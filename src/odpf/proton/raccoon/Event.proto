@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package odpf.proton.raccoon;
+
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.raccoon";
+option java_outer_classname = "EventProto";
+
+message Event {
+  // Data/byteArray of the serialised product proto.
+  bytes eventBytes = 1;
+  /* This is the protoMessageName which the protoc provides with each compiled proto.
+    This type is used by raccoon to distribute events to respective Kafka topics.
+  */
+  string type = 2;
+ }
