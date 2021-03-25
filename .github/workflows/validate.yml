@@ -1,0 +1,15 @@
+name: Validate
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  validate:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: wizhi/setup-buf@v1
+        with:
+          version: 0.40.0
+      - run: buf breaking --against '.git#branch=raccoon-proto'
