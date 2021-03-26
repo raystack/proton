@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package odpf.proton.metadata.resource;
+
+option java_package = "io.odpf.proton.metadata.resource";
+option java_outer_classname = "OptimusLog";
+option go_package = "github.com/odpf/proton/metadata/resource";
+
+import "google/protobuf/timestamp.proto";
+
+message OptimusLogKey {
+  string urn = 1;
+}
+
+message OptimusLogMessage {
+  string urn = 1;
+  int32 version = 2;
+  string description = 3;
+  repeated OptimusConfig labels = 4;
+  string owner = 5;
+  OptimusTask task = 6;
+
+  OptimusJobSchedule schedule = 7;
+  OptimusJobBehavior behaviour = 8;
+
+  repeated OptimusHook hooks = 9;
+  repeated OptimusJobDependency dependencies = 10;
+
+  google.protobuf.Timestamp event_timestamp = 100;
+}
+
+message OptimusTask {
+  string name = 1;
+  string image = 2;
+  string description = 3;
+  string destination = 4;
+  repeated OptimusConfig config = 5;
+  OptimusTaskWindow window = 6;
+  int32 priority = 7;
+}
+
+message OptimusTaskWindow {
+  string Size = 1;
+  string offset = 2;
+  string truncate_to = 3;
+}
+
+message OptimusHook {
+  string name = 1;
+  string image = 2;
+  string description = 3;
+  repeated OptimusConfig config = 4;
+  string type = 5;
+  repeated string depends_on = 6;
+}
+
+message OptimusJobDependency {
+  string Project = 1;
+  string Job = 2;
+  string Type = 3;
+}
+
+message OptimusJobSchedule {
+  google.protobuf.Timestamp start_date = 1;
+  google.protobuf.Timestamp end_date = 2;
+  string interval = 3;
+}
+
+message OptimusJobBehavior {
+  bool depends_on_past = 1;
+  bool catchup = 2;
+}
+
+message OptimusConfig {
+  string name = 1;
+  string value = 2;
+}
