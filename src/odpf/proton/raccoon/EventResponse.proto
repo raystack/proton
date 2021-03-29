@@ -9,8 +9,11 @@ option java_outer_classname = "EventResponseProto";
 message EventResponse {
   Status status = 1;
   Code code = 2;
+  // sent_time populated by the server before the response is sent.
   int64 sent_time = 3;
+  // additional-human readable information related to the status and code.
   string reason = 4;
+  // arbitrary response data. req_guid is also sent as part of data.
   map<string, string> data = 5;
 }
 
