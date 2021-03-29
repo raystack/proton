@@ -12,4 +12,4 @@ jobs:
       - uses: wizhi/setup-buf@v1
         with:
           version: 0.40.0
-      - run: buf breaking --against '.git#branch=raccoon-proto'
+      - run: git ls-tree -r main | grep '.*\.proto$' >/dev/null && buf breaking --against .git#branch=main
