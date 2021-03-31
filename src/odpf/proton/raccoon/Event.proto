@@ -7,12 +7,25 @@ option java_package = "io.odpf.proton.raccoon";
 option java_outer_classname = "EventProto";
 
 /*
-  Raccoon is event-agnostic. It means you can use any data format or schema you want for your event. It can be as simple as JSON encoded key-value pair or complex protobuf schema that captures all metadata you want. The data then needs to be serialized to bytes and populate it in eventBytes field.
+ `Event` defines wrapper of the event you want to push to Raccoon
+
+ The event populated here is in form of bytes. It means you can use any data format or schema
+ you want for your event. It can be as simple as JSON encoded key-value pair or complex
+ protobuf schema that captures all metadata you want. The data then needs to be serialized to
+ bytes and populate it in `eventBytes` field. Single `Event` contains one event.
 */
 
 message Event {
-  // Data/byteArray of the serialised event. For example, you can have your events in proto format and serialize it to bytes.
+  /*
+  `eventBytes` is where you put bytes serialized event.
+  */
   bytes eventBytes = 1;
-  // This `type` usually denotes an event type that the producer of this proto message may set. It is currently used by raccoon to distribute events to respective Kafka topics. However the users of this proto can use this type to set strings which can be processed in their ingestion systems to distribute or perform other functions.
+  /*
+  `type` denotes an event type that the producer of this proto message may set.
+
+  It is currently used by raccoon to distribute events to respective Kafka topics. However the
+  users of this proto can use this type to set strings which can be processed in their
+  ingestion systems to distribute or perform other functions.
+  */
   string type = 2;
  }
