@@ -1,6 +1,6 @@
 This folder contains the contract between [Raccoon](https://github.com/odpf/raccoon) and the client. The client sends the request in form of bytes serialized `EventRequest` proto. `EventRequest` contains repeated `Event` field. `Event` is where you put your bytes serialized event. Because the event is serialized as bytes, you can put any kind of event structured in any kind of schema as per your requirement. This makes Raccoon event-agnostic. You can send any form of events. After the request is sent, Raccoon will process it and give back the response in form of `EventResponse`. The client can handle the response such as retry the request in case of failure. See the illustration below for more clarity.
 
-<p align="center"><img src="./../../../../docs/assets/raccoon-reqres.svg"/></p>
+<p align="center"><img src="./../../../docs/assets/raccoon-reqres.svg"/></p>
 
 For details of each field in each proto, you can open the proto files and read the comment.
 ### How to use

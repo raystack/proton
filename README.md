@@ -13,7 +13,7 @@ Proton does not provide compiled language specific proto files or the descriptor
 <p align="center"><img src="./docs/assets/usage.svg" /></p>
 
 ## Structure
-Proton has flat structure where proto files are put under /src/odpf/proton/<application>/. Each application's sub directory read me provides details on how to use the respective proto.
+Proton has flat structure where proto files are put under /odpf/proton/\<application\>/. Each application's sub directory read me provides details on how to use the respective proto.
 
 ## Contribute
 Prerequisite: You need to have [buf](https://buf.build/) installed
