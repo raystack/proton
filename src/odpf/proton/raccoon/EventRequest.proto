@@ -9,11 +9,41 @@ option java_outer_classname = "EventRequestProto";
 import "odpf/proton/raccoon/Event.proto";
 import "google/protobuf/timestamp.proto";
 
+/*
+ `EventRequest` defines the contract to push events to Raccoon
+
+ An `EventRequest` allows you to push more than one events(batch). The events
+ are wrapped inside `events` repeated field. All of the fields on `EventRequest`
+ are required.
+*/
 message EventRequest {
-  // req_guid is returned on response as the identifier of which request it was responded to. For protocol like WebSocket, the request-response is not synchronous. Thus, the client needs an identifier of which response belongs to which request in order to handle each response.
+  /*
+  `req_guid` is unique identifier of the request the client is making.
+
+  Raccoon uses the identifier to send response of the request. The client can handle the
+  response accordingly. For example, the client can retry the request in case the response is
+  giving `INTERNAL_ERROR` code with "publisher failed" reason.
+
+  This identifier is necessary because on event-based protocols like WebSocket the response is
+  returned asynchronously. If there is no identifier, no way the client can tell which response
+  belongs to which request.
+
+  Apart from sending response, `req_guid` is used to log some informations on 'debug' level. You can search the 
+  debug logs with `ReqGUID` keyword.
+  */ 
   string req_guid = 1;
-  // Raccoon uses sent_time to calculate time from events is sent to when events successfully published.
+  /*
+  `sent_time` defines the time the request is sent.
+
+  `sent_time` is used to calculate various metrics. The main metric uses `sent_time` is duration from the
+  request is sent until the events are published.
+  */
   google.protobuf.Timestamp sent_time = 2;
-  // bytes serialized events. Normally you want to batch the event being sent to optimize the network call.
+  /*
+  `events` is where the client put all the events wrapped in `Event`.
+
+  As mentioned above, the request allows the client to push more than one event. Normally you want to batch
+  the events to optimize the network call. 
+  */
   repeated Event events = 3;
 }
