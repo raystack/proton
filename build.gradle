@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf' version '0.8.15'
+    id 'maven-publish'
+}
+
+group 'io.odpf'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.google.protobuf:protobuf-java:3.11.4"
+}
+
+protobuf {
+    generatedFilesBaseDir = "$projectDir/generated-protos"
+
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/odpf/proton"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+clean {
+    delete "$projectDir/generated-protos"
+    delete "$projectDir/build"
+}
