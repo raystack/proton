@@ -1,6 +1,8 @@
-This folder contains the contract between [Raccoon](https://github.com/odpf/raccoon) and the client. The client sends the request in form of bytes serialized `EventRequest` proto. `EventRequest` contains repeated `Event` field. `Event` is where you put your bytes serialized event. Because the event is serialized as bytes, you can put any kind of event structured in any kind of schema as per your requirement. This makes Raccoon event-agnostic. You can send any form of events. After the request is sent, Raccoon will process it and give back the response in form of `EventResponse`. The client can handle the response such as retry the request in case of failure. See the illustration below for more clarity.
+This folder contains the contract between [Raccoon](https://github.com/odpf/raccoon) and the client.
+### High level view
+The client sends the request in form of bytes serialized `EventRequest` proto. `EventRequest` contains repeated `Event` field. `Event` is where you put your bytes serialized event. Because the event is serialized as bytes, you can put any kind of event structured in any kind of schema as per your requirement. This makes Raccoon event-agnostic. You can send any form of events. After the request is sent, Raccoon will process it and give back the response in form of `EventResponse`. The client can handle the response such as retry the request in case of failure. See the illustration below for more clarity.
 
-<p align="center"><img src="./../../../docs/assets/raccoon-reqres.svg"/></p>
+<p align="center"><img src="./../../docs/assets/raccoon-reqres.svg"/></p>
 
 For details of each field in each proto, you can open the proto files and read the comment.
 ### How to use
@@ -9,9 +11,9 @@ Since proton only provides the proto files. You need to [compile](https://develo
 There are [2 packaging options](https://developers.google.com/protocol-buffers/docs/reference/javascript-generated#invocation) provided by the [default protoc](https://github.com/protocolbuffers/protobuf) to compile the proto to javascript code. For this example we are using [commonjs](https://developers.google.com/protocol-buffers/docs/reference/javascript-generated#commonjs-imports).
 To compile the proto files you can go to `proton` root directory and enter:
 ```
-protoc --proto_path=src --js_out=import_style=commonjs,binary:. odpf/proton/raccoon/Event.proto odpf/proton/raccoon/EventRequest.proto odpf/proton/raccoon/EventResponse.proto
+protoc --proto_path=src --js_out=import_style=commonjs,binary:. odpf/raccoon/Event.proto odpf/raccoon/EventRequest.proto odpf/raccoon/EventResponse.proto
 ```
-The command will generate the javascript package under `odpf/proton/raccoon`. You'll see 3 files with `_pb.js` suffix. You can move those generated codes to your project and import them.
+The command will generate the javascript package under `odpf/raccoon`. You'll see 3 files with `_pb.js` suffix. You can move those generated codes to your project and import them.
 
 Javascript generated code requires `google-protobuf` as dependency. Make sure to include it in your `package.json`.
 
