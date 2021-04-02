@@ -22,15 +22,15 @@ Now, you got Javascript generated code in your project. You only need to import 
 const { Timestamp } = require('google-protobuf/google/protobuf/timestamp_pb.js');
 const { EventRequest } = require('./EventRequest_pb');
 const { Event } = require('./Event_pb');
+const { MyClickEvent } = require('./MyClickEvent_pb');
 
-const userClickEvent = {
-  user_id: 'user-12783',
-  event: 'order_clicked',
-  timestamp: 1617092381,
-};
+const userClickEvent = new MyClickEvent();
+userClickEvent.setUserId('user-12783');
+userClickEvent.setEvent('order_clicked');
+userClickEvent.setTimestamp(1617092381);
 
 const event = new Event();
-event.setEventbytes(Buffer.from(JSON.stringify(userClickEvent)));
+event.setEventbytes(userClickEvent.serializeBinary());
 event.setType('click_event');
 
 const sentTime = new Timestamp();
