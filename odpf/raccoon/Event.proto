@@ -10,9 +10,8 @@ option java_outer_classname = "EventProto";
  `Event` defines wrapper of the event you want to push to Raccoon
 
  The event populated here is in form of bytes. It means you can use any data format or schema
- you want for your event. It can be as simple as JSON encoded key-value pair or complex
- protobuf schema that captures all metadata you want. The data then needs to be serialized to
- bytes and populate it in `eventBytes` field. Single `Event` contains one event.
+ you want for your event. You can structure your event on protobuf as you like. The data then
+ needs to be serialized to bytes and populate it in `eventBytes` field. Single `Event` contains one event.
 */
 
 message Event {
