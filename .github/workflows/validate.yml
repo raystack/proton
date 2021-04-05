@@ -12,4 +12,5 @@ jobs:
       - uses: wizhi/setup-buf@v1
         with:
           version: 0.40.0
-      - run: buf breaking --against .git#branch=main
+      - name: validate-breaking-changes
+        run: REPO=https://github.com/$GITHUB_REPOSITORY.git; buf breaking --against $REPO
