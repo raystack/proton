@@ -9,6 +9,8 @@ option java_outer_classname = "EventRequestProto";
 import "odpf/raccoon/Event.proto";
 import "google/protobuf/timestamp.proto";
 
+option go_package = "github.com/odpf/proton/raccoon";
+
 /*
  `EventRequest` defines the contract to push events to Raccoon
 
