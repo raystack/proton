@@ -6,6 +6,8 @@ option java_multiple_files = true;
 option java_package = "io.odpf.raccoon";
 option java_outer_classname = "EventResponseProto";
 
+option go_package = "github.com/odpf/proton/raccoon";
+
 /*
  `EventResponse` defines the response contract from Raccoon
 
