@@ -52,6 +52,14 @@ service RuntimeService {
             get: "/api/v1/project/{project_name}/job/{job_name}/dump"
         };
     }
+    // CheckJobSpecification checks if a job specification is valid
+    rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/project/{project_name}/job/check"
+        };
+    }
+    // CheckJobSpecifications checks if the job specifications are valid
+    rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
 
     // RegisterProject creates a new project
     rpc RegisterProject(RegisterProjectRequest) returns (RegisterProjectResponse) {
@@ -203,10 +211,10 @@ message JobStatus {
 
 // ResourceSpecification are datastore specification representation of a resource
 message ResourceSpecification {
+    reserved 3; // depricated "datastore"
+
     int32 version = 1;
     string name = 2;
-
-    string datastore = 3;
     string type = 4;
 
     google.protobuf.Struct spec = 5;
@@ -259,6 +267,31 @@ message DumpJobSpecificationRequest {
 message DumpJobSpecificationResponse {
     bool success = 1;
     string content = 2;
+}
+
+message CheckJobSpecificationRequest {
+    string project_name = 1;
+    JobSpecification job = 2;
+}
+
+message CheckJobSpecificationResponse {
+    bool success = 1;
+}
+
+message CheckJobSpecificationsRequest {
+    string project_name = 1;
+    repeated JobSpecification jobs = 2;
+}
+
+message CheckJobSpecificationsResponse {
+    bool success = 1;
+
+    // non ack responses are more of a progress/info response
+    // and not really success or failure statuses
+    bool ack = 2;
+
+    string message = 3;
+    string job_name = 4;
 }
 
 message RegisterProjectRequest {
