@@ -8,7 +8,7 @@ import "google/protobuf/struct.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
-option java_package = "io.odpf.optimus";
+option java_package = "io.odpf.proton.optimus";
 option java_outer_classname = "RuntimeServiceManager";
 
 // These annotations are used when generating the OpenAPI file.
