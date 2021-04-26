@@ -14,10 +14,10 @@ option java_outer_classname = "RuntimeServiceManager";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-      version: "0.1";
+        version: "0.1";
     };
     external_docs: {
-      description: "Optimus server";
+        description: "Optimus server";
     }
     schemes: HTTP;
 };
@@ -38,15 +38,30 @@ service RuntimeService {
     // events
     rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
-    // RegisterJobSpecification registers a new job for a client which belongs to a project
-    rpc RegisterJobSpecification(RegisterJobSpecificationRequest) returns (RegisterJobSpecificationResponse) {
+    // CreateJobSpecification registers a new job for a client which belongs to a project
+    rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/job"
+            post: "/api/v1/project/{project_name}/client/{client_name}/job"
             body: "*"
         };
     }
-    
-    // ListJobSpecification returns list of jobs created in a project 
+
+    // ReadJobSpecification reads a provided job spec of a client
+    rpc ReadJobSpecification(ReadJobSpecificationRequest) returns (ReadJobSpecificationResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}"
+        };
+    }
+
+    // DeleteJobSpecification deletes a job spec of a client
+    rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}/delete"
+            body: "*"
+        };
+    }
+
+    // ListJobSpecification returns list of jobs created in a project
     rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
         option (google.api.http) = {
             get: "/api/v1/project/{project_name}/job"
@@ -76,8 +91,8 @@ service RuntimeService {
             body: "*"
         };
     }
-    // RegisterClient creates a new client for a project
-    rpc RegisterClient(RegisterClientRequest) returns (RegisterClientResponse) {
+    // RegisterProjectClient creates a new client for a project
+    rpc RegisterProjectClient(RegisterProjectClientRequest) returns (RegisterProjectClientResponse) {
         option (google.api.http) = {
             post: "/api/v1/project/{project_name}/client"
             body: "*"
@@ -94,6 +109,13 @@ service RuntimeService {
     rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/project"
+        };
+    }
+
+    // ListProjectClients returns list of clients of a project
+    rpc ListProjectClients(ListProjectClientsRequest) returns (ListProjectClientsResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/project/{project_name}/client"
         };
     }
 
@@ -258,7 +280,7 @@ message DeployJobSpecificationRequest {
     // TODO: not implemented yet, default behaviour is to treat this true always till then
     // bool synchronize = 3; // deletes job that are not sent as part of this deployment
 
-    string client_id = 4;
+    string client_name = 4;
 }
 
 message DeployJobSpecificationResponse {
@@ -274,7 +296,7 @@ message DeployJobSpecificationResponse {
 
 message ListJobSpecificationRequest {
     string project_name = 1;
-    string client_id = 2;
+    string client_name = 2;
 }
 
 message ListJobSpecificationResponse{
@@ -284,7 +306,7 @@ message ListJobSpecificationResponse{
 message DumpJobSpecificationRequest {
     string project_name = 1;
     string job_name = 2;
-    string client_id = 3;
+    string client_name = 3;
 }
 
 message DumpJobSpecificationResponse {
@@ -319,7 +341,7 @@ message CheckJobSpecificationsResponse {
 
 message RegisterProjectRequest {
     ProjectSpecification project = 1;
-    string client_id = 2;
+    ClientSpecification client = 2;
 }
 
 message RegisterProjectResponse {
@@ -327,23 +349,45 @@ message RegisterProjectResponse {
     string message = 2;
 }
 
-message RegisterClientRequest {
+message RegisterProjectClientRequest {
     string project_name = 1;
     ClientSpecification client = 2;
 }
 
-message RegisterClientResponse {
+message RegisterProjectClientResponse {
     bool success = 1;
     string message = 2;
 }
 
-message RegisterJobSpecificationRequest {
+message CreateJobSpecificationRequest {
     string project_name = 1;
-    string client_id = 2;
+    string client_name = 2;
     JobSpecification spec = 3;
 }
 
-message RegisterJobSpecificationResponse {
+message CreateJobSpecificationResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ReadJobSpecificationRequest {
+    string project_name = 1;
+    string client_name = 2;
+    string job_name = 3;
+}
+
+message ReadJobSpecificationResponse {
+    bool success = 1;
+    JobSpecification spec = 2;
+}
+
+message DeleteJobSpecificationRequest {
+    string project_name = 1;
+    string client_name = 2;
+    string job_name = 3;
+}
+
+message DeleteJobSpecificationResponse {
     bool success = 1;
     string message = 2;
 }
@@ -365,6 +409,14 @@ message ListProjectsResponse {
     repeated ProjectSpecification projects = 1;
 }
 
+message ListProjectClientsRequest {
+    string project_name = 1;
+}
+
+message ListProjectClientsResponse {
+    repeated ClientSpecification clients = 1;
+}
+
 message RegisterInstanceRequest {
     string project_name = 1;
     string job_name = 2;
@@ -381,7 +433,7 @@ message RegisterInstanceResponse {
 message JobStatusRequest {
     string project_name = 1;
     string job_name = 2;
-    string client_id = 3;
+    string client_name = 3;
 }
 
 message JobStatusResponse {
@@ -404,7 +456,7 @@ message DeployResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
     repeated ResourceSpecification resources = 3;
-    string client_id = 4;
+    string client_name = 4;
 }
 
 message DeployResourceSpecificationResponse {
@@ -422,7 +474,7 @@ message DeployResourceSpecificationResponse {
 message ListResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
-    string client_id = 3;
+    string client_name = 3;
 }
 
 message ListResourceSpecificationResponse {
@@ -433,7 +485,7 @@ message CreateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
-    string client_id = 4;
+    string client_name = 4;
 }
 
 message CreateResourceResponse {
@@ -445,7 +497,7 @@ message ReadResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     string resource_name = 3;
-    string client_id = 4;
+    string client_name = 4;
 }
 
 message ReadResourceResponse {
@@ -458,7 +510,7 @@ message UpdateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
-    string client_id = 4;
+    string client_name = 4;
 }
 
 message UpdateResourceResponse {

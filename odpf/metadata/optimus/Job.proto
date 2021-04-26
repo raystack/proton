@@ -28,6 +28,8 @@ message JobMetadata {
   repeated JobHook hooks = 11;
   repeated JobDependency dependencies = 12;
 
+  string client = 13;
+
   google.protobuf.Timestamp event_timestamp = 100;
 }
 
