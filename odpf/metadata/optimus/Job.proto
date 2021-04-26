@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package odpf.metadata.optimus;
+
+option java_package = "io.odpf.proton.metadata.optimus";
+option java_outer_classname = "Optimus";
+option go_package = "github.com/odpf/proton/metadata/optimus";
+
+import "google/protobuf/timestamp.proto";
+
+message JobMetadataKey {
+  string urn = 1;
+}
+
+message JobMetadata {
+  string urn = 1;
+  string name = 2;
+  string tenant = 3;
+  int32 version = 4;
+  string description = 5;
+  repeated JobLabel labels = 6;
+  string owner = 7;
+
+  JobTask task = 8;
+  JobSchedule schedule = 9;
+  JobBehavior behaviour = 10;
+
+  repeated JobHook hooks = 11;
+  repeated JobDependency dependencies = 12;
+
+  string client_name = 13;
+
+  google.protobuf.Timestamp event_timestamp = 100;
+}
+
+message JobTask {
+  string name = 1;
+  string image = 2;
+  string description = 3;
+  string destination = 4;
+  repeated JobTaskConfig config = 5;
+  JobTaskWindow window = 6;
+  int32 priority = 7;
+}
+
+message JobHook {
+  string name = 1;
+  string image = 2;
+  string description = 3;
+  repeated JobHookConfig config = 4;
+  string type = 5;
+  repeated string depends_on = 6;
+}
+
+message JobDependency {
+  string tenant = 1;
+  string job = 2;
+  string type = 3;
+}
+
+message JobTaskWindow {
+  string size = 1;
+  string offset = 2;
+  string truncate_to = 3;
+}
+
+message JobSchedule {
+  google.protobuf.Timestamp start_date = 1;
+  google.protobuf.Timestamp end_date = 2;
+  string interval = 3;
+}
+
+message JobBehavior {
+  bool depends_on_past = 1;
+  bool catchup = 2;
+}
+
+message JobLabel {
+  string name = 1;
+  string value = 2;
+}
+
+message JobTaskConfig {
+  string name = 1;
+  string value = 2;
+}
+
+message JobHookConfig {
+  string name = 1;
+  string value = 2;
+}
