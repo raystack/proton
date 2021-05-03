@@ -1,0 +1,184 @@
+syntax = "proto3";
+package odpf.optimus;
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus";
+option java_outer_classname = "TaskPluginManager";
+
+import "odpf/optimus/runtime_service.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+service TaskPlugin {
+    // GetTaskSchema provides basic working details for this task
+    rpc GetTaskSchema(GetTaskSchema.Request) returns (GetTaskSchema.Response);
+
+    // GetTaskQuestions list down all the cli inputs required to generate spec files
+	// name used for question will be directly mapped to DefaultTaskConfig() parameters
+    rpc GetTaskQuestions(GetTaskQuestions.Request) returns (GetTaskQuestions.Response);
+    rpc ValidateTaskQuestion(ValidateTaskQuestion.Request) returns (ValidateTaskQuestion.Response);
+
+
+    // DefaultTaskConfig will be passed down to execution unit as env vars
+	// they will be generated based on results of AskQuestions
+	// if DryRun is true in UnitOptions, should not throw error for missing inputs
+    rpc DefaultTaskConfig(DefaultTaskConfig.Request) returns (DefaultTaskConfig.Response);
+    // DefaultTaskAssets will be passed down to execution unit as files
+	// if DryRun is true in PluginOptions, should not throw error for missing inputs
+    rpc DefaultTaskAssets(DefaultTaskAssets.Request) returns (DefaultTaskAssets.Response);
+    // CompileTaskAssets overrides the default asset compilation behaviour
+    rpc CompileTaskAssets(CompileTaskAssets.Request) returns (CompileTaskAssets.Response);
+
+    // GenerateTaskDestination derive destination from config and assets
+	rpc GenerateTaskDestination(GenerateTaskDestination.Request) returns (GenerateTaskDestination.Response);
+
+	// GenerateTaskDependencies returns names of job destination on which this unit
+	// is dependent on
+	rpc GenerateTaskDependencies(GenerateTaskDependencies.Request) returns (GenerateTaskDependencies.Response);
+}
+
+message PluginOptions {
+    bool dry_run = 1;
+}
+
+message GetTaskSchema {
+    message Request {}
+    message Response {
+        string name = 1;
+        string description = 2;
+        string image = 3;
+
+        // secret_path will be mounted inside the container as volume
+        // e.g. /opt/secret/auth.json
+        string secret_path = 4;
+    }
+}
+
+message PluginQuestion {
+    string name = 1;
+    string prompt = 2;
+    string help = 3;
+    string default = 4;
+    repeated string multiselect = 5;
+
+    string sub_questions_if_value = 6;
+    repeated PluginQuestion sub_questions = 7;
+}
+
+message PluginAnswer {
+    PluginQuestion question = 1;
+    string value = 2;
+}
+
+message GetTaskQuestions {
+    message Request {
+        PluginOptions options = 40;
+    }
+    message Response {
+        repeated PluginQuestion questions = 1;
+    }
+}
+
+message ValidateTaskQuestion {
+    message Request {
+        PluginAnswer answer = 1;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        bool success = 1;
+        string error = 2;
+    }
+}
+
+message TaskConfigs {
+    message Config {
+        string name = 1;
+        string value = 2;
+    }
+    repeated Config configs = 1;
+}
+
+message DefaultTaskConfig {
+    message Request {
+        repeated PluginAnswer answers = 1;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        TaskConfigs configs = 1;
+    }
+}
+
+message TaskAssets {
+    message Asset {
+        string name = 1;
+        string value = 2;
+    }
+    repeated Asset assets = 1;
+}
+
+message DefaultTaskAssets {
+    message Request {
+        repeated PluginAnswer answers = 1;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        TaskAssets assets = 1;
+    }
+}
+
+message TaskWindow {
+    google.protobuf.Duration size = 1;
+    google.protobuf.Duration offset = 2;
+    string truncate_to = 3;
+}
+
+message CompileTaskAssets {
+    message Request {
+        TaskConfigs job_configs = 1;
+        TaskAssets job_assets = 2;
+        TaskWindow task_window = 3;
+        google.protobuf.Timestamp instance_schedule = 4;
+        repeated InstanceSpecData instance_data = 5;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        TaskAssets assets = 1;
+    }
+}
+
+message GenerateTaskDestination {
+    message Request {
+        // Task configs
+        TaskConfigs job_config = 1;
+        // Job assets
+        TaskAssets job_assets = 2;
+        // Job project
+        ProjectSpecification project = 3;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        string destination = 1;
+    }
+}
+
+message GenerateTaskDependencies {
+    message Request {
+        // Task configs
+        TaskConfigs job_config = 1;
+        // Job assets
+        TaskAssets job_assets = 2;
+        // Job project
+        ProjectSpecification project = 3;
+
+        PluginOptions options = 40;
+    }
+    message Response {
+        repeated string dependencies = 1;
+    }
+}

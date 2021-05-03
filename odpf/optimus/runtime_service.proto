@@ -36,6 +36,7 @@ service RuntimeService {
     // returns a stream of messages which can be used to track the progress
     // of deployments. Message containing ack are status events other are progress
     // events
+    // State of the world request
     rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
     // CreateJobSpecification registers a new job for a namespace which belongs to a project
@@ -176,6 +177,12 @@ service RuntimeService {
 message ProjectSpecification {
     string name = 1;
     map<string, string> config = 2;
+
+    message ProjectSecret {
+        string name = 1;
+        string value = 2;
+    }
+    repeated ProjectSecret secrets = 3;
 }
 
 message NamespaceSpecification {
@@ -223,12 +230,7 @@ message JobConfigItem {
 
 message JobDependency {
     string name = 1;
-    string type = 2;
-}
-
-message ProjectSecret {
-    string name = 1;
-    string value = 2;
+    string type = 2; // intra/inter/extra
 }
 
 message InstanceSpec {
@@ -236,13 +238,32 @@ message InstanceSpec {
     google.protobuf.Timestamp scheduled_at = 2;
     repeated InstanceSpecData data = 3;
     string job_name = 4;
+
+    enum Type {
+        INVALID = 0;
+        TASK = 1;
+        HOOK = 2;
+    }
 }
 
 message InstanceSpecData {
+    reserved 3, 4;
+    
     string name = 1;
     string value = 2;
-    string task = 3;
-    string type = 4;
+
+    // type of data, could be an env var or file
+    enum Type {
+        INVALID = 0;
+        ENV = 1;
+        FILE = 2;
+    }
+    Type type = 5;
+}
+
+message InstanceContext {
+    map<string, string> envs = 1;
+    map<string, string> files = 2;
 }
 
 message JobStatus {
@@ -419,10 +440,14 @@ message ListProjectNamespacesResponse {
 }
 
 message RegisterInstanceRequest {
+    reserved 3;
+
     string project_name = 1;
     string job_name = 2;
-    string type = 3;
     google.protobuf.Timestamp scheduled_at = 4;
+    
+    string instance_name = 5;
+    InstanceSpec.Type instance_type = 6;
 }
 
 message RegisterInstanceResponse {
@@ -430,6 +455,7 @@ message RegisterInstanceResponse {
     JobSpecification job = 2;
     InstanceSpec instance = 3;
     NamespaceSpecification namespace = 4;
+    InstanceContext context = 5;
 }
 
 message JobStatusRequest {
