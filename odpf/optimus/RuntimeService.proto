@@ -144,25 +144,25 @@ service RuntimeService {
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            get: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
         };
     }
 
     // Datastore CRUD
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            post: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
     rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource/{resource_name}"
+            get: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource/{resource_name}"
         };
     }
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
-            put: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            put: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
@@ -180,6 +180,7 @@ message ProjectSpecification {
 
 message ClientSpecification {
     string name = 1;
+    map<string, string> config = 2;
 }
 
 message JobSpecHook {
@@ -316,6 +317,7 @@ message DumpJobSpecificationResponse {
 message CheckJobSpecificationRequest {
     string project_name = 1;
     JobSpecification job = 2;
+    string client_name = 3;
 }
 
 message CheckJobSpecificationResponse {
@@ -325,6 +327,7 @@ message CheckJobSpecificationResponse {
 message CheckJobSpecificationsRequest {
     string project_name = 1;
     repeated JobSpecification jobs = 2;
+    string client_name = 3;
 }
 
 message CheckJobSpecificationsResponse {
@@ -426,6 +429,7 @@ message RegisterInstanceResponse {
     ProjectSpecification project = 1;
     JobSpecification job = 2;
     InstanceSpec instance = 3;
+    ClientSpecification client = 4;
 }
 
 message JobStatusRequest {
