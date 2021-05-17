@@ -56,8 +56,7 @@ service RuntimeService {
     // DeleteJobSpecification deletes a job spec of a client
     rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}/delete"
-            body: "*"
+            delete: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}"
         };
     }
 
@@ -377,8 +376,7 @@ message ReadJobSpecificationRequest {
 }
 
 message ReadJobSpecificationResponse {
-    bool success = 1;
-    JobSpecification spec = 2;
+    JobSpecification spec = 1;
 }
 
 message DeleteJobSpecificationRequest {
