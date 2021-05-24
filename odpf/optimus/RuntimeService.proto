@@ -38,25 +38,25 @@ service RuntimeService {
     // events
     rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
-    // CreateJobSpecification registers a new job for a client which belongs to a project
+    // CreateJobSpecification registers a new job for a namespace which belongs to a project
     rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/client/{client_name}/job"
+            post: "/api/v1/project/{project_name}/namespace/{namespace}/job"
             body: "*"
         };
     }
 
-    // ReadJobSpecification reads a provided job spec of a client
+    // ReadJobSpecification reads a provided job spec of a namespace
     rpc ReadJobSpecification(ReadJobSpecificationRequest) returns (ReadJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}"
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
         };
     }
 
-    // DeleteJobSpecification deletes a job spec of a client
+    // DeleteJobSpecification deletes a job spec of a namespace
     rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
         option (google.api.http) = {
-            delete: "/api/v1/project/{project_name}/client/{client_name}/job/{job_name}"
+            delete: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
         };
     }
 
@@ -90,10 +90,10 @@ service RuntimeService {
             body: "*"
         };
     }
-    // RegisterProjectClient creates a new client for a project
-    rpc RegisterProjectClient(RegisterProjectClientRequest) returns (RegisterProjectClientResponse) {
+    // RegisterProjectNamespace creates a new namespace for a project
+    rpc RegisterProjectNamespace(RegisterProjectNamespaceRequest) returns (RegisterProjectNamespaceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/client"
+            post: "/api/v1/project/{project_name}/namespace"
             body: "*"
         };
     }
@@ -111,10 +111,10 @@ service RuntimeService {
         };
     }
 
-    // ListProjectClients returns list of clients of a project
-    rpc ListProjectClients(ListProjectClientsRequest) returns (ListProjectClientsResponse) {
+    // ListProjectNamespaces returns list of namespaces of a project
+    rpc ListProjectNamespaces(ListProjectNamespacesRequest) returns (ListProjectNamespacesResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/client"
+            get: "/api/v1/project/{project_name}/namespace"
         };
     }
 
@@ -144,25 +144,25 @@ service RuntimeService {
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
         };
     }
 
     // Datastore CRUD
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
+            post: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
     rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource/{resource_name}"
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}"
         };
     }
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
-            put: "/api/v1/project/{project_name}/client/{client_name}/datastore/{datastore_name}/resource"
+            put: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
@@ -178,7 +178,7 @@ message ProjectSpecification {
     map<string, string> config = 2;
 }
 
-message ClientSpecification {
+message NamespaceSpecification {
     string name = 1;
     map<string, string> config = 2;
 }
@@ -280,7 +280,7 @@ message DeployJobSpecificationRequest {
     // TODO: not implemented yet, default behaviour is to treat this true always till then
     // bool synchronize = 3; // deletes job that are not sent as part of this deployment
 
-    string client_name = 4;
+    string namespace = 4;
 }
 
 message DeployJobSpecificationResponse {
@@ -296,7 +296,7 @@ message DeployJobSpecificationResponse {
 
 message ListJobSpecificationRequest {
     string project_name = 1;
-    string client_name = 2;
+    string namespace = 2;
 }
 
 message ListJobSpecificationResponse{
@@ -306,7 +306,7 @@ message ListJobSpecificationResponse{
 message DumpJobSpecificationRequest {
     string project_name = 1;
     string job_name = 2;
-    string client_name = 3;
+    string namespace = 3;
 }
 
 message DumpJobSpecificationResponse {
@@ -317,7 +317,7 @@ message DumpJobSpecificationResponse {
 message CheckJobSpecificationRequest {
     string project_name = 1;
     JobSpecification job = 2;
-    string client_name = 3;
+    string namespace = 3;
 }
 
 message CheckJobSpecificationResponse {
@@ -327,7 +327,7 @@ message CheckJobSpecificationResponse {
 message CheckJobSpecificationsRequest {
     string project_name = 1;
     repeated JobSpecification jobs = 2;
-    string client_name = 3;
+    string namespace = 3;
 }
 
 message CheckJobSpecificationsResponse {
@@ -343,7 +343,7 @@ message CheckJobSpecificationsResponse {
 
 message RegisterProjectRequest {
     ProjectSpecification project = 1;
-    ClientSpecification client = 2;
+    NamespaceSpecification namespace = 2;
 }
 
 message RegisterProjectResponse {
@@ -351,19 +351,19 @@ message RegisterProjectResponse {
     string message = 2;
 }
 
-message RegisterProjectClientRequest {
+message RegisterProjectNamespaceRequest {
     string project_name = 1;
-    ClientSpecification client = 2;
+    NamespaceSpecification namespace = 2;
 }
 
-message RegisterProjectClientResponse {
+message RegisterProjectNamespaceResponse {
     bool success = 1;
     string message = 2;
 }
 
 message CreateJobSpecificationRequest {
     string project_name = 1;
-    string client_name = 2;
+    string namespace = 2;
     JobSpecification spec = 3;
 }
 
@@ -374,7 +374,7 @@ message CreateJobSpecificationResponse {
 
 message ReadJobSpecificationRequest {
     string project_name = 1;
-    string client_name = 2;
+    string namespace = 2;
     string job_name = 3;
 }
 
@@ -384,7 +384,7 @@ message ReadJobSpecificationResponse {
 
 message DeleteJobSpecificationRequest {
     string project_name = 1;
-    string client_name = 2;
+    string namespace = 2;
     string job_name = 3;
 }
 
@@ -410,12 +410,12 @@ message ListProjectsResponse {
     repeated ProjectSpecification projects = 1;
 }
 
-message ListProjectClientsRequest {
+message ListProjectNamespacesRequest {
     string project_name = 1;
 }
 
-message ListProjectClientsResponse {
-    repeated ClientSpecification clients = 1;
+message ListProjectNamespacesResponse {
+    repeated NamespaceSpecification namespaces = 1;
 }
 
 message RegisterInstanceRequest {
@@ -429,13 +429,13 @@ message RegisterInstanceResponse {
     ProjectSpecification project = 1;
     JobSpecification job = 2;
     InstanceSpec instance = 3;
-    ClientSpecification client = 4;
+    NamespaceSpecification namespace = 4;
 }
 
 message JobStatusRequest {
     string project_name = 1;
     string job_name = 2;
-    string client_name = 3;
+    string namespace = 3;
 }
 
 message JobStatusResponse {
@@ -458,7 +458,7 @@ message DeployResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
     repeated ResourceSpecification resources = 3;
-    string client_name = 4;
+    string namespace = 4;
 }
 
 message DeployResourceSpecificationResponse {
@@ -476,7 +476,7 @@ message DeployResourceSpecificationResponse {
 message ListResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
-    string client_name = 3;
+    string namespace = 3;
 }
 
 message ListResourceSpecificationResponse {
@@ -487,7 +487,7 @@ message CreateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
-    string client_name = 4;
+    string namespace = 4;
 }
 
 message CreateResourceResponse {
@@ -499,7 +499,7 @@ message ReadResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     string resource_name = 3;
-    string client_name = 4;
+    string namespace = 4;
 }
 
 message ReadResourceResponse {
@@ -512,7 +512,7 @@ message UpdateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
-    string client_name = 4;
+    string namespace = 4;
 }
 
 message UpdateResourceResponse {
