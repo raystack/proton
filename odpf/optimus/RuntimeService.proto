@@ -14,10 +14,10 @@ option java_outer_classname = "RuntimeServiceManager";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-      version: "0.1";
+        version: "0.1";
     };
     external_docs: {
-      description: "Optimus server";
+        description: "Optimus server";
     }
     schemes: HTTP;
 };
@@ -37,8 +37,30 @@ service RuntimeService {
     // of deployments. Message containing ack are status events other are progress
     // events
     rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
-    
-    // ListJobSpecification returns list of jobs created in a project 
+
+    // CreateJobSpecification registers a new job for a namespace which belongs to a project
+    rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/project/{project_name}/namespace/{namespace}/job"
+            body: "*"
+        };
+    }
+
+    // ReadJobSpecification reads a provided job spec of a namespace
+    rpc ReadJobSpecification(ReadJobSpecificationRequest) returns (ReadJobSpecificationResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
+        };
+    }
+
+    // DeleteJobSpecification deletes a job spec of a namespace
+    rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
+        option (google.api.http) = {
+            delete: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
+        };
+    }
+
+    // ListJobSpecification returns list of jobs created in a project
     rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
         option (google.api.http) = {
             get: "/api/v1/project/{project_name}/job"
@@ -68,6 +90,13 @@ service RuntimeService {
             body: "*"
         };
     }
+    // RegisterProjectNamespace creates a new namespace for a project
+    rpc RegisterProjectNamespace(RegisterProjectNamespaceRequest) returns (RegisterProjectNamespaceResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/project/{project_name}/namespace"
+            body: "*"
+        };
+    }
     // RegisterSecret creates a new secret of a project
     rpc RegisterSecret(RegisterSecretRequest) returns (RegisterSecretResponse) {
         option (google.api.http) = {
@@ -79,6 +108,13 @@ service RuntimeService {
     rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/project"
+        };
+    }
+
+    // ListProjectNamespaces returns list of namespaces of a project
+    rpc ListProjectNamespaces(ListProjectNamespacesRequest) returns (ListProjectNamespacesResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/project/{project_name}/namespace"
         };
     }
 
@@ -108,25 +144,25 @@ service RuntimeService {
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
         };
     }
 
     // Datastore CRUD
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            post: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
     rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource/{resource_name}"
+            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}"
         };
     }
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
-            put: "/api/v1/project/{project_name}/datastore/{datastore_name}/resource"
+            put: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
@@ -138,6 +174,11 @@ service RuntimeService {
 // models
 
 message ProjectSpecification {
+    string name = 1;
+    map<string, string> config = 2;
+}
+
+message NamespaceSpecification {
     string name = 1;
     map<string, string> config = 2;
 }
@@ -238,6 +279,8 @@ message DeployJobSpecificationRequest {
 
     // TODO: not implemented yet, default behaviour is to treat this true always till then
     // bool synchronize = 3; // deletes job that are not sent as part of this deployment
+
+    string namespace = 4;
 }
 
 message DeployJobSpecificationResponse {
@@ -253,6 +296,7 @@ message DeployJobSpecificationResponse {
 
 message ListJobSpecificationRequest {
     string project_name = 1;
+    string namespace = 2;
 }
 
 message ListJobSpecificationResponse{
@@ -262,6 +306,7 @@ message ListJobSpecificationResponse{
 message DumpJobSpecificationRequest {
     string project_name = 1;
     string job_name = 2;
+    string namespace = 3;
 }
 
 message DumpJobSpecificationResponse {
@@ -272,6 +317,7 @@ message DumpJobSpecificationResponse {
 message CheckJobSpecificationRequest {
     string project_name = 1;
     JobSpecification job = 2;
+    string namespace = 3;
 }
 
 message CheckJobSpecificationResponse {
@@ -281,6 +327,7 @@ message CheckJobSpecificationResponse {
 message CheckJobSpecificationsRequest {
     string project_name = 1;
     repeated JobSpecification jobs = 2;
+    string namespace = 3;
 }
 
 message CheckJobSpecificationsResponse {
@@ -296,9 +343,52 @@ message CheckJobSpecificationsResponse {
 
 message RegisterProjectRequest {
     ProjectSpecification project = 1;
+    NamespaceSpecification namespace = 2;
 }
 
 message RegisterProjectResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message RegisterProjectNamespaceRequest {
+    string project_name = 1;
+    NamespaceSpecification namespace = 2;
+}
+
+message RegisterProjectNamespaceResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message CreateJobSpecificationRequest {
+    string project_name = 1;
+    string namespace = 2;
+    JobSpecification spec = 3;
+}
+
+message CreateJobSpecificationResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ReadJobSpecificationRequest {
+    string project_name = 1;
+    string namespace = 2;
+    string job_name = 3;
+}
+
+message ReadJobSpecificationResponse {
+    JobSpecification spec = 1;
+}
+
+message DeleteJobSpecificationRequest {
+    string project_name = 1;
+    string namespace = 2;
+    string job_name = 3;
+}
+
+message DeleteJobSpecificationResponse {
     bool success = 1;
     string message = 2;
 }
@@ -320,6 +410,14 @@ message ListProjectsResponse {
     repeated ProjectSpecification projects = 1;
 }
 
+message ListProjectNamespacesRequest {
+    string project_name = 1;
+}
+
+message ListProjectNamespacesResponse {
+    repeated NamespaceSpecification namespaces = 1;
+}
+
 message RegisterInstanceRequest {
     string project_name = 1;
     string job_name = 2;
@@ -331,11 +429,13 @@ message RegisterInstanceResponse {
     ProjectSpecification project = 1;
     JobSpecification job = 2;
     InstanceSpec instance = 3;
+    NamespaceSpecification namespace = 4;
 }
 
 message JobStatusRequest {
     string project_name = 1;
     string job_name = 2;
+    string namespace = 3;
 }
 
 message JobStatusResponse {
@@ -358,6 +458,7 @@ message DeployResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
     repeated ResourceSpecification resources = 3;
+    string namespace = 4;
 }
 
 message DeployResourceSpecificationResponse {
@@ -375,6 +476,7 @@ message DeployResourceSpecificationResponse {
 message ListResourceSpecificationRequest {
     string project_name = 1;
     string datastore_name = 2;
+    string namespace = 3;
 }
 
 message ListResourceSpecificationResponse {
@@ -385,6 +487,7 @@ message CreateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
+    string namespace = 4;
 }
 
 message CreateResourceResponse {
@@ -396,6 +499,7 @@ message ReadResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     string resource_name = 3;
+    string namespace = 4;
 }
 
 message ReadResourceResponse {
@@ -408,6 +512,7 @@ message UpdateResourceRequest {
     string project_name = 1;
     string datastore_name = 2;
     ResourceSpecification resource = 3;
+    string namespace = 4;
 }
 
 message UpdateResourceResponse {
