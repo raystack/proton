@@ -119,7 +119,8 @@ service RuntimeService {
         };
     }
 
-    // RegisterInstance is an internal admin command used during task execution
+    // RegisterInstance is an internal admin command used during task/hook execution
+    // to pull task/hook compiled configuration and assets.
     rpc RegisterInstance(RegisterInstanceRequest) returns (RegisterInstanceResponse) {
         option (google.api.http) = {
             post: "/api/v1/project/{project_name}/job/{job_name}/instance"
@@ -171,8 +172,6 @@ service RuntimeService {
     //rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
 }
-
-// models
 
 message ProjectSpecification {
     string name = 1;
@@ -284,7 +283,7 @@ message ResourceSpecification {
     map<string, string> labels = 7;
 }
 
-// rpc req/res
+//~~~ rpc req/res
 
 message VersionRequest {
     string client = 1;

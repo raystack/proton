@@ -10,6 +10,7 @@ import "odpf/optimus/runtime_service.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
+// TaskPlugin must be implemented on a GRPC server for plugins
 service TaskPlugin {
     // GetTaskSchema provides basic working details for this task
     rpc GetTaskSchema(GetTaskSchema.Request) returns (GetTaskSchema.Response);
@@ -20,11 +21,15 @@ service TaskPlugin {
     rpc ValidateTaskQuestion(ValidateTaskQuestion.Request) returns (ValidateTaskQuestion.Response);
 
 
-    // DefaultTaskConfig will be passed down to execution unit as env vars
-    // they will be generated based on results of AskQuestions
-    // if DryRun is true in UnitOptions, should not throw error for missing inputs
+    // DefaultTaskConfig are a set of configuration which will be embedded in job
+    // specification. These configs can be requested by the docker container before
+    // execution
+    // they will be generated based on results of GetTaskQuestions
+    // if DryRun is true in PluginOptions, should not throw error for missing inputs
     rpc DefaultTaskConfig(DefaultTaskConfig.Request) returns (DefaultTaskConfig.Response);
-    // DefaultTaskAssets will be passed down to execution unit as files
+    // DefaultTaskAssets are a set of files which will be embedded in job
+    // specification in assets folder. These configs can be requested by the
+    // docker container before execution.
     // if DryRun is true in PluginOptions, should not throw error for missing inputs
     rpc DefaultTaskAssets(DefaultTaskAssets.Request) returns (DefaultTaskAssets.Response);
     // CompileTaskAssets overrides the default asset compilation behaviour

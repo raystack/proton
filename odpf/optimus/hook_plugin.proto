@@ -8,6 +8,7 @@ option java_outer_classname = "HookPluginManager";
 
 import "odpf/optimus/task_plugin.proto";
 
+// HookPlugin must be implemented on a GRPC server for plugins
 service HookPlugin {
     // GetHookSchema provides basic working details for this hook
     rpc GetHookSchema(GetHookSchema.Request) returns (GetHookSchema.Response);
@@ -18,11 +19,16 @@ service HookPlugin {
     rpc ValidateHookQuestion(ValidateHookQuestion.Request) returns (ValidateHookQuestion.Response);
 
 
-    // DefaultHookConfig will be passed down to execution unit as env vars
-    // they will be generated based on results of AskQuestions
+    // DefaultHookConfig are a set of configuration which will be embedded in job
+    // specification. These configs can be requested by the docker container before
+    // execution
+    // It will be generated based on results of GetHookQuestions, it also inherit
+    // its parent task config
     // if DryRun is true in PluginOptions, should not throw error for missing inputs
     rpc DefaultHookConfig(DefaultHookConfig.Request) returns (DefaultHookConfig.Response);
-    // DefaultHookAssets will be passed down to execution unit as files
+    // DefaultHookAssets are a set of files which will be embedded in job
+    // specification in assets folder. These configs can be requested by the
+    // docker container before execution.
     // if DryRun is true in PluginOptions, should not throw error for missing inputs
     rpc DefaultHookAssets(DefaultHookAssets.Request) returns (DefaultHookAssets.Response);
 }
