@@ -15,27 +15,27 @@ service TaskPlugin {
     rpc GetTaskSchema(GetTaskSchema.Request) returns (GetTaskSchema.Response);
 
     // GetTaskQuestions list down all the cli inputs required to generate spec files
-	// name used for question will be directly mapped to DefaultTaskConfig() parameters
+    // name used for question will be directly mapped to DefaultTaskConfig() parameters
     rpc GetTaskQuestions(GetTaskQuestions.Request) returns (GetTaskQuestions.Response);
     rpc ValidateTaskQuestion(ValidateTaskQuestion.Request) returns (ValidateTaskQuestion.Response);
 
 
     // DefaultTaskConfig will be passed down to execution unit as env vars
-	// they will be generated based on results of AskQuestions
-	// if DryRun is true in UnitOptions, should not throw error for missing inputs
+    // they will be generated based on results of AskQuestions
+    // if DryRun is true in UnitOptions, should not throw error for missing inputs
     rpc DefaultTaskConfig(DefaultTaskConfig.Request) returns (DefaultTaskConfig.Response);
     // DefaultTaskAssets will be passed down to execution unit as files
-	// if DryRun is true in PluginOptions, should not throw error for missing inputs
+    // if DryRun is true in PluginOptions, should not throw error for missing inputs
     rpc DefaultTaskAssets(DefaultTaskAssets.Request) returns (DefaultTaskAssets.Response);
     // CompileTaskAssets overrides the default asset compilation behaviour
     rpc CompileTaskAssets(CompileTaskAssets.Request) returns (CompileTaskAssets.Response);
 
     // GenerateTaskDestination derive destination from config and assets
-	rpc GenerateTaskDestination(GenerateTaskDestination.Request) returns (GenerateTaskDestination.Response);
+    rpc GenerateTaskDestination(GenerateTaskDestination.Request) returns (GenerateTaskDestination.Response);
 
-	// GenerateTaskDependencies returns names of job destination on which this unit
-	// is dependent on
-	rpc GenerateTaskDependencies(GenerateTaskDependencies.Request) returns (GenerateTaskDependencies.Response);
+    // GenerateTaskDependencies returns names of job destination on which this unit
+    // is dependent on
+    rpc GenerateTaskDependencies(GenerateTaskDependencies.Request) returns (GenerateTaskDependencies.Response);
 }
 
 message PluginOptions {
