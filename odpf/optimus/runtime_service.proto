@@ -168,10 +168,9 @@ service RuntimeService {
             body: "*"
         };
     }
-    // Replay replays the given job between start_date and end_date
-    rpc Replay(ReplayRequest) returns (ReplayResponse) {
+    rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job/{job_name}/replay"
+            get: "/api/v1/project/{project_name}/job/{job_name}/replayDryRun"
         };
     }
     // TODO(kush.sharma): disabled ATM
@@ -551,22 +550,21 @@ message UpdateResourceResponse {
     string message = 2;
 }
 
-message ReplayRequest {
+message ReplayDryRunRequest {
     string project_name = 1;
     string job_name = 2;
     string namespace = 3;
-    bool dry_run = 4;
-    string start_date = 5;
-    string end_date = 6;
+    string start_date = 4;
+    string end_date = 5;
 }
 
-message ReplayResponse {
+message ReplayDryRunResponse {
     bool success = 1;
-    ReplayResponseNode response = 2;
+    ReplayExecutionTreeNode response = 2;
 }
 
-message ReplayResponseNode {
+message ReplayExecutionTreeNode {
     string jobName = 1;
-    repeated ReplayResponseNode dependents = 2;
+    repeated ReplayExecutionTreeNode dependents = 2;
     repeated google.protobuf.Timestamp runs = 3;
 }
