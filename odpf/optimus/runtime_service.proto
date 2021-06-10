@@ -568,5 +568,5 @@ message ReplayResponse {
 message ReplayResponseNode {
     string jobName = 1;
     repeated ReplayResponseNode dependents = 2;
-    repeated string runs = 3;
+    repeated google.protobuf.Timestamp runs = 3;
 }
