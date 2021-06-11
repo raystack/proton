@@ -170,7 +170,7 @@ service RuntimeService {
     }
     rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job/{job_name}/replayDryRun"
+            get: "/api/v1/project/{project_name}/job/{job_name}/replay-dry-run"
         };
     }
     // TODO(kush.sharma): disabled ATM
@@ -564,7 +564,7 @@ message ReplayDryRunResponse {
 }
 
 message ReplayExecutionTreeNode {
-    string jobName = 1;
+    string job_name = 1;
     repeated ReplayExecutionTreeNode dependents = 2;
     repeated google.protobuf.Timestamp runs = 3;
 }
