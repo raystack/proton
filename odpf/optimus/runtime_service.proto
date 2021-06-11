@@ -5,6 +5,7 @@ import "odpf/third_party/googleapis/google/api/annotations.proto";
 import "odpf/third_party/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/duration.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -225,6 +226,18 @@ message JobSpecification {
 
     string description = 17; // optional
     map<string, string> labels = 18;
+
+    message Behavior {
+
+        // retry behaviour if job failed to execute for the first time
+        message Retry {
+            int32 count = 1;
+            google.protobuf.Duration delay = 2;
+            bool exponential_backoff = 3;
+        }
+        Retry retry = 1;
+    }
+    Behavior behavior = 19;
 }
 
 message JobConfigItem {
