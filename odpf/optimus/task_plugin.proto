@@ -61,14 +61,19 @@ message GetTaskSchema {
 }
 
 message PluginQuestion {
+    reserved 6, 7;
+
     string name = 1;
     string prompt = 2;
     string help = 3;
     string default = 4;
     repeated string multiselect = 5;
 
-    string sub_questions_if_value = 6;
-    repeated PluginQuestion sub_questions = 7;
+    message SubQuestion {
+        string if_value = 1;
+        repeated PluginQuestion questions = 2;
+    }
+    repeated SubQuestion sub_questions = 8;
 }
 
 message PluginAnswer {
