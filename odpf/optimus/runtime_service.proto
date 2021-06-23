@@ -85,7 +85,7 @@ service RuntimeService {
     // CheckJobSpecifications checks if the job specifications are valid
     rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
 
-    // RegisterProject creates a new project
+    // RegisterProject creates a new optimus project
     rpc RegisterProject(RegisterProjectRequest) returns (RegisterProjectResponse) {
         option (google.api.http) = {
             post: "/api/v1/project"
@@ -314,10 +314,6 @@ message VersionResponse {
 message DeployJobSpecificationRequest {
     string project_name = 1; // unique project identifier
     repeated JobSpecification jobs = 2;
-
-    // TODO: not implemented yet, default behaviour is to treat this true always till then
-    // bool synchronize = 3; // deletes job that are not sent as part of this deployment
-
     string namespace = 4;
 }
 
