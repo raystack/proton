@@ -83,6 +83,7 @@ message PluginAnswer {
 
 message GetTaskQuestions {
     message Request {
+        string job_name = 1;
         PluginOptions options = 40;
     }
     message Response {
