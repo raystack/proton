@@ -570,6 +570,7 @@ message ReplayRequest {
     string namespace = 3;
     string start_date = 4;
     string end_date = 5;
+    bool force = 6;
 }
 
 message ReplayDryRunResponse {
