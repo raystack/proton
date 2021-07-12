@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/odpf/proton/guardian/go_package";
 option java_multiple_files = true;
 option java_package = "io.odpf.proton.guardian";
-option java_outer_classname = "Guardian";
+option java_outer_classname = "ServiceManager";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
