@@ -6,7 +6,7 @@ import "odpf/third_party/grpc-gateway/protoc-gen-openapiv2/options/annotations.p
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/odpf/proton/guardian/go_package";
+option go_package = "github.com/odpf/proton/guardian";
 option java_multiple_files = true;
 option java_package = "io.odpf.proton.guardian";
 option java_outer_classname = "ServiceManager";
