@@ -134,6 +134,13 @@ service RuntimeService {
             get: "/api/v1/project/{project_name}/job/{job_name}/status"
         };
     }
+    // RegisterJobEvent notifies optimus service about an event related to job
+    rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}/event"
+            body: "*"
+        };
+    }
     // GetWindow provides the start and end dates provided a scheduled date
     // of the execution window
     rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
@@ -143,6 +150,7 @@ service RuntimeService {
     }
 
     // DeployResourceSpecification migrate all resource specifications of a datastore in project
+    // State of the world request
     rpc DeployResourceSpecification(DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
@@ -241,6 +249,14 @@ message JobSpecification {
             bool exponential_backoff = 3;
         }
         Retry retry = 1;
+
+        // Notifiers are used to set custom alerting in case of job failure/sla_miss
+        message Notifiers {
+            JobEvent.Type on = 1;
+            repeated string channels = 2;
+            map<string, string> config = 3;
+        }
+        repeated Notifiers notify = 2;
     }
     Behavior behavior = 19;
 }
@@ -291,6 +307,17 @@ message InstanceContext {
 message JobStatus {
     string state = 1;
     google.protobuf.Timestamp scheduled_at = 2;
+}
+
+message JobEvent {
+    enum Type {
+        INVALID = 0;
+        SLA_MISS = 1;
+        FAILURE = 2;
+        SUCCESS = 3;
+    }
+    Type type = 1;
+    google.protobuf.Struct value = 2;
 }
 
 // ResourceSpecification are datastore specification representation of a resource
@@ -477,9 +504,10 @@ message RegisterInstanceResponse {
 }
 
 message JobStatusRequest {
+    reserved 3;
+
     string project_name = 1;
     string job_name = 2;
-    string namespace = 3;
 }
 
 message JobStatusResponse {
@@ -587,3 +615,13 @@ message ReplayExecutionTreeNode {
 message ReplayResponse {
     string id = 1;
 }
+
+message RegisterJobEventRequest {
+    string project_name = 1;
+    string job_name = 2;
+    string namespace = 3;
+
+    JobEvent event = 4;
+}
+
+message RegisterJobEventResponse {}
