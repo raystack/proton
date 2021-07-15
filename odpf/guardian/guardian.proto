@@ -114,7 +114,7 @@ service Guardian {
         };
     }
 
-    rpc MakeAction(MakeActionRequest) returns (MakeActionResponse) {
+    rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
         option (google.api.http) = {
             post: "/appeals/{id}/approvals/{approval_name}"
             body: "*"
@@ -234,7 +234,7 @@ message ListApprovalsResponse {
     repeated Approval approvals = 1;
 }
 
-message MakeActionRequest {
+message UpdateApprovalRequest {
     uint32 id = 1;
     string approval_name = 2;
 
@@ -244,7 +244,7 @@ message MakeActionRequest {
     Action action = 3;
 }
 
-message MakeActionResponse {
+message UpdateApprovalResponse {
     Appeal appeal = 1;
 }
 
