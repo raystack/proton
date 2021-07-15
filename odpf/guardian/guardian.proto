@@ -257,7 +257,7 @@ message Provider {
     message ProviderConfig {
         string type = 1;
         string urn = 2;
-        google.protobuf.Struct labels = 3;
+        map<string, string> labels = 3;
         google.protobuf.Value credentials = 4;
 
         message AppealConfig {
@@ -317,7 +317,7 @@ message Policy {
     }
     repeated ApprovalStep steps = 4;
 
-    google.protobuf.Struct labels = 5;
+    map<string, string> labels = 5;
     google.protobuf.Timestamp created_at = 6;
     google.protobuf.Timestamp updated_at = 7;
 }
@@ -337,7 +337,7 @@ message Appeal {
     }
     AppealOptions options = 8;  // optional
 
-    google.protobuf.Struct labels = 9;
+    map<string, string> labels = 9;
     Resource resource = 10;  // optional
     repeated Approval approvals = 11;
 
@@ -369,7 +369,7 @@ message Resource {
     string urn = 5;
     string name = 6;
     google.protobuf.Struct details = 7;
-    google.protobuf.Struct labels = 8;
+    map<string, string> labels = 8;
     google.protobuf.Timestamp created_at = 9;
     google.protobuf.Timestamp updated_at = 10;
 }
