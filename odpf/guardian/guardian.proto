@@ -248,6 +248,7 @@ message MakeActionResponse {
     Appeal appeal = 1;
 }
 
+// Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles 
 message Provider {
     uint32 id = 1;
     string type = 2;
@@ -290,6 +291,7 @@ message Provider {
     google.protobuf.Timestamp updated_at = 6;
 }
 
+// Policy is a configurable steps for appeal's approval
 message Policy {
     string id = 1;
     uint32 version = 2;
@@ -320,6 +322,7 @@ message Policy {
     google.protobuf.Timestamp updated_at = 7;
 }
 
+// Appeal is created by user to get access to one or more resources
 message Appeal {
     uint32 id = 1;
     uint32 resource_id = 2;
@@ -342,6 +345,7 @@ message Appeal {
     google.protobuf.Timestamp updated_at = 13;
 }
 
+// Approval is an approval item that generated in an appeal based on the selected policy
 message Approval {
     uint32 id = 1;
     string name = 2;
@@ -356,6 +360,7 @@ message Approval {
     google.protobuf.Timestamp updated_at = 11;
 }
 
+// Resource contains information of resource from providers
 message Resource {
     uint32 id = 1;
     string provider_type = 2;
