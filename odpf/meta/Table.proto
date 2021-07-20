@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package odpf.meta;
+
+option java_package = "io.odpf.proton.meta";
+option java_outer_classname = "Table";
+option go_package = "github.com/odpf/proton/meta";
+
+import "odpf/meta/facets/Columns.proto";
+import "odpf/meta/facets/Ownership.proto";
+import "odpf/meta/facets/Lineage.proto";
+import "odpf/meta/facets/Tags.proto";
+import "odpf/meta/facets/Custom.proto";
+import "odpf/meta/common/Timestamp.proto";
+import "odpf/meta/common/Event.proto";
+
+message TableKey {
+  string urn = 1;
+}
+
+message Table {
+  string urn = 1;
+  string name = 2;
+  string source = 3;
+  string description = 4;
+  TableProfile profile = 5;
+  odpf.meta.facets.Columns schema = 6;
+  odpf.meta.facets.Ownership ownership = 7;
+  odpf.meta.facets.Lineage lineage = 8;
+  odpf.meta.facets.Tags tags = 21;
+  odpf.meta.facets.Custom custom = 22;
+  odpf.meta.common.Timestamp timestamps = 23;
+  odpf.meta.common.Event event = 100;
+}
+
+message TableProfile {
+  int64 total_rows = 1;
+  string partition_key = 2;
+  string partition_value = 3;
+}

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package odpf.meta;
+
+option java_package = "io.odpf.proton.meta";
+option java_outer_classname = "User";
+option go_package = "github.com/odpf/proton/meta";
+
+import "odpf/meta/facets/Tags.proto";
+import "odpf/meta/facets/Custom.proto";
+import "odpf/meta/common/Timestamp.proto";
+import "odpf/meta/common/Event.proto";
+
+message UserKey {
+  string urn = 1;
+}
+
+message User {
+  string urn = 1;
+  string source = 2;
+  string email = 3;
+  string username = 4;
+  string first_name = 5;
+  string last_name = 6;
+  string full_name = 7;
+  string display_name = 8;
+  string title = 9;
+  bool is_active = 10;
+  string manager_email = 11;
+  repeated Profile profiles = 12;
+  repeated Membership memberships = 20;
+  odpf.meta.facets.Tags tags = 21;
+  odpf.meta.facets.Custom custom = 22;
+  odpf.meta.common.Timestamp timestamps = 23;
+  odpf.meta.common.Event event = 100;
+}
+
+message Membership {
+  string group_urn = 1;
+  repeated string role = 2;
+}
+
+message Profile {
+  string id = 1;
+  string platform = 2;
+  string url = 3;
+}
+

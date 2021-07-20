@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package odpf.meta.common;
+
+option java_package = "io.odpf.proton.meta.common";
+option java_outer_classname = "Timestamp";
+option go_package = "github.com/odpf/proton/meta/common";
+
+import "google/protobuf/timestamp.proto";
+
+message Timestamp {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+}

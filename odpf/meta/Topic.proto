@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package odpf.meta;
+
+option java_package = "io.odpf.proton.meta";
+option java_outer_classname = "Topic";
+option go_package = "github.com/odpf/proton/meta";
+
+import "odpf/meta/facets/TopicSchema.proto";
+import "odpf/meta/facets/Ownership.proto";
+import "odpf/meta/facets/Lineage.proto";
+import "odpf/meta/facets/Tags.proto";
+import "odpf/meta/facets/Custom.proto";
+import "odpf/meta/common/Timestamp.proto";
+import "odpf/meta/common/Event.proto";
+
+message TopicKey {
+  string urn = 1;
+}
+
+message Topic {
+  string urn = 1;
+  string name = 2;
+  string source = 3;
+  string description = 4;
+  TopicProfile profile = 5;
+  odpf.meta.facets.TopicSchema schema = 6;
+  odpf.meta.facets.Ownership ownership = 7;
+  odpf.meta.facets.Lineage lineage = 8;
+  odpf.meta.facets.Tags tags = 21;
+  odpf.meta.facets.Custom custom = 22;
+  odpf.meta.common.Timestamp timestamps = 23;
+  odpf.meta.common.Event event = 100;
+}
+
+message TopicProfile {
+  int64 throughput = 1;
+  int64 number_of_partitions = 2;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package odpf.meta.facets;
+
+option java_package = "io.odpf.proton.meta.facets";
+option java_outer_classname = "Custom";
+option go_package = "github.com/odpf/proton/meta/facets";
+
+message Custom {
+  map<string,string> custom_properties = 1;
+}

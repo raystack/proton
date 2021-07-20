@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package odpf.meta.facets;
+
+option java_package = "io.odpf.proton.meta.facets";
+option java_outer_classname = "TopicSchema";
+option go_package = "github.com/odpf/proton/meta/facets";
+
+message TopicSchema {
+  string schema_url = 1;
+  string format = 2;
+}
