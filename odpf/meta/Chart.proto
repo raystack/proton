@@ -24,9 +24,10 @@ message Chart {
   string source = 4;
   string description = 5;
   string url = 6;
-  string raw_query = 7;
-  string dashboard_urn = 8;
-  string dashboard_source = 9;
+  string data_source = 7;
+  string raw_query = 8;
+  string dashboard_urn = 9;
+  string dashboard_source = 10;
   odpf.meta.facets.Ownership ownership = 21;
   odpf.meta.facets.Lineage lineage = 22;
   odpf.meta.facets.Tags tags = 23;
