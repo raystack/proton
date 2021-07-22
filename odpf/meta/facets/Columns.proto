@@ -6,6 +6,8 @@ option java_package = "io.odpf.proton.meta.facets";
 option java_outer_classname = "Columns";
 option go_package = "github.com/odpf/proton/meta/facets";
 
+import "odpf/meta/facets/Custom.proto";
+
 message Columns {
   repeated Column columns = 1;
 }
@@ -16,4 +18,16 @@ message Column {
   string data_type = 3;
   bool is_nullable = 4;
   int64 length = 5;
+  ColumnProfile profile = 6;
+  odpf.meta.facets.Custom custom = 22;
+}
+
+message ColumnProfile {
+  string min = 1;
+  string max = 2;
+  float avg = 3;
+  float med = 4;
+  int64 unique = 5;
+  int64 count = 6;
+  string top = 7;
 }
