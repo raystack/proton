@@ -1,0 +1,67 @@
+syntax = "proto3";
+package odpf.optimus.plugins;
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus.plugins";
+option java_outer_classname = "BasePluginProto";
+
+
+// Base must be implemented by all plugins
+service Base {
+    // PluginInfo provides basic details for this plugin
+    rpc PluginInfo(PluginInfoRequest) returns (PluginInfoResponse);
+}
+
+// PluginType enumerates the type of plugins Optimus supports
+enum PluginType {
+    PluginType_UNKNOWN = 0;
+    PluginType_TASK = 1;
+    PluginType_HOOK = 2;
+}
+
+// PluginMod enumerates the type of mods this plugin supports
+enum PluginMod {
+    PluginMod_UNKNOWN = 0;
+    PluginMod_CLI = 1;
+    PluginMod_DEPENDENCYRESOLVER = 2;
+}
+
+// HookType enumerates the type of hook Optimus supports
+enum HookType {
+    HookType_UNKNOWN = 0;
+    HookType_PRE = 1;
+    HookType_POST = 2;
+    HookType_FAIL = 3;
+}
+
+message PluginInfoRequest {}
+message PluginInfoResponse {
+    string name = 1;
+    string description = 2;
+    PluginType plugin_type = 3;
+    repeated PluginMod plugin_mods = 4;
+
+    // plugin_version is the semver version of this individual plugin
+    string plugin_version = 5;
+    // api_versions indicates the versions of the Optimus Plugin API
+    // this plugin supports
+    repeated string api_version = 6;
+    
+    // docker image including version if this executes a docker image
+    string image = 10;
+
+    // HOOK specific
+    // name of hooks on which this should depend on before executing
+    repeated string depends_on = 20;
+    HookType hook_type = 21;
+
+    // Experimental
+    // will be mounted inside the container as volume
+    string secret_path = 30;
+}
+
+
+message PluginOptions {
+    bool dry_run = 1;
+}
