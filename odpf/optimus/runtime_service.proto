@@ -28,7 +28,7 @@ service RuntimeService {
     // server ping with version
     rpc Version(VersionRequest) returns (VersionResponse) {
         option (google.api.http) = {
-            post: "/api/v1/version"
+            post: "/v1/version"
             body: "*"
         };
     }
@@ -43,7 +43,7 @@ service RuntimeService {
     // CreateJobSpecification registers a new job for a namespace which belongs to a project
     rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/namespace/{namespace}/job"
+            post: "/v1/project/{project_name}/namespace/{namespace}/job"
             body: "*"
         };
     }
@@ -51,21 +51,21 @@ service RuntimeService {
     // ReadJobSpecification reads a provided job spec of a namespace
     rpc ReadJobSpecification(ReadJobSpecificationRequest) returns (ReadJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
+            get: "/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
         };
     }
 
     // DeleteJobSpecification deletes a job spec of a namespace
     rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
         option (google.api.http) = {
-            delete: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
+            delete: "/v1/project/{project_name}/namespace/{namespace}/job/{job_name}"
         };
     }
 
     // ListJobSpecification returns list of jobs created in a project
     rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job"
+            get: "/v1/project/{project_name}/job"
         };
     }
 
@@ -73,13 +73,13 @@ service RuntimeService {
     // consumable form
     rpc DumpJobSpecification(DumpJobSpecificationRequest) returns (DumpJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job/{job_name}/dump"
+            get: "/v1/project/{project_name}/job/{job_name}/dump"
         };
     }
     // CheckJobSpecification checks if a job specification is valid
     rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/job/check"
+            post: "/v1/project/{project_name}/job/check"
         };
     }
     // CheckJobSpecifications checks if the job specifications are valid
@@ -88,35 +88,35 @@ service RuntimeService {
     // RegisterProject creates a new optimus project
     rpc RegisterProject(RegisterProjectRequest) returns (RegisterProjectResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project"
+            post: "/v1/project"
             body: "*"
         };
     }
     // RegisterProjectNamespace creates a new namespace for a project
     rpc RegisterProjectNamespace(RegisterProjectNamespaceRequest) returns (RegisterProjectNamespaceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/namespace"
+            post: "/v1/project/{project_name}/namespace"
             body: "*"
         };
     }
     // RegisterSecret creates a new secret of a project
     rpc RegisterSecret(RegisterSecretRequest) returns (RegisterSecretResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/secret/{secret_name}"
+            post: "/v1/project/{project_name}/secret/{secret_name}"
             body: "*"
         };
     }
     // ListProjects returns list of registered projects and configurations
     rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project"
+            get: "/v1/project"
         };
     }
 
     // ListProjectNamespaces returns list of namespaces of a project
     rpc ListProjectNamespaces(ListProjectNamespacesRequest) returns (ListProjectNamespacesResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/namespace"
+            get: "/v1/project/{project_name}/namespace"
         };
     }
 
@@ -124,20 +124,20 @@ service RuntimeService {
     // to pull task/hook compiled configuration and assets.
     rpc RegisterInstance(RegisterInstanceRequest) returns (RegisterInstanceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/job/{job_name}/instance"
+            post: "/v1/project/{project_name}/job/{job_name}/instance"
             body: "*"
         };
     }
     // JobStatus returns the current and past run status of jobs
     rpc JobStatus(JobStatusRequest) returns (JobStatusResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job/{job_name}/status"
+            get: "/v1/project/{project_name}/job/{job_name}/status"
         };
     }
     // RegisterJobEvent notifies optimus service about an event related to job
     rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/namespace/{namespace}/job/{job_name}/event"
+            post: "/v1/project/{project_name}/namespace/{namespace}/job/{job_name}/event"
             body: "*"
         };
     }
@@ -145,7 +145,7 @@ service RuntimeService {
     // of the execution window
     rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
         option (google.api.http) = {
-            get: "/api/v1/window"
+            get: "/v1/window"
         };
     }
 
@@ -155,36 +155,36 @@ service RuntimeService {
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
+            get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
         };
     }
 
     // Datastore CRUD
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
+            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
     rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}"
+            get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}"
         };
     }
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
-            put: "/api/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
+            put: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
     rpc ReplayDryRun(ReplayRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
-            get: "/api/v1/project/{project_name}/job/{job_name}/replay-dry-run"
+            get: "/v1/project/{project_name}/job/{job_name}/replay-dry-run"
         };
     }
     rpc Replay(ReplayRequest) returns (ReplayResponse) {
         option (google.api.http) = {
-            post: "/api/v1/project/{project_name}/job/{job_name}/replay"
+            post: "/v1/project/{project_name}/job/{job_name}/replay"
         };
     }
     // TODO(kush.sharma): disabled ATM
@@ -278,7 +278,7 @@ message InstanceSpec {
     string job_name = 4;
 
     enum Type {
-        INVALID = 0;
+        UNKNOWN = 0;
         TASK = 1;
         HOOK = 2;
     }
@@ -292,7 +292,7 @@ message InstanceSpecData {
 
     // type of data, could be an env var or file
     enum Type {
-        INVALID = 0;
+        UNKNOWN = 0;
         ENV = 1;
         FILE = 2;
     }
@@ -311,13 +311,19 @@ message JobStatus {
 
 message JobEvent {
     enum Type {
-        INVALID = 0;
+        UNKNOWN = 0;
         SLA_MISS = 1;
         FAILURE = 2;
         SUCCESS = 3;
     }
     Type type = 1;
     google.protobuf.Struct value = 2;
+}
+
+message TaskWindow {
+    google.protobuf.Duration size = 1;
+    google.protobuf.Duration offset = 2;
+    string truncate_to = 3;
 }
 
 // ResourceSpecification are datastore specification representation of a resource

@@ -1,0 +1,45 @@
+syntax = "proto3";
+package odpf.optimus.plugins;
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus.plugins";
+option java_outer_classname = "DependencyResolverModProto";
+
+import "odpf/optimus/plugins/cli.proto";
+import "odpf/optimus/plugins/base.proto";
+import "odpf/optimus/runtime_service.proto";
+
+// DependencyResolverMod must be implemented by all plugins want to support automatic
+// dependency resolution
+service DependencyResolverMod {
+    // GenerateDestination derive destination from config and assets
+    rpc GenerateDestination(GenerateDestinationRequest) returns (GenerateDestinationResponse);
+
+    // GenerateDependencies return names of job destination on which this unit
+    // is dependent on
+    rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
+}
+
+message GenerateDestinationRequest {
+    Configs config = 1;
+    Assets assets = 2;
+    odpf.optimus.ProjectSpecification project = 3;
+
+    PluginOptions options = 40;
+}
+message GenerateDestinationResponse {
+    string destination = 1;
+    string destination_type = 2;
+}
+
+message GenerateDependenciesRequest {
+    Configs config = 1;
+    Assets assets = 2;
+    odpf.optimus.ProjectSpecification project = 3;
+
+    PluginOptions options = 40;
+}
+message GenerateDependenciesResponse {
+    repeated string dependencies = 1;
+}
