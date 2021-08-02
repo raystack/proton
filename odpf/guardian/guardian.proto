@@ -283,7 +283,7 @@ message Provider {
             }
             repeated RoleConfig roles = 3;
         }
-        ResourceConfig resources = 6;
+        repeated ResourceConfig resources = 6;
     }
     ProviderConfig config = 4;
 
