@@ -129,7 +129,7 @@ message ListProvidersResponse {
 }
 
 message CreateProviderRequest {
-    Provider provider = 1;
+    ProviderConfig config = 1;
 }
 
 message CreateProviderResponse {
@@ -138,7 +138,7 @@ message CreateProviderResponse {
 
 message UpdateProviderRequest {
     uint32 id = 1;
-    Provider provider = 2;
+    ProviderConfig config = 2;
 }
 
 message UpdateProviderResponse {
@@ -248,43 +248,44 @@ message UpdateApprovalResponse {
     Appeal appeal = 1;
 }
 
-// Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles 
+message ProviderConfig {
+    string type = 1;
+    string urn = 2;
+    map<string, string> labels = 3;
+    google.protobuf.Value credentials = 4;
+
+    message AppealConfig {
+        bool allow_permanent_access = 1;
+        string allow_active_access_extension_in = 2;
+    }
+    AppealConfig appeal = 5;
+
+    message ResourceConfig {
+        string type = 1;
+
+        message PolicyConfig {
+            string id = 1;
+            int32 version = 2;
+        }
+        PolicyConfig policy = 2;
+
+        message RoleConfig {
+            string id = 1;
+            string name = 2;
+            string description = 3;
+            repeated google.protobuf.Value permissions = 4;
+        }
+        repeated RoleConfig roles = 3;
+    }
+    repeated ResourceConfig resources = 6;
+}
+
+// Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles
 message Provider {
     uint32 id = 1;
     string type = 2;
     string urn = 3;
 
-    message ProviderConfig {
-        string type = 1;
-        string urn = 2;
-        map<string, string> labels = 3;
-        google.protobuf.Value credentials = 4;
-
-        message AppealConfig {
-            bool allow_permanent_access = 1;
-            string allow_active_access_extension_in = 2;
-        }
-        AppealConfig appeal = 5;
-
-        message ResourceConfig {
-            string type = 1;
-
-            message PolicyConfig {
-                string id = 1;
-                int32 version = 2;
-            }
-            PolicyConfig policy = 2;
-
-            message RoleConfig {
-                string id = 1;
-                string name = 2;
-                string description = 3;
-                repeated google.protobuf.Value permissions = 4;
-            }
-            repeated RoleConfig roles = 3;
-        }
-        repeated ResourceConfig resources = 6;
-    }
     ProviderConfig config = 4;
 
     google.protobuf.Timestamp created_at = 5;
