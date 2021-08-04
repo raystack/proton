@@ -70,7 +70,7 @@ service GuardianService {
         };
     }
 
-    rpc UpdateResource(UpdateResourceRequest) returns (Resource) {
+    rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
             put: "/resources/{id}"
             body: "*"
@@ -177,6 +177,10 @@ message ListResourcesResponse {
 message UpdateResourceRequest {
     uint32 id = 1;
     Resource resource = 2;
+}
+
+message UpdateResourceResponse {
+    Resource resource = 1;
 }
 
 message ListAppealsRequest {
