@@ -117,7 +117,7 @@ service GuardianService {
     rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
         option (google.api.http) = {
             post: "/appeals/{id}/approvals/{approval_name}"
-            body: "*"
+            body: "action"
         };
     }
 }
