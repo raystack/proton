@@ -33,14 +33,14 @@ service GuardianService {
     rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
         option (google.api.http) = {
             post: "/providers"
-            body: "*"
+            body: "config"
         };
     }
 
     rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
         option (google.api.http) = {
             put: "/providers/{id}"
-            body: "*"
+            body: "config"
         };
     }
 
@@ -53,14 +53,14 @@ service GuardianService {
     rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
         option (google.api.http) = {
             post: "/policies"
-            body: "*"
+            body: "policy"
         };
     }
 
     rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
         option (google.api.http) = {
             put: "/policies/{id}"
-            body: "*"
+            body: "policy"
         };
     }
 
@@ -73,7 +73,7 @@ service GuardianService {
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
             put: "/resources/{id}"
-            body: "*"
+            body: "resource"
         };
     }
 
