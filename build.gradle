@@ -3,15 +3,12 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-
 group 'io.odpf'
 version '0.2.0'
-
 
 repositories {
     maven { url "https://plugins.gradle.org/m2/" }
 }
-
 
 sourceSets {
     main {
@@ -54,11 +51,15 @@ protobuf {
     protoc {
         artifact = 'com.google.protobuf:protoc:3.10.0'
     }
-    plugins {
-
-    }
+    plugins {}
     generateProtoTasks {
-        all()*.plugins {
+        all().each { task ->
+            task.generateDescriptorSet = true
+            task.descriptorSetOptions.includeSourceInfo = true
+            task.descriptorSetOptions.includeImports = true
+            task.descriptorSetOptions.path = "$projectDir/build/descriptors/${project.version}"
+
+
             // incase required to generate for multiple languages
             // refer to gradle protobuf plugin documentation: https://github.com/google/protobuf-gradle-plugin
             // python{}
