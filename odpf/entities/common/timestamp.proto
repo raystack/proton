@@ -3,7 +3,7 @@ syntax = "proto3";
 package odpf.entities.common;
 
 option java_package = "io.odpf.entities.common";
-option java_outer_classname = "Timestamp";
+option java_outer_classname = "TimestampProto";
 option go_package = "github.com/odpf/proton/entities/common";
 
 import "google/protobuf/timestamp.proto";

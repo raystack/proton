@@ -3,7 +3,7 @@ syntax = "proto3";
 package odpf.entities.resources;
 
 option java_package = "io.odpf.entities.resources";
-option java_outer_classname = "Group";
+option java_outer_classname = "GroupProto";
 option go_package = "github.com/odpf/proton/entities/resources";
 
 
