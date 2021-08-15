@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package odpf.entities.resources;
+
+option java_package = "io.odpf.entities.resources";
+option java_outer_classname = "Table";
+option go_package = "github.com/odpf/proton/entities/resources";
+
+import "odpf/entities/facets/columns.proto";
+import "odpf/entities/facets/ownership.proto";
+import "odpf/entities/facets/lineage.proto";
+import "odpf/entities/facets/properties.proto";
+
+import "odpf/entities/common/timestamp.proto";
+import "odpf/entities/common/event.proto";
+
+// Table is a table in a database.
+// It can be a file, a table, a view, a materialized view, a temporary table, or a virtual table.
+message Table {
+  // Required. The URN of the table.
+  // For example, "my-database.my-schema.my-table".
+  string urn = 1;
+  // Required. The name of the table.
+  // For example, "my-table".
+  string name = 2;
+  // Optional. The source of the table.
+  // For example, "bigquery".
+  string source = 3;
+  // Optional. The description of the table.
+  // For example, "My User table".
+  string description = 4;
+  // Optional. The metrics about the table.
+  // For example check the profile schem.
+  TableProfile profile = 21;
+  // Optional. The columns of the table.
+  // For example, "id, name, age".
+  odpf.entities.facets.Columns schema = 22;
+  // Optional. The ownership of the topic.
+  // For an example check out ownership.
+  odpf.entities.facets.Ownership ownership = 31;
+  // Optional. The lineage of the topic.
+  // For an example check out lineage schema.
+  odpf.entities.facets.Lineage lineage = 32;
+  // Optional. List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  // Properties are defined in the properties schema.
+  odpf.entities.facets.Properties properties = 33;
+  // Optional. The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  // Timestamps are defined in the timestamp schema.
+  odpf.entities.common.Timestamp timestamps = 34;
+  // Optional. The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.entities.common.Event event = 100;
+}
+
+// TableProfile is the metrics about the table.
+message TableProfile {
+  // Optional. The number of rows in the table.
+  // For example, "100".
+  int64 total_rows = 1;
+  // Optional. The number of rows in the table that are not deleted.
+  // For example, "event_timestamp".
+  string partition_key = 2;
+  string partition_value = 3;
+}

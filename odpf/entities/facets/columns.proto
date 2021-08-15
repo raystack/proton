@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package odpf.entities.facets;
+
+option java_package = "io.odpf.entities.facets";
+option java_outer_classname = "Columns";
+option go_package = "github.com/odpf/proton/entities/facets";
+
+
+// Columns represents a list of columns.
+// It is facet used to specify the schema of a table or a file.
+message Columns {
+  // The list of columns.
+  repeated Column columns = 1;
+}
+
+// Column represents a column in a table or a file.
+message Column {
+  // Required. The name of the column.
+  // For example, "customer_id".
+  string name = 1;
+  // Optional. The description of the column.
+  // For example, "The unique id of the customer"
+  string description = 2;
+  // Required. The data type of the column.
+  // For example, "INT64".
+  string data_type = 3;
+  // Optional. The format of the column.
+  // For example, "true".
+  bool is_nullable = 4;
+  // Optional. The length of the column.
+  // For example, "10".
+  int64 length = 5;
+}
