@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package odpf.entities.resources;
+
+option java_package = "io.odpf.entities.resources";
+option java_outer_classname = "GroupProto";
+option go_package = "github.com/odpf/proton/entities/resources";
+
+
+import "odpf/entities/common/timestamp.proto";
+import "odpf/entities/common/event.proto";
+
+import "odpf/entities/facets/properties.proto";
+
+// Group represents a group of users and resources.
+message Group {
+  // Required. The unique identifier for the group.
+  // For example, "group:example".
+  string urn = 1;
+  // Optional. The name of the group.
+  // For example, "Example Group".
+  string name = 2;
+  // Optional. The email of the group.
+  // For example, "xyz@xyz.com"
+  string email = 3;
+  // Optional. Source of the group.
+  // For example, "example.com".
+  string source = 4;
+  // Required. The members of the group.
+  // For example look at schema of the member.
+  repeated Member members = 21;
+  // Optional. List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  // Properties are defined in the properties schema.
+  odpf.entities.facets.Properties properties = 31;
+  // Optional. The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  // Timestamps are defined in the timestamp schema.
+  odpf.entities.common.Timestamp timestamps = 32;
+  // Optional. The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.entities.common.Event event = 100;
+}
+
+// Member represents a user.
+message Member {
+  // Required. The unique identifier for the user.
+  // For example, "user:example".
+  string urn = 1;
+  // Optional. The role of the user.
+  // For example, "owner".
+  string role = 2;
+}

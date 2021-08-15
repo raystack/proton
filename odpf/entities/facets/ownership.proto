@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package odpf.entities.facets;
+
+option java_package = "io.odpf.entities.facets";
+option java_outer_classname = "OwnershipProto";
+option go_package = "github.com/odpf/proton/entities/facets";
+
+import "odpf/entities/common/resource.proto";
+
+// Ownership is a facet that describes the ownership of a resource.
+message Ownership {
+  // Requird: The list of owners of the resource.
+  // For an example check the owner schema.
+  repeated Owner owners = 7;
+}
+
+// Owner is a facet that describes the owner of a resource.
+message Owner {
+  // Required: The name of the owner.
+  // For example: "user:johndoe".
+  string urn = 1;
+  // Optional: The name of the owner.
+  // For example: "John Doe".
+  string name = 2;
+  // Optional: The role of the owner.
+  // For example: "admin", "steward".
+  string role = 3;
+}

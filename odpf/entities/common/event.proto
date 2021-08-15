@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package odpf.entities.common;
+
+option java_package = "io.odpf.entities.common";
+option java_outer_classname = "EventProto";
+option go_package = "github.com/odpf/proton/entities/common";
+
+import "google/protobuf/timestamp.proto";
+
+// Event represents an event in the system.
+// Event is majorly used to represent the state of the system in the form of events.
+// It can be used in any schema which intend to produce events to message bus.
+message Event {
+  // Required. The timestamp of the event.
+  // For example "2018-01-01T00:00:00Z".
+  google.protobuf.Timestamp timestamp = 1;
+  // Optional. The activity that created the event. 
+  // For example "create", "update".
+  string action = 2;
+  // Optional. The description of the event.
+  // For example "user is created from signup form".
+  string description = 3;
+
+}
