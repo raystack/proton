@@ -232,6 +232,7 @@ message CreateAppealResponse {
 
 message ListApprovalsRequest {
     string user = 1;
+    repeated string statuses = 2;
 }
 
 message ListApprovalsResponse {
