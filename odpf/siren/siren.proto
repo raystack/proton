@@ -1,0 +1,37 @@
+syntax = "proto3";
+package odpf.siren;
+
+import "odpf/third_party/googleapis/google/api/annotations.proto";
+import "odpf/third_party/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/siren";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.siren";
+option java_outer_classname = "ServiceManager";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        version: "0.1";
+    };
+    external_docs: {
+        description: "Siren server";
+    }
+    schemes: HTTP;
+};
+
+service SirenService {
+    rpc Ping(PingRequest) returns (PingResponse) {
+        option (google.api.http) = {
+            get: "/ping"
+        };
+    }
+}
+
+message PingRequest {}
+
+message PingResponse {
+    string message = 1;
+}
