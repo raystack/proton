@@ -194,6 +194,11 @@ service RuntimeService {
             get: "/v1/project/{project_name}/job/{job_name}/replay/{id}"
         };
     }
+    rpc GetReplayList(GetReplayListRequest) returns (GetReplayListResponse) {
+        option (google.api.http) = {
+            get: "/v1/project/{project_name}/replay/{id}"
+        };
+    }
     // TODO(kush.sharma): disabled ATM
     //rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
@@ -661,3 +666,20 @@ message RegisterJobEventRequest {
 }
 
 message RegisterJobEventResponse {}
+
+message GetReplayListRequest {
+    string project_name = 1;
+}
+
+message GetReplayListResponse {
+    repeated ReplaySpec replay_list = 1;
+}
+
+message ReplaySpec {
+    string id = 1;
+    string job_name = 2;
+    string start_date = 3;
+    string end_date = 4;
+    string state = 5;
+    google.protobuf.Timestamp created_at = 6;
+}
