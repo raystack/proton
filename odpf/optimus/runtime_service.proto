@@ -196,7 +196,7 @@ service RuntimeService {
     }
     rpc GetReplayList(GetReplayListRequest) returns (GetReplayListResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/replay/{id}"
+            get: "/v1/project/{project_name}/replay/list"
         };
     }
     // TODO(kush.sharma): disabled ATM
