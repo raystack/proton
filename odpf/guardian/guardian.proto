@@ -355,6 +355,10 @@ message Appeal {
 
     google.protobuf.Timestamp created_at = 12;
     google.protobuf.Timestamp updated_at = 13;
+
+    string revoked_by = 14;
+    google.protobuf.Timestamp revoked_at = 15;
+    string revoke_reason = 16;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
