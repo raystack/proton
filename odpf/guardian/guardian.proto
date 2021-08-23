@@ -98,6 +98,7 @@ service GuardianService {
     rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
         option (google.api.http) = {
             put: "/appeals/{id}/revoke"
+            body: "reason"
         };
     }
 
@@ -209,6 +210,11 @@ message CancelAppealResponse {
 
 message RevokeAppealRequest {
     uint32 id = 1;
+
+    message Reason {
+        string reason = 1;
+    }
+    Reason reason = 2;
 }
 
 message RevokeAppealResponse {
