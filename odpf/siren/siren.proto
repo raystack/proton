@@ -28,6 +28,44 @@ service SirenService {
             get: "/ping"
         };
     }
+
+    rpc GetAlertHistory(GetAlertHistoryRequest) returns (GetAlertHistoryResponse) {
+        option (google.api.http) = {
+            get: "/history"
+        };
+    }
+
+    rpc CreateAlertHistory(CreateAlertHistoryRequest) returns (CreateAlertHistoryResponse) {
+        option (google.api.http) = {
+            post: "/history"
+            body: "*"
+        };
+    }
+
+    rpc GetWorkspaceChannels(GetWorkspaceChannelsRequest) returns (GetWorkspaceChannelsResponse) {
+        option (google.api.http) = {
+            get: "/workspaces/{workspaceName}/channels"
+        };
+    }
+    rpc ExchangeCode(ExchangeCodeRequest) returns (ExchangeCodeResponse) {
+        option (google.api.http) = {
+            post: "/oauth/slack/token",
+            body: "*"
+        };
+    }
+    rpc GetAlertCredentials(GetAlertCredentialsRequest) returns (GetAlertCredentialsResponse) {
+        option (google.api.http) = {
+            get: "/teams/{teamName}/credentials"
+        };
+    }
+
+    rpc UpdateAlertCredentials(UpdateAlertCredentialsRequest) returns (UpdateAlertCredentialsResponse) {
+        option (google.api.http) = {
+            put: "/teams/{teamName}/credentials"
+            body: "*"
+        };
+    }
+
 }
 
 message PingRequest {}
@@ -35,3 +73,103 @@ message PingRequest {}
 message PingResponse {
     string message = 1;
 }
+
+message GetAlertHistoryRequest {
+    string resource = 1;  
+    uint32 startTime = 2;
+    uint32 endTime = 3;
+}
+
+message GetAlertHistoryResponse {
+    repeated AlertHistory alerts = 1;
+}
+
+message AlertHistory {
+    uint64 id = 1;
+    string name = 2;
+    string template_id = 3;
+    string metric_name = 4;
+    string metric_value = 5;
+    string level = 6;
+    string created_at = 7;
+    string updated_at = 8;
+}
+
+message Annotations {
+    string metric_name = 1;
+    string metric_value = 2;
+    string resource = 3;
+    string template = 4;
+}
+
+message Labels {
+    string severity = 1;
+}
+
+message Alerts {
+    Annotations annotations = 1;
+    Labels labels = 2;
+    string status = 3;
+}
+
+message CreateAlertHistoryRequest {
+    repeated Alerts alerts = 1;
+}
+
+message CreateAlertHistoryResponse {
+    repeated AlertHistory alerts = 1;
+}
+
+message Workspace {
+    string id = 1;
+    string name = 2;
+}
+
+message GetWorkspaceChannelsRequest {
+    string workspaceName = 1;
+}
+
+message GetWorkspaceChannelsResponse {
+    repeated Workspace data = 1;
+}
+
+message ExchangeCodeRequest {
+    string code = 1;
+    string workspace = 2;
+}
+
+message ExchangeCodeResponse {
+    bool ok = 1;
+}
+
+message GetAlertCredentialsRequest{
+    string teamName = 1;
+}
+
+message Critical {
+    string channel = 1;
+}
+
+message Warning {
+    string channel = 1;
+}
+
+message SlackConfig {
+    Critical critical = 1;
+    Warning warning = 2;
+}
+
+message GetAlertCredentialsResponse {
+    string entity = 1;
+    string teamName = 2;
+    string pagerdutyCredentials = 3;
+    SlackConfig slackConfig = 4;
+}
+
+message UpdateAlertCredentialsRequest {
+    string entity = 1;
+    string teamName = 2;
+    string pagerdutyCredentials = 3;
+    SlackConfig slackConfig = 4;
+}
+message UpdateAlertCredentialsResponse{}
