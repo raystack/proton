@@ -179,24 +179,24 @@ service RuntimeService {
     }
     rpc ReplayDryRun(ReplayRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/job/{job_name}/replay-dry-run"
+            post: "/v1/project/{project_name}/replay/{job_name}/dryrun"
             body: "*"
         };
     }
     rpc Replay(ReplayRequest) returns (ReplayResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/job/{job_name}/replay"
+            post: "/v1/project/{project_name}/replay/{job_name}"
             body: "*"
         };
     }
     rpc GetReplayStatus(GetReplayStatusRequest) returns (GetReplayStatusResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/job/{job_name}/replay/{id}"
+            get: "/v1/project/{project_name}/replay/{job_name}/{id}"
         };
     }
     rpc GetReplayList(GetReplayListRequest) returns (GetReplayListResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/replay/list"
+            get: "/v1/project/{project_name}/replay"
         };
     }
     // TODO(kush.sharma): disabled ATM
