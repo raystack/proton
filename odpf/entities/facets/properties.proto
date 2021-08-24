@@ -6,6 +6,8 @@ option java_package = "io.odpf.entities.facets";
 option java_outer_classname = "PropertiesProto";
 option go_package = "github.com/odpf/proton/entities/facets";
 
+import "google/protobuf/struct.proto";
+
 message Properties {
 
   // Optional: List of tags the user has.
@@ -15,6 +17,6 @@ message Properties {
   map<string,string> labels = 2;
 
   // Optional: List of properties the user has.
-  map<string,string> fields = 3;
+  google.protobuf.Struct fields = 3;
  
 }
