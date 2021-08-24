@@ -20,7 +20,9 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     external_docs: {
         description: "Optimus server";
     }
-    schemes: HTTP;
+    schemes: HTTP; 
+    host: "127.0.0.1:9100";
+    base_path: "/api";
 };
 
 // WARNING: This is still in active development and can have breaking changes
@@ -159,18 +161,21 @@ service RuntimeService {
         };
     }
 
-    // Datastore CRUD
+    // Database CRUD
+    // CreateResource registers a new resource of a namespace which belongs to a project
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
         option (google.api.http) = {
             post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
             body: "*"
         };
     }
+   // ReadResource reads a provided resource spec of a namespace
     rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
         option (google.api.http) = {
             get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}"
         };
     }
+    // UpdateResource updates a resource specification of a datastore in project
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
             put: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource"
@@ -200,7 +205,7 @@ service RuntimeService {
         };
     }
     // TODO(kush.sharma): disabled ATM
-    //rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
+    // rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
 }
 
