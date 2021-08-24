@@ -194,7 +194,7 @@ service RuntimeService {
             get: "/v1/project/{project_name}/replay/{job_name}/{id}"
         };
     }
-    rpc GetReplayList(GetReplayListRequest) returns (GetReplayListResponse) {
+    rpc ListReplays(ListReplaysRequest) returns (ListReplaysResponse) {
         option (google.api.http) = {
             get: "/v1/project/{project_name}/replay"
         };
@@ -667,11 +667,11 @@ message RegisterJobEventRequest {
 
 message RegisterJobEventResponse {}
 
-message GetReplayListRequest {
+message ListReplaysRequest {
     string project_name = 1;
 }
 
-message GetReplayListResponse {
+message ListReplaysResponse {
     repeated ReplaySpec replay_list = 1;
 }
 
