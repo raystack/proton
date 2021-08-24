@@ -179,7 +179,7 @@ service RuntimeService {
     }
     rpc ReplayDryRun(ReplayRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/replay/{job_name}/dryrun"
+            post: "/v1/project/{project_name}/replay/{job_name}:dryrun"
             body: "*"
         };
     }
