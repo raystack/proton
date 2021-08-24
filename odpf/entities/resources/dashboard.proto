@@ -32,7 +32,7 @@ message Dashboard {
   string url = 5;
   // Optional. The list of the charts in the dashboard.
   // For an example, check the schema of the chart.
-  Chart charts = 21;
+  repeated Chart charts = 21;
   // Optional. The ownership of the topic.
   // For an example check out ownership.
   odpf.entities.facets.Ownership ownership = 31;
@@ -68,24 +68,27 @@ message Chart {
   // Optional. The raw query of the chart.
   // For example, "SELECT * FROM my_table".
   string raw_query = 7;
+  // Optional. The source of the data.
+  // For example, "bigquery,graphite".
+  string data_source = 8;
   // Optional. The dashboard ur of the chart.
   // For example, "dashboard:1".
-  string dashboard_urn = 8;
+  string dashboard_urn = 9;
   // Optional. The source of the dashboard of the chart.
   // For example, "metabase".
-  string dashboard_source = 9;
-  // Optional. The ownership of the topic.
+  string dashboard_source = 10;
+  // Optional. The ownership of the dashboard.
   // For an example check out ownership.
   odpf.entities.facets.Ownership ownership = 31;
-  // Optional. The lineage of the topic.
+  // Optional. The lineage of the dashboard.
   // For an example check out lineage schema.
   odpf.entities.facets.Lineage lineage = 32;
   // Optional. List of the user's custom properties.
-  // Properties facet can be used to set custom properties, tags and labels for a user.
+  // Properties facet can be used to set custom properties, tags and labels for a dashboard.
   // Properties are defined in the properties schema.
   odpf.entities.facets.Properties properties = 33;
   // Optional. The timestamp of the user's creation.
-  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  // Timstamp facet can be used to set the creation and updation timestamp of a dashboard.
   // Timestamps are defined in the timestamp schema.
   odpf.entities.common.Timestamp timestamps = 34;
   // Optional. The timestamp of the generated event.
