@@ -73,6 +73,18 @@ service SirenService {
             body: "*"
         };
     }
+
+    rpc GetRules(GetRulesRequest) returns (GetRulesResponse) {
+        option (google.api.http) = {
+            get: "/rules"
+        };
+    }
+    rpc UpdateRule(UpdateRuleRequest) returns (Rule) {
+        option (google.api.http) = {
+            put: "/rules"
+            body: "*"
+        };
+    }
 }
 
 message PingRequest {}
@@ -193,4 +205,47 @@ message SendSlackNotificationRequest{
 
 message SendSlackNotificationResponse {
     bool ok = 1;
+}
+
+message GetRulesRequest {
+    string namespace = 1;
+    string entity= 2;
+    string group_name = 3;
+    string status = 4;
+    string template = 5;
+}
+
+message Variables {
+    string name = 1;
+    string type = 2;
+    string value = 3;
+    string description = 4;
+}
+
+message Rule {
+    uint64 id = 1;
+    string name = 2;
+    string entity = 3;
+    string namespace = 4;
+    string group_name = 5;
+    string template = 6;
+    string status = 7;
+    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
+    repeated Variables variables = 10;
+}
+
+message GetRulesResponse {
+    repeated Rule rules = 1;
+}
+
+message UpdateRuleRequest {
+    uint64 id = 1;
+    string name = 2;
+    string entity = 3;
+    string namespace = 4;
+    string group_name = 5;
+    string template = 6;
+    string status = 7;
+    repeated Variables variables = 10;
 }
