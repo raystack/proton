@@ -13,15 +13,15 @@ option java_package = "io.odpf.proton.siren";
 option java_outer_classname = "ServiceManager";
 
 // These annotations are used when generating the OpenAPI file.
-option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-    info: {
-        version: "0.1";
-    };
-    external_docs: {
-        description: "Siren server";
-    }
-    schemes: HTTP;
-};
+// option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//     info: {
+//         version: "0.1";
+//     };
+//     external_docs: {
+//         description: "Siren server";
+//     }
+//     schemes: HTTP;
+// };
 
 service SirenService {
     rpc Ping(PingRequest) returns (PingResponse) {
@@ -82,6 +82,36 @@ service SirenService {
     rpc UpdateRule(UpdateRuleRequest) returns (Rule) {
         option (google.api.http) = {
             put: "/rules"
+            body: "*"
+        };
+    }
+
+    rpc GetTemplates(GetTemplatesRequest) returns (GetTemplatesResponse) {
+        option (google.api.http) = {
+            get: "/templates"
+        };
+    }
+
+    rpc GetTemplateByName(GetTemplateByNameRequest) returns (Template) {
+        option (google.api.http) = {
+            get: "/templates/{name}"
+        };
+    }
+
+    rpc UpsertTemplate(UpsertTemplateRequest) returns (Template) {
+        option (google.api.http) = {
+            put: "/templates",
+            body: "*"
+        };
+    }
+    rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse) {
+        option (google.api.http) = {
+            delete: "/templates/{name}",
+        };
+    }
+    rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {
+        option (google.api.http) = {
+            post: "/templates/{name}/render",
             body: "*"
         };
     }
@@ -248,4 +278,56 @@ message UpdateRuleRequest {
     string template = 6;
     string status = 7;
     repeated Variables variables = 10;
+}
+
+message GetTemplatesRequest{
+    string tag = 1;
+}
+
+message TemplateVariables {
+    string name = 1;
+    string type = 2;
+    string default = 3;
+    string description = 4;
+}
+
+message Template {
+    uint64 id = 1;
+    string name = 2;
+    string body = 3;
+    repeated string tags = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+    repeated TemplateVariables variables = 7;
+}
+
+message UpsertTemplateRequest {
+    uint64 id = 1;
+    string name = 2;
+    string body = 3;
+    repeated string tags = 4;
+    repeated TemplateVariables variables = 7;
+}
+
+message GetTemplatesResponse {
+    repeated Template templates = 1;
+}
+
+message GetTemplateByNameRequest {
+    string name = 1;
+}
+
+message DeleteTemplateRequest {
+    string name = 1;
+}
+
+message DeleteTemplateResponse {}
+
+message RenderTemplateRequest {
+    string name = 1;
+    map<string, string> variables = 2;
+}
+
+message RenderTemplateResponse {
+    string body = 1;
 }
