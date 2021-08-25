@@ -179,19 +179,19 @@ service RuntimeService {
     }
     rpc DryRunReplay(DryRunReplayRequest) returns (DryRunReplayResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/replay/{job_name}:dryrun"
+            post: "/v1/project/{project_name}/replay/dryrun"
             body: "*"
         };
     }
     rpc Replay(ReplayRequest) returns (ReplayResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/replay/{job_name}"
+            post: "/v1/project/{project_name}/replay"
             body: "*"
         };
     }
     rpc GetReplayStatus(GetReplayStatusRequest) returns (GetReplayStatusResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/replay/{job_name}/{id}"
+            get: "/v1/project/{project_name}/replay/{id}"
         };
     }
     rpc ListReplays(ListReplaysRequest) returns (ListReplaysResponse) {
@@ -629,7 +629,6 @@ message DryRunReplayRequest {
     string namespace = 3;
     string start_date = 4;
     string end_date = 5;
-    bool force = 6;
 }
 
 message DryRunReplayResponse {
@@ -687,8 +686,8 @@ message ListReplaysResponse {
 message ReplaySpec {
     string id = 1;
     string job_name = 2;
-    string start_date = 3;
-    string end_date = 4;
+    google.protobuf.Timestamp start_date = 3;
+    google.protobuf.Timestamp end_date = 4;
     string state = 5;
     google.protobuf.Timestamp created_at = 6;
 }
