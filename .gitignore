@@ -16,6 +16,7 @@
 
 .gradle/
 .idea/
+.project/
 build/
 generated-protos/
 
