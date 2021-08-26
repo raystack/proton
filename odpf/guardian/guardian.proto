@@ -44,6 +44,12 @@ service GuardianService {
         };
     }
 
+    rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
+        option (google.api.http) = {
+            get: "/providers/{id}/resources/{resource_type}/roles"
+        };
+    }
+
     rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
         option (google.api.http) = {
             get: "/policies"
@@ -144,6 +150,15 @@ message UpdateProviderRequest {
 
 message UpdateProviderResponse {
     Provider provider = 1;
+}
+
+message ListRolesRequest {
+    uint32 id = 1;
+    string resource_type = 2;
+}
+
+message ListRolesResponse {
+    repeated Role roles = 1;
 }
 
 message ListPoliciesRequest {}
@@ -259,6 +274,13 @@ message UpdateApprovalResponse {
     Appeal appeal = 1;
 }
 
+message Role {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    repeated google.protobuf.Value permissions = 4;
+}
+
 message ProviderConfig {
     string type = 1;
     string urn = 2;
@@ -279,13 +301,6 @@ message ProviderConfig {
             int32 version = 2;
         }
         PolicyConfig policy = 2;
-
-        message Role {
-            string id = 1;
-            string name = 2;
-            string description = 3;
-            repeated google.protobuf.Value permissions = 4;
-        }
         repeated Role roles = 4;
     }
     repeated ResourceConfig resources = 6;
