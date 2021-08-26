@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package odpf.assets.common;
+
+option java_package = "io.odpf.assets.common";
+option java_outer_classname = "ResourceProto";
+option go_package = "github.com/odpf/proton/assets/common";
+
+
+// Resource is a generic resource that represents a file or other resource.
+// It can be a table, job, user or group.
+message Resource {
+  // The unique identifier of the resource. 
+  // Example: `user:jdoe` or `group:accounting`.
+  string urn = 1;
+
+  // The name of the resource.
+  // Example: `John Doe` or `Accounting`.
+  string name = 2;
+
+  // The source of the resource.
+  // Example: `github` or `bigquery`.
+  string source = 3;
+
+  // The type of the asset.
+  // Example: `user` or `group`.
+  string type = 4;
+
+  // The REST URL for accessing the resource. URL returns the resource itself. 
+  // Example: `https://xyz.com/v1/users/user-123`
+  string resource_url = 5;
+}

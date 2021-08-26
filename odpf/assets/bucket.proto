@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package odpf.assets;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "BucketProto";
+option go_package = "github.com/odpf/proton/assets";
+
+import "google/protobuf/timestamp.proto";
+
+import "odpf/assets/facets/ownership.proto";
+import "odpf/assets/facets/lineage.proto";
+import "odpf/assets/facets/properties.proto";
+
+import "odpf/assets/common/timestamp.proto";
+import "odpf/assets/common/event.proto";
+
+message Bucket {
+  // The unique identifier for the bucket.
+  // Example: `bucket-1`.
+  string urn = 1;
+
+  // The name of the bucket.
+  // Example: `bucket 1`.
+  string name = 2;
+
+  // The source of the bucket.
+  // Example: `metabase`.
+  string source = 3;
+
+  // The description of the bucket.
+  // Example: `This bucket was created by the product team.`
+  string description = 4;
+
+  // The location of the bucket. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `ASIA`
+  string location = 5;
+
+  // The type of the storage. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `STANDARD`
+  string storage_type = 6;
+
+  // List of blobs in the bucket.
+  repeated Blob blobs = 7;
+
+  // The ownership of the bucket.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  odpf.assets.facets.Properties properties = 32;
+
+  // The timestamp of the bucket's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a bucket.
+  odpf.assets.common.Timestamp timestamps = 33;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.common.Event event = 100;
+
+}
+
+message Blob {
+  // The URN of the blob.
+  // Example: `location/bucket-name/file-name`.
+  string urn = 1;
+
+  // The name of the blob.
+  // Example: `file-name`.
+  string name = 2;
+
+  // The source of the blob.
+  // Example: `gcs`.
+  string source = 3;
+
+  // The description of the blob.
+  // Example: `This is a config file for x app`
+  string description = 4;
+
+  // The length of the object content.
+  // Example: `300`
+  int64 size = 5;
+
+  // Delete time of the blob object.
+  google.protobuf.Timestamp delete_time = 6;
+
+  // Expire time of the blob object.
+  google.protobuf.Timestamp expire_time = 7;
+
+  // The ownership of the blob.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  odpf.assets.facets.Properties properties = 32;
+
+  // The timestamp of the blob's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a blob.
+  odpf.assets.common.Timestamp timestamps = 33;
+}

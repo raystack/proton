@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package odpf.assets;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "DashboardProto";
+option go_package = "github.com/odpf/proton/assets";
+
+import "odpf/assets/facets/ownership.proto";
+import "odpf/assets/facets/lineage.proto";
+import "odpf/assets/facets/properties.proto";
+
+import "odpf/assets/common/timestamp.proto";
+import "odpf/assets/common/event.proto";
+
+// Dashboard is a resource that represents a dashboard.
+message Dashboard {
+  // The unique identifier for the dashboard.
+  // Example: "dashboard-1".
+  string urn = 1;
+
+  // The name of the dashboard.
+  // Example: "Dashboard 1".
+  string name = 2;
+
+  // The source of the dashboard.
+  // Example: "metabase".
+  string source = 3;
+
+  // The description of the dashboard.
+  // Example: "This dashboard was created by the Metabase team."
+  string description = 4;
+
+  // The url of the dashboard.
+  // Example: "https://metabase.com/dashboard/dashboard-1".
+  string url = 5;
+
+  // The list of the charts in the dashboard.
+  // For an example, check the schema of the chart.
+  repeated Chart charts = 21;
+
+  // The ownership of the topic.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  odpf.assets.facets.Properties properties = 32;
+
+  // The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  odpf.assets.common.Timestamp timestamps = 33;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.common.Event event = 100;
+
+}
+
+message Chart {
+  // The URN of the chart.
+  // Example: `chart:1`.
+  string urn = 1;
+
+  // The name of the chart.
+  // Example: `My Chart`.
+  string name = 2;
+
+  // The type of the chart.
+  // Example: `line`.
+  string type = 3;
+
+  // The source of the chart.
+  // Example: `metabase`.
+  string source = 4;
+
+  // The description of the chart.
+  // Example: `This is a chart for my dashboard.`
+  string description = 5;
+
+  // The url of the chart.
+  // Example: `http://metabase.com/charts/mychart`.
+  string url = 6;
+
+  // The raw query of the chart.
+  // Example: `SELECT * FROM my_table`.
+  string raw_query = 7;
+
+  // The source of the data.
+  // Example: `bigquery,graphite`.
+  string data_source = 8;
+
+  // The dashboard ur of the chart.
+  // Example: `dashboard:1`.
+  string dashboard_urn = 9;
+
+  // The source of the dashboard of the chart.
+  // Example: `metabase`.
+  string dashboard_source = 10;
+
+  // The ownership of the dashboard.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // The lineage of the dashboard.
+  // For an example check out lineage schema.
+  odpf.assets.facets.Lineage lineage = 32;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a dashboard.
+  odpf.assets.facets.Properties properties = 33;
+
+  // The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a dashboard.
+  odpf.assets.common.Timestamp timestamps = 34;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.common.Event event = 100;
+
+}

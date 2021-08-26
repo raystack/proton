@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package odpf.assets;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "JobProto";
+option go_package = "github.com/odpf/proton/assets";
+
+import "odpf/assets/facets/ownership.proto";
+import "odpf/assets/facets/lineage.proto";
+import "odpf/assets/facets/properties.proto";
+
+import "odpf/assets/common/timestamp.proto";
+import "odpf/assets/common/event.proto";
+
+// Job is a resource that represents a job.
+message Job {
+  // Required. The unique identifier of the job.  
+  // Example: 'job_1'.
+  string urn = 1;
+
+  // The name of the job.
+  // Example: 'Job 1'.
+  string name = 2;
+
+  // The source of the job.
+  // Example: 'airflow'.
+  string source = 3;
+
+  // The type of the job.
+  // Example: 'firehose', 'stream'.
+  string type = 4;
+
+  // The description of the job.
+  // Example: 'This job is used to process data from a stream.'
+  string description = 5;
+
+  // The ownership of the topic.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // The lineage of the topic.
+  // For an example check out lineage schema.
+  odpf.assets.facets.Lineage lineage = 32;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  odpf.assets.facets.Properties properties = 33;
+
+  // The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  odpf.assets.common.Timestamp timestamps = 34;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.common.Event event = 100;
+}

@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package odpf.assets;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "TableProto";
+option go_package = "github.com/odpf/proton/assets";
+
+import "odpf/assets/facets/schema.proto";
+import "odpf/assets/facets/ownership.proto";
+import "odpf/assets/facets/lineage.proto";
+import "odpf/assets/facets/properties.proto";
+
+import "odpf/assets/common/timestamp.proto";
+import "odpf/assets/common/event.proto";
+
+// Table is a table in a database.
+// It can be a file, a table, a view, a materialized view, a temporary table, or a virtual table.
+message Table {
+  // The URN of the table.
+  // Example: 'my-database.my-schema.my-table'.
+  string urn = 1;
+  // The name of the table.
+  // Example: 'my-table'.
+  string name = 2;
+  // The source of the table.
+  // Example: 'bigquery'.
+  string source = 3;
+
+  // The description of the table.
+  // Example: 'My User table'.
+  string description = 4;
+
+  // The metrics about the table.
+  // For example check the profile schem.
+  TableProfile profile = 21;
+
+  // The columns of the table.
+  // Example: 'id', `name`, `age'.
+  odpf.assets.facets.Columns schema = 22;
+
+  // The ownership of the topic.
+  // For an example check out ownership.
+  odpf.assets.facets.Ownership ownership = 31;
+
+  // The lineage of the topic.
+  // For an example check out lineage schema.
+  odpf.assets.facets.Lineage lineage = 32;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  odpf.assets.facets.Properties properties = 33;
+
+  // The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  odpf.assets.common.Timestamp timestamps = 34;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.common.Event event = 100;
+}
+
+// TableProfile is the metrics about the table.
+message TableProfile {
+  // The number of rows in the table.
+  // Example: `100`.
+  int64 total_rows = 1;
+
+  // The number of rows in the table that are not deleted.
+  // Example: `event_timestamp`.
+  string partition_key = 2;
+
+  string partition_value = 3;
+}
