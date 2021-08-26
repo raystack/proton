@@ -280,13 +280,13 @@ message ProviderConfig {
         }
         PolicyConfig policy = 2;
 
-        message RoleConfig {
+        message Role {
             string id = 1;
             string name = 2;
             string description = 3;
             repeated google.protobuf.Value permissions = 4;
         }
-        repeated RoleConfig roles = 3;
+        repeated Role roles = 4;
     }
     repeated ResourceConfig resources = 6;
 }
