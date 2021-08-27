@@ -20,7 +20,7 @@ message Resource {
 
   // The source of the resource.
   // Example: `github` or `bigquery`.
-  string source = 3;
+  string service = 3;
 
   // The type of the asset.
   // Example: `user` or `group`.
@@ -28,5 +28,5 @@ message Resource {
 
   // The REST URL for accessing the resource. URL returns the resource itself. 
   // Example: `https://xyz.com/v1/users/user-123`
-  string resource_url = 5;
+  string url = 5;
 }

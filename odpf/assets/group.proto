@@ -9,26 +9,18 @@ option go_package = "github.com/odpf/proton/assets";
 
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
+import "odpf/assets/common/resource.proto";
 
 import "odpf/assets/facets/properties.proto";
 
 // Group represents a group of users and resources.
 message Group {
-  // The unique identifier for the group.
-  // Example: `group:example`.
-  string urn = 1;
-
-  // The name of the group.
-  // Example: `Example Group`.
-  string name = 2;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The email of the group.
   // Example: `xyz@xyz.com`
   string email = 3;
-
-  // Source of the group.
-  // Example: `example.com`.
-  string source = 4;
 
   // The members of the group.
   // For example look at schema of the member.

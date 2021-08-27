@@ -10,30 +10,18 @@ import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
+import "odpf/assets/common/resource.proto";
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
 
 // Dashboard is a resource that represents a dashboard.
 message Dashboard {
-  // The unique identifier for the dashboard.
-  // Example: "dashboard-1".
-  string urn = 1;
-
-  // The name of the dashboard.
-  // Example: "Dashboard 1".
-  string name = 2;
-
-  // The source of the dashboard.
-  // Example: "metabase".
-  string source = 3;
+    // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The description of the dashboard.
   // Example: "This dashboard was created by the Metabase team."
   string description = 4;
-
-  // The url of the dashboard.
-  // Example: "https://metabase.com/dashboard/dashboard-1".
-  string url = 5;
 
   // The list of the charts in the dashboard.
   // For an example, check the schema of the chart.

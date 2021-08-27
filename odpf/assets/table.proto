@@ -11,21 +11,15 @@ import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
+import "odpf/assets/common/resource.proto";
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
 
 // Table is a table in a database.
 // It can be a file, a table, a view, a materialized view, a temporary table, or a virtual table.
 message Table {
-  // The URN of the table.
-  // Example: 'my-database.my-schema.my-table'.
-  string urn = 1;
-  // The name of the table.
-  // Example: 'my-table'.
-  string name = 2;
-  // The source of the table.
-  // Example: 'bigquery'.
-  string source = 3;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The description of the table.
   // Example: 'My User table'.

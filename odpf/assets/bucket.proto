@@ -12,21 +12,13 @@ import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
+import "odpf/assets/common/resource.proto";
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
 
 message Bucket {
-  // The unique identifier for the bucket.
-  // Example: `bucket-1`.
-  string urn = 1;
-
-  // The name of the bucket.
-  // Example: `bucket 1`.
-  string name = 2;
-
-  // The source of the bucket.
-  // Example: `metabase`.
-  string source = 3;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The description of the bucket.
   // Example: `This bucket was created by the product team.`

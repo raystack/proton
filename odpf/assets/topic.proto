@@ -11,23 +11,15 @@ import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
+import "odpf/assets/common/resource.proto";
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
 
 // Topic is resource that represents a logical group of messages 
 // in message bus like kafka, pubsub, pulsar etc.
 message Topic {
-  // Required. The URN of the topic.
-  // Example: `urn:odpf:topic:my-topic`.
-  string urn = 1;
-
-  // Required. The name of the topic.
-  // Example: `My Topic`.
-  string name = 2;
-
-  // The source of the topic.
-  // Example: 'kafka', 'pubsub'.
-  string source = 3;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The description of the topic.
   // Example: 'This is a topic for my application'.

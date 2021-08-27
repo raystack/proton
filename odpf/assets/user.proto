@@ -9,6 +9,7 @@ option go_package = "github.com/odpf/proton/assets";
 
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
+import "odpf/assets/common/resource.proto";
 
 import "odpf/assets/facets/properties.proto";
 
@@ -16,13 +17,9 @@ import "odpf/assets/facets/properties.proto";
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
 message User {
-  // The unique identifier of the user
-  // Example: "user:jdoe"
-  string urn = 1;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
-  // The source of the user account. 
-  // Example: `github`
-  string source = 2;
   // The emai address of the user.
   // Example: `job.deo@gmail.com`
   string email = 3;

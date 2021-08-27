@@ -1,22 +1,22 @@
 syntax = "proto3";
 
-package odpf.assets.facets;
+package odpf.entities.facets;
 
-option java_package = "io.odpf.assets.facets";
+option java_package = "io.odpf.entities.facets";
 option java_outer_classname = "PropertiesProto";
-option go_package = "github.com/odpf/proton/assets/facets";
+option go_package = "github.com/odpf/proton/entities/facets";
 
 import "google/protobuf/struct.proto";
 
 message Properties {
 
-  // Tags associated with this resource..
+  // Optional: List of tags the user has.
   repeated string tags = 1;
 
-  // Labels associated with this resource.
+  //Optional. List of labels the user has.
   map<string,string> labels = 2;
 
-  // Custom attributes associated with this resource.
+  // Optional: List of properties the user has.
   google.protobuf.Struct attributes = 3;
  
 }

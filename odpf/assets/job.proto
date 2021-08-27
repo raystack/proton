@@ -10,26 +10,14 @@ import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
+import "odpf/assets/common/resource.proto";
 import "odpf/assets/common/timestamp.proto";
 import "odpf/assets/common/event.proto";
 
 // Job is a resource that represents a job.
 message Job {
-  // Required. The unique identifier of the job.  
-  // Example: 'job_1'.
-  string urn = 1;
-
-  // The name of the job.
-  // Example: 'Job 1'.
-  string name = 2;
-
-  // The source of the job.
-  // Example: 'airflow'.
-  string source = 3;
-
-  // The type of the job.
-  // Example: 'firehose', 'stream'.
-  string type = 4;
+  // Representation of the resource
+  odpf.assets.common.Resource resource = 1;
 
   // The description of the job.
   // Example: 'This job is used to process data from a stream.'
