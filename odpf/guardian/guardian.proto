@@ -1,0 +1,375 @@
+syntax = "proto3";
+package odpf.guardian;
+
+import "odpf/third_party/googleapis/google/api/annotations.proto";
+import "odpf/third_party/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/guardian";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.guardian";
+option java_outer_classname = "ServiceManager";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        version: "0.1";
+    };
+    external_docs: {
+        description: "Guardian server";
+    }
+    schemes: HTTP;
+};
+
+// WARNING: This is still in active development and can have breaking changes
+service Guardian {
+    rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
+        option (google.api.http) = {
+            get: "/providers"
+        };
+    }
+
+    rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
+        option (google.api.http) = {
+            post: "/providers"
+            body: "*"
+        };
+    }
+
+    rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
+        option (google.api.http) = {
+            put: "/providers/{id}"
+            body: "*"
+        };
+    }
+
+    rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+        option (google.api.http) = {
+            get: "/policies"
+        };
+    }
+
+    rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
+        option (google.api.http) = {
+            post: "/policies"
+            body: "*"
+        };
+    }
+
+    rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
+        option (google.api.http) = {
+            put: "/policies/{id}"
+            body: "*"
+        };
+    }
+
+    rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+        option (google.api.http) = {
+            get: "/resources"
+        };
+    }
+
+    rpc UpdateResource(UpdateResourceRequest) returns (Resource) {
+        option (google.api.http) = {
+            put: "/resources/{id}"
+            body: "*"
+        };
+    }
+
+    rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
+        option (google.api.http) = {
+            get: "/appeals"
+        };
+    }
+
+    rpc GetAppeal(GetAppealRequest) returns (GetAppealResponse) {
+        option (google.api.http) = {
+            get: "/appeals/{id}"
+        };
+    }
+
+    rpc CancelAppeal(CancelAppealRequest) returns (CancelAppealResponse) {
+        option (google.api.http) = {
+            put: "/appeals/{id}/cancel"
+        };
+    }
+
+    rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
+        option (google.api.http) = {
+            put: "/appeals/{id}/revoke"
+        };
+    }
+
+    rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
+        option (google.api.http) = {
+            post: "/appeals"
+            body: "*"
+        };
+    }
+
+    rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
+        option (google.api.http) = {
+            get: "/appeals/approvals"
+        };
+    }
+
+    rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
+        option (google.api.http) = {
+            post: "/appeals/{id}/approvals/{approval_name}"
+            body: "*"
+        };
+    }
+}
+
+message ListProvidersRequest {}
+
+message ListProvidersResponse {
+    repeated Provider providers = 1;
+}
+
+message CreateProviderRequest {
+    Provider provider = 1;
+}
+
+message CreateProviderResponse {
+    Provider provider = 1;
+}
+
+message UpdateProviderRequest {
+    uint32 id = 1;
+    Provider provider = 2;
+}
+
+message UpdateProviderResponse {
+    Provider provider = 1;
+}
+
+message ListPoliciesRequest {}
+
+message ListPoliciesResponse {
+    repeated Policy policies = 1;
+}
+
+message CreatePolicyRequest {
+    Policy policy = 1;
+}
+
+message CreatePolicyResponse {
+    Policy policy = 1;
+}
+
+message UpdatePolicyRequest {
+    string id = 1;
+    Policy policy = 2;
+}
+
+message UpdatePolicyResponse {
+    Policy policy = 1;
+}
+
+message ListResourcesRequest {}
+
+message ListResourcesResponse {
+    repeated Resource resources = 1;
+}
+
+message UpdateResourceRequest {
+    uint32 id = 1;
+    Resource resource = 2;
+}
+
+message ListAppealsRequest {
+    string user = 1;
+}
+
+message ListAppealsResponse {
+    repeated Appeal appeals = 1;
+}
+
+message GetAppealRequest {
+    uint32 id = 1;
+}
+
+message GetAppealResponse {
+    Appeal appeal = 1;
+}
+
+message CancelAppealRequest {
+    uint32 id = 1;
+}
+
+message CancelAppealResponse {
+    Appeal appeal = 1;
+}
+
+message RevokeAppealRequest {
+    uint32 id = 1;
+}
+
+message RevokeAppealResponse {
+    Appeal appeal = 1;
+}
+
+message CreateAppealRequest {
+    string user = 1;
+
+    message Resource {
+        uint32 id = 1;
+        string role = 2;
+        google.protobuf.Struct options = 3;
+    }
+    repeated Resource resources = 2;
+}
+
+message CreateAppealResponse {
+    repeated Appeal appeals = 1;
+}
+
+message ListApprovalsRequest {
+    string user = 1;
+}
+
+message ListApprovalsResponse {
+    repeated Approval approvals = 1;
+}
+
+message UpdateApprovalRequest {
+    uint32 id = 1;
+    string approval_name = 2;
+
+    message Action {
+        string action = 1;
+    }
+    Action action = 3;
+}
+
+message UpdateApprovalResponse {
+    Appeal appeal = 1;
+}
+
+// Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles 
+message Provider {
+    uint32 id = 1;
+    string type = 2;
+    string urn = 3;
+
+    message ProviderConfig {
+        string type = 1;
+        string urn = 2;
+        google.protobuf.Struct labels = 3;
+        google.protobuf.Value credentials = 4;
+
+        message AppealConfig {
+            bool allow_permanent_access = 1;
+            string allow_active_access_extension_in = 2;
+        }
+        AppealConfig appeal = 5;
+
+        message ResourceConfig {
+            string type = 1;
+
+            message PolicyConfig {
+                string id = 1;
+                int32 version = 2;
+            }
+            PolicyConfig policy = 2;
+
+            message RoleConfig {
+                string id = 1;
+                string name = 2;
+                string description = 3;
+                repeated google.protobuf.Value permissions = 4;
+            }
+            repeated RoleConfig roles = 3;
+        }
+        ResourceConfig resources = 6;
+    }
+    ProviderConfig config = 4;
+
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+// Policy is a configurable steps for appeal's approval
+message Policy {
+    string id = 1;
+    uint32 version = 2;
+    string description = 3;
+
+    message ApprovalStep {
+        string name = 1;
+        string description = 2;  // optional
+
+        message Condition {
+            string field = 1;
+
+            message MatchCondition {
+                google.protobuf.Value eq = 1;
+            }
+            MatchCondition match = 2;
+        }
+        repeated Condition conditions = 3;  // optional
+
+        bool allow_failed = 4;             // optional
+        repeated string dependencies = 5;  // optional
+        string approvers = 6;              // optional
+    }
+    repeated ApprovalStep steps = 4;
+
+    google.protobuf.Struct labels = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+// Appeal is created by user to get access to one or more resources
+message Appeal {
+    uint32 id = 1;
+    uint32 resource_id = 2;
+    string policy_id = 3;
+    uint32 policy_version = 4;
+    string status = 5;
+    string user = 6;
+    string role = 7;
+
+    message AppealOptions {
+        google.protobuf.Timestamp expiration_date = 1;  // optional
+    }
+    AppealOptions options = 8;  // optional
+
+    google.protobuf.Struct labels = 9;
+    Resource resource = 10;  // optional
+    repeated Approval approvals = 11;
+
+    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp updated_at = 13;
+}
+
+// Approval is an approval item that generated in an appeal based on the selected policy
+message Approval {
+    uint32 id = 1;
+    string name = 2;
+    uint32 appeal_id = 3;
+    string status = 4;
+    string actor = 5;
+    string policy_id = 6;
+    uint32 policy_version = 7;
+    repeated string approvers = 8;
+    Appeal appeal = 9;
+    google.protobuf.Timestamp created_at = 10;
+    google.protobuf.Timestamp updated_at = 11;
+}
+
+// Resource contains information of resource from providers
+message Resource {
+    uint32 id = 1;
+    string provider_type = 2;
+    string provider_urn = 3;
+    string type = 4;
+    string urn = 5;
+    string name = 6;
+    google.protobuf.Struct details = 7;
+    google.protobuf.Struct labels = 8;
+    google.protobuf.Timestamp created_at = 9;
+    google.protobuf.Timestamp updated_at = 10;
+}
