@@ -30,7 +30,7 @@ service SirenService {
         };
     }
 
-    rpc GetAlertHistory(GetAlertHistoryRequest) returns (GetAlertHistoryResponse) {
+    rpc ListAlertHistory(ListAlertHistoryRequest) returns (ListAlertHistoryResponse) {
         option (google.api.http) = {
             get: "/history"
         };
@@ -43,7 +43,7 @@ service SirenService {
         };
     }
 
-    rpc GetWorkspaceChannels(GetWorkspaceChannelsRequest) returns (GetWorkspaceChannelsResponse) {
+    rpc ListWorkspaceChannels(ListWorkspaceChannelsRequest) returns (ListWorkspaceChannelsResponse) {
         option (google.api.http) = {
             get: "/workspaces/{workspace_name}/channels"
         };
@@ -74,7 +74,7 @@ service SirenService {
         };
     }
 
-    rpc GetRules(GetRulesRequest) returns (GetRulesResponse) {
+    rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
         option (google.api.http) = {
             get: "/rules"
         };
@@ -86,7 +86,7 @@ service SirenService {
         };
     }
 
-    rpc GetTemplates(GetTemplatesRequest) returns (GetTemplatesResponse) {
+    rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse) {
         option (google.api.http) = {
             get: "/templates"
         };
@@ -123,13 +123,13 @@ message PingResponse {
     string message = 1;
 }
 
-message GetAlertHistoryRequest {
+message ListAlertHistoryRequest {
     string resource = 1;  
     uint32 start_time = 2;
     uint32 end_time = 3;
 }
 
-message GetAlertHistoryResponse {
+message ListAlertHistoryResponse {
     repeated AlertHistory alerts = 1;
 }
 
@@ -174,11 +174,11 @@ message Workspace {
     string name = 2;
 }
 
-message GetWorkspaceChannelsRequest {
+message ListWorkspaceChannelsRequest {
     string workspace_name = 1;
 }
 
-message GetWorkspaceChannelsResponse {
+message ListWorkspaceChannelsResponse {
     repeated Workspace data = 1;
 }
 
@@ -237,7 +237,7 @@ message SendSlackNotificationResponse {
     bool ok = 1;
 }
 
-message GetRulesRequest {
+message ListRulesRequest {
     string namespace = 1;
     string entity= 2;
     string group_name = 3;
@@ -265,7 +265,7 @@ message Rule {
     repeated Variables variables = 10;
 }
 
-message GetRulesResponse {
+message ListRulesResponse {
     repeated Rule rules = 1;
 }
 
@@ -280,7 +280,7 @@ message UpdateRuleRequest {
     repeated Variables variables = 10;
 }
 
-message GetTemplatesRequest{
+message ListTemplatesRequest{
     string tag = 1;
 }
 
@@ -309,7 +309,7 @@ message UpsertTemplateRequest {
     repeated TemplateVariables variables = 7;
 }
 
-message GetTemplatesResponse {
+message ListTemplatesResponse {
     repeated Template templates = 1;
 }
 
