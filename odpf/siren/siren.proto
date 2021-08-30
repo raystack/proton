@@ -155,14 +155,14 @@ message Labels {
     string severity = 1;
 }
 
-message Alerts {
+message Alert {
     Annotations annotations = 1;
     Labels labels = 2;
     string status = 3;
 }
 
 message CreateAlertHistoryRequest {
-    repeated Alerts alerts = 1;
+    repeated Alert alerts = 1;
 }
 
 message CreateAlertHistoryResponse {
