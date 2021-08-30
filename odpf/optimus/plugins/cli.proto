@@ -118,4 +118,5 @@ message CompileAssetsRequest {
 }
 message CompileAssetsResponse {
     Assets assets = 1;
+    bool skip_compile = 2;
 }
