@@ -1,4 +1,8 @@
 version: v1beta1
+name: buf.build/odpf/proton
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
 build:
   roots:
     - .
