@@ -6,3 +6,5 @@ deps:
 breaking:
   use:
     - WIRE
+  except:
+    - RESERVED_MESSAGE_NO_DELETE
