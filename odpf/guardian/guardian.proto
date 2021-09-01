@@ -83,6 +83,12 @@ service GuardianService {
         };
     }
 
+    rpc ListUserAppeals(ListUserAppealsRequest) returns (ListUserAppealsResponse) {
+        option (google.api.http) = {
+            get: "/me/appeals"
+        };
+    }
+
     rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
         option (google.api.http) = {
             get: "/appeals"
@@ -197,6 +203,12 @@ message UpdateResourceRequest {
 
 message UpdateResourceResponse {
     Resource resource = 1;
+}
+
+message ListUserAppealsRequest {}
+
+message ListUserAppealsResponse {
+    repeated Appeal appeals = 1;
 }
 
 message ListAppealsRequest {
