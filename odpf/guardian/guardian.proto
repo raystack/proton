@@ -121,9 +121,15 @@ service GuardianService {
         };
     }
 
+    rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
+        option (google.api.http) = {
+            get: "/me/approvals"
+        };
+    }
+
     rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
         option (google.api.http) = {
-            get: "/appeals/approvals"
+            get: "/approvals"
         };
     }
 
@@ -261,6 +267,14 @@ message CreateAppealRequest {
 
 message CreateAppealResponse {
     repeated Appeal appeals = 1;
+}
+
+message ListUserApprovalsRequest {
+    repeated string statuses = 2;
+}
+
+message ListUserApprovalsResponse {
+    repeated Approval approvals = 1;
 }
 
 message ListApprovalsRequest {
