@@ -28,18 +28,18 @@ message Snapshot {
 	bool latest = 5;
 }
 
-message DownloadRequest {
+message DownloadDescriptorRequest {
 	string namespace = 1 [(google.api.field_behavior) = REQUIRED];
 	string name = 2 [(google.api.field_behavior) = REQUIRED];
 	string version = 3 [(google.api.field_behavior) = REQUIRED];
 	repeated string fullnames = 4;
 }
 
-message DownloadResponse {
+message DownloadDescriptorResponse {
 	bytes data = 1;
 }
 
-message UploadRequest {
+message UploadDescriptorRequest {
 	string namespace = 1 [(google.api.field_behavior) = REQUIRED];
 	string name = 2 [(google.api.field_behavior) = REQUIRED];
 	string version = 3 [(google.api.field_behavior) = REQUIRED];
@@ -49,7 +49,7 @@ message UploadRequest {
 	repeated string skiprules = 7;
 }
 
-message UploadResponse {
+message UploadDescriptorResponse {
 	bool success = 1;
 	bool dryrun = 2;
 	string errors = 3;
@@ -66,23 +66,21 @@ message ListSnapshotsRequest {
 	bool latest = 4;
 }
 
-message UpdateLatestRequest {
+message PromoteSnapshotRequest {
 	int64 id = 1;
-	bool latest = 2;
 }
 
 service StencilService {
-	rpc UploadDescriptors (UploadRequest) returns (UploadResponse) {}
-	rpc DownloadDescriptors (DownloadRequest) returns (DownloadResponse) {}
+	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {}
+	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {}
 	rpc ListSnapshots(ListSnapshotsRequest) returns (ListSnapshotsResponse) {
 		option (google.api.http) = {
 			get: "/v1/snapshots"
 		};
 	}
-	rpc UpdateLatest(UpdateLatestRequest) returns (Snapshot) {
+	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (Snapshot) {
 		option (google.api.http) = {
-			patch: "/v1/snapshots/{id}",
-			body: "*"
+			patch: "/v1/snapshots/{id}:promote"
 		};
 	}
 }
