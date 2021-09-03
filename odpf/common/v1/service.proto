@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package odpf.common.v1;
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/common/v1";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.common";
+option java_outer_classname = "CommonServiceProto";
+
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        version: "0.1";
+    };
+    external_docs: {
+        description: "Common endpoints for all services";
+    }
+    schemes: HTTP;
+};
+
+service CommonService {
+    rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
+        option (google.api.http) = {
+            get: "/v1/version"
+        };
+    }
+}
+
+message GetVersionRequest {}
+
+// Keeping a response envelope over version to add more info in future like latest: bool, latestVersion: Version etc
+message GetVersionResponse {
+    Version version = 1;
+}
+
+message Version {
+    string version = 1;
+    string commit_id = 2;
+    google.protobuf.Timestamp build_time = 3;
+    string lang_version = 4;
+    string os_arch = 5;
+}
