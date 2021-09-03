@@ -1,0 +1,29 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bufbuild/buf-setup-action@v0.3.1
+        with:
+          version: 0.54.1
+      - uses: bufbuild/buf-breaking-action@v0.4.0
+        with:
+          against: 'https://github.com/$GITHUB_REPOSITORY.git#branch=main'
+  push_to_bsr:
+    runs-on: ubuntu-20.04
+    needs: validate
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bufbuild/buf-setup-action@v0.3.1
+        with:
+          version: 0.54.1
+      - uses: bufbuild/buf-push-action@v0.3.0
+        with:
+          buf_token: ${{ secrets.BUF_TOKEN }}
