@@ -177,21 +177,26 @@ service RuntimeService {
             body: "*"
         };
     }
-    rpc ReplayDryRun(ReplayRequest) returns (ReplayDryRunResponse) {
+    rpc DryRunReplay(DryRunReplayRequest) returns (DryRunReplayResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/job/{job_name}/replay-dry-run"
+            post: "/v1/project/{project_name}/replay/dryrun"
             body: "*"
         };
     }
     rpc Replay(ReplayRequest) returns (ReplayResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/job/{job_name}/replay"
+            post: "/v1/project/{project_name}/replay"
             body: "*"
         };
     }
     rpc GetReplayStatus(GetReplayStatusRequest) returns (GetReplayStatusResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/job/{job_name}/replay/{id}"
+            get: "/v1/project/{project_name}/replay/{id}"
+        };
+    }
+    rpc ListReplays(ListReplaysRequest) returns (ListReplaysResponse) {
+        option (google.api.http) = {
+            get: "/v1/project/{project_name}/replay"
         };
     }
     // TODO(kush.sharma): disabled ATM
@@ -614,7 +619,19 @@ message ReplayRequest {
     bool force = 6;
 }
 
-message ReplayDryRunResponse {
+message ReplayResponse {
+    string id = 1;
+}
+
+message DryRunReplayRequest {
+    string project_name = 1;
+    string job_name = 2;
+    string namespace = 3;
+    string start_date = 4;
+    string end_date = 5;
+}
+
+message DryRunReplayResponse {
     bool success = 1;
     ReplayExecutionTreeNode response = 2;
 }
@@ -623,10 +640,6 @@ message ReplayExecutionTreeNode {
     string job_name = 1;
     repeated ReplayExecutionTreeNode dependents = 2;
     repeated google.protobuf.Timestamp runs = 3;
-}
-
-message ReplayResponse {
-    string id = 1;
 }
 
 message GetReplayStatusResponse {
@@ -661,3 +674,20 @@ message RegisterJobEventRequest {
 }
 
 message RegisterJobEventResponse {}
+
+message ListReplaysRequest {
+    string project_name = 1;
+}
+
+message ListReplaysResponse {
+    repeated ReplaySpec replay_list = 1;
+}
+
+message ReplaySpec {
+    string id = 1;
+    string job_name = 2;
+    google.protobuf.Timestamp start_date = 3;
+    google.protobuf.Timestamp end_date = 4;
+    string state = 5;
+    google.protobuf.Timestamp created_at = 6;
+}
