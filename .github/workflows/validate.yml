@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: wizhi/setup-buf@v1
+      - uses: bufbuild/buf-setup-action@v0.3.1
         with:
-          version: 0.40.0
-      - name: validate-breaking-changes
-        run: REPO=https://github.com/$GITHUB_REPOSITORY.git; buf breaking --against $REPO
+          version: 0.54.1
+      - uses: bufbuild/buf-breaking-action@v0.4.0
+        with:
+          against: 'https://github.com/$GITHUB_REPOSITORY.git#branch=main'

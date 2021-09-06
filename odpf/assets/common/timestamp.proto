@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package odpf.assets.common;
+
+option java_package = "io.odpf.assets.common";
+option java_outer_classname = "TimestampProto";
+option go_package = "github.com/odpf/proton/assets/common";
+
+import "google/protobuf/timestamp.proto";
+
+// Timestamp represents created and modified timestamps.
+message Timestamp {
+  // The timestamp when the object was created.
+  google.protobuf.Timestamp create_time = 1;
+
+  // The timestamp when the object was last modified.
+  google.protobuf.Timestamp update_time = 2;
+}
+
+// A time window specified by its `start_time` and `end_time`.
+message TimeWindow {
+  // Start time of the time window (exclusive).
+  google.protobuf.Timestamp start_time = 1;
+
+  // End time of the time window (inclusive). If not specified, the current
+  // timestamp is used instead.
+  google.protobuf.Timestamp end_time = 2;
+}
