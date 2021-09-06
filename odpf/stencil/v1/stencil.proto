@@ -7,7 +7,7 @@ import "google/protobuf/descriptor.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 
-option go_package = "github.com/odpf/stencil/server/api/v1/pb";
+option go_package = "github.com/odpf/proton/stencil/v1;stencilv1";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
@@ -70,6 +70,10 @@ message PromoteSnapshotRequest {
 	int64 id = 1;
 }
 
+message PromoteSnapshotResponse {
+	Snapshot snapshot = 1;
+}
+
 service StencilService {
 	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {}
 	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {}
@@ -78,7 +82,8 @@ service StencilService {
 			get: "/v1/snapshots"
 		};
 	}
-	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (Snapshot) {
+	// PromoteSnapshot promotes particular snapshot version as latest
+	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (PromoteSnapshotResponse) {
 		option (google.api.http) = {
 			patch: "/v1/snapshots/{id}:promote"
 		};
