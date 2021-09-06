@@ -185,7 +185,7 @@ message ListWorkspaceChannelsResponse {
 }
 
 message ExchangeCodeRequest {
-    string code = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string code = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"];
     string workspace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
@@ -231,7 +231,7 @@ message SendSlackNotificationRequest{
     string entity = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string message = 3;
     string receiver_name = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string receiver_type = 5 [(validate.rules).string = {in: ["user", "channel"]}];
+    string receiver_type = 5 [(validate.rules).string = {in: ["channel", "user"]}];;
     repeated google.protobuf.Struct blocks = 6;
 }
 
@@ -282,8 +282,8 @@ message UpdateRuleRequest {
     string namespace = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string group_name = 5 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string template = 6 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string status = 7 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    repeated Variables variables = 10 [(validate.rules).repeated.min_items = 1];
+    string status = 7 [(validate.rules).string = {in: ["enabled", "disabled"]}];
+    repeated Variables variables = 10;
 }
 
 message ListTemplatesRequest{
@@ -314,8 +314,8 @@ message TemplateResponse {
 message UpsertTemplateRequest {
     uint64 id = 1;
     string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    repeated string tags = 4;
+    string body = 3;
+    repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
     repeated TemplateVariables variables = 5 [(validate.rules).repeated.min_items = 1];
 }
 
