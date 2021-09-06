@@ -20,6 +20,30 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 	schemes: HTTP;
 };
 
+service StencilService {
+	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {}
+	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {}
+	rpc ListSnapshots(ListSnapshotsRequest) returns (ListSnapshotsResponse) {
+		option (google.api.http) = {
+			get: "/v1/snapshots"
+		};
+	}
+	// PromoteSnapshot promotes particular snapshot version as latest
+	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (PromoteSnapshotResponse) {
+		option (google.api.http) = {
+			patch: "/v1/snapshots/{id}/promote"
+		};
+	}
+}
+
+enum Rules {
+	UNKNOWN = 0;
+	FILE_NO_BREAKING_CHANGE = 1;
+	MESSAGE_NO_DELETE = 2;
+	FIELD_NO_BREAKING_CHANGE = 3;
+	ENUM_NO_BREAKING_CHANGE = 4;
+}
+
 message Snapshot {
 	int64 id = 1;
 	string namespace = 2 [(google.api.field_behavior) = REQUIRED];
@@ -46,7 +70,7 @@ message UploadDescriptorRequest {
 	bytes data = 4 [(google.api.field_behavior) = REQUIRED];
 	bool latest = 5;
 	bool dryrun = 6;
-	repeated string skiprules = 7;
+	repeated Rules skiprules = 7;
 }
 
 message UploadDescriptorResponse {
@@ -72,20 +96,4 @@ message PromoteSnapshotRequest {
 
 message PromoteSnapshotResponse {
 	Snapshot snapshot = 1;
-}
-
-service StencilService {
-	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {}
-	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {}
-	rpc ListSnapshots(ListSnapshotsRequest) returns (ListSnapshotsResponse) {
-		option (google.api.http) = {
-			get: "/v1/snapshots"
-		};
-	}
-	// PromoteSnapshot promotes particular snapshot version as latest
-	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (PromoteSnapshotResponse) {
-		option (google.api.http) = {
-			patch: "/v1/snapshots/{id}:promote"
-		};
-	}
 }
