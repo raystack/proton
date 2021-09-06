@@ -1,18 +1,20 @@
 syntax = "proto3";
-package odpf.siren;
+package odpf.siren.v1;
 
-import "odpf/third_party/googleapis/google/api/annotations.proto";
-import "odpf/third_party/grpc-gateway/protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/any.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/odpf/proton/siren";
 option java_multiple_files = true;
 option java_package = "io.odpf.proton.siren";
 option java_outer_classname = "ServiceManager";
 
-// These annotations are used when generating the OpenAPI file.
+These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
         version: "0.1";
@@ -175,7 +177,7 @@ message Workspace {
 }
 
 message ListWorkspaceChannelsRequest {
-    string workspace_name = 1;
+    string workspace_name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message ListWorkspaceChannelsResponse {
@@ -183,8 +185,8 @@ message ListWorkspaceChannelsResponse {
 }
 
 message ExchangeCodeRequest {
-    string code = 1;
-    string workspace = 2;
+    string code = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string workspace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message ExchangeCodeResponse {
@@ -192,20 +194,20 @@ message ExchangeCodeResponse {
 }
 
 message GetAlertCredentialsRequest{
-    string team_name = 1;
+    string team_name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message Critical {
-    string channel = 1;
+    string channel = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message Warning {
-    string channel = 1;
+    string channel = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message SlackConfig {
-    Critical critical = 1;
-    Warning warning = 2;
+    Critical critical = 1 [(validate.rules).message.required = true];
+    Warning warning = 2 [(validate.rules).message.required = true];
 }
 
 message GetAlertCredentialsResponse {
@@ -216,20 +218,20 @@ message GetAlertCredentialsResponse {
 }
 
 message UpdateAlertCredentialsRequest {
-    string entity = 1;
+    string entity = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string team_name = 2;
-    string pagerduty_credentials = 3;
-    SlackConfig slack_config = 4;
+    string pagerduty_credentials = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    SlackConfig slack_config = 4 [(validate.rules).message.required = true];
 }
 message UpdateAlertCredentialsResponse{}
 
 
 message SendSlackNotificationRequest{
     string provider = 1;
-    string entity = 2;
+    string entity = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string message = 3;
-    string receiver_name = 4;
-    string receiver_type = 5;
+    string receiver_name = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string receiver_type = 5 [(validate.rules).string = {in: ["user", "channel"]}];
     repeated google.protobuf.Struct blocks = 6;
 }
 
@@ -246,9 +248,9 @@ message ListRulesRequest {
 }
 
 message Variables {
-    string name = 1;
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string type = 2;
-    string value = 3;
+    string value = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string description = 4;
 }
 
@@ -272,12 +274,12 @@ message ListRulesResponse {
 message UpdateRuleRequest {
     uint64 id = 1;
     string name = 2;
-    string entity = 3;
-    string namespace = 4;
-    string group_name = 5;
-    string template = 6;
-    string status = 7;
-    repeated Variables variables = 10;
+    string entity = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string namespace = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string group_name = 5 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string template = 6 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string status = 7 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    repeated Variables variables = 10 [(validate.rules).repeated.min_items = 1];
 }
 
 message ListTemplatesRequest{
@@ -285,28 +287,28 @@ message ListTemplatesRequest{
 }
 
 message TemplateVariables {
-    string name = 1;
-    string type = 2;
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string type = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string default = 3;
     string description = 4;
 }
 
 message Template {
     uint64 id = 1;
-    string name = 2;
-    string body = 3;
-    repeated string tags = 4;
+    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
     google.protobuf.Timestamp created_at = 5;
     google.protobuf.Timestamp updated_at = 6;
-    repeated TemplateVariables variables = 7;
+    repeated TemplateVariables variables = 7 [(validate.rules).repeated.min_items = 1];
 }
 
 message UpsertTemplateRequest {
     uint64 id = 1;
-    string name = 2;
-    string body = 3;
+    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     repeated string tags = 4;
-    repeated TemplateVariables variables = 7;
+    repeated TemplateVariables variables = 5 [(validate.rules).repeated.min_items = 1];
 }
 
 message ListTemplatesResponse {
@@ -314,7 +316,7 @@ message ListTemplatesResponse {
 }
 
 message GetTemplateByNameRequest {
-    string name = 1;
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message DeleteTemplateRequest {
@@ -324,7 +326,7 @@ message DeleteTemplateRequest {
 message DeleteTemplateResponse {}
 
 message RenderTemplateRequest {
-    string name = 1;
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     map<string, string> variables = 2;
 }
 
