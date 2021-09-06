@@ -17,7 +17,7 @@ option java_outer_classname = "ServiceManager";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-        version: "0.1";
+        version: "0.1.0";
     };
     external_docs: {
         description: "Siren server";
@@ -81,7 +81,7 @@ service SirenService {
             get: "/rules"
         };
     }
-    rpc UpdateRule(UpdateRuleRequest) returns (Rule) {
+    rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse) {
         option (google.api.http) = {
             put: "/rules"
             body: "*"
@@ -94,13 +94,13 @@ service SirenService {
         };
     }
 
-    rpc GetTemplateByName(GetTemplateByNameRequest) returns (Template) {
+    rpc GetTemplateByName(GetTemplateByNameRequest) returns (TemplateResponse) {
         option (google.api.http) = {
             get: "/templates/{name}"
         };
     }
 
-    rpc UpsertTemplate(UpsertTemplateRequest) returns (Template) {
+    rpc UpsertTemplate(UpsertTemplateRequest) returns (TemplateResponse) {
         option (google.api.http) = {
             put: "/templates",
             body: "*"
@@ -271,6 +271,10 @@ message ListRulesResponse {
     repeated Rule rules = 1;
 }
 
+message UpdateRuleResponse {
+    Rule rule = 1;
+}
+
 message UpdateRuleRequest {
     uint64 id = 1;
     string name = 2;
@@ -301,6 +305,10 @@ message Template {
     google.protobuf.Timestamp created_at = 5;
     google.protobuf.Timestamp updated_at = 6;
     repeated TemplateVariables variables = 7 [(validate.rules).repeated.min_items = 1];
+}
+
+message TemplateResponse {
+    Template template = 1;
 }
 
 message UpsertTemplateRequest {
