@@ -12,17 +12,23 @@ option go_package = "github.com/odpf/proton/stencil/v1;stencilv1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 	info: {
-		version: "0.1.3";
+		version: "0.1.4";
 	};
-	external_docs: {
-		description: "Stencil server";
-	}
 	schemes: HTTP;
 };
 
 service StencilService {
-	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {}
-	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {}
+	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			consumes: "multipart/form-data";
+			produces: "application/json";
+		};
+	}
+	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			produces: "application/octet-stream";
+		};
+	}
 	rpc ListSnapshots(ListSnapshotsRequest) returns (ListSnapshotsResponse) {
 		option (google.api.http) = {
 			get: "/v1/snapshots"
@@ -36,7 +42,7 @@ service StencilService {
 	}
 }
 
-enum Rules {
+enum Rule {
 	UNKNOWN = 0;
 	FILE_NO_BREAKING_CHANGE = 1;
 	MESSAGE_NO_DELETE = 2;
@@ -70,7 +76,11 @@ message UploadDescriptorRequest {
 	bytes data = 4 [(google.api.field_behavior) = REQUIRED];
 	bool latest = 5;
 	bool dryrun = 6;
-	repeated Rules skiprules = 7;
+	Checks checks = 7;
+}
+
+message Checks {
+	repeated Rule except = 2;
 }
 
 message UploadDescriptorResponse {
