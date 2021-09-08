@@ -182,7 +182,7 @@ service RuntimeService {
             body: "*"
         };
     }
-    rpc DryRunReplay(DryRunReplayRequest) returns (DryRunReplayResponse) {
+    rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
         option (google.api.http) = {
             post: "/v1/project/{project_name}/replay/dryrun"
             body: "*"
@@ -651,7 +651,7 @@ message ReplayResponse {
     string id = 1;
 }
 
-message DryRunReplayRequest {
+message ReplayDryRunRequest {
     string project_name = 1;
     string job_name = 2;
     string namespace = 3;
@@ -659,7 +659,7 @@ message DryRunReplayRequest {
     string end_date = 5;
 }
 
-message DryRunReplayResponse {
+message ReplayDryRunResponse {
     bool success = 1;
     ReplayExecutionTreeNode response = 2;
 }
