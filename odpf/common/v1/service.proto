@@ -14,7 +14,7 @@ option java_outer_classname = "CommonServiceProto";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-        version: "0.1";
+        version: "0.1.0";
     };
     external_docs: {
         description: "Common endpoints for all services";
@@ -25,22 +25,25 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 service CommonService {
     rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
         option (google.api.http) = {
-            get: "/v1/version"
+            post: "/v1/version"
+            body: "*"
         };
     }
 }
 
-message GetVersionRequest {}
+message GetVersionRequest {
+    Version client = 1;
+}
 
-// Keeping a response envelope over version to add more info in future like latest: bool, latestVersion: Version etc
 message GetVersionResponse {
-    Version version = 1;
+    Version server = 1;
 }
 
 message Version {
     string version = 1;
-    string commit_id = 2;
+    string commit = 2;
     google.protobuf.Timestamp build_time = 3;
     string lang_version = 4;
-    string os_arch = 5;
+    string os = 5;
+    string architechture = 6;
 }
