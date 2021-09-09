@@ -1,0 +1,42 @@
+syntax = "proto3";
+package odpf.optimus.internal;
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus.internal";
+option java_outer_classname = "CommandLogProto";
+
+message CommandLog {
+    enum Type {
+        COMMAND_TYPE_UNKNOWN = 0;
+        COMMAND_TYPE_NOOP = 1;
+        COMMAND_TYPE_SCHEDULE_JOB = 2;
+        COMMAND_TYPE_UPDATE_JOB = 3;
+    }
+    Type type = 1;
+    bytes payload = 2;
+}
+
+message CommandNoop {
+	string id = 1;
+}
+
+// CommandScheduleJob will be sent to assign job for execution to a peer
+message CommandScheduleJob {
+    // peer_id is the node name to which this job is assigned to get
+    // executed
+    string peer_id = 1;
+
+	repeated string run_ids = 2;
+}
+
+// CommandUpdateJob will be sent to update the attributes of job which was
+// previously scheduled for execution
+message CommandUpdateJob {
+    string peer_id = 1;
+    message Patch {
+        string run_id = 1;
+        string status = 2;
+    }
+	repeated Patch patches = 2;
+}
