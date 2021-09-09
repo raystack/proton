@@ -45,5 +45,5 @@ message Version {
     google.protobuf.Timestamp build_time = 3;
     string lang_version = 4;
     string os = 5;
-    string architechture = 6;
+    string architecture = 6;
 }
