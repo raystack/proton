@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package odpf.common.v1;
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/common/v1";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.common";
+option java_outer_classname = "CommonServiceProto";
+
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        version: "0.1.0";
+    };
+    external_docs: {
+        description: "Common endpoints for all services";
+    }
+    schemes: HTTP;
+};
+
+service CommonService {
+    rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
+        option (google.api.http) = {
+            post: "/v1/version"
+            body: "*"
+        };
+    }
+}
+
+message GetVersionRequest {
+    Version client = 1;
+}
+
+message GetVersionResponse {
+    Version server = 1;
+}
+
+message Version {
+    string version = 1;
+    string commit = 2;
+    google.protobuf.Timestamp build_time = 3;
+    string lang_version = 4;
+    string os = 5;
+    string architecture = 6;
+}
