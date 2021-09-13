@@ -231,7 +231,7 @@ message SendSlackNotificationRequest{
     string entity = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string message = 3;
     string receiver_name = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string receiver_type = 5 [(validate.rules).string = {in: ["channel", "user"]}];;
+    string receiver_type = 5 [(validate.rules).string = {in: ["channel", "user"]}];
     repeated google.protobuf.Struct blocks = 6;
 }
 
