@@ -63,6 +63,9 @@ message DownloadDescriptorRequest {
 	string name = 2 [(google.api.field_behavior) = REQUIRED];
 	string version = 3 [(google.api.field_behavior) = REQUIRED];
 	repeated string fullnames = 4;
+
+	// supported channel: latest
+	string channel = 5;
 }
 
 message DownloadDescriptorResponse {
