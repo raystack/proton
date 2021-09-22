@@ -206,7 +206,7 @@ service RuntimeService {
     }
     rpc BackupDryRun(BackupDryRunRequest) returns (BackupDryRunResponse) {
         option (google.api.http) = {
-            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/resource/{resource_name}/backup/dryrun"
+            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup-dryrun"
             body: "*"
         };
     }
