@@ -210,6 +210,12 @@ service RuntimeService {
             body: "*"
         };
     }
+    rpc Backup(BackupRequest) returns (BackupResponse) {
+        option (google.api.http) = {
+            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
+            body: "*"
+        };
+    }
     // TODO(kush.sharma): disabled ATM
     // rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
@@ -749,4 +755,24 @@ message BackupDryRunRequest {
 
 message BackupDryRunResponse {
     repeated string resource_name = 1;
+}
+
+message BackupRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string resource_name = 3;
+    string namespace = 4;
+    string description = 5;
+    bool ignore_downstream = 6;
+    BackupConfig backupConfig = 7;
+}
+
+message BackupResponse {
+    repeated string urn = 1;
+}
+
+message BackupConfig {
+    string dataset = 1;
+    string prefix = 2;
+    int32 ttl = 3;
 }
