@@ -23,7 +23,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 // WARNING: This is still in active development and can have breaking changes
-service Guardian {
+service GuardianService {
     rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
         option (google.api.http) = {
             get: "/providers"
@@ -261,6 +261,7 @@ message CreateAppealRequest {
         uint32 id = 1;
         string role = 2;
         google.protobuf.Struct options = 3;
+        google.protobuf.Struct details = 4;
     }
     repeated Resource resources = 2;
 }
@@ -400,6 +401,8 @@ message Appeal {
     string revoked_by = 14;
     google.protobuf.Timestamp revoked_at = 15;
     string revoke_reason = 16;
+    google.protobuf.Struct details = 17;
+
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
