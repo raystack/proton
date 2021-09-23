@@ -6,6 +6,7 @@ import "google/api/field_behavior.proto";
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
@@ -32,6 +33,70 @@ service SirenService {
         };
     }
 
+    rpc ListProviders(google.protobuf.Empty) returns (ListProvidersResponse) {
+        option (google.api.http) = {
+            get: "/providers"
+        };
+    }
+
+    rpc CreateProvider(CreateProviderRequest) returns (Provider) {
+        option (google.api.http) = {
+            post: "/providers"
+            body: "*"
+        };
+    }
+
+    rpc GetProvider(GetProviderRequest) returns (Provider) {
+        option (google.api.http) = {
+            get: "/providers/{id}"
+        };
+    }
+
+    rpc UpdateProvider(UpdateProviderRequest) returns (Provider) {
+        option (google.api.http) = {
+            put: "/providers/{id}",
+            body: "*"
+        };
+    }
+
+    rpc DeleteProvider(DeleteProviderRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/providers/{id}"
+        };
+    }
+
+    rpc ListReceivers(google.protobuf.Empty) returns (ListReceiversResponse) {
+        option (google.api.http) = {
+            get: "/receivers"
+        };
+    }
+
+    rpc CreateReceiver(CreateReceiverRequest) returns (Receiver) {
+        option (google.api.http) = {
+            post: "/receivers"
+            body: "*"
+        };
+    }
+
+    rpc GetReceiver(GetReceiverRequest) returns (Receiver) {
+        option (google.api.http) = {
+            get: "/receivers/{id}"
+        };
+    }
+
+    rpc UpdateReceiver(UpdateReceiverRequest) returns (Receiver) {
+        option (google.api.http) = {
+            put: "/receivers/{id}",
+            body: "*"
+        };
+    }
+
+    rpc DeleteReceiver(DeleteReceiverRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/receivers/{id}"
+        };
+    }
+
     rpc ListAlertHistory(ListAlertHistoryRequest) returns (ListAlertHistoryResponse) {
         option (google.api.http) = {
             get: "/history"
@@ -47,7 +112,7 @@ service SirenService {
 
     rpc ListWorkspaceChannels(ListWorkspaceChannelsRequest) returns (ListWorkspaceChannelsResponse) {
         option (google.api.http) = {
-            get: "/workspaces/{workspace_name}/channels"
+            get: "/slackworkspaces/{workspace_name}/channels"
         };
     }
     rpc ExchangeCode(ExchangeCodeRequest) returns (ExchangeCodeResponse) {
@@ -125,6 +190,88 @@ message PingResponse {
     string message = 1;
 }
 
+enum Types {
+    CORTEX = 0;
+}
+
+message Provider {
+    uint64 id = 1;
+    string host = 2;
+    string name = 3;
+    string type = 4 [(validate.rules).string = {in: ["cortex"]}];
+    google.protobuf.Struct credentials = 5;
+    map<string, string> labels = 6;
+    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListProvidersResponse {
+    repeated Provider providers = 1;
+}
+
+message CreateProviderRequest {
+    string host = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string type = 3 [(validate.rules).string = {in: ["cortex"]}];
+    google.protobuf.Struct credentials = 4;
+    map<string, string> labels = 5;
+}
+
+message GetProviderRequest {
+    uint64 id = 1;
+}
+
+message UpdateProviderRequest {
+    uint64 id = 1;
+    string host = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+    string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string type = 4 [(validate.rules).string = {in: ["cortex"]}];
+    google.protobuf.Struct credentials = 5;
+    map<string, string> labels = 6;
+}
+
+message DeleteProviderRequest {
+    uint64 id = 1;
+}
+
+message Receiver {
+    uint64 id = 1;
+    string name = 2;
+    string type = 3 [(validate.rules).string = {in: ["slack", "pagerduty", "http"]}];
+    map<string, string> labels = 4;
+    google.protobuf.Struct configurations = 5;
+    google.protobuf.Struct data = 6;
+    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListReceiversResponse {
+    repeated Receiver receivers = 1;
+}
+
+message CreateReceiverRequest {
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+    string type = 2 [(validate.rules).string = {in: ["slack", "pagerduty", "http"]}];
+    map<string, string> labels = 3;
+    google.protobuf.Struct configurations = 4;
+}
+
+message GetReceiverRequest {
+    uint64 id = 1;
+}
+
+message UpdateReceiverRequest {
+    uint64 id = 1;
+    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+    string type = 3 [(validate.rules).string = {in: ["slack", "pagerduty", "http"]}];
+    map<string, string> labels = 4;
+    google.protobuf.Struct configurations = 5;
+}
+
+message DeleteReceiverRequest {
+    uint64 id = 1;
+}
+
 message ListAlertHistoryRequest {
     string resource = 1;  
     uint32 start_time = 2;
@@ -171,7 +318,7 @@ message CreateAlertHistoryResponse {
     repeated AlertHistory alerts = 1;
 }
 
-message Workspace {
+message SlackWorkspace {
     string id = 1;
     string name = 2;
 }
@@ -181,7 +328,7 @@ message ListWorkspaceChannelsRequest {
 }
 
 message ListWorkspaceChannelsResponse {
-    repeated Workspace data = 1;
+    repeated SlackWorkspace data = 1;
 }
 
 message ExchangeCodeRequest {
