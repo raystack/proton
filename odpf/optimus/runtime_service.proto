@@ -764,15 +764,9 @@ message BackupRequest {
     string namespace = 4;
     string description = 5;
     bool ignore_downstream = 6;
-    BackupConfig backupConfig = 7;
+    map<string, string> config = 7;
 }
 
 message BackupResponse {
     repeated string urn = 1;
-}
-
-message BackupConfig {
-    string dataset = 1;
-    string prefix = 2;
-    int32 ttl = 3;
 }
