@@ -62,6 +62,12 @@ service GuardianService {
         };
     }
 
+    rpc GetPolicy(GetPolicyRequest) returns (Policy) {
+        option (google.api.http) = {
+            get: "/policies/{id}/versions/{version}"
+        };
+    }
+
     rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
         option (google.api.http) = {
             post: "/policies"
@@ -187,6 +193,11 @@ message ListPoliciesRequest {}
 
 message ListPoliciesResponse {
     repeated Policy policies = 1;
+}
+
+message GetPolicyRequest {
+    string id = 1;
+    uint32 version = 2;
 }
 
 message CreatePolicyRequest {
