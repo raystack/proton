@@ -30,6 +30,12 @@ service GuardianService {
         };
     }
 
+    rpc GetProvider(GetProviderRequest) returns (Provider) {
+        option (google.api.http) = {
+            get: "/providers/{id}"
+        };
+    }
+
     rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
         option (google.api.http) = {
             post: "/providers"
@@ -145,6 +151,10 @@ message ListProvidersRequest {}
 
 message ListProvidersResponse {
     repeated Provider providers = 1;
+}
+
+message GetProviderRequest {
+    uint32 id = 1;
 }
 
 message CreateProviderRequest {
