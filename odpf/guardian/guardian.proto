@@ -388,6 +388,7 @@ message Appeal {
 
     message AppealOptions {
         google.protobuf.Timestamp expiration_date = 1;  // optional
+        string duration = 2;
     }
     AppealOptions options = 8;  // optional
 
