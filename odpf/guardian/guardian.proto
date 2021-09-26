@@ -88,6 +88,12 @@ service GuardianService {
         };
     }
 
+    rpc GetResource(GetResourceRequest) returns (Resource) {
+        option (google.api.http) = {
+            get: "/resources/{id}"
+        };
+    }
+
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
             put: "/resources/{id}"
@@ -221,6 +227,10 @@ message ListResourcesRequest {}
 
 message ListResourcesResponse {
     repeated Resource resources = 1;
+}
+
+message GetResourceRequest {
+    uint32 id = 1;
 }
 
 message UpdateResourceRequest {
