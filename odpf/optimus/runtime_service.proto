@@ -216,6 +216,11 @@ service RuntimeService {
             body: "*"
         };
     }
+    rpc ListBackups(ListBackupsRequest) returns (ListBackupsResponse) {
+        option (google.api.http) = {
+            get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
+        };
+    }
     // TODO(kush.sharma): disabled ATM
     // rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
@@ -769,4 +774,21 @@ message BackupRequest {
 
 message BackupResponse {
     repeated string urn = 1;
+}
+
+message ListBackupsRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string namespace = 3;
+}
+
+message ListBackupsResponse {
+    repeated BackupSpec backup_list = 1;
+}
+
+message BackupSpec {
+    string id = 1;
+    string resource_name = 2;
+    google.protobuf.Timestamp created_at = 3;
+    string description = 4;
 }
