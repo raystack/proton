@@ -40,6 +40,8 @@ service StencilService {
 			patch: "/v1/snapshots/{id}/promote"
 		};
 	}
+	// Search matches given query with message names and field names
+	// returns filtered message/field names along with snapshot details
 	rpc Search(SearchRequest) returns (SearchResponse) {
 		option (google.api.http) = {
 			get: "/v1/search"
@@ -105,28 +107,23 @@ message ListSnapshotsResponse {
 	repeated Snapshot snapshots = 1;
 }
 
-message Search {
-	enum Type {
-		UNKNOWN = 0;
-		MESSAGE_LEVEL = 1;
-		FIELD_LEVEL = 2;
-	}
-}
-
 message SearchRequest {
 	string namespace = 1;
 	string name = 2;
 	string version = 3;
 	bool latest = 4;
-	Search.Type type = 5;
-	string query = 6;
+	string query = 5;
 }
 
 message SearchResult {
+	message File {
+		string path = 1;
+		string package = 2;
+		repeated string messages = 3;
+		repeated string fields = 4;
+	}
 	Snapshot snapshot = 1;
-	string filepath = 2;
-	string package = 3;
-	string message_name = 4;
+	repeated File files = 2;
 }
 
 message SearchResponse {
