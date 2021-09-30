@@ -180,6 +180,50 @@ service Shield {
       summary: "Update Role by ID";
     };
   }
+
+  // Organizations
+  rpc GetAllOrganizations(GetAllOrganizationsRequest) returns (GetAllOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1/organizations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all Organization";
+    };
+  }
+
+  rpc CreateOrganization(CreateOrganizationRequest) returns (OrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1/organizations",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Create Organization";
+    };
+  }
+
+  rpc GetOrganizationByID(GetOrganizationRequest) returns (OrganizationResponse) {
+    option (google.api.http) = {
+      get: "/v1/organizations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get Organization by ID";
+    };
+  }
+
+  rpc UpdateOrganizationByID(UpdateOrganizationRequest) returns (OrganizationResponse) {
+    option (google.api.http) = {
+      put: "/v1/organizations/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Update Organization by ID";
+    };
+  }
+
 }
 
 message CreateUserRequestBody {
@@ -325,4 +369,45 @@ message GetAllRolesRequest {
 
 message GetAllRolesResponse {
   repeated Role roles = 1;
+}
+
+
+
+message CreateOrganizationBody {
+  string name = 1;
+  string slug = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
+message CreateOrganizationRequest {
+  CreateOrganizationBody body = 1;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+}
+
+message OrganizationResponse {
+  Organization organization = 1;
+}
+
+message GetAllOrganizationsRequest {
+}
+
+message GetAllOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message GetOrganizationRequest {
+  string id = 1;
+}
+
+message UpdateOrganizationRequest {
+  string id = 1;
+  CreateOrganizationBody body = 2;
 }
