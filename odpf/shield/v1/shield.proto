@@ -224,6 +224,49 @@ service Shield {
     };
   }
 
+  // Projects
+  rpc GetAllProjects(GetAllProjectsRequest) returns (GetAllProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all Project";
+    };
+  }
+
+  rpc CreateProject(CreateProjectRequest) returns (ProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1/projects",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Create Project";
+    };
+  }
+
+  rpc GetProjectByID(GetProjectRequest) returns (ProjectResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get Project by ID";
+    };
+  }
+
+  rpc UpdateProjectByID(UpdateProjectRequest) returns (ProjectResponse) {
+    option (google.api.http) = {
+      put: "/v1/projects/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Update Project by ID";
+    };
+  }
+
 }
 
 message CreateUserRequestBody {
@@ -410,4 +453,44 @@ message GetOrganizationRequest {
 message UpdateOrganizationRequest {
   string id = 1;
   CreateOrganizationBody body = 2;
+}
+
+
+message CreateProjectBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
+message CreateProjectRequest {
+  CreateProjectBody body = 1;
+}
+
+message Project {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 3;
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+}
+
+message ProjectResponse {
+  Project project = 1;
+}
+
+message GetAllProjectsRequest {
+}
+
+message GetAllProjectsResponse {
+  repeated Project projects = 1;
+}
+
+message GetProjectRequest {
+  string id = 1;
+}
+
+message UpdateProjectRequest {
+  string id = 1;
+  CreateProjectBody body = 2;
 }
