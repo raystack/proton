@@ -783,7 +783,7 @@ message ListBackupsRequest {
 }
 
 message ListBackupsResponse {
-    repeated BackupSpec backup_list = 1;
+    repeated BackupSpec backups = 1;
 }
 
 message BackupSpec {
