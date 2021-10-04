@@ -223,7 +223,9 @@ message UpdatePolicyResponse {
     Policy policy = 1;
 }
 
-message ListResourcesRequest {}
+message ListResourcesRequest {
+    bool is_deleted = 1;
+}
 
 message ListResourcesResponse {
     repeated Resource resources = 1;
@@ -464,4 +466,5 @@ message Resource {
     map<string, string> labels = 8;
     google.protobuf.Timestamp created_at = 9;
     google.protobuf.Timestamp updated_at = 10;
+    bool is_deleted = 11;
 }
