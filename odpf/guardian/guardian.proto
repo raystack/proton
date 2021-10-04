@@ -72,7 +72,7 @@ service GuardianService {
 
     rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
         option (google.api.http) = {
-            get: "/resources/{is_deleted}"
+            get: "/resources"
         };
     }
 
