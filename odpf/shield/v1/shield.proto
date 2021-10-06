@@ -23,7 +23,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 
 service ShieldService {
   // Users
-  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse) {
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
     option (google.api.http) = {
       get: "/v1/users"
     };
@@ -86,7 +86,7 @@ service ShieldService {
   }
 
   // Group
-  rpc GetAllGroups(GetAllGroupsRequest) returns (GetAllGroupsResponse) {
+  rpc GetGroups(GetGroupsRequest) returns (GetGroupsResponse) {
     option (google.api.http) = {
       get: "/v1/groups",
     };
@@ -139,7 +139,7 @@ service ShieldService {
   }
 
   // Roles
-  rpc GetAllRoles(GetAllRolesRequest) returns (GetAllRolesResponse) {
+  rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {
     option (google.api.http) = {
       get: "/v1/roles",
     };
@@ -182,7 +182,7 @@ service ShieldService {
   }
 
   // Organizations
-  rpc GetAllOrganizations(GetAllOrganizationsRequest) returns (GetAllOrganizationsResponse) {
+  rpc GetOrganizations(GetOrganizationsRequest) returns (GetOrganizationsResponse) {
     option (google.api.http) = {
       get: "/v1/organizations"
     };
@@ -225,7 +225,7 @@ service ShieldService {
   }
 
   // Projects
-  rpc GetAllProjects(GetAllProjectsRequest) returns (GetAllProjectsResponse) {
+  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse) {
     option (google.api.http) = {
       get: "/v1/projects"
     };
@@ -305,11 +305,11 @@ message GetUserRequest {
 message GetCurrentUserRequest {
 }
 
-message GetAllUsersRequest {
+message GetUsersRequest {
   google.protobuf.Struct fields = 1;
 }
 
-message GetAllUsersResponse {
+message GetUsersResponse {
   repeated User users = 1;
 }
 
@@ -363,11 +363,11 @@ message GetGroupRequest {
   string id = 1;
 }
 
-message GetAllGroupsRequest {
+message GetGroupsRequest {
   string user_id = 1;
 }
 
-message GetAllGroupsResponse {
+message GetGroupsResponse {
   repeated Group groups = 1;
 }
 
@@ -405,10 +405,10 @@ message UpdateRoleRequest {
   CreateRoleBody body = 2;
 }
 
-message GetAllRolesRequest {
+message GetRolesRequest {
 }
 
-message GetAllRolesResponse {
+message GetRolesResponse {
   repeated Role roles = 1;
 }
 
@@ -437,10 +437,10 @@ message OrganizationResponse {
   Organization organization = 1;
 }
 
-message GetAllOrganizationsRequest {
+message GetOrganizationsRequest {
 }
 
-message GetAllOrganizationsResponse {
+message GetOrganizationsResponse {
   repeated Organization organizations = 1;
 }
 
@@ -477,10 +477,10 @@ message ProjectResponse {
   Project project = 1;
 }
 
-message GetAllProjectsRequest {
+message GetProjectsRequest {
 }
 
-message GetAllProjectsResponse {
+message GetProjectsResponse {
   repeated Project projects = 1;
 }
 
