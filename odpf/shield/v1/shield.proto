@@ -23,7 +23,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 
 service ShieldService {
   // Users
-  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {
       get: "/v1/users"
     };
@@ -43,7 +43,7 @@ service ShieldService {
     };
   }
 
-  rpc GetUserByID(GetUserByIDRequest) returns (GetUserByIDResponse) {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
     option (google.api.http) = {
       get: "/v1/users/{id}",
     };
@@ -63,7 +63,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateUserByID(UpdateUserByIDRequest) returns (UpdateUserByIDResponse) {
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
       put: "/v1/users/{id}",
       body: "body";
@@ -86,7 +86,7 @@ service ShieldService {
   }
 
   // Group
-  rpc GetGroups(GetGroupsRequest) returns (GetGroupsResponse) {
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (google.api.http) = {
       get: "/v1/groups",
     };
@@ -107,7 +107,7 @@ service ShieldService {
     };
   }
 
-  rpc GetGroupByID(GetGroupByIDRequest) returns (GetGroupByIDResponse) {
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
     option (google.api.http) = {
       get: "/v1/groups/{id}",
     };
@@ -117,7 +117,7 @@ service ShieldService {
     };
   }
 
-  rpc GetGroupUsers(GetGroupUsersRequest) returns (GetGroupUsersResponse) {
+  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
     option (google.api.http) = {
       get: "/v1/groups/{id}/users",
     };
@@ -127,7 +127,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateGroupByID(UpdateGroupByIDRequest) returns (UpdateGroupByIDResponse) {
+  rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
     option (google.api.http) = {
       put: "/v1/groups/{id}",
       body: "body";
@@ -139,7 +139,7 @@ service ShieldService {
   }
 
   // Roles
-  rpc GetRoles(GetRolesRequest) returns (GetRolesResponse) {
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http) = {
       get: "/v1/roles",
     };
@@ -160,7 +160,7 @@ service ShieldService {
     };
   }
 
-  rpc GetRoleByID(GetRoleByIDRequest) returns (GetRoleByIDResponse) {
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
     option (google.api.http) = {
       get: "/v1/roles/{id}",
     };
@@ -170,7 +170,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateRoleByID(UpdateRoleByIDRequest) returns (UpdateRoleByIDResponse) {
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
     option (google.api.http) = {
       put: "/v1/roles/{id}",
       body: "body";
@@ -182,7 +182,7 @@ service ShieldService {
   }
 
   // Organizations
-  rpc GetOrganizations(GetOrganizationsRequest) returns (GetOrganizationsResponse) {
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
     option (google.api.http) = {
       get: "/v1/organizations"
     };
@@ -203,7 +203,7 @@ service ShieldService {
     };
   }
 
-  rpc GetOrganizationByID(GetOrganizationByIDRequest) returns (GetOrganizationByIDResponse) {
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
     option (google.api.http) = {
       get: "/v1/organizations/{id}",
     };
@@ -213,7 +213,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateOrganizationByID(UpdateOrganizationByIDRequest) returns (UpdateOrganizationByIDResponse) {
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
     option (google.api.http) = {
       put: "/v1/organizations/{id}",
       body: "body"
@@ -225,7 +225,7 @@ service ShieldService {
   }
 
   // Projects
-  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse) {
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {
       get: "/v1/projects"
     };
@@ -246,7 +246,7 @@ service ShieldService {
     };
   }
 
-  rpc GetProjectByID(GetProjectByIDRequest) returns (GetProjectByIDResponse) {
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
     option (google.api.http) = {
       get: "/v1/projects/{id}",
     };
@@ -256,7 +256,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateProjectByID(UpdateProjectByIDRequest) returns (UpdateProjectByIDResponse) {
+  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
     option (google.api.http) = {
       put: "/v1/projects/{id}",
       body: "body"
@@ -293,7 +293,7 @@ message CreateUserResponse {
   User user = 1;
 }
 
-message GetUserByIDResponse {
+message GetUserResponse {
   User user = 1;
 }
 
@@ -301,7 +301,7 @@ message GetCurrentUserResponse {
   User user = 1;
 }
 
-message UpdateUserByIDResponse {
+message UpdateUserResponse {
   User user = 1;
 }
 
@@ -309,23 +309,23 @@ message UpdateCurrentUserResponse {
   User user = 1;
 }
 
-message UpdateUserByIDRequest {
+message UpdateUserRequest {
   string id = 1;
   CreateUserRequestBody body = 2;
 }
 
-message GetUserByIDRequest {
+message GetUserRequest {
   string id = 1;
 }
 
 message GetCurrentUserRequest {
 }
 
-message GetUsersRequest {
+message ListUsersRequest {
   google.protobuf.Struct fields = 1;
 }
 
-message GetUsersResponse {
+message ListUsersResponse {
   repeated User users = 1;
 }
 
@@ -362,19 +362,19 @@ message CreateGroupResponse {
   Group group = 1;
 }
 
-message GetGroupByIDResponse {
+message GetGroupResponse {
   Group group = 1;
 }
 
-message UpdateGroupByIDResponse {
+message UpdateGroupResponse {
   Group group = 1;
 }
 
-message GetGroupUsersResponse {
+message ListGroupUsersResponse {
   repeated User users = 1;
 }
 
-message UpdateGroupByIDRequest {
+message UpdateGroupRequest {
   string id = 1;
   CreateGroupRequestBody body = 2;
 }
@@ -383,19 +383,19 @@ message UpdateCurrentUserRequest {
   CreateGroupRequestBody body = 1;
 }
 
-message GetGroupByIDRequest {
+message GetGroupRequest {
   string id = 1;
 }
 
-message GetGroupUsersRequest {
+message ListGroupUsersRequest {
   string id = 1;
 }
 
-message GetGroupsRequest {
+message ListGroupsRequest {
   string user_id = 1;
 }
 
-message GetGroupsResponse {
+message ListGroupsResponse {
   repeated Group groups = 1;
 }
 
@@ -424,27 +424,27 @@ message CreateRoleResponse {
   Role role = 1;
 }
 
-message GetRoleByIDResponse {
+message GetRoleResponse {
   Role role = 1;
 }
 
-message UpdateRoleByIDResponse {
+message UpdateRoleResponse {
   Role role = 1;
 }
 
-message GetRoleByIDRequest {
+message GetRoleRequest {
   string id = 1;
 }
 
-message UpdateRoleByIDRequest {
+message UpdateRoleRequest {
   string id = 1;
   CreateRoleBody body = 2;
 }
 
-message GetRolesRequest {
+message ListRolesRequest {
 }
 
-message GetRolesResponse {
+message ListRolesResponse {
   repeated Role roles = 1;
 }
 
@@ -473,26 +473,26 @@ message CreateOrganizationResponse {
   Organization organization = 1;
 }
 
-message GetOrganizationByIDResponse {
+message GetOrganizationResponse {
   Organization organization = 1;
 }
 
-message UpdateOrganizationByIDResponse {
+message UpdateOrganizationResponse {
   Organization organization = 1;
 }
 
-message GetOrganizationsRequest {
+message ListOrganizationsRequest {
 }
 
-message GetOrganizationsResponse {
+message ListOrganizationsResponse {
   repeated Organization organizations = 1;
 }
 
-message GetOrganizationByIDRequest {
+message GetOrganizationRequest {
   string id = 1;
 }
 
-message UpdateOrganizationByIDRequest {
+message UpdateOrganizationRequest {
   string id = 1;
   CreateOrganizationBody body = 2;
 }
@@ -521,26 +521,26 @@ message CreateProjectResponse {
   Project project = 1;
 }
 
-message GetProjectByIDResponse {
+message GetProjectResponse {
   Project project = 1;
 }
 
-message UpdateProjectByIDResponse {
+message UpdateProjectResponse {
   Project project = 1;
 }
 
-message GetProjectsRequest {
+message ListProjectsRequest {
 }
 
-message GetProjectsResponse {
+message ListProjectsResponse {
   repeated Project projects = 1;
 }
 
-message GetProjectByIDRequest {
+message GetProjectRequest {
   string id = 1;
 }
 
-message UpdateProjectByIDRequest {
+message UpdateProjectRequest {
   string id = 1;
   CreateProjectBody body = 2;
 }
