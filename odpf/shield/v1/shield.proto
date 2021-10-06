@@ -21,7 +21,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   schemes: HTTP;
 };
 
-service Shield {
+service ShieldService {
   // Users
   rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse) {
     option (google.api.http) = {
@@ -285,8 +285,8 @@ message User {
   string slug = 3;
   string email = 4 [(validate.rules).string.email = true]; 
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp createdAt = 6;
-  google.protobuf.Timestamp updatedAt = 7;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 message UserResponse {
@@ -334,12 +334,12 @@ message Group {
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 3;
   repeated Admin admins = 4;
-  bool isMember = 5;
-  int32 memberCount = 6;
-  string orgId = 7;
+  bool is_member = 5;
+  int32 member_count = 6;
+  string org_id = 7;
   google.protobuf.Struct metadata = 8;
-  google.protobuf.Timestamp createdAt = 9;
-  google.protobuf.Timestamp updatedAt = 10;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
 }
 
 message GroupResponse {
@@ -364,9 +364,7 @@ message GetGroupRequest {
 }
 
 message GetAllGroupsRequest {
-  string userId = 1;
-//  string orgId = 2;
-//  string org = 3;
+  string user_id = 1;
 }
 
 message GetAllGroupsResponse {
@@ -379,8 +377,8 @@ message Role {
   repeated string tags = 3;
   repeated string actions = 4;
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp createdAt = 6;
-  google.protobuf.Timestamp updatedAt = 7;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 message CreateRoleBody {
@@ -431,8 +429,8 @@ message Organization {
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 3;
   google.protobuf.Struct metadata = 4;
-  google.protobuf.Timestamp createdAt = 5;
-  google.protobuf.Timestamp updatedAt = 6;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message OrganizationResponse {
@@ -471,8 +469,8 @@ message Project {
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 3;
   google.protobuf.Struct metadata = 4;
-  google.protobuf.Timestamp createdAt = 5;
-  google.protobuf.Timestamp updatedAt = 6;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message ProjectResponse {
