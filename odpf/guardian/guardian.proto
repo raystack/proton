@@ -225,6 +225,11 @@ message UpdatePolicyResponse {
 
 message ListResourcesRequest {
     bool is_deleted = 1;
+    string provider_type = 2;
+    string provider_urn = 3;
+    string type = 4;
+    string urn = 5;
+    string name = 6;
 }
 
 message ListResourcesResponse {
