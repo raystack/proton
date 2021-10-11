@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package odpf.assets.facets;
+
+option java_package = "io.odpf.assets.facets";
+option java_outer_classname = "PreviewProto";
+option go_package = "github.com/odpf/proton/assets/facets";
+
+import "google/protobuf/struct.proto";
+
+// Preview contains samples of the metadata.
+message Preview {
+  // fields is a list of fields.
+  repeated string fields = 1;
+
+  // rows is a multidimensional array containing 
+  // Optional: List of properties the user has.
+  google.protobuf.ListValue rows = 2;
+}
