@@ -346,6 +346,11 @@ message Role {
     repeated google.protobuf.Value permissions = 4;
 }
 
+message PolicyConfig {
+    string id = 1;
+    int32 version = 2;
+}
+
 message ProviderConfig {
     string type = 1;
     string urn = 2;
@@ -360,11 +365,6 @@ message ProviderConfig {
 
     message ResourceConfig {
         string type = 1;
-
-        message PolicyConfig {
-            string id = 1;
-            int32 version = 2;
-        }
         PolicyConfig policy = 2;
         repeated Role roles = 4;
     }
@@ -383,6 +383,15 @@ message Provider {
     google.protobuf.Timestamp updated_at = 6;
 }
 
+message Condition {
+    string field = 1;
+
+    message MatchCondition {
+        google.protobuf.Value eq = 1;
+    }
+    MatchCondition match = 2;
+}
+
 // Policy is a configurable steps for appeal's approval
 message Policy {
     string id = 1;
@@ -393,14 +402,6 @@ message Policy {
         string name = 1;
         string description = 2;  // optional
 
-        message Condition {
-            string field = 1;
-
-            message MatchCondition {
-                google.protobuf.Value eq = 1;
-            }
-            MatchCondition match = 2;
-        }
         repeated Condition conditions = 3;  // optional
 
         bool allow_failed = 4;             // optional
@@ -412,6 +413,39 @@ message Policy {
     map<string, string> labels = 5;
     google.protobuf.Timestamp created_at = 6;
     google.protobuf.Timestamp updated_at = 7;
+
+    message Requirement {
+        message RequirementTrigger {
+            string provider_type = 1;
+            string provider_urn = 2;
+            string resource_type = 3;
+            string resource_urn = 4;
+            string role = 5;
+            repeated Condition conditions = 6;
+        }
+        RequirementTrigger on = 1;
+
+        message AdditionalAppeal {
+            message ResourceIdentifier {
+                string provider_type = 1;
+                string provider_urn = 2;
+                string type = 3;
+                string urn = 4;
+                uint32 id = 5;
+            }
+            ResourceIdentifier resource = 1;
+            string role = 2;
+            AppealOptions options = 3;
+            PolicyConfig policy = 4;
+        }
+        repeated AdditionalAppeal appeals = 2;
+    }
+    repeated Requirement requirements = 8;
+}
+
+message AppealOptions {
+    google.protobuf.Timestamp expiration_date = 1;  // optional
+    string duration = 2;
 }
 
 // Appeal is created by user to get access to one or more resources
@@ -424,10 +458,6 @@ message Appeal {
     string user = 6;
     string role = 7;
 
-    message AppealOptions {
-        google.protobuf.Timestamp expiration_date = 1;  // optional
-        string duration = 2;
-    }
     AppealOptions options = 8;  // optional
 
     map<string, string> labels = 9;
