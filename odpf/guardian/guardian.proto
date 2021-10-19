@@ -256,7 +256,7 @@ message ListUserAppealsResponse {
 }
 
 message ListAppealsRequest {
-    string user = 1;
+    string account_id = 1;
 }
 
 message ListAppealsResponse {
@@ -293,7 +293,7 @@ message RevokeAppealResponse {
 }
 
 message CreateAppealRequest {
-    string user = 1;
+    string account_id = 1;
 
     message Resource {
         uint32 id = 1;
@@ -317,7 +317,7 @@ message ListUserApprovalsResponse {
 }
 
 message ListApprovalsRequest {
-    string user = 1;
+    string account_id = 1;
     repeated string statuses = 2;
 }
 
@@ -421,7 +421,7 @@ message Appeal {
     string policy_id = 3;
     uint32 policy_version = 4;
     string status = 5;
-    string user = 6;
+    string account_id = 6;
     string role = 7;
 
     message AppealOptions {
