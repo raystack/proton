@@ -256,7 +256,7 @@ message ListUserAppealsResponse {
 }
 
 message ListAppealsRequest {
-    string user = 1;
+    string account_id = 1;
 }
 
 message ListAppealsResponse {
@@ -293,7 +293,7 @@ message RevokeAppealResponse {
 }
 
 message CreateAppealRequest {
-    string user = 1;
+    string account_id = 1;
 
     message Resource {
         uint32 id = 1;
@@ -302,6 +302,7 @@ message CreateAppealRequest {
         google.protobuf.Struct details = 4;
     }
     repeated Resource resources = 2;
+    string account_type = 3;
 }
 
 message CreateAppealResponse {
@@ -317,7 +318,7 @@ message ListUserApprovalsResponse {
 }
 
 message ListApprovalsRequest {
-    string user = 1;
+    string account_id = 1;
     repeated string statuses = 2;
 }
 
@@ -455,7 +456,7 @@ message Appeal {
     string policy_id = 3;
     uint32 policy_version = 4;
     string status = 5;
-    string user = 6;
+    string account_id = 6;
     string role = 7;
 
     AppealOptions options = 8;  // optional
@@ -472,6 +473,8 @@ message Appeal {
     string revoke_reason = 16;
     google.protobuf.Struct details = 17;
 
+    string account_type = 18;
+    string created_by = 19;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
