@@ -302,6 +302,7 @@ message CreateAppealRequest {
         google.protobuf.Struct details = 4;
     }
     repeated Resource resources = 2;
+    string account_type = 3;
 }
 
 message CreateAppealResponse {
@@ -442,6 +443,8 @@ message Appeal {
     string revoke_reason = 16;
     google.protobuf.Struct details = 17;
 
+    string account_type = 18;
+    string created_by = 19;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
