@@ -65,6 +65,39 @@ service SirenService {
         };
     }
 
+
+    rpc ListNamespaces(google.protobuf.Empty) returns (ListNamespacesResponse) {
+        option (google.api.http) = {
+            get: "/namespaces"
+        };
+    }
+
+    rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
+        option (google.api.http) = {
+            post: "/namespaces"
+            body: "*"
+        };
+    }
+
+    rpc GetNamespace(GetNamespaceRequest) returns (Namespace) {
+        option (google.api.http) = {
+            get: "/namespaces/{id}"
+        };
+    }
+
+    rpc UpdateNamespace(UpdateNamespaceRequest) returns (Namespace) {
+        option (google.api.http) = {
+            put: "/namespaces/{id}",
+            body: "*"
+        };
+    }
+
+    rpc DeleteNamespace(DeleteNamespaceRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/namespaces/{id}"
+        };
+    }
+
     rpc ListReceivers(google.protobuf.Empty) returns (ListReceiversResponse) {
         option (google.api.http) = {
             get: "/receivers"
@@ -231,6 +264,46 @@ message UpdateProviderRequest {
 }
 
 message DeleteProviderRequest {
+    uint64 id = 1;
+}
+
+
+message Namespace {
+    uint64 id = 1;
+    string name = 2;
+    uint64 provider = 3;
+    google.protobuf.Struct credentials = 4;
+    map<string, string> labels = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message ListNamespacesResponse {
+    repeated Namespace namespaces = 1;
+}
+
+message CreateNamespaceRequest {
+    string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 provider = 2;
+    google.protobuf.Struct credentials = 3;
+    map<string, string> labels = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetNamespaceRequest {
+    uint64 id = 1;
+}
+
+message UpdateNamespaceRequest {
+    uint64 id = 1;
+    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 provider = 3;
+    google.protobuf.Struct credentials = 4;
+    map<string, string> labels = 5;
+}
+
+message DeleteNamespaceRequest {
     uint64 id = 1;
 }
 
