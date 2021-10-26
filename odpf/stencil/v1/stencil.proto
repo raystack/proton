@@ -175,14 +175,6 @@ message Schema {
 	google.protobuf.Timestamp updated_at = 6;
 }
 
-message Version {
-	// auto increment version number
-	int64 version = 1;
-	// unique id, used to globally refer to this version
-	string id = 2;
-	google.protobuf.Timestamp created_at = 3;
-}
-
 message ListNamespaceRequest {}
 
 message ListNamespaceResponse {
