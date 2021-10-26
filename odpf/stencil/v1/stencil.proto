@@ -3,11 +3,12 @@ package odpf.stencil.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/api/empty.proto";
 import "google/protobuf/descriptor.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 
-option go_package = "github.com/odpf/proton/stencil/v1;stencilv1";
+option go_package = "github.com/odpf/proton/stencil/v1beta1;stencilv1beta1";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
@@ -18,119 +19,289 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service StencilService {
-	rpc UploadDescriptor (UploadDescriptorRequest) returns (UploadDescriptorResponse) {
+	rpc ListNamespace(google.protobuf.Empty) returns (ListNamespaceResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces"
+		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-			consumes: "multipart/form-data";
-			produces: "application/json";
-		};
+      tags: "namespace";
+      summary: "List names of namespaces";
+    };
 	}
-	rpc DownloadDescriptor (DownloadDescriptorRequest) returns (DownloadDescriptorResponse) {
+	rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces/{id}"
+		};
 		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-			produces: "application/octet-stream";
-		};
+      tags: "namespace";
+      summary: "Get namespace by id";
+    };
 	}
-	rpc ListSnapshots(ListSnapshotsRequest) returns (ListSnapshotsResponse) {
+	rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
 		option (google.api.http) = {
-			get: "/v1/snapshots"
+			post: "/v1/namespaces",
+			body: "*"
 		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Create namespace entry";
+    };
 	}
-	// PromoteSnapshot promotes particular snapshot version as latest
-	rpc PromoteSnapshot(PromoteSnapshotRequest) returns (PromoteSnapshotResponse) {
+	rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
 		option (google.api.http) = {
-			patch: "/v1/snapshots/{id}/promote"
+			put: "/v1/namespaces/{id}"
 		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Update namespace entity by id";
+    };
 	}
-	// Search matches given query with message names and field names
-	// returns filtered message/field names along with snapshot details
-	rpc Search(SearchRequest) returns (SearchResponse) {
+	rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {
 		option (google.api.http) = {
-			get: "/v1/search"
+			delete: "/v1/namespaces/{id}"
 		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Delete namespace by id";
+			description: "Ensure all schemas under this namespace is deleted, otherwise it will throw error";
+    };
+	}
+	rpc ListSchemas(ListSchemasRequest) returns (ListSchemasResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces/{id}/schemas"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "List schemas under the namespace";
+    };
+	}
+	rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {
+		option (google.api.http) = {
+			post: "/v1/namespaces/{id}/schemas/{schema_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Create schema under the namespace";
+    };
+	}
+	rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {
+		option (google.api.http) = {
+			patch: "/v1/namespaces/{id}/schemas/{schema_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Update only schema metadata";
+    };
+	}
+	rpc DeleteSchemas(DeleteSchemasRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			delete: "/v1/namespaces/{id}/schemas"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Delete all schemas under specified namespace";
+    };
+	}
+	rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Get latest schema for specified schema id and namespace id";
+			description: "Returns schema data in byte64 format. Clients can decode 'data' field to expected data format"
+    };
+	}
+	rpc DeleteSchema(DeleteSchemaRequest) returns (DeleteSchemaResponse) {
+		option (google.api.http) = {
+			delete: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Delete specified schema";
+    };
+	}
+	rpc ListVersions(ListVersionsRequest) returns (ListVersionsResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces/{namespace_id}/schemas/{schema_id}/versions"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+			tags: "version";
+      summary: "List all version numbers for schema";
+    };
+	}
+	rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
+		option (google.api.http) = {
+			get: "/v1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			tags: "schema";
+      tags: "version";
+      summary: "Get schema for specified version";
+    };
+	}
+	rpc DeleteVersion(DeleteVersionRequest) returns (DeleteVersionResponse) {
+		option (google.api.http) = {
+			delete: "/v1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"
+		};
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			tags: "schema";
+      tags: "version";
+      summary: "Delete specified version of the schema";
+    };
 	}
 }
 
-enum Rule {
-	UNKNOWN = 0;
-	FILE_NO_BREAKING_CHANGE = 1;
-	MESSAGE_NO_DELETE = 2;
-	FIELD_NO_BREAKING_CHANGE = 3;
-	ENUM_NO_BREAKING_CHANGE = 4;
+message Namespace {
+	string id = 1;
+	Schema.Format format = 2;
+	string description = 3;
+	google.protobuf.Timestamp created_at = 4;
+	google.protobuf.Timestamp updated_at = 5;
 }
 
-message Snapshot {
-	int64 id = 1;
-	string namespace = 2 [(google.api.field_behavior) = REQUIRED];
-	string name = 3;
-	string version = 4;
-	bool latest = 5;
+message Schema {
+	enum Format {
+		UNKNOWN = 0;
+		PROTOBUF = 1;
+		AVRO = 2;
+		JSON = 3;
+	}
+	string id = 1;
+	Format format = 2;
+	string authority = 3;
+	string description = 4;
+	google.protobuf.Timestamp created_at = 5;
+	google.protobuf.Timestamp updated_at = 6;
 }
 
-message DownloadDescriptorRequest {
-	string namespace = 1 [(google.api.field_behavior) = REQUIRED];
-	string name = 2 [(google.api.field_behavior) = REQUIRED];
-	string version = 3 [(google.api.field_behavior) = REQUIRED];
-	repeated string fullnames = 4;
+message Version {
+	// auto increment version number
+	int64 version = 1;
+	// unique id, used to globally refer to this version
+	string id = 2;
+	google.protobuf.Timestamp created_at = 3;
 }
 
-message DownloadDescriptorResponse {
+message ListNamespaceResponse {
+	repeated string namespaces = 1;
+}
+
+message GetNamespaceRequest {
+	string id = 1;
+}
+
+message GetNamespaceResponse {	
+	Namespace namespace = 1;
+}
+
+message CreateNamespaceRequest {
+	string id = 1;
+	Schema.Format format = 2;
+	string description = 3;
+}
+
+message CreateNamespaceResponse {
+	Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+	string id = 1;
+}
+
+message UpdateNamespaceResponse {
+	Namespace namespace = 1;
+}
+
+message DeleteNamespaceRequest {
+	string id = 1;
+}
+message DeleteNamespaceResponse {
+	string message = 1;
+}
+
+message ListSchemasRequest {
+	string id = 1;
+}
+message ListSchemasResponse {
+	repeated string schemas = 1;
+}
+
+message DeleteSchemasRequest {
+	string id = 1;
+}
+
+message DeleteSchemasResponse {
+	string message = 1;
+}
+
+message GetSchemaRequest {
+	string namespace_id = 1;
+	string schema_id = 2;
+}
+
+message GetSchemaResponse {
+	int64 version = 1;
+	Schema.Format format = 2;
+	bytes data = 3;
+}
+
+message CreateSchemaRequest {
+	string namespace_id = 1;
+	string schema_id = 2;
+	// can be used to override the namespace level format
+	Schema.Format format = 3;
+	string authority = 4;
+	string description = 5;
+}
+
+message CreateSchemaResponse {
+	Schema schema = 1;
+}
+
+message UpdateSchemaMetadataRequest {
+	Schema.Format format = 1;
+	string description = 2;
+}
+
+message UpdateSchemaMetadataResponse {
+	Schema schema = 1;
+}
+
+message DeleteSchemaRequest {
+	string id = 1;
+}
+
+message DeleteSchemaResponse {
+	string message = 1;
+}
+
+message ListVersionsRequest {
+	string namespace_id = 1;
+	string schema_id = 2;
+}
+
+message ListVersionsResponse {
+	repeated int64 versions = 1;
+}
+
+message GetVersionRequest {
+	string namespace_id = 1;
+	string schema_id = 2;
+	string version_id = 3;
+}
+
+message GetVersionResponse {
 	bytes data = 1;
 }
 
-message UploadDescriptorRequest {
-	string namespace = 1 [(google.api.field_behavior) = REQUIRED];
-	string name = 2 [(google.api.field_behavior) = REQUIRED];
-	string version = 3 [(google.api.field_behavior) = REQUIRED];
-	bytes data = 4 [(google.api.field_behavior) = REQUIRED];
-	bool latest = 5;
-	bool dryrun = 6;
-	Checks checks = 7;
+message DeleteVersionRequest {
+	string namespace_id = 1;
+	string schema_id = 2;
+	string version_id = 3;
 }
 
-message Checks {
-	repeated Rule except = 2;
-}
-
-message UploadDescriptorResponse {
-	bool success = 1;
-	bool dryrun = 2;
-	string errors = 3;
-}
-
-message ListSnapshotsRequest {
-	string namespace = 1;
-	string name = 2;
-	string version = 3;
-	bool latest = 4;
-}
-
-message ListSnapshotsResponse {
-	repeated Snapshot snapshots = 1;
-}
-
-message SearchRequest {
-	string namespace = 1;
-	string name = 2;
-	string version = 3;
-	bool latest = 4;
-	string query = 5;
-}
-
-message SearchResult {
-	string path = 1;
-	string package = 2;
-	repeated string messages = 3;
-	repeated string fields = 4;
-	repeated Snapshot snapshots = 5;
-}
-
-message SearchResponse {
-	repeated SearchResult results = 1;
-}
-
-message PromoteSnapshotRequest {
-	int64 id = 1;
-}
-
-message PromoteSnapshotResponse {
-	Snapshot snapshot = 1;
+message DeleteVersionResponse {
+	string message = 1;
 }
