@@ -230,12 +230,13 @@ enum Types {
 message Provider {
     uint64 id = 1;
     string host = 2;
-    string name = 3;
-    string type = 4 [(validate.rules).string = {in: ["cortex"]}];
-    google.protobuf.Struct credentials = 5;
-    map<string, string> labels = 6;
-    google.protobuf.Timestamp created_at = 7;
-    google.protobuf.Timestamp updated_at = 8;
+    string urn = 3;
+    string name = 4;
+    string type = 5 [(validate.rules).string = {in: ["cortex"]}];
+    google.protobuf.Struct credentials = 6;
+    map<string, string> labels = 7;
+    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
 }
 
 message ListProvidersResponse {
@@ -243,11 +244,12 @@ message ListProvidersResponse {
 }
 
 message CreateProviderRequest {
-    string host = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
-    string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string type = 3 [(validate.rules).string = {in: ["cortex"]}];
-    google.protobuf.Struct credentials = 4;
-    map<string, string> labels = 5;
+    string host = 1 [(validate.rules).string.uri = true];
+    string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string type = 4 [(validate.rules).string = {in: ["cortex"]}];
+    google.protobuf.Struct credentials = 5;
+    map<string, string> labels = 6;
 }
 
 message GetProviderRequest {
@@ -256,7 +258,7 @@ message GetProviderRequest {
 
 message UpdateProviderRequest {
     uint64 id = 1;
-    string host = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+    string host = 2 [(validate.rules).string.uri = true];
     string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
     string type = 4 [(validate.rules).string = {in: ["cortex"]}];
     google.protobuf.Struct credentials = 5;
@@ -270,12 +272,13 @@ message DeleteProviderRequest {
 
 message Namespace {
     uint64 id = 1;
-    string name = 2;
-    uint64 provider = 3;
-    google.protobuf.Struct credentials = 4;
-    map<string, string> labels = 5;
-    google.protobuf.Timestamp created_at = 6;
-    google.protobuf.Timestamp updated_at = 7;
+    string urn = 2;
+    string name = 3;
+    uint64 provider = 4;
+    google.protobuf.Struct credentials = 5;
+    map<string, string> labels = 6;
+    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
 }
 
 message ListNamespacesResponse {
@@ -284,11 +287,12 @@ message ListNamespacesResponse {
 
 message CreateNamespaceRequest {
     string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    uint64 provider = 2;
-    google.protobuf.Struct credentials = 3;
-    map<string, string> labels = 4;
-    google.protobuf.Timestamp created_at = 5;
-    google.protobuf.Timestamp updated_at = 6;
+    string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 provider = 3;
+    google.protobuf.Struct credentials = 4;
+    map<string, string> labels = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
 }
 
 message GetNamespaceRequest {
