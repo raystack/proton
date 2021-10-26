@@ -2,9 +2,8 @@ syntax = "proto3";
 package odpf.stencil.v1;
 
 import "google/api/annotations.proto";
-import "google/api/field_behavior.proto";
-import "google/api/empty.proto";
 import "google/protobuf/descriptor.proto";
+import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 
@@ -19,7 +18,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service StencilService {
-	rpc ListNamespace(google.protobuf.Empty) returns (ListNamespaceResponse) {
+	rpc ListNamespace(ListNamespaceRequest) returns (ListNamespaceResponse) {
 		option (google.api.http) = {
 			get: "/v1/namespaces"
 		};
@@ -93,7 +92,7 @@ service StencilService {
       summary: "Update only schema metadata";
     };
 	}
-	rpc DeleteSchemas(DeleteSchemasRequest) returns (google.protobuf.Empty) {
+	rpc DeleteSchemas(DeleteSchemasRequest) returns (DeleteSchemasResponse) {
 		option (google.api.http) = {
 			delete: "/v1/namespaces/{id}/schemas"
 		};
@@ -183,6 +182,8 @@ message Version {
 	string id = 2;
 	google.protobuf.Timestamp created_at = 3;
 }
+
+message ListNamespaceRequest {}
 
 message ListNamespaceResponse {
 	repeated string namespaces = 1;
