@@ -464,31 +464,30 @@ message SendSlackNotificationResponse {
 }
 
 message ListRulesRequest {
-    string namespace = 1;
-    string entity= 2;
+    string name = 1;
+    string namespace = 2;
     string group_name = 3;
-    string status = 4;
-    string template = 5;
+    string template = 4;
 }
 
 message Variables {
     string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string type = 2;
-    string value = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string value = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string type = 3;
     string description = 4;
 }
 
 message Rule {
     uint64 id = 1;
     string name = 2;
-    string entity = 3;
-    string namespace = 4;
-    string group_name = 5;
+    bool enabled = 3;
+    string group_name = 4;
+    string namespace = 5;
     string template = 6;
-    string status = 7;
+    repeated Variables variables = 7;
     google.protobuf.Timestamp created_at = 8;
     google.protobuf.Timestamp updated_at = 9;
-    repeated Variables variables = 10;
+    uint64 provider_namespace = 10 [(validate.rules).uint64.gte = 0];;
 }
 
 message ListRulesResponse {
@@ -500,14 +499,12 @@ message UpdateRuleResponse {
 }
 
 message UpdateRuleRequest {
-    uint64 id = 1;
-    string name = 2;
-    string entity = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string namespace = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string group_name = 5 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string template = 6 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string status = 7 [(validate.rules).string = {in: ["enabled", "disabled"]}];
-    repeated Variables variables = 10;
+    bool enabled = 1;
+    string group_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string namespace = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string template = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    repeated Variables variables = 5;
+    uint64 provider_namespace = 6;
 }
 
 message ListTemplatesRequest{
