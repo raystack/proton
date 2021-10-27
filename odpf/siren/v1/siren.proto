@@ -18,28 +18,42 @@ option java_outer_classname = "ServiceManager";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-        version: "0.1.0";
+        title: "Siren APIs";
+        description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
+        version: "0.3.0";
     };
-    external_docs: {
-        description: "Siren server";
-    }
     schemes: HTTP;
 };
 
 service SirenService {
     rpc Ping(PingRequest) returns (PingResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "ping";
+            tags: "Ping";
+        };
+
         option (google.api.http) = {
             get: "/ping"
-        };
+        };   
     }
 
     rpc ListProviders(google.protobuf.Empty) returns (ListProvidersResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list providers";
+            tags: "Provider";
+        };
+        
         option (google.api.http) = {
             get: "/providers"
         };
     }
 
     rpc CreateProvider(CreateProviderRequest) returns (Provider) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "create a provider";
+            tags: "Provider";
+        };
+
         option (google.api.http) = {
             post: "/providers"
             body: "*"
@@ -47,12 +61,22 @@ service SirenService {
     }
 
     rpc GetProvider(GetProviderRequest) returns (Provider) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "get a provider";
+            tags: "Provider";
+        };
+
         option (google.api.http) = {
             get: "/providers/{id}"
         };
     }
 
     rpc UpdateProvider(UpdateProviderRequest) returns (Provider) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "update a provider";
+            tags: "Provider";
+        };
+
         option (google.api.http) = {
             put: "/providers/{id}",
             body: "*"
@@ -60,6 +84,11 @@ service SirenService {
     }
 
     rpc DeleteProvider(DeleteProviderRequest) returns (google.protobuf.Empty) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "delete a provider";
+            tags: "Provider";
+        };
+
         option (google.api.http) = {
             delete: "/providers/{id}"
         };
@@ -67,12 +96,22 @@ service SirenService {
 
 
     rpc ListNamespaces(google.protobuf.Empty) returns (ListNamespacesResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list namespaces";
+            tags: "Namespace";
+        };
+
         option (google.api.http) = {
             get: "/namespaces"
         };
     }
 
     rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "create a namespace";
+            tags: "Namespace";
+        };
+
         option (google.api.http) = {
             post: "/namespaces"
             body: "*"
@@ -80,12 +119,22 @@ service SirenService {
     }
 
     rpc GetNamespace(GetNamespaceRequest) returns (Namespace) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "get a namespace";
+            tags: "Namespace";
+        };
+
         option (google.api.http) = {
             get: "/namespaces/{id}"
         };
     }
 
     rpc UpdateNamespace(UpdateNamespaceRequest) returns (Namespace) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "update a namespace";
+            tags: "Namespace";
+        };
+
         option (google.api.http) = {
             put: "/namespaces/{id}",
             body: "*"
@@ -93,18 +142,33 @@ service SirenService {
     }
 
     rpc DeleteNamespace(DeleteNamespaceRequest) returns (google.protobuf.Empty) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "delete a namespace";
+            tags: "Namespace";
+        };
+
         option (google.api.http) = {
             delete: "/namespaces/{id}"
-        };
+        };        
     }
 
     rpc ListReceivers(google.protobuf.Empty) returns (ListReceiversResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list receivers";
+            tags: "Receiver";
+        };
+
         option (google.api.http) = {
             get: "/receivers"
         };
     }
 
     rpc CreateReceiver(CreateReceiverRequest) returns (Receiver) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "create a receiver";
+            tags: "Receiver";
+        };
+        
         option (google.api.http) = {
             post: "/receivers"
             body: "*"
@@ -112,12 +176,22 @@ service SirenService {
     }
 
     rpc GetReceiver(GetReceiverRequest) returns (Receiver) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "get a receiver";
+            tags: "Receiver";
+        };
+
         option (google.api.http) = {
             get: "/receivers/{id}"
-        };
+        }; 
     }
 
     rpc UpdateReceiver(UpdateReceiverRequest) returns (Receiver) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "update a receiver";
+            tags: "Receiver";
+        };
+
         option (google.api.http) = {
             put: "/receivers/{id}",
             body: "*"
@@ -125,6 +199,11 @@ service SirenService {
     }
 
     rpc DeleteReceiver(DeleteReceiverRequest) returns (google.protobuf.Empty) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "delete a receiver";
+            tags: "Receiver";
+        };
+
         option (google.api.http) = {
             delete: "/receivers/{id}"
         };
@@ -175,11 +254,21 @@ service SirenService {
     }
 
     rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list rules";
+            tags: "Rule";
+        };
+
         option (google.api.http) = {
             get: "/rules"
         };
     }
     rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "add/update a rule";
+            tags: "Rule";
+        };
+
         option (google.api.http) = {
             put: "/rules"
             body: "*"
@@ -187,29 +276,55 @@ service SirenService {
     }
 
     rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list templates";
+            tags: "Template";
+        };
+
         option (google.api.http) = {
             get: "/templates"
         };
     }
 
     rpc GetTemplateByName(GetTemplateByNameRequest) returns (TemplateResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "get a template";
+            tags: "Template";
+        };
+
         option (google.api.http) = {
             get: "/templates/{name}"
         };
     }
 
     rpc UpsertTemplate(UpsertTemplateRequest) returns (TemplateResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "add/update a template";
+            tags: "Template";
+        };
+
         option (google.api.http) = {
             put: "/templates",
             body: "*"
         };
     }
     rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "delete a template";
+            tags: "Template";
+        };
+
         option (google.api.http) = {
             delete: "/templates/{name}",
         };
     }
+
     rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "render a template";
+            tags: "Template";
+        };
+        
         option (google.api.http) = {
             post: "/templates/{name}/render",
             body: "*"
