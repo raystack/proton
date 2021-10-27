@@ -468,6 +468,7 @@ message ListRulesRequest {
     string namespace = 2;
     string group_name = 3;
     string template = 4;
+    uint64 provider_namespace = 5;
 }
 
 message Variables {
