@@ -209,19 +209,29 @@ service SirenService {
         };
     }
 
-    rpc ListAlertHistory(ListAlertHistoryRequest) returns (ListAlertHistoryResponse) {
+    rpc ListAlerts(ListAlertsRequest) returns (Alerts) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "list alerts";
+            tags: "Alert";
+        };
+
         option (google.api.http) = {
-            get: "/history"
+            get: "/alerts/{provider_name}/{provider_id}"
         };
     }
 
-    rpc CreateAlertHistory(CreateAlertHistoryRequest) returns (CreateAlertHistoryResponse) {
+    rpc CreateCortexAlerts(CreateCortexAlertsRequest) returns (Alerts) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "create cortex alerts";
+            tags: "Alert";
+        };
+
         option (google.api.http) = {
-            post: "/history"
+            post: "/alerts/cortex/{provider_id}"
             body: "*"
         };
     }
-
+    
     rpc ListWorkspaceChannels(ListWorkspaceChannelsRequest) returns (ListWorkspaceChannelsResponse) {
         option (google.api.http) = {
             get: "/slackworkspaces/{workspace_name}/channels"
@@ -464,25 +474,39 @@ message DeleteReceiverRequest {
     uint64 id = 1;
 }
 
-message ListAlertHistoryRequest {
-    string resource = 1;  
-    uint32 start_time = 2;
-    uint32 end_time = 3;
+message ListAlertsRequest {
+    string provider_name = 1 [(validate.rules).string = {in: ["cortex"]}];
+    uint64 provider_id = 2;
+    string resource_name = 3;
+    uint64 start_time = 4;
+    uint64 end_time = 5;
 }
 
-message ListAlertHistoryResponse {
-    repeated AlertHistory alerts = 1;
+message Alerts {
+    repeated Alert alerts = 1;
 }
 
-message AlertHistory {
+message Alert {
     uint64 id = 1;
-    string name = 2;
-    string template_id = 3;
+    uint64 provider_id = 2;
+    string resource_name = 3;
     string metric_name = 4;
     string metric_value = 5;
-    string level = 6;
-    string created_at = 7;
-    string updated_at = 8;
+    string severity = 6;
+    string rule = 7;
+    google.protobuf.Timestamp triggered_at = 8;
+}
+
+message CreateCortexAlertsRequest {
+    uint64 provider_id = 1;
+    repeated CortexAlert alerts = 2;
+}
+
+message CortexAlert {
+    Annotations annotations = 1;
+    Labels labels = 2;
+    string status = 3;
+    google.protobuf.Timestamp starts_at=4;
 }
 
 message Annotations {
@@ -494,20 +518,6 @@ message Annotations {
 
 message Labels {
     string severity = 1;
-}
-
-message Alert {
-    Annotations annotations = 1;
-    Labels labels = 2;
-    string status = 3;
-}
-
-message CreateAlertHistoryRequest {
-    repeated Alert alerts = 1;
-}
-
-message CreateAlertHistoryResponse {
-    repeated AlertHistory alerts = 1;
 }
 
 message SlackWorkspace {
