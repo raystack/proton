@@ -76,7 +76,7 @@ service StencilService {
   }
   rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {
     option (google.api.http) = {
-      post: "/v1/namespaces/{id}/schemas/{schema_id}"
+      post: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "schema";
@@ -247,6 +247,7 @@ message CreateSchemaRequest {
   Schema.Format format = 3;
   string authority = 4;
   string description = 5;
+  bytes data = 6;
 }
 
 message CreateSchemaResponse {
