@@ -67,7 +67,7 @@ service RuntimeService {
     // ListJobSpecification returns list of jobs created in a project
     rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/job"
+            get: "/v1/project/{project_name}/namespace/{namespace}/job"
         };
     }
 
