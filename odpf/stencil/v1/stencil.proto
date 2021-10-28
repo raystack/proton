@@ -85,7 +85,7 @@ service StencilService {
   }
   rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {
     option (google.api.http) = {
-      patch: "/v1/namespaces/{id}/schemas/{schema_id}"
+      patch: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "schema";
@@ -130,7 +130,7 @@ service StencilService {
       summary: "List all version numbers for schema";
     };
   }
-  rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {
+  rpc GetVersionedSchema(GetVersionRequest) returns (GetVersionResponse) {
     option (google.api.http) = {
       get: "/v1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"
     };
@@ -255,8 +255,10 @@ message CreateSchemaResponse {
 }
 
 message UpdateSchemaMetadataRequest {
-  Schema.Format format = 1;
-  string description = 2;
+  string namespace_id = 1;
+  string schema_id = 2;
+  Schema.Format format = 3;
+  string description = 4;
 }
 
 message UpdateSchemaMetadataResponse {
@@ -264,7 +266,8 @@ message UpdateSchemaMetadataResponse {
 }
 
 message DeleteSchemaRequest {
-  string id = 1;
+  string namespace_id = 1;
+  string schema_id = 2;
 }
 
 message DeleteSchemaResponse {
