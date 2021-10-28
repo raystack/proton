@@ -136,7 +136,7 @@ message PromoteSnapshotResponse {
 }
 
 service StencilServiceV1 {
-  rpc ListNamespace(ListNamespaceRequest) returns (ListNamespaceResponse) {
+  rpc ListNamespaces(ListNamespaceRequest) returns (ListNamespaceResponse) {
     option (google.api.http) = {
       get: "/v1/namespaces"
     };
