@@ -166,7 +166,8 @@ service StencilServiceV1 {
   }
   rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
     option (google.api.http) = {
-      put: "/v1/namespaces/{id}"
+      put: "/v1/namespaces/{id}",
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "namespace";
@@ -319,6 +320,8 @@ message CreateNamespaceResponse {
 
 message UpdateNamespaceRequest {
   string id = 1;
+  Schema.Format format = 2;
+  string description = 3;
 }
 
 message UpdateNamespaceResponse {
