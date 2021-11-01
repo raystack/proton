@@ -401,13 +401,12 @@ message Policy {
 
     message ApprovalStep {
         string name = 1;
-        string description = 2;  // optional
-
-        repeated Condition conditions = 3;  // optional
-
-        bool allow_failed = 4;             // optional
-        repeated string dependencies = 5;  // optional
-        string approvers = 6;              // optional
+        string description = 2;
+        bool allow_failed = 3;
+        string when = 4;
+        string strategy = 5;
+        string approve_if = 6;
+        repeated string approvers = 7;
     }
     repeated ApprovalStep steps = 4;
 
