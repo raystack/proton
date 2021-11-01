@@ -195,7 +195,8 @@ service StencilServiceV1 {
   }
   rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {
     option (google.api.http) = {
-      post: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
+      post: "/v1/namespaces/{namespace_id}/schemas/{schema_id}",
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "schema";
@@ -205,6 +206,7 @@ service StencilServiceV1 {
   rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {
     option (google.api.http) = {
       patch: "/v1/namespaces/{namespace_id}/schemas/{schema_id}"
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "schema";
