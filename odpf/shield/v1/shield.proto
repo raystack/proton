@@ -341,19 +341,15 @@ message CreateGroupRequest {
 }
 
 message Group {
-  reserved 6;
-  reserved "org_id";
-
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 3;
   repeated User admins = 4;
   int32 member_count = 5;
-  // string OBSOLETE_org_id = 6;  [OBSOLETE]
+  string org_id = 6;
   google.protobuf.Struct metadata = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
-  Organization organization = 10;
 }
 
 message CreateGroupResponse {
