@@ -67,7 +67,7 @@ service RuntimeService {
     // ListJobSpecification returns list of jobs created in a project
     rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/job"
+            get: "/v1/project/{project_name}/namespace/{namespace}/job"
         };
     }
 
@@ -202,6 +202,23 @@ service RuntimeService {
     rpc ListReplays(ListReplaysRequest) returns (ListReplaysResponse) {
         option (google.api.http) = {
             get: "/v1/project/{project_name}/replay"
+        };
+    }
+    rpc BackupDryRun(BackupDryRunRequest) returns (BackupDryRunResponse) {
+        option (google.api.http) = {
+            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup-dryrun"
+            body: "*"
+        };
+    }
+    rpc Backup(BackupRequest) returns (BackupResponse) {
+        option (google.api.http) = {
+            post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
+            body: "*"
+        };
+    }
+    rpc ListBackups(ListBackupsRequest) returns (ListBackupsResponse) {
+        option (google.api.http) = {
+            get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
         };
     }
     // TODO(kush.sharma): disabled ATM
@@ -719,6 +736,7 @@ message ReplaySpec {
     string state = 5;
     google.protobuf.Timestamp created_at = 6;
 }
+
 message RunJobRequest {
     string project_name = 1;
     string namespace = 2;
@@ -730,3 +748,47 @@ message RunJobRequest {
 }
 
 message RunJobResponse {}
+
+message BackupDryRunRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string resource_name = 3;
+    string namespace = 4;
+    string description = 5;
+    bool ignore_downstream = 6;
+}
+
+message BackupDryRunResponse {
+    repeated string resource_name = 1;
+}
+
+message BackupRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string resource_name = 3;
+    string namespace = 4;
+    string description = 5;
+    bool ignore_downstream = 6;
+    map<string, string> config = 7;
+}
+
+message BackupResponse {
+    repeated string urn = 1;
+}
+
+message ListBackupsRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string namespace = 3;
+}
+
+message ListBackupsResponse {
+    repeated BackupSpec backups = 1;
+}
+
+message BackupSpec {
+    string id = 1;
+    string resource_name = 2;
+    google.protobuf.Timestamp created_at = 3;
+    string description = 4;
+}

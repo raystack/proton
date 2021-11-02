@@ -7,6 +7,7 @@ option java_outer_classname = "TableProto";
 option go_package = "github.com/odpf/proton/assets";
 
 import "odpf/assets/facets/schema.proto";
+import "odpf/assets/facets/preview.proto";
 import "odpf/assets/facets/ownership.proto";
 import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
@@ -33,12 +34,16 @@ message Table {
   // Example: 'id', `name`, `age'.
   odpf.assets.facets.Columns schema = 22;
 
+  // Previews of the table.
+  // For an example check out preview facet.
+  odpf.assets.facets.Preview preview = 23;
+
   // The ownership of the topic.
   // For an example check out ownership.
   odpf.assets.facets.Ownership ownership = 31;
 
   // The lineage of the topic.
-  // For an example check out lineage schema.
+  // For an example check out lineage.
   odpf.assets.facets.Lineage lineage = 32;
 
   // List of the user's custom properties.

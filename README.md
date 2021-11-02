@@ -7,6 +7,7 @@ Following are the considerations for going with single repository:
 - This repository contains protocol buffers that have common patterns and APIs that services can reuse instead of spending effort in writing these protobufs. Each subdirectory contains details of the respective protos.
 - Validation, generation, and other proto-related operations can be placed in one place. Thus, avoid duplication.
 - We also see good possibility to reuse proto schema. Have it in one place make it easy to import proto.
+
 ## Usage
 Proton does not provide compiled language specific proto files or the descriptor sets for the respective protos. It is upto the users to pull these protos and use `protoc` for language specific compiled files and have dependencies/imports in their code.
 
@@ -14,6 +15,33 @@ Proton does not provide compiled language specific proto files or the descriptor
 
 ## Structure
 Proton has flat structure where proto files are put under /odpf/proton/\<application\>/. Each application's sub directory read me provides details on how to use the respective proto.
+
+## Guide
+
+### Generating go code using buf
+
+***This guide is last tried on buf version `1.0.0-rc4`.***
+
+Add this `buf.gen.yaml` at the root folder.
+
+```
+version: v1beta1
+plugins:
+  - name: go
+    out: dst
+    opt: paths=source_relative
+```
+
+Run below command to generate your proto to `/dst` folder.
+
+```
+buf generate
+```
+
+Use below command if you just want to target specific package/folder
+```
+buf generate --path odpf/assets
+```
 
 ## Contribute
 Prerequisite: You need to have [buf](https://buf.build/) installed
