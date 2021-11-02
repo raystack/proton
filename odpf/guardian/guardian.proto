@@ -230,6 +230,7 @@ message ListResourcesRequest {
     string type = 4;
     string urn = 5;
     string name = 6;
+    repeated string details = 7;
 }
 
 message ListResourcesResponse {
