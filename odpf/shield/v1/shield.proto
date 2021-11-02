@@ -333,6 +333,7 @@ message GroupRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 2;
   google.protobuf.Struct metadata = 3;
+  string org_id = 4;
 }
 
 message CreateGroupRequest {
@@ -345,7 +346,7 @@ message Group {
   string slug = 3;
   repeated User admins = 4;
   int32 member_count = 5;
-  string org_id = 6;
+  Organization organization = 6;
   google.protobuf.Struct metadata = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
