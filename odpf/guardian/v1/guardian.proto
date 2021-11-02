@@ -27,7 +27,7 @@ service GuardianService {
         };
     }
 
-    rpc GetProvider(GetProviderRequest) returns (Provider) {
+    rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
         option (google.api.http) = {
             get: "/providers/{id}"
         };
@@ -59,7 +59,7 @@ service GuardianService {
         };
     }
 
-    rpc GetPolicy(GetPolicyRequest) returns (Policy) {
+    rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
         option (google.api.http) = {
             get: "/policies/{id}/versions/{version}"
         };
@@ -85,7 +85,7 @@ service GuardianService {
         };
     }
 
-    rpc GetResource(GetResourceRequest) returns (Resource) {
+    rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
         option (google.api.http) = {
             get: "/resources/{id}"
         };
@@ -166,6 +166,10 @@ message GetProviderRequest {
     uint32 id = 1;
 }
 
+message GetProviderResponse {
+    Provider provider = 1;
+}
+
 message CreateProviderRequest {
     ProviderConfig config = 1;
 }
@@ -203,6 +207,10 @@ message GetPolicyRequest {
     uint32 version = 2;
 }
 
+message GetPolicyResponse {
+    Policy policy = 1;
+}
+
 message CreatePolicyRequest {
     Policy policy = 1;
 }
@@ -236,6 +244,10 @@ message ListResourcesResponse {
 
 message GetResourceRequest {
     uint32 id = 1;
+}
+
+message GetResourceResponse {
+    Resource resource = 1;
 }
 
 message UpdateResourceRequest {
