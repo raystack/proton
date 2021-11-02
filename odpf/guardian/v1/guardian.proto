@@ -1,20 +1,17 @@
 syntax = "proto3";
-package odpf.guardian;
+package odpf.guardian.v1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/odpf/proton/guardian";
-option java_multiple_files = true;
-option java_package = "io.odpf.proton.guardian";
-option java_outer_classname = "ServiceManager";
+option go_package = "github.com/odpf/proton/guardian/v1;guardianv1";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
-        version: "0.1";
+        version: "0.1.0";
     };
     external_docs: {
         description: "Guardian server";
