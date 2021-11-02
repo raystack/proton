@@ -442,6 +442,7 @@ message Policy {
         repeated AdditionalAppeal appeals = 2;
     }
     repeated Requirement requirements = 8;
+    google.protobuf.Struct iam = 9;
 }
 
 message AppealOptions {
