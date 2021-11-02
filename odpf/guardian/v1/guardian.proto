@@ -13,9 +13,6 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
         version: "0.1.0";
     };
-    external_docs: {
-        description: "Guardian server";
-    }
     schemes: HTTP;
 };
 
