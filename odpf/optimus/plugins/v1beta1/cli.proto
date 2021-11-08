@@ -1,5 +1,5 @@
 syntax = "proto3";
-package odpf.optimus.plugins;
+package odpf.optimus.plugins.v1beta1;
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -7,11 +7,11 @@ option java_package = "io.odpf.proton.optimus.plugins";
 option java_outer_classname = "CLIModProto";
 
 import "google/protobuf/timestamp.proto";
-import "odpf/optimus/plugins/base.proto";
-import "odpf/optimus/runtime_service.proto";
+import "odpf/optimus/plugins/v1beta1/base.proto";
+import "odpf/optimus/core/v1beta1/runtime.proto";
 
-// CLIMod must be implemented to interact with users via optimus cli
-service CLIMod {
+// CLIModService must be implemented to interact with users via optimus cli
+service CLIModService {
     // GetQuestions list down all the cli inputs required to generate spec files
     // name used for question will be directly mapped to DefaultConfig() parameters
     rpc GetQuestions(GetQuestionsRequest) returns (GetQuestionsResponse);
@@ -110,9 +110,9 @@ message DefaultAssetsResponse {
 message CompileAssetsRequest {
     Configs configs = 1;
     Assets assets = 2;
-    odpf.optimus.TaskWindow window = 3;
+    odpf.optimus.core.v1beta1.TaskWindow window = 3;
     google.protobuf.Timestamp instance_schedule = 4;
-    repeated odpf.optimus.InstanceSpecData instance_data = 5;
+    repeated odpf.optimus.core.v1beta1.InstanceSpecData instance_data = 5;
 
     PluginOptions options = 40;
 }

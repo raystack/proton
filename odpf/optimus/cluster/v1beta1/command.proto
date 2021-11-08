@@ -1,20 +1,18 @@
 syntax = "proto3";
-package odpf.optimus.internal;
+package odpf.optimus.cluster.v1beta1;
 
 option go_package = "github.com/odpf/proton/optimus";
-option java_multiple_files = true;
-option java_package = "io.odpf.proton.optimus.internal";
-option java_outer_classname = "CommandLogProto";
 
 message CommandLog {
-    enum Type {
-        COMMAND_TYPE_UNKNOWN = 0;
-        COMMAND_TYPE_NOOP = 1;
-        COMMAND_TYPE_SCHEDULE_JOB = 2;
-        COMMAND_TYPE_UPDATE_JOB = 3;
-    }
-    Type type = 1;
+    CommandLogType type = 1;
     bytes payload = 2;
+}
+
+enum CommandLogType {
+    COMMAND_LOG_TYPE_UNSPECIFIED = 0;
+    COMMAND_LOG_TYPE_NOOP = 1;
+    COMMAND_LOG_TYPE_SCHEDULE_JOB = 2;
+    COMMAND_LOG_TYPE_UPDATE_JOB = 3;
 }
 
 message CommandNoop {
