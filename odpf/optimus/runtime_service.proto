@@ -700,7 +700,9 @@ message ReplayDryRunRequest {
 
 message ReplayDryRunResponse {
     bool success = 1;
-    ReplayExecutionTreeNode response = 2;
+    ReplayExecutionTreeNode response = 2 [deprecated=true];
+    ReplayExecutionTreeNode execution_tree = 3;
+    repeated string ignored_jobs = 4;
 }
 
 message ReplayExecutionTreeNode {
@@ -783,6 +785,7 @@ message BackupDryRunRequest {
 
 message BackupDryRunResponse {
     repeated string resource_name = 1;
+    repeated string ignored_resources = 2;
 }
 
 message BackupRequest {
