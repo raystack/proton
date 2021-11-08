@@ -589,7 +589,7 @@ message SendReceiverNotificationRequest{
     }
 
     oneof data {
-        SlackPayload slack_payload = 2;
+        SlackPayload slack = 2;
     }
 }
 
