@@ -35,6 +35,10 @@ message Dashboard {
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
   odpf.assets.common.Timestamp timestamps = 33;
 
+  // The lineage of the dashboard.
+  // For an example check out lineage schema.
+  odpf.assets.facets.Lineage lineage = 34;
+
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   odpf.assets.common.Event event = 100;
