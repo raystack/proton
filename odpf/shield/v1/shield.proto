@@ -344,12 +344,10 @@ message Group {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 3;
-  repeated User admins = 4;
-  int32 member_count = 5;
-  string org_id = 6;
-  google.protobuf.Struct metadata = 7;
-  google.protobuf.Timestamp created_at = 8;
-  google.protobuf.Timestamp updated_at = 9;
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 message CreateGroupResponse {
