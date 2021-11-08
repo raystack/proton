@@ -19,10 +19,6 @@ message Dashboard {
     // Representation of the resource
   odpf.assets.common.Resource resource = 1;
 
-  // The description of the dashboard.
-  // Example: "This dashboard was created by the Metabase team."
-  string description = 4;
-
   // The list of the charts in the dashboard.
   // For an example, check the schema of the chart.
   repeated Chart charts = 21;
@@ -90,7 +86,7 @@ message Chart {
   // For an example check out ownership.
   odpf.assets.facets.Ownership ownership = 31;
 
-  // The lineage of the dashboard.
+  // The lineage of the chart.
   // For an example check out lineage schema.
   odpf.assets.facets.Lineage lineage = 32;
 

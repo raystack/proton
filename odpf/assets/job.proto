@@ -19,10 +19,6 @@ message Job {
   // Representation of the resource
   odpf.assets.common.Resource resource = 1;
 
-  // The description of the job.
-  // Example: 'This job is used to process data from a stream.'
-  string description = 5;
-
   // The ownership of the topic.
   // For an example check out ownership.
   odpf.assets.facets.Ownership ownership = 31;

@@ -21,10 +21,6 @@ message Topic {
   // Representation of the resource
   odpf.assets.common.Resource resource = 1;
 
-  // The description of the topic.
-  // Example: 'This is a topic for my application'.
-  string description = 4;
-
   // The metrics of the topic.
   // For an example check out topic profile schema.
   TopicProfile profile = 21;
