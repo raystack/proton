@@ -220,6 +220,18 @@ service SirenService {
         };
     }
 
+    rpc SendReceiverNotification(SendReceiverNotificationRequest) returns (SendReceiverNotificationResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "send notification to receiver";
+            tags: "Receiver";
+        };
+
+        option (google.api.http) = {
+            post: "/receivers/{id}/send"
+            body: "*"
+        };
+    }
+
     rpc CreateCortexAlerts(CreateCortexAlertsRequest) returns (Alerts) {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "create cortex alerts";
@@ -252,13 +264,6 @@ service SirenService {
     rpc UpdateAlertCredentials(UpdateAlertCredentialsRequest) returns (UpdateAlertCredentialsResponse) {
         option (google.api.http) = {
             put: "/teams/{team_name}/credentials"
-            body: "*"
-        };
-    }
-
-    rpc SendSlackNotification(SendSlackNotificationRequest) returns (SendSlackNotificationResponse) {
-        option (google.api.http) = {
-            post: "/notifications"
             body: "*"
         };
     }
@@ -574,17 +579,21 @@ message UpdateAlertCredentialsRequest {
 }
 message UpdateAlertCredentialsResponse{}
 
+message SendReceiverNotificationRequest{
+    uint64 id = 1;
+    message SlackPayload {
+        string message = 1;
+        string receiver_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+        string receiver_type = 3 [(validate.rules).string = {in: ["channel", "user"]}];
+        repeated google.protobuf.Struct blocks = 4;
+    }
 
-message SendSlackNotificationRequest{
-    string provider = 1;
-    string entity = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string message = 3;
-    string receiver_name = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string receiver_type = 5 [(validate.rules).string = {in: ["channel", "user"]}];
-    repeated google.protobuf.Struct blocks = 6;
+    oneof data {
+        SlackPayload slack_payload = 2;
+    }
 }
 
-message SendSlackNotificationResponse {
+message SendReceiverNotificationResponse {
     bool ok = 1;
 }
 
