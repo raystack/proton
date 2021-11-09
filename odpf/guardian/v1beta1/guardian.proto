@@ -1,12 +1,12 @@
 syntax = "proto3";
-package odpf.guardian.v1;
+package odpf.guardian.v1beta1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/odpf/proton/guardian/v1;guardianv1";
+option go_package = "github.com/odpf/proton/guardian/v1beta1;guardianv1beta1";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
