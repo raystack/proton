@@ -20,134 +20,134 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 service GuardianService {
     rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
         option (google.api.http) = {
-            get: "/providers"
+            get: "/v1beta1/providers"
         };
     }
 
     rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
         option (google.api.http) = {
-            get: "/providers/{id}"
+            get: "/v1beta1/providers/{id}"
         };
     }
 
     rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
         option (google.api.http) = {
-            post: "/providers"
+            post: "/v1beta1/providers"
             body: "config"
         };
     }
 
     rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
         option (google.api.http) = {
-            put: "/providers/{id}"
+            put: "/v1beta1/providers/{id}"
             body: "config"
         };
     }
 
     rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
         option (google.api.http) = {
-            get: "/providers/{id}/resources/{resource_type}/roles"
+            get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"
         };
     }
 
     rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
         option (google.api.http) = {
-            get: "/policies"
+            get: "/v1beta1/policies"
         };
     }
 
     rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
         option (google.api.http) = {
-            get: "/policies/{id}/versions/{version}"
+            get: "/v1beta1/policies/{id}/versions/{version}"
         };
     }
 
     rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
         option (google.api.http) = {
-            post: "/policies"
+            post: "/v1beta1/policies"
             body: "policy"
         };
     }
 
     rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
         option (google.api.http) = {
-            put: "/policies/{id}"
+            put: "/v1beta1/policies/{id}"
             body: "policy"
         };
     }
 
     rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
         option (google.api.http) = {
-            get: "/resources"
+            get: "/v1beta1/resources"
         };
     }
 
     rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
         option (google.api.http) = {
-            get: "/resources/{id}"
+            get: "/v1beta1/resources/{id}"
         };
     }
 
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
         option (google.api.http) = {
-            put: "/resources/{id}"
+            put: "/v1beta1/resources/{id}"
             body: "resource"
         };
     }
 
     rpc ListUserAppeals(ListUserAppealsRequest) returns (ListUserAppealsResponse) {
         option (google.api.http) = {
-            get: "/me/appeals"
+            get: "/v1beta1/me/appeals"
         };
     }
 
     rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
         option (google.api.http) = {
-            get: "/appeals"
+            get: "/v1beta1/appeals"
         };
     }
 
     rpc GetAppeal(GetAppealRequest) returns (GetAppealResponse) {
         option (google.api.http) = {
-            get: "/appeals/{id}"
+            get: "/v1beta1/appeals/{id}"
         };
     }
 
     rpc CancelAppeal(CancelAppealRequest) returns (CancelAppealResponse) {
         option (google.api.http) = {
-            put: "/appeals/{id}/cancel"
+            put: "/v1beta1/appeals/{id}/cancel"
         };
     }
 
     rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
         option (google.api.http) = {
-            put: "/appeals/{id}/revoke"
+            put: "/v1beta1/appeals/{id}/revoke"
             body: "reason"
         };
     }
 
     rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
         option (google.api.http) = {
-            post: "/appeals"
+            post: "/v1beta1/appeals"
             body: "*"
         };
     }
 
     rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
         option (google.api.http) = {
-            get: "/me/approvals"
+            get: "/v1beta1/me/approvals"
         };
     }
 
     rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
         option (google.api.http) = {
-            get: "/approvals"
+            get: "/v1beta1/approvals"
         };
     }
 
     rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
         option (google.api.http) = {
-            post: "/appeals/{id}/approvals/{approval_name}"
+            post: "/v1beta1/appeals/{id}/approvals/{approval_name}"
             body: "action"
         };
     }
