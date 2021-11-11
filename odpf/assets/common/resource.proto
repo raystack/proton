@@ -29,4 +29,8 @@ message Resource {
   // The REST URL for accessing the resource. URL returns the resource itself. 
   // Example: `https://xyz.com/v1/users/user-123`
   string url = 5;
+
+  // The description of the resource. 
+  // Example: `This resource is being used for storing important number`
+  string description = 6;
 }

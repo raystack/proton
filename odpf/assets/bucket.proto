@@ -9,7 +9,6 @@ option go_package = "github.com/odpf/proton/assets";
 import "google/protobuf/timestamp.proto";
 
 import "odpf/assets/facets/ownership.proto";
-import "odpf/assets/facets/lineage.proto";
 import "odpf/assets/facets/properties.proto";
 
 import "odpf/assets/common/resource.proto";
@@ -66,19 +65,15 @@ message Blob {
   // Example: `gcs`.
   string source = 3;
 
-  // The description of the blob.
-  // Example: `This is a config file for x app`
-  string description = 4;
-
   // The length of the object content.
   // Example: `300`
-  int64 size = 5;
+  int64 size = 4;
 
   // Delete time of the blob object.
-  google.protobuf.Timestamp delete_time = 6;
+  google.protobuf.Timestamp delete_time = 5;
 
   // Expire time of the blob object.
-  google.protobuf.Timestamp expire_time = 7;
+  google.protobuf.Timestamp expire_time = 6;
 
   // The ownership of the blob.
   // For an example check out ownership.
