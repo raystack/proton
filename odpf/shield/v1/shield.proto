@@ -395,7 +395,7 @@ message Role {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated string types = 3;
-  string definition_level = 4;
+  string namespace = 4;
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
@@ -405,7 +405,7 @@ message RoleRequestBody {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated string types = 3;
-  string definition_level = 4;
+  string namespace = 4;
   google.protobuf.Struct metadata = 5;
 }
 
