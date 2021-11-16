@@ -37,7 +37,7 @@ service SirenService {
         };   
     }
 
-    rpc ListProviders(google.protobuf.Empty) returns (ListProvidersResponse) {
+    rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "list providers";
             tags: "Provider";
@@ -367,6 +367,11 @@ message Provider {
     map<string, string> labels = 7;
     google.protobuf.Timestamp created_at = 8;
     google.protobuf.Timestamp updated_at = 9;
+}
+
+message ListProvidersRequest {
+    string urn = 1;
+    string type = 2;
 }
 
 message ListProvidersResponse {
