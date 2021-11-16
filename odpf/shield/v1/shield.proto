@@ -394,18 +394,19 @@ message ListGroupsResponse {
 message Role {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  repeated string tags = 3;
-  repeated string actions = 4;
+  repeated string types = 3;
+  string definition_level = 4;
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
 }
 
 message RoleRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  repeated string tags = 2;
-  repeated string actions = 3;
-  google.protobuf.Struct metadata = 4;
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated string types = 3;
+  string definition_level = 4;
+  google.protobuf.Struct metadata = 5;
 }
 
 message CreateRoleRequest {
