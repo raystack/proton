@@ -71,13 +71,13 @@ service RuntimeService {
         };
     }
 
-    // DumpJobSpecification returns compiled representation of the job in a scheduler
-    // consumable form
-    rpc DumpJobSpecification(DumpJobSpecificationRequest) returns (DumpJobSpecificationResponse) {
+    // GetJobTask provides task details specific to plugin used in a job
+    rpc GetJobTask(GetJobTaskRequest) returns (GetJobTaskResponse) {
         option (google.api.http) = {
-            get: "/v1/project/{project_name}/job/{job_name}/dump"
+            get: "/v1/project/{project_name}/namespace/{namespace}/job/{job_name}/task"
         };
     }
+
     // CheckJobSpecification checks if a job specification is valid
     rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
         option (google.api.http) = {
@@ -327,7 +327,7 @@ message InstanceSpec {
     google.protobuf.Timestamp executed_at = 5;
     
     enum Type {
-        UNKNOWN = 0;
+        UNSPECIFIED = 0;
         TASK = 1;
         HOOK = 2;
     }
@@ -343,7 +343,7 @@ message InstanceSpecData {
 
     // type of data, could be an env var or file
     enum Type {
-        UNKNOWN = 0;
+        UNSPECIFIED = 0;
         ENV = 1;
         FILE = 2;
     }
@@ -362,7 +362,7 @@ message JobStatus {
 
 message JobEvent {
     enum Type {
-        UNKNOWN = 0;
+        UNSPECIFIED = 0;
         SLA_MISS = 1;
         FAILURE = 2;
         SUCCESS = 3;
@@ -388,6 +388,25 @@ message ResourceSpecification {
     google.protobuf.Struct spec = 5;
     map<string, string> assets = 6;
     map<string, string> labels = 7;
+}
+
+// JobTask is part of a job that dictates main transformation
+// each job has exactly one task
+message JobTask {
+    string name = 1;
+    string description = 2;
+    string image = 3;
+    
+    message Destination {
+        string destination = 1;
+        string type = 2;
+    }
+    Destination destination = 4;
+
+    message Dependency {
+        string dependency = 1;
+    }
+    repeated Dependency dependencies = 5;
 }
 
 //~~~ rpc req/res
@@ -426,15 +445,14 @@ message ListJobSpecificationResponse{
     repeated JobSpecification jobs = 1;
 }
 
-message DumpJobSpecificationRequest {
+message GetJobTaskRequest {
     string project_name = 1;
-    string job_name = 2;
-    string namespace = 3;
+    string namespace = 2;
+    string job_name = 3;
 }
 
-message DumpJobSpecificationResponse {
-    bool success = 1;
-    string content = 2;
+message GetJobTaskResponse {
+    JobTask task = 1;
 }
 
 message CheckJobSpecificationRequest {

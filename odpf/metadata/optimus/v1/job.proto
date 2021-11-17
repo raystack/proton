@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package odpf.metadata.optimus;
+package odpf.metadata.optimus.v1;
 
 option java_package = "io.odpf.proton.metadata.optimus";
 option java_outer_classname = "Optimus";
