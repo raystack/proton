@@ -466,7 +466,7 @@ message CheckJobSpecificationsResponse {
 
 message RegisterProjectRequest {
     ProjectSpecification project = 1;
-    NamespaceSpecification namespace = 2;
+    NamespaceSpecification namespace = 2 [deprecated=true];
 }
 
 message RegisterProjectResponse {
