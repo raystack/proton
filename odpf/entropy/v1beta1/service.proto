@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package odpf.entropy.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/odpf/proton/entropy/v1beta1;entropyv1beta1";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.entropy";
+option java_outer_classname = "EntropyServiceProto";
+
+
+service ResourceService {
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/"
+    };
+  }
+
+  rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}"
+    };
+  }
+
+  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources"
+      body: "resource"
+    };
+  }
+
+  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/resources/{resource.urn}"
+      body: "resource"
+    };
+  }
+
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/resources/{urn}"
+    };
+  }
+}
+
+message Resource {
+  string id = 1;
+  string urn = 2;
+  string name = 3;
+  string parent = 4;
+  string kind = 5;
+  google.protobuf.Value configs = 6;
+  string status = 7;
+  map<string, string> labels = 8;
+}
+
+message ListResourcesRequest {
+  string parent = 1;
+  string kind = 2;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
+
+message GetResourceRequest {
+  string urn = 1;
+  string kind = 2;
+}
+
+message GetResourceResponse {
+  Resource resource = 1;
+}
+
+message CreateResourceRequest {
+  Resource resource = 3;
+}
+
+message CreateResourceResponse {
+  Resource resource = 3;
+}
+
+message UpdateResourceRequest {
+  Resource resource = 1;
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message UpdateResourceResponse {
+  Resource resource = 1;
+}
+
+message DeleteResourceRequest {
+  string urn = 1;
+  string kind = 2;
+}
+
+message DeleteResourceResponse {}
