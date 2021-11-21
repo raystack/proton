@@ -850,4 +850,5 @@ message BackupSpec {
     string resource_name = 2;
     google.protobuf.Timestamp created_at = 3;
     string description = 4;
+    map<string, string> config = 5;
 }
