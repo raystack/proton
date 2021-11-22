@@ -867,4 +867,5 @@ message GetBackupDetailRequest {
 
 message GetBackupDetailResponse {
     BackupSpec spec = 1;
+    repeated string urn = 2;
 }
