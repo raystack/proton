@@ -66,4 +66,16 @@ message TableProfile {
   string partition_key = 2;
 
   string partition_value = 3;
+
+  int64 usage_count = 4;
+  
+  repeated TableCommonJoin common_join = 5;
+}
+
+// TableCommonJoin is the metric of which are other tables that 
+// are joined with this table
+message TableCommonJoin {
+  string urn = 1;
+
+  int64 count = 2;
 }
