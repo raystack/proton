@@ -221,6 +221,11 @@ service RuntimeService {
             get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
         };
     }
+    rpc GetBackupDetail(GetBackupDetailRequest) returns (GetBackupDetailResponse) {
+        option (google.api.http) = {
+            get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup/{id}"
+        };
+    }
     // TODO(kush.sharma): disabled ATM
     // rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {}
 
@@ -851,4 +856,15 @@ message BackupSpec {
     google.protobuf.Timestamp created_at = 3;
     string description = 4;
     map<string, string> config = 5;
+}
+
+message GetBackupDetailRequest {
+    string project_name = 1;
+    string datastore_name = 2;
+    string namespace = 3;
+    string id = 4;
+}
+
+message GetBackupDetailResponse {
+    BackupSpec spec = 1;
 }
