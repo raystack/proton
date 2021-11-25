@@ -72,10 +72,13 @@ message TableProfile {
   repeated TableCommonJoin common_join = 5;
 }
 
-// TableCommonJoin is the metric of which are other tables that 
-// are joined with this table
+// TableCommonJoin is the metric of which are other tables that are joined with this table
 message TableCommonJoin {
   string urn = 1;
 
   int64 count = 2;
+
+  repeated string join_conditions = 3;
+
+  repeated string filter_conditions = 4;
 }
