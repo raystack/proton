@@ -70,6 +70,8 @@ message TableProfile {
   int64 usage_count = 4;
   
   repeated TableCommonJoin common_join = 5;
+
+  repeated string filter_conditions = 6;
 }
 
 // TableCommonJoin is the metric of which are other tables that are joined with this table
@@ -78,7 +80,5 @@ message TableCommonJoin {
 
   int64 count = 2;
 
-  repeated string join_conditions = 3;
-
-  repeated string filter_conditions = 4;
+  repeated string conditions = 3;
 }
