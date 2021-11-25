@@ -787,6 +787,7 @@ message ReplaySpec {
     google.protobuf.Timestamp end_date = 4;
     string state = 5;
     google.protobuf.Timestamp created_at = 6;
+    map<string, string> config = 7;
 }
 
 message RunJobRequest {
