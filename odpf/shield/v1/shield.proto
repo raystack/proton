@@ -372,7 +372,7 @@ message UpdateGroupRequest {
 }
 
 message UpdateCurrentUserRequest {
-  GroupRequestBody body = 1;
+  UserRequestBody body = 1;
 }
 
 message GetGroupRequest {
