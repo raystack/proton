@@ -66,4 +66,19 @@ message TableProfile {
   string partition_key = 2;
 
   string partition_value = 3;
+
+  int64 usage_count = 4;
+  
+  repeated Join joins = 5;
+
+  repeated string filters = 6;
+}
+
+// Join is the metric of which are other tables that are joined with this table
+message Join {
+  string urn = 1;
+
+  int64 count = 2;
+
+  repeated string conditions = 3;
 }
