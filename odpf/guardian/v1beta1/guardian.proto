@@ -256,7 +256,14 @@ message UpdateResourceResponse {
     Resource resource = 1;
 }
 
-message ListUserAppealsRequest {}
+message ListUserAppealsRequest {
+    repeated string statuses = 1;
+    string role = 2;
+    repeated string provider_types = 3;
+    repeated string provider_urns = 4;
+    repeated string resource_types = 5;
+    repeated string resource_urns = 6;
+}
 
 message ListUserAppealsResponse {
     repeated Appeal appeals = 1;
@@ -264,6 +271,12 @@ message ListUserAppealsResponse {
 
 message ListAppealsRequest {
     string account_id = 1;
+    repeated string statuses = 2;
+    string role = 3;
+    repeated string provider_types = 4;
+    repeated string provider_urns = 5;
+    repeated string resource_types = 6;
+    repeated string resource_urns = 7;
 }
 
 message ListAppealsResponse {
