@@ -69,13 +69,13 @@ message TableProfile {
 
   int64 usage_count = 4;
   
-  repeated TableCommonJoin common_join = 5;
+  repeated Join joins = 5;
 
-  repeated string filter_conditions = 6;
+  repeated string filters = 6;
 }
 
-// TableCommonJoin is the metric of which are other tables that are joined with this table
-message TableCommonJoin {
+// Join is the metric of which are other tables that are joined with this table
+message Join {
   string urn = 1;
 
   int64 count = 2;
