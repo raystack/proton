@@ -267,6 +267,135 @@ service ShieldService {
     };
   }
 
+  // Actions
+  rpc ListActions(ListActionsRequest) returns (ListActionsResponse) {
+    option (google.api.http) = {
+      get: "/v1/actions"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Get all Actions";
+    };
+  }
+
+  rpc CreateAction(CreateActionRequest) returns (CreateActionResponse) {
+    option (google.api.http) = {
+      post: "/v1/actions",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Create Action";
+    };
+  }
+
+  rpc GetAction(GetActionRequest) returns (GetActionResponse) {
+    option (google.api.http) = {
+      get: "/v1/actions/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Get Action by ID";
+    };
+  }
+
+  rpc UpdateAction(UpdateActionRequest) returns (UpdateActionResponse) {
+    option (google.api.http) = {
+      put: "/v1/actions/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Update Action by ID";
+    };
+  }
+
+  // Namespaces
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1/namespaces"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get all Namespaces";
+    };
+  }
+
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1/namespaces",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Create Namespace";
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1/namespaces/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get Namespace by ID";
+    };
+  }
+
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (google.api.http) = {
+      put: "/v1/namespaces/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Update Namespace by ID";
+    };
+  }
+
+  // Policies
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {
+      get: "/v1/policies"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get all Policy";
+    };
+  }
+
+  rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
+    option (google.api.http) = {
+      post: "/v1/policies",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Create Policy";
+    };
+  }
+
+  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
+    option (google.api.http) = {
+      get: "/v1/policies/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get Policy by ID";
+    };
+  }
+
+  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
+    option (google.api.http) = {
+      put: "/v1/policies/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Update Policy by ID";
+    };
+  }
+
 }
 
 message UserRequestBody {
@@ -395,7 +524,7 @@ message Role {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated string types = 3;
-  string namespace = 4;
+  Namespace namespace = 4;
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
@@ -405,7 +534,7 @@ message RoleRequestBody {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated string types = 3;
-  string namespace = 4;
+  string namespace_id = 4;
   google.protobuf.Struct metadata = 5;
 }
 
@@ -535,4 +664,144 @@ message GetProjectRequest {
 message UpdateProjectRequest {
   string id = 1;
   ProjectRequestBody body = 2;
+}
+
+message Action {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  Namespace namespace = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message Namespace {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Policy {
+  string id = 1;
+  Role role = 2;
+  Action action = 3;
+  Namespace namespace = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ActionRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string namespace_id = 3;
+}
+
+message NamespaceRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message PolicyRequestBody {
+  string role_id = 1;
+  string action_id = 2;
+  string namespace_id = 3;
+}
+
+message ListActionsRequest {
+
+}
+
+message ListActionsResponse {
+  repeated Action actions = 1;
+}
+
+message CreateActionRequest {
+  ActionRequestBody body = 1;
+}
+
+message CreateActionResponse {
+  Action action = 1;
+}
+
+message GetActionRequest {
+  string id = 1;
+}
+
+message GetActionResponse {
+  Action action = 1;
+}
+
+message UpdateActionRequest {
+  string id = 1;
+  ActionRequestBody body = 2;
+}
+
+message UpdateActionResponse {
+  Action action = 1;
+}
+
+message ListNamespacesRequest {
+
+}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message CreateNamespaceRequest {
+  NamespaceRequestBody body = 1;
+}
+
+message CreateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message GetNamespaceRequest {
+  string id = 1;
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+  string id = 1;
+  NamespaceRequestBody body = 2;
+}
+
+message UpdateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message ListPoliciesRequest {
+
+}
+
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}
+
+message CreatePolicyRequest {
+  PolicyRequestBody body = 1;
+}
+
+message CreatePolicyResponse {
+  repeated Policy policies = 1;
+}
+
+message GetPolicyRequest {
+  string id = 1;
+}
+
+message GetPolicyResponse {
+  Policy policy = 1;
+}
+
+message UpdatePolicyRequest {
+  string id = 1;
+  PolicyRequestBody body = 2;
+}
+
+message UpdatePolicyResponse {
+  repeated Policy policies = 1;
 }
