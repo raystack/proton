@@ -683,7 +683,7 @@ message Namespace {
 
 message Policy {
   string id = 1;
-	Role role = 2;
+  Role role = 2;
   Action action = 3;
   Namespace namespace = 4;
   google.protobuf.Timestamp created_at = 5;
