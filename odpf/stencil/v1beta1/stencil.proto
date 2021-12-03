@@ -76,16 +76,7 @@ service StencilService {
       summary: "List schemas under the namespace";
     };
   }
-  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema";
-      summary: "Create schema under the namespace. Returns version number, unique ID and location";
-    };
-  }
+  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {}
   rpc GetSchemaMetadata(GetSchemaMetadataRequest) returns (GetSchemaMetadataResponse) {
     option (google.api.http) = {
       get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/meta"
@@ -105,16 +96,7 @@ service StencilService {
       summary: "Update only schema metadata";
     };
   }
-  rpc GetLatestSchema(GetLatestSchemaRequest) returns (GetLatestSchemaResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema";
-      summary: "Get latest schema for specified schema id and namespace id";
-      description: "Returns schema data in byte64 format. Clients can decode 'data' field to expected data format"
-    };
-  }
+  rpc GetLatestSchema(GetLatestSchemaRequest) returns (GetLatestSchemaResponse) {}
   rpc DeleteSchema(DeleteSchemaRequest) returns (DeleteSchemaResponse) {
     option (google.api.http) = {
       delete: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"
@@ -124,16 +106,7 @@ service StencilService {
       summary: "Delete specified schema";
     };
   }
-  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema";
-      tags: "version";
-      summary: "Get schema for specified version";
-    };
-  }
+  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {}
   rpc ListVersions(ListVersionsRequest) returns (ListVersionsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions"
@@ -159,9 +132,10 @@ service StencilService {
 message Namespace {
   string id = 1;
   Schema.Format format = 2;
-  string description = 3;
-  google.protobuf.Timestamp created_at = 4;
-  google.protobuf.Timestamp updated_at = 5;
+  Schema.Compatibility Compatibility = 3;
+  string description = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message Schema {
@@ -173,7 +147,12 @@ message Schema {
   }
   enum Compatibility {
     COMPATIBILITY_UNSPECIFIED = 0;
-    COMPATIBILITY_FULL = 1;
+    COMPATIBILITY_BACKWARD = 1;
+    COMPATIBILITY_BACKWARD_TRANSITIVE = 2;
+    COMPATIBILITY_FORWARD = 3;
+    COMPATIBILITY_FORWARD_TRANSITIVE = 4;
+    COMPATIBILITY_FULL = 5;
+    COMPATIBILITY_FULL_TRANSITIVE = 6;
   }
   string name = 1;
   Format format = 2;
@@ -200,7 +179,8 @@ message GetNamespaceResponse {
 message CreateNamespaceRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
   Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
-  string description = 3;
+  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
 }
 
 message CreateNamespaceResponse {
@@ -210,7 +190,8 @@ message CreateNamespaceResponse {
 message UpdateNamespaceRequest {
   string id = 1;
   Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
-  string description = 3;
+  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
 }
 
 message UpdateNamespaceResponse {
