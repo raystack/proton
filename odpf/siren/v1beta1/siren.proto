@@ -165,7 +165,62 @@ service SirenService {
         };        
     }
 
-    
+    rpc ListSubscriptions(google.protobuf.Empty) returns (ListSubscriptionsResponse) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "List subscriptions";
+            tags: "Subscription";
+        };
+
+        option (google.api.http) = {
+            get: "/v1beta1/subscriptions"
+        };
+    }
+
+    rpc CreateSubscription(CreateSubscriptionRequest) returns (Subscription) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Create a subscription";
+            tags: "Subscription";
+        };
+
+        option (google.api.http) = {
+            post: "/v1beta1/subscriptions"
+            body: "*"
+        };
+    }
+
+    rpc GetSubscription(GetSubscriptionRequest) returns (Subscription) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Get a subscription";
+            tags: "Subscription";
+        };
+
+        option (google.api.http) = {
+            get: "/v1beta1/subscriptions/{id}"
+        };
+    }
+
+    rpc UpdateSubscription(UpdateSubscriptionRequest) returns (Subscription) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Update a subscription";
+            tags: "Subscription";
+        };
+        option (google.api.http) = {
+            put: "/v1beta1/subscriptions/{id}",
+            body: "*"
+        };
+    }
+
+    rpc DeleteSubscription(DeleteSubscriptionRequest) returns (google.protobuf.Empty) {
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Delete a subscription";
+            tags: "Subscription";
+        };
+
+        option (google.api.http) = {
+            delete: "/v1beta1/subscriptions/{id}"
+        };
+    }
+
     rpc ListReceivers(google.protobuf.Empty) returns (ListReceiversResponse) {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "list receivers";
@@ -429,6 +484,49 @@ message DeleteNamespaceRequest {
     uint64 id = 1;
 }
 
+message ReceiverMetadata {
+    uint64 id = 1; 
+    map<string, string> configuration = 4;
+}
+
+message Subscription {
+    uint64 id = 1;
+    string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 namespace = 3; 
+    repeated ReceiverMetadata receivers = 4;
+    map<string, string> match = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+}
+
+message ListSubscriptionsResponse {
+    repeated Subscription subscriptions = 1;
+}
+
+message CreateSubscriptionRequest {
+    string urn = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 namespace = 2; 
+    repeated ReceiverMetadata receivers = 3;
+    map<string, string> match = 4;
+}
+
+message GetSubscriptionRequest {
+    uint64 id = 1;
+}
+
+message UpdateSubscriptionRequest {
+    uint64 id = 1;
+    string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    uint64 namespace = 3; 
+    repeated ReceiverMetadata receivers = 4;
+    map<string, string> match = 5;
+}
+
+message DeleteSubscriptionRequest {
+    uint64 id = 1;
+}
+
+
 message Receiver {
     uint64 id = 1;
     string name = 2;
@@ -546,7 +644,7 @@ message Rule {
 
 message Variables {
     string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-    string value = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string value = 2;
     string type = 3;
     string description = 4;
 }
