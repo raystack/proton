@@ -686,6 +686,7 @@ message ReplayRequest {
 
 message ReplayResponse {
     string id = 1;
+    repeated string ignored_jobs = 2;
 }
 
 message ReplayDryRunRequest {
@@ -801,6 +802,7 @@ message BackupRequest {
 
 message BackupResponse {
     repeated string urn = 1;
+    repeated string ignored_resources = 2;
 }
 
 message ListBackupsRequest {
