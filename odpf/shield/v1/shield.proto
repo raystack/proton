@@ -396,6 +396,91 @@ service ShieldService {
     };
   }
 
+    // Relations
+    rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
+      option (google.api.http) = {
+        get: "/v1/relations"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Relation";
+        summary: "Get all Relations";
+      };
+    }
+  
+    rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
+      option (google.api.http) = {
+        post: "/v1/relations",
+        body: "body"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Relation";
+        summary: "Create Relation";
+      };
+    }
+  
+    rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
+      option (google.api.http) = {
+        get: "/v1/relations/{id}",
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Relation";
+        summary: "Get Relation by ID";
+      };
+    }
+  
+    rpc UpdateRelation(UpdateRelationRequest) returns (UpdateRelationResponse) {
+      option (google.api.http) = {
+        put: "/v1/relations/{id}",
+        body: "body"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Relation";
+        summary: "Update Relation by ID";
+      };
+    }
+
+    // Resources  
+    rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+      option (google.api.http) = {
+        get: "/v1/resources"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Resource";
+        summary: "Get all Resources";
+      };
+    }
+  
+    rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+      option (google.api.http) = {
+        post: "/v1/resources",
+        body: "body"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Resource";
+        summary: "Create Resource";
+      };
+    }
+  
+    rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+      option (google.api.http) = {
+        get: "/v1/resources/{id}",
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Resource";
+        summary: "Get Resource by ID";
+      };
+    }
+  
+    rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+      option (google.api.http) = {
+        put: "/v1/resources/{id}",
+        body: "body"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Resource";
+        summary: "Update Resource by ID";
+      };
+    }
 }
 
 message UserRequestBody {
@@ -805,3 +890,106 @@ message UpdatePolicyRequest {
 message UpdatePolicyResponse {
   repeated Policy policies = 1;
 }
+
+message Relation {
+  string id = 1;
+  Namespace subject_type = 2;
+  string subject_id = 3;
+  Namespace object_type = 4;
+  string object_id = 5;
+  Role role = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message Resource {
+  string id = 1;
+  string name = 2;
+  Group group = 3;
+  Project project = 4;
+  Organization organization = 5;
+  Namespace namespace = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListRelationsRequest {
+
+}
+
+message ListRelationsResponse {
+  repeated Relation relations = 1;
+}
+
+message RelationRequestBody {
+  string subject_type = 1;
+  string subject_id = 2;
+  string object_type = 3;
+  string object_id = 4;
+  string role_id = 5;
+}
+
+message CreateRelationRequest {
+  RelationRequestBody body = 1;
+}
+
+message CreateRelationResponse {
+  Relation relation = 1;
+}
+
+message GetRelationRequest {
+  string id = 1;
+}
+
+message GetRelationResponse {
+  Relation relation = 1;
+}
+
+message UpdateRelationRequest {
+  string id = 1;
+  RelationRequestBody body = 2;
+}
+
+ message UpdateRelationResponse {
+  Relation relation = 1;
+ }
+
+ message ListResourcesRequest {
+ }
+
+ message ListResourcesResponse {
+  repeated Resource resources = 1;
+ }
+
+ message ResourceRequestBody {
+  string name = 1;
+  string group_id = 2;
+  string project_id = 3;
+  string organization_id = 4;
+  string namespace_id = 5;
+ }
+
+ message CreateResourceRequest {
+  ResourceRequestBody body = 1;
+ }
+
+ message CreateResourceResponse {
+  Resource resource = 1;
+ }
+
+ message GetResourceRequest {
+  string id = 1;
+ }
+
+ message  GetResourceResponse {
+  Resource resource = 1;
+ }
+
+ message UpdateResourceRequest {
+  string id = 1;
+  ResourceRequestBody body = 2;
+ }
+
+ message UpdateResourceResponse {
+  Resource resource = 1;
+ }
