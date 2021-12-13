@@ -680,8 +680,7 @@ message ReplayRequest {
     string start_date = 4;
     string end_date = 5;
     bool force = 6;
-    bool ignore_downstream = 7;
-    string allowed_downstream = 8;
+    repeated string allowed_downstream = 7;
 }
 
 message ReplayResponse {
@@ -695,8 +694,7 @@ message ReplayDryRunRequest {
     string namespace = 3;
     string start_date = 4;
     string end_date = 5;
-    bool ignore_downstream = 6;
-    string allowed_downstream = 7;
+    repeated string allowed_downstream = 6;
 }
 
 message ReplayDryRunResponse {
@@ -780,8 +778,8 @@ message BackupDryRunRequest {
     string resource_name = 3;
     string namespace = 4;
     string description = 5;
-    bool ignore_downstream = 6;
-    string allowed_downstream = 7;
+    bool ignore_downstream = 6 [deprecated=true];
+    repeated string allowed_downstream = 7;
 }
 
 message BackupDryRunResponse {
@@ -795,9 +793,9 @@ message BackupRequest {
     string resource_name = 3;
     string namespace = 4;
     string description = 5;
-    bool ignore_downstream = 6;
+    bool ignore_downstream = 6 [deprecated=true];
     map<string, string> config = 7;
-    string allowed_downstream = 8;
+    repeated string allowed_downstream = 8;
 }
 
 message BackupResponse {
