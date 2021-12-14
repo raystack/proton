@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package odpf.assets.common;
+package odpf.assets.common.v1beta1;
 
 option java_package = "io.odpf.assets.common";
 option java_outer_classname = "ResourceProto";
-option go_package = "github.com/odpf/proton/assets/common";
+option go_package = "github.com/odpf/proton/assets/common/v1beta1";
 
 
 // Resource is a generic resource that represents a file or other resource.
