@@ -680,7 +680,11 @@ message ReplayRequest {
     string start_date = 4;
     string end_date = 5;
     bool force = 6;
-    repeated string allowed_downstream = 7;
+    
+    // represents which downstream to be replayed. 
+    // possible values are the namespace names, *, or empty. 
+    // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+    repeated string allowed_downstream_namespaces = 7;
 }
 
 message ReplayResponse {
@@ -694,7 +698,11 @@ message ReplayDryRunRequest {
     string namespace = 3;
     string start_date = 4;
     string end_date = 5;
-    repeated string allowed_downstream = 6;
+
+    // represents which downstream to be replayed. 
+    // possible values are the namespace names, *, or empty. 
+    // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+    repeated string allowed_downstream_namespaces = 6;
 }
 
 message ReplayDryRunResponse {
@@ -779,7 +787,11 @@ message BackupDryRunRequest {
     string namespace = 4;
     string description = 5;
     bool ignore_downstream = 6 [deprecated=true];
-    repeated string allowed_downstream = 7;
+
+    // represents which downstream to be backed up. 
+    // possible values are the namespace names, *, or empty. 
+    // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+    repeated string allowed_downstream_namespaces = 7;
 }
 
 message BackupDryRunResponse {
@@ -795,7 +807,11 @@ message BackupRequest {
     string description = 5;
     bool ignore_downstream = 6 [deprecated=true];
     map<string, string> config = 7;
-    repeated string allowed_downstream = 8;
+
+    // represents which downstream to be backed up. 
+    // possible values are the namespace names, *, or empty. 
+    // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+    repeated string allowed_downstream_namespaces = 8;
 }
 
 message BackupResponse {
