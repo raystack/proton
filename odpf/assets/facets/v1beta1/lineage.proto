@@ -1,21 +1,21 @@
 syntax = "proto3";
 
-package odpf.assets.facets;
+package odpf.assets.facets.v1beta1;
 
 option java_package = "io.odpf.assets.facets";
 option java_outer_classname = "LineageProto";
-option go_package = "github.com/odpf/proton/assets/facets";
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1";
 
-import "odpf/assets/common/resource.proto";
+import "odpf/assets/common/v1beta1/resource.proto";
 
 // Linage reprsents the relationship of resource to other resources.
 // Relation is way of describing the relationship between two resources.
 message Lineage {
   // The resource that is the source of the relationship.
   // Example: a resource that is the parent of another resource.
-  repeated odpf.assets.common.Resource upstreams = 1;
+  repeated odpf.assets.common.v1beta1.Resource upstreams = 1;
 
   // The resource that is the destination of the relationship.
   // Example: a resource that is the child of another resource.
-  repeated odpf.assets.common.Resource downstreams = 2;
+  repeated odpf.assets.common.v1beta1.Resource downstreams = 2;
 }

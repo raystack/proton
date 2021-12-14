@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package odpf.assets.facets;
+package odpf.assets.facets.v1beta1;
 
 option java_package = "io.odpf.assets.facets";
 option java_outer_classname = "SchemaProto";
-option go_package = "github.com/odpf/proton/assets/facets";
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1";
 
 
-import "odpf/assets/facets/properties.proto";
+import "odpf/assets/facets/v1beta1/properties.proto";
 
 // Columns represents a list of columns.
 // It is facet used to specify the schema of a table or a file.
@@ -43,7 +43,7 @@ message Column {
 
   // Representation of the column properties.
   // Properties facet can be used to set custom properties, tags and labels for a column.
-  odpf.assets.facets.Properties properties = 31;
+  odpf.assets.facets.v1beta1.Properties properties = 31;
 }
 
 message ColumnProfile {
