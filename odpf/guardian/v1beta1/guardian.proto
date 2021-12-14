@@ -352,6 +352,7 @@ message UpdateApprovalRequest {
 
     message Action {
         string action = 1;
+        string reason = 2;
     }
     Action action = 3;
 }
@@ -517,6 +518,7 @@ message Approval {
     Appeal appeal = 9;
     google.protobuf.Timestamp created_at = 10;
     google.protobuf.Timestamp updated_at = 11;
+    string reason = 12;
 }
 
 // Resource contains information of resource from providers
