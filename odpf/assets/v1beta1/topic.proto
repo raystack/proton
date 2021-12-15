@@ -4,7 +4,7 @@ package odpf.assets.v1beta1;
 
 option java_package = "io.odpf.assets";
 option java_outer_classname = "TopicProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 
 import "odpf/assets/facets/v1beta1/schema.proto";
 import "odpf/assets/facets/v1beta1/ownership.proto";

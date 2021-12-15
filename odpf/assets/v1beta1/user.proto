@@ -4,7 +4,7 @@ package odpf.assets.v1beta1;
 
 option java_package = "io.odpf.assets";
 option java_outer_classname = "UserProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 
 
 import "odpf/assets/common/v1beta1/timestamp.proto";
