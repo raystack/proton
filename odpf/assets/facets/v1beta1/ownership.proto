@@ -26,4 +26,8 @@ message Owner {
   // The role of the owner.
   // Example: `admin`, `steward`.
   string role = 3;
+
+  // The email of the owner.
+  // Example: `abc@email.com`
+  string email = 4;
 }
