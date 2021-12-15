@@ -25,7 +25,7 @@ service ShieldService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {
-      get: "/v1/users"
+      get: "/v1beta1/users"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -34,7 +34,7 @@ service ShieldService {
   }
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http) = {
-      post: "/v1/users",
+      post: "/v1beta1/users",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -45,7 +45,7 @@ service ShieldService {
 
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
     option (google.api.http) = {
-      get: "/v1/users/{id}",
+      get: "/v1beta1/users/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -55,7 +55,7 @@ service ShieldService {
 
   rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
     option (google.api.http) = {
-      get: "/v1/users/self",
+      get: "/v1beta1/users/self",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -65,7 +65,7 @@ service ShieldService {
 
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
-      put: "/v1/users/{id}",
+      put: "/v1beta1/users/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -76,7 +76,7 @@ service ShieldService {
 
   rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {
     option (google.api.http) = {
-      put: "/v1/users/self",
+      put: "/v1beta1/users/self",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -88,7 +88,7 @@ service ShieldService {
   // Group
   rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (google.api.http) = {
-      get: "/v1/groups",
+      get: "/v1beta1/groups",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -98,7 +98,7 @@ service ShieldService {
 
   rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
     option (google.api.http) = {
-      post: "/v1/groups",
+      post: "/v1beta1/groups",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -109,7 +109,7 @@ service ShieldService {
 
   rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
     option (google.api.http) = {
-      get: "/v1/groups/{id}",
+      get: "/v1beta1/groups/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -119,7 +119,7 @@ service ShieldService {
 
   rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
     option (google.api.http) = {
-      get: "/v1/groups/{id}/users",
+      get: "/v1beta1/groups/{id}/users",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -129,7 +129,7 @@ service ShieldService {
 
   rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
     option (google.api.http) = {
-      put: "/v1/groups/{id}",
+      put: "/v1beta1/groups/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -141,7 +141,7 @@ service ShieldService {
   // Roles
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http) = {
-      get: "/v1/roles",
+      get: "/v1beta1/roles",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
@@ -151,7 +151,7 @@ service ShieldService {
 
   rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
     option (google.api.http) = {
-      post: "/v1/roles",
+      post: "/v1beta1/roles",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -162,7 +162,7 @@ service ShieldService {
 
   rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
     option (google.api.http) = {
-      get: "/v1/roles/{id}",
+      get: "/v1beta1/roles/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
@@ -172,7 +172,7 @@ service ShieldService {
 
   rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
     option (google.api.http) = {
-      put: "/v1/roles/{id}",
+      put: "/v1beta1/roles/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -184,7 +184,7 @@ service ShieldService {
   // Organizations
   rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
     option (google.api.http) = {
-      get: "/v1/organizations"
+      get: "/v1beta1/organizations"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
@@ -194,7 +194,7 @@ service ShieldService {
 
   rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
     option (google.api.http) = {
-      post: "/v1/organizations",
+      post: "/v1beta1/organizations",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -205,7 +205,7 @@ service ShieldService {
 
   rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
     option (google.api.http) = {
-      get: "/v1/organizations/{id}",
+      get: "/v1beta1/organizations/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
@@ -215,7 +215,7 @@ service ShieldService {
 
   rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
     option (google.api.http) = {
-      put: "/v1/organizations/{id}",
+      put: "/v1beta1/organizations/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -227,7 +227,7 @@ service ShieldService {
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {
-      get: "/v1/projects"
+      get: "/v1beta1/projects"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
@@ -237,7 +237,7 @@ service ShieldService {
 
   rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
     option (google.api.http) = {
-      post: "/v1/projects",
+      post: "/v1beta1/projects",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -248,7 +248,7 @@ service ShieldService {
 
   rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
     option (google.api.http) = {
-      get: "/v1/projects/{id}",
+      get: "/v1beta1/projects/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
@@ -258,7 +258,7 @@ service ShieldService {
 
   rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
     option (google.api.http) = {
-      put: "/v1/projects/{id}",
+      put: "/v1beta1/projects/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -270,7 +270,7 @@ service ShieldService {
   // Actions
   rpc ListActions(ListActionsRequest) returns (ListActionsResponse) {
     option (google.api.http) = {
-      get: "/v1/actions"
+      get: "/v1beta1/actions"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Action";
@@ -280,7 +280,7 @@ service ShieldService {
 
   rpc CreateAction(CreateActionRequest) returns (CreateActionResponse) {
     option (google.api.http) = {
-      post: "/v1/actions",
+      post: "/v1beta1/actions",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -291,7 +291,7 @@ service ShieldService {
 
   rpc GetAction(GetActionRequest) returns (GetActionResponse) {
     option (google.api.http) = {
-      get: "/v1/actions/{id}",
+      get: "/v1beta1/actions/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Action";
@@ -301,7 +301,7 @@ service ShieldService {
 
   rpc UpdateAction(UpdateActionRequest) returns (UpdateActionResponse) {
     option (google.api.http) = {
-      put: "/v1/actions/{id}",
+      put: "/v1beta1/actions/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -313,7 +313,7 @@ service ShieldService {
   // Namespaces
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
     option (google.api.http) = {
-      get: "/v1/namespaces"
+      get: "/v1beta1/namespaces"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Namespace";
@@ -323,7 +323,7 @@ service ShieldService {
 
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
     option (google.api.http) = {
-      post: "/v1/namespaces",
+      post: "/v1beta1/namespaces",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -334,7 +334,7 @@ service ShieldService {
 
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
     option (google.api.http) = {
-      get: "/v1/namespaces/{id}",
+      get: "/v1beta1/namespaces/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Namespace";
@@ -344,7 +344,7 @@ service ShieldService {
 
   rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
     option (google.api.http) = {
-      put: "/v1/namespaces/{id}",
+      put: "/v1beta1/namespaces/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -356,7 +356,7 @@ service ShieldService {
   // Policies
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
     option (google.api.http) = {
-      get: "/v1/policies"
+      get: "/v1beta1/policies"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
@@ -366,7 +366,7 @@ service ShieldService {
 
   rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
     option (google.api.http) = {
-      post: "/v1/policies",
+      post: "/v1beta1/policies",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -377,7 +377,7 @@ service ShieldService {
 
   rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
     option (google.api.http) = {
-      get: "/v1/policies/{id}",
+      get: "/v1beta1/policies/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
@@ -387,7 +387,7 @@ service ShieldService {
 
   rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
     option (google.api.http) = {
-      put: "/v1/policies/{id}",
+      put: "/v1beta1/policies/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -399,7 +399,7 @@ service ShieldService {
     // Relations
     rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
       option (google.api.http) = {
-        get: "/v1/relations"
+        get: "/v1beta1/relations"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
         tags: "Relation";
@@ -409,7 +409,7 @@ service ShieldService {
   
     rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
       option (google.api.http) = {
-        post: "/v1/relations",
+        post: "/v1beta1/relations",
         body: "body"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -420,7 +420,7 @@ service ShieldService {
   
     rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
       option (google.api.http) = {
-        get: "/v1/relations/{id}",
+        get: "/v1beta1/relations/{id}",
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
         tags: "Relation";
@@ -430,7 +430,7 @@ service ShieldService {
   
     rpc UpdateRelation(UpdateRelationRequest) returns (UpdateRelationResponse) {
       option (google.api.http) = {
-        put: "/v1/relations/{id}",
+        put: "/v1beta1/relations/{id}",
         body: "body"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -442,7 +442,7 @@ service ShieldService {
     // Resources  
     rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
       option (google.api.http) = {
-        get: "/v1/resources"
+        get: "/v1beta1/resources"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
         tags: "Resource";
@@ -452,7 +452,7 @@ service ShieldService {
   
     rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
       option (google.api.http) = {
-        post: "/v1/resources",
+        post: "/v1beta1/resources",
         body: "body"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -463,7 +463,7 @@ service ShieldService {
   
     rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
       option (google.api.http) = {
-        get: "/v1/resources/{id}",
+        get: "/v1beta1/resources/{id}",
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
         tags: "Resource";
@@ -473,7 +473,7 @@ service ShieldService {
   
     rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
       option (google.api.http) = {
-        put: "/v1/resources/{id}",
+        put: "/v1beta1/resources/{id}",
         body: "body"
       };
       option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
