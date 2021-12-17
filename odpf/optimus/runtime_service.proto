@@ -255,18 +255,18 @@ message JobSpecHook {
     repeated JobConfigItem config = 2;
 }
 
-message JobSpecResourceConfig {
+message JobSpecMetadataResourceConfig {
     string cpu = 1;
     string memory = 2;
 }
 
-message JobSpecResource {
-    JobSpecResourceConfig request = 1;
-    JobSpecResourceConfig limit = 2;
+message JobSpecMetadataResource {
+    JobSpecMetadataResourceConfig request = 1;
+    JobSpecMetadataResourceConfig limit = 2;
 }
 
 message JobMetadata {
-    JobSpecResource resource = 1;
+    JobSpecMetadataResource resource = 1;
 }
 
 message JobSpecification {
