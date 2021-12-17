@@ -352,6 +352,7 @@ message UpdateApprovalRequest {
 
     message Action {
         string action = 1;
+        string reason = 2;
     }
     Action action = 3;
 }
@@ -390,6 +391,7 @@ message ProviderConfig {
         repeated Role roles = 4;
     }
     repeated ResourceConfig resources = 6;
+    repeated string allowed_account_types = 7;
 }
 
 // Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles
@@ -516,6 +518,7 @@ message Approval {
     Appeal appeal = 9;
     google.protobuf.Timestamp created_at = 10;
     google.protobuf.Timestamp updated_at = 11;
+    string reason = 12;
 }
 
 // Resource contains information of resource from providers

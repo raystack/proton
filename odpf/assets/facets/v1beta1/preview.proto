@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package odpf.assets.facets;
+package odpf.assets.facets.v1beta1;
 
 option java_package = "io.odpf.assets.facets";
 option java_outer_classname = "PreviewProto";
-option go_package = "github.com/odpf/proton/assets/facets";
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
 
 import "google/protobuf/struct.proto";
 

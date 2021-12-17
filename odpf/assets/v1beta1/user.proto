@@ -1,24 +1,24 @@
 syntax = "proto3";
 
-package odpf.assets;
+package odpf.assets.v1beta1;
 
 option java_package = "io.odpf.assets";
 option java_outer_classname = "UserProto";
-option go_package = "github.com/odpf/proton/assets";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 
 
-import "odpf/assets/common/timestamp.proto";
-import "odpf/assets/common/event.proto";
-import "odpf/assets/common/resource.proto";
+import "odpf/assets/common/v1beta1/timestamp.proto";
+import "odpf/assets/common/v1beta1/event.proto";
+import "odpf/assets/common/v1beta1/resource.proto";
 
-import "odpf/assets/facets/properties.proto";
+import "odpf/assets/facets/v1beta1/properties.proto";
 
 // User is a person who uses or operates something. 
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
 message User {
   // Representation of the resource
-  odpf.assets.common.Resource resource = 1;
+  odpf.assets.common.v1beta1.Resource resource = 1;
 
   // The emai address of the user.
   // Example: `job.deo@gmail.com`
@@ -66,15 +66,15 @@ message User {
 
   // Representation of custom properties of user.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.Properties properties = 31;
+  odpf.assets.facets.v1beta1.Properties properties = 31;
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
-  odpf.assets.common.Timestamp timestamps = 32;
+  odpf.assets.common.v1beta1.Timestamp timestamps = 32;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
-  odpf.assets.common.Event event = 100;
+  odpf.assets.common.v1beta1.Event event = 100;
 }
 
 // Membership is a relationship between a user and a group.

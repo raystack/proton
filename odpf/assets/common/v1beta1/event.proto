@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package odpf.assets.common;
+package odpf.assets.common.v1beta1;
 
 option java_package = "io.odpf.assets.common";
 option java_outer_classname = "EventProto";
-option go_package = "github.com/odpf/proton/assets/common";
+option go_package = "github.com/odpf/proton/assets/common/v1beta1;commonv1beta1";
 
 import "google/protobuf/timestamp.proto";
 

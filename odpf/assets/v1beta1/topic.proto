@@ -1,25 +1,25 @@
 syntax = "proto3";
 
-package odpf.assets;
+package odpf.assets.v1beta1;
 
 option java_package = "io.odpf.assets";
 option java_outer_classname = "TopicProto";
-option go_package = "github.com/odpf/proton/assets";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 
-import "odpf/assets/facets/schema.proto";
-import "odpf/assets/facets/ownership.proto";
-import "odpf/assets/facets/lineage.proto";
-import "odpf/assets/facets/properties.proto";
+import "odpf/assets/facets/v1beta1/schema.proto";
+import "odpf/assets/facets/v1beta1/ownership.proto";
+import "odpf/assets/facets/v1beta1/lineage.proto";
+import "odpf/assets/facets/v1beta1/properties.proto";
 
-import "odpf/assets/common/resource.proto";
-import "odpf/assets/common/timestamp.proto";
-import "odpf/assets/common/event.proto";
+import "odpf/assets/common/v1beta1/resource.proto";
+import "odpf/assets/common/v1beta1/timestamp.proto";
+import "odpf/assets/common/v1beta1/event.proto";
 
 // Topic is resource that represents a logical group of messages 
 // in message bus like kafka, pubsub, pulsar etc.
 message Topic {
   // Representation of the resource
-  odpf.assets.common.Resource resource = 1;
+  odpf.assets.common.v1beta1.Resource resource = 1;
 
   // The metrics of the topic.
   // For an example check out topic profile schema.
@@ -27,27 +27,27 @@ message Topic {
 
   // The schama of the topic.
   // For an example check out topic schema.
-  odpf.assets.facets.TopicSchema schema = 31;
+  odpf.assets.facets.v1beta1.TopicSchema schema = 31;
 
   // The ownership of the topic.
   // For an example check out ownership.
-  odpf.assets.facets.Ownership ownership = 32;
+  odpf.assets.facets.v1beta1.Ownership ownership = 32;
 
   // The lineage of the topic.
   // For an example check out lineage schema.
-  odpf.assets.facets.Lineage lineage = 33;
+  odpf.assets.facets.v1beta1.Lineage lineage = 33;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.Properties properties = 34;
+  odpf.assets.facets.v1beta1.Properties properties = 34;
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
-  odpf.assets.common.Timestamp timestamps = 35;
+  odpf.assets.common.v1beta1.Timestamp timestamps = 35;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
-  odpf.assets.common.Event event = 100;
+  odpf.assets.common.v1beta1.Event event = 100;
 }
 
 // TopicProfile is the profile of the topic.
