@@ -255,6 +255,20 @@ message JobSpecHook {
     repeated JobConfigItem config = 2;
 }
 
+message JobSpecMetadataResourceConfig {
+    string cpu = 1;
+    string memory = 2;
+}
+
+message JobSpecMetadataResource {
+    JobSpecMetadataResourceConfig request = 1;
+    JobSpecMetadataResourceConfig limit = 2;
+}
+
+message JobMetadata {
+    JobSpecMetadataResource resource = 1;
+}
+
 message JobSpecification {
     int32 version = 1;
     string name = 2;
@@ -301,6 +315,8 @@ message JobSpecification {
         repeated Notifiers notify = 2;
     }
     Behavior behavior = 19;
+
+    JobMetadata metadata = 20;
 }
 
 message JobConfigItem {
