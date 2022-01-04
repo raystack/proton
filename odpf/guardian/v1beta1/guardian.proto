@@ -263,6 +263,7 @@ message ListUserAppealsRequest {
     repeated string provider_urns = 4;
     repeated string resource_types = 5;
     repeated string resource_urns = 6;
+    repeated string order_by = 7;
 }
 
 message ListUserAppealsResponse {
@@ -277,6 +278,7 @@ message ListAppealsRequest {
     repeated string provider_urns = 5;
     repeated string resource_types = 6;
     repeated string resource_urns = 7;
+    repeated string order_by = 8;
 }
 
 message ListAppealsResponse {
@@ -331,6 +333,7 @@ message CreateAppealResponse {
 
 message ListUserApprovalsRequest {
     repeated string statuses = 2;
+    repeated string order_by = 3;
 }
 
 message ListUserApprovalsResponse {
@@ -340,6 +343,7 @@ message ListUserApprovalsResponse {
 message ListApprovalsRequest {
     string account_id = 1;
     repeated string statuses = 2;
+    repeated string order_by = 3;
 }
 
 message ListApprovalsResponse {
