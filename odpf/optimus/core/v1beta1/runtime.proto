@@ -560,6 +560,7 @@ message RegisterSecretRequest {
     string secret_name = 2;
     string value = 3; // base64 encoded secret value
     string namespace_name = 4;
+    bool update_only = 5;
 }
 
 message RegisterSecretResponse {
