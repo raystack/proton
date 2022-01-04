@@ -210,7 +210,7 @@ service RuntimeService {
             body: "*"
         };
     }
-    rpc Backup(BackupRequest) returns (BackupResponse) {
+    rpc CreateBackup(CreateBackupRequest) returns (CreateBackupResponse) {
         option (google.api.http) = {
             post: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
             body: "*"
@@ -221,7 +221,7 @@ service RuntimeService {
             get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup"
         };
     }
-    rpc GetBackupDetail(GetBackupDetailRequest) returns (GetBackupDetailResponse) {
+    rpc GetBackup(GetBackupRequest) returns (GetBackupResponse) {
         option (google.api.http) = {
             get: "/v1/project/{project_name}/namespace/{namespace}/datastore/{datastore_name}/backup/{id}"
         };
@@ -821,7 +821,7 @@ message BackupDryRunResponse {
     repeated string ignored_resources = 2;
 }
 
-message BackupRequest {
+message CreateBackupRequest {
     string project_name = 1;
     string datastore_name = 2;
     string resource_name = 3;
@@ -836,7 +836,7 @@ message BackupRequest {
     repeated string allowed_downstream_namespaces = 8;
 }
 
-message BackupResponse {
+message CreateBackupResponse {
     repeated string urn = 1;
     repeated string ignored_resources = 2;
 }
@@ -859,14 +859,14 @@ message BackupSpec {
     map<string, string> config = 5;
 }
 
-message GetBackupDetailRequest {
+message GetBackupRequest {
     string project_name = 1;
     string datastore_name = 2;
     string namespace = 3;
     string id = 4;
 }
 
-message GetBackupDetailResponse {
+message GetBackupResponse {
     BackupSpec spec = 1;
     repeated string urn = 2;
 }
