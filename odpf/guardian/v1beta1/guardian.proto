@@ -471,7 +471,7 @@ message Policy {
     message IAM {
         string provider = 1;
         google.protobuf.Value config = 2;
-        map<string, string> profile_schema = 3;
+        map<string, string> schema = 3;
     }
     IAM iam = 9;
 }
