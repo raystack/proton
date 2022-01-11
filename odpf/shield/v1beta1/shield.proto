@@ -350,6 +350,37 @@ service ShieldService {
     };
   }
 
+  rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/projects/{id}/admins",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all Admins of a Project";
+    };
+  }
+
+  rpc AddProjectAdmin(AddProjectAdminRequest) returns (AddProjectAdminResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects/{id}/admins",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Add Admin to Project";
+    };
+  }
+
+  rpc RemoveProjectAdmin(RemoveProjectAdminRequest) returns (RemoveProjectAdminResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/projects/{id}/admins/{user_id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Remove Admin from Project";
+    };
+  }
+
   // Actions
   rpc ListActions(ListActionsRequest) returns (ListActionsResponse) {
     option (google.api.http) = {
@@ -915,6 +946,36 @@ message GetProjectRequest {
 message UpdateProjectRequest {
   string id = 1;
   ProjectRequestBody body = 2;
+}
+
+message ListProjectAdminsRequest {
+  string id = 1;
+}
+
+message ListProjectAdminsResponse {
+  repeated User users = 1;
+}
+
+message AddProjectAdminRequestBody {
+  repeated string user_ids = 1;
+}
+
+message AddProjectAdminRequest {
+  string id = 1;
+  AddProjectAdminRequestBody body = 2;
+}
+
+message AddProjectAdminResponse {
+  repeated User users = 1;
+}
+
+message RemoveProjectAdminRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message RemoveProjectAdminResponse {
+  string message = 1;
 }
 
 message Action {
