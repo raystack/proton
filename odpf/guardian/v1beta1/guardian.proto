@@ -160,7 +160,7 @@ message ListProvidersResponse {
 }
 
 message GetProviderRequest {
-    uint32 id = 1;
+    string id = 1;
 }
 
 message GetProviderResponse {
@@ -176,7 +176,7 @@ message CreateProviderResponse {
 }
 
 message UpdateProviderRequest {
-    uint32 id = 1;
+    string id = 1;
     ProviderConfig config = 2;
 }
 
@@ -185,7 +185,7 @@ message UpdateProviderResponse {
 }
 
 message ListRolesRequest {
-    uint32 id = 1;
+    string id = 1;
     string resource_type = 2;
 }
 
@@ -240,7 +240,7 @@ message ListResourcesResponse {
 }
 
 message GetResourceRequest {
-    uint32 id = 1;
+    string id = 1;
 }
 
 message GetResourceResponse {
@@ -248,7 +248,7 @@ message GetResourceResponse {
 }
 
 message UpdateResourceRequest {
-    uint32 id = 1;
+    string id = 1;
     Resource resource = 2;
 }
 
@@ -286,7 +286,7 @@ message ListAppealsResponse {
 }
 
 message GetAppealRequest {
-    uint32 id = 1;
+    string id = 1;
 }
 
 message GetAppealResponse {
@@ -294,7 +294,7 @@ message GetAppealResponse {
 }
 
 message CancelAppealRequest {
-    uint32 id = 1;
+    string id = 1;
 }
 
 message CancelAppealResponse {
@@ -302,7 +302,7 @@ message CancelAppealResponse {
 }
 
 message RevokeAppealRequest {
-    uint32 id = 1;
+    string id = 1;
 
     message Reason {
         string reason = 1;
@@ -318,7 +318,7 @@ message CreateAppealRequest {
     string account_id = 1;
 
     message Resource {
-        uint32 id = 1;
+        string id = 1;
         string role = 2;
         google.protobuf.Struct options = 3;
         google.protobuf.Struct details = 4;
@@ -351,7 +351,7 @@ message ListApprovalsResponse {
 }
 
 message UpdateApprovalRequest {
-    uint32 id = 1;
+    string id = 1;
     string approval_name = 2;
 
     message Action {
@@ -400,7 +400,7 @@ message ProviderConfig {
 
 // Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles
 message Provider {
-    uint32 id = 1;
+    string id = 1;
     string type = 2;
     string urn = 3;
 
@@ -457,7 +457,7 @@ message Policy {
                 string provider_urn = 2;
                 string type = 3;
                 string urn = 4;
-                uint32 id = 5;
+                string id = 5;
             }
             ResourceIdentifier resource = 1;
             string role = 2;
@@ -483,8 +483,8 @@ message AppealOptions {
 
 // Appeal is created by user to get access to one or more resources
 message Appeal {
-    uint32 id = 1;
-    uint32 resource_id = 2;
+    string id = 1;
+    string resource_id = 2;
     string policy_id = 3;
     uint32 policy_version = 4;
     string status = 5;
@@ -512,9 +512,9 @@ message Appeal {
 
 // Approval is an approval item that generated in an appeal based on the selected policy
 message Approval {
-    uint32 id = 1;
+    string id = 1;
     string name = 2;
-    uint32 appeal_id = 3;
+    string appeal_id = 3;
     string status = 4;
     string actor = 5;
     string policy_id = 6;
@@ -528,7 +528,7 @@ message Approval {
 
 // Resource contains information of resource from providers
 message Resource {
-    uint32 id = 1;
+    string id = 1;
     string provider_type = 2;
     string provider_urn = 3;
     string type = 4;
