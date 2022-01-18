@@ -595,6 +595,19 @@ service ShieldService {
         summary: "Update Resource by ID";
       };
     }
+
+
+    // Authz
+    rpc CheckResourcePermission(ResourceActionAuthzRequest) returns (ResourceActionAuthzResponse) {
+      option (google.api.http) = {
+        post: "/v1beta1/check/{resourceID}",
+        body: "*"
+      };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        tags: "Authz";
+        summary: "check permission for action on a resource by an user";
+      };
+    }
 }
 
 message UserRequestBody {
@@ -1219,4 +1232,14 @@ message UpdateRelationRequest {
 
  message UpdateResourceResponse {
   Resource resource = 1;
+ }
+
+ message ResourceActionAuthzRequest {
+  string resourceID = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];;
+  string actionID   = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];;
+  string namespace  = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];;
+ }
+
+ message ResourceActionAuthzResponse {
+  string status = 1;
  }
