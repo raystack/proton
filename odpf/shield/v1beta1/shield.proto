@@ -1138,6 +1138,7 @@ message Resource {
   Namespace namespace = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
+  User user = 9;
 }
 
 message ListRelationsRequest {
@@ -1194,6 +1195,7 @@ message UpdateRelationRequest {
   string project_id = 3;
   string organization_id = 4;
   string namespace_id = 5;
+  string user_id = 6;
  }
 
  message CreateResourceRequest {
