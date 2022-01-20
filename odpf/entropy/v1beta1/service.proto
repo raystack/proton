@@ -5,6 +5,7 @@ package odpf.entropy.v1beta1;
 import "google/api/annotations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/entropy/v1beta1;entropyv1beta1";
 option java_multiple_files = true;
@@ -15,7 +16,7 @@ option java_outer_classname = "EntropyServiceProto";
 service ResourceService {
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/resources/"
+      get: "/v1beta1/resources"
     };
   }
 
@@ -47,14 +48,15 @@ service ResourceService {
 }
 
 message Resource {
-  string id = 1;
-  string urn = 2;
-  string name = 3;
-  string parent = 4;
-  string kind = 5;
-  google.protobuf.Value configs = 6;
+  string urn = 1;
+  string name = 2;
+  string parent = 3;
+  string kind = 4;
+  google.protobuf.Value configs = 5;
+  map<string, string> labels = 6;
   string status = 7;
-  map<string, string> labels = 8;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
 }
 
 message ListResourcesRequest {
@@ -68,7 +70,6 @@ message ListResourcesResponse {
 
 message GetResourceRequest {
   string urn = 1;
-  string kind = 2;
 }
 
 message GetResourceResponse {
@@ -76,11 +77,11 @@ message GetResourceResponse {
 }
 
 message CreateResourceRequest {
-  Resource resource = 3;
+  Resource resource = 1;
 }
 
 message CreateResourceResponse {
-  Resource resource = 3;
+  Resource resource = 1;
 }
 
 message UpdateResourceRequest {
@@ -94,7 +95,6 @@ message UpdateResourceResponse {
 
 message DeleteResourceRequest {
   string urn = 1;
-  string kind = 2;
 }
 
 message DeleteResourceResponse {}
