@@ -127,6 +127,16 @@ service StencilService {
       summary: "Delete specified version of the schema";
     };
   }
+
+  rpc SearchSchemas(SearchSchemasRequest) returns (SearchSchemasResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{namespace_id}/schemas/_search"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Search all the schemas in a given namespace";
+    };
+  }
 }
 
 message Namespace {
@@ -294,4 +304,22 @@ message DeleteVersionRequest {
 
 message DeleteVersionResponse {
   string message = 1;
+}
+
+message SearchSchemasRequest {
+  string namespace_id = 1;
+  int32 version_id = 2;
+  string query = 3;
+}
+
+message SearchSchemasResponse {
+  string namepsace_id = 1;
+  repeated SearchHits hits = 2;
+}
+
+message SearchHits {
+  string schema = 1;
+  int32 version_id = 2;
+  repeated string fields = 3;
+  repeated string types = 4;
 }
