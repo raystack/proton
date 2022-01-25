@@ -117,6 +117,13 @@ service RuntimeService {
         };
     }
 
+    // ListSecrets shows the secrets registered for a project
+    rpc ListSecrets(ListSecretsRequest) returns (ListSecretsResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/project/{project_name}/secret"
+        };
+    }
+
     // ListProjects returns list of registered projects and configurations
     rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
@@ -571,10 +578,7 @@ message RegisterSecretRequest {
     string namespace_name = 4;
 }
 
-message RegisterSecretResponse {
-    bool success = 1;
-    string message = 2;
-}
+message RegisterSecretResponse {}
 
 message UpdateSecretRequest {
     string project_name = 1;
@@ -583,9 +587,20 @@ message UpdateSecretRequest {
     string namespace_name = 4;
 }
 
-message UpdateSecretResponse {
-    bool success = 1;
-    string message = 2;
+message UpdateSecretResponse {}
+
+message ListSecretsRequest {
+    string project_name = 1;
+}
+
+message ListSecretsResponse {
+    message Secret {
+        string name = 1;
+        string digest = 2;
+        string namespace = 3;
+        google.protobuf.Timestamp updated_at = 4;
+    }
+    repeated Secret secrets = 1;
 }
 
 message ListProjectsRequest {}
