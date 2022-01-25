@@ -578,10 +578,7 @@ message RegisterSecretRequest {
     string namespace_name = 4;
 }
 
-message RegisterSecretResponse {
-    bool success = 1;
-    string message = 2;
-}
+message RegisterSecretResponse {}
 
 message UpdateSecretRequest {
     string project_name = 1;
@@ -590,10 +587,7 @@ message UpdateSecretRequest {
     string namespace_name = 4;
 }
 
-message UpdateSecretResponse {
-    bool success = 1;
-    string message = 2;
-}
+message UpdateSecretResponse {}
 
 message ListSecretsRequest {
     string project_name = 1;
