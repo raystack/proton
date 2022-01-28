@@ -128,13 +128,13 @@ service StencilService {
     };
   }
 
-  rpc SearchSchemas(SearchSchemasRequest) returns (SearchSchemasResponse) {
+  rpc Search(SearchRequest) returns (SearchResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/namespaces/{namespace_id}/schemas/_search"
+      get: "/v1beta1/search"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "schema";
-      summary: "Search all the schemas in a given namespace";
+      summary: "Global Search API";
     };
   }
 }
@@ -306,20 +306,27 @@ message DeleteVersionResponse {
   string message = 1;
 }
 
-message SearchSchemasRequest {
+message SearchRequest {
   string namespace_id = 1;
-  int32 version_id = 2;
-  string query = 3;
+  string schema_id = 2;
+  int32 version_id = 3;
+  string query = 4;
+  bool all = 5;
 }
 
-message SearchSchemasResponse {
-  string namepsace_id = 1;
-  repeated SearchHits hits = 2;
+message SearchResponse {
+  repeated SearchHits hits = 1;
+  SearchMeta meta = 2;
 }
 
 message SearchHits {
-  string schema = 1;
-  int32 version_id = 2;
-  repeated string fields = 3;
-  repeated string types = 4;
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
+  repeated string fields = 4;
+  repeated string types = 5;
+}
+
+message SearchMeta {
+  uint32 total = 1;
 }
