@@ -309,9 +309,12 @@ message DeleteVersionResponse {
 message SearchRequest {
   string namespace_id = 1;
   string schema_id = 2;
-  int32 version_id = 3;
-  string query = 4;
-  bool all = 5;
+  string query = 3;
+  
+  oneof version {
+    bool history = 4;
+    int32 version_id = 5;
+  }
 }
 
 message SearchResponse {
