@@ -3,7 +3,6 @@ syntax = "proto3";
 package odpf.entropy.v1beta1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/field_mask.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -35,8 +34,8 @@ service ResourceService {
 
   rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
     option (google.api.http) = {
-      patch: "/v1beta1/resources/{resource.urn}"
-      body: "resource"
+      patch: "/v1beta1/resources/{urn}"
+      body: "*"
     };
   }
 
@@ -54,7 +53,16 @@ message Resource {
   string kind = 4;
   google.protobuf.Value configs = 5;
   map<string, string> labels = 6;
-  string status = 7;
+
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_PENDING = 1;
+    STATUS_ERROR = 2;
+    STATUS_RUNNING = 3;
+    STATUS_STOPPED = 4;
+    STATUS_COMPLETED = 5;
+  }
+  Status status = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
 }
@@ -85,8 +93,8 @@ message CreateResourceResponse {
 }
 
 message UpdateResourceRequest {
-  Resource resource = 1;
-  google.protobuf.FieldMask update_mask = 2;
+  string urn = 1;
+  google.protobuf.Value configs = 2;
 }
 
 message UpdateResourceResponse {
