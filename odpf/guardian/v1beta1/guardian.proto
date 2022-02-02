@@ -335,6 +335,7 @@ message CreateAppealResponse {
 message ListUserApprovalsRequest {
     repeated string statuses = 2;
     repeated string order_by = 3;
+    string account_id = 4;
 }
 
 message ListUserApprovalsResponse {
