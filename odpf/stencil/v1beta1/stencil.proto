@@ -127,6 +127,16 @@ service StencilService {
       summary: "Delete specified version of the schema";
     };
   }
+
+  rpc Search(SearchRequest) returns (SearchResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/search"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Global Search API";
+    };
+  }
 }
 
 message Namespace {
@@ -294,4 +304,32 @@ message DeleteVersionRequest {
 
 message DeleteVersionResponse {
   string message = 1;
+}
+
+message SearchRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  string query = 3;
+  
+  oneof version {
+    bool history = 4;
+    int32 version_id = 5;
+  }
+}
+
+message SearchResponse {
+  repeated SearchHits hits = 1;
+  SearchMeta meta = 2;
+}
+
+message SearchHits {
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
+  repeated string fields = 4;
+  repeated string types = 5;
+}
+
+message SearchMeta {
+  uint32 total = 1;
 }
