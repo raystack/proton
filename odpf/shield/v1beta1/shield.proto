@@ -719,6 +719,7 @@ message GetGroupRequest {
 
 message ListGroupsRequest {
   string user_id = 1;
+  string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message ListGroupsResponse {
