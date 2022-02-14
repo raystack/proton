@@ -338,6 +338,8 @@ message JobSpecification {
     Behavior behavior = 19;
 
     JobMetadata metadata = 20;
+
+    ExternalDependency external_dependency = 21;
 }
 
 message JobConfigItem {
@@ -906,4 +908,15 @@ message GetBackupRequest {
 message GetBackupResponse {
     BackupSpec spec = 1;
     repeated string urn = 2;
+}
+
+message ExternalDependency {
+    repeated HttpDependency http_dependencies = 1; // http sensor dependencies
+}
+
+message HttpDependency {
+    string name = 1;
+    string url = 2;
+    map<string, string> headers = 3;
+    map<string, string> request_params = 4;
 }
