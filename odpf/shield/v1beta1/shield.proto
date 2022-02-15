@@ -671,6 +671,7 @@ message GetUserRequest {
 
 message ListUserGroupsRequest {
   string id = 1;
+  string role = 2;
 }
 
 message GetCurrentUserRequest {
