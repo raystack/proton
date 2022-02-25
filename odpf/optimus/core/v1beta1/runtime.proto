@@ -613,6 +613,7 @@ message ListSecretsResponse {
 message DeleteSecretRequest {
     string project_name = 1;
     string secret_name = 2;
+    string namespace_name = 3;
 }
 
 message DeleteSecretResponse {}
