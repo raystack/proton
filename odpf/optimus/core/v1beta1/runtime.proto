@@ -397,6 +397,7 @@ message InstanceSpecData {
 message InstanceContext {
     map<string, string> envs = 1;
     map<string, string> files = 2;
+    map<string, string> secrets = 3;
 }
 
 message JobStatus {
