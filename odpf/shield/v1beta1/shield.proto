@@ -53,6 +53,16 @@ service ShieldService {
     };
   }
 
+  rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{id}/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List Groups of a User";
+    };
+  }
+
   rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
     option (google.api.http) = {
       get: "/v1beta1/users/self",
@@ -659,6 +669,11 @@ message GetUserRequest {
   string id = 1;
 }
 
+message ListUserGroupsRequest {
+  string id = 1;
+  string role = 2;
+}
+
 message GetCurrentUserRequest {
 }
 
@@ -679,6 +694,10 @@ message GroupRequestBody {
 
 message CreateGroupRequest {
   GroupRequestBody body = 1;
+}
+
+message ListUserGroupsResponse {
+  repeated Group groups = 1;
 }
 
 message Group {
