@@ -348,6 +348,7 @@ message JobConfigItem {
 message JobDependency {
     string name = 1;
     string type = 2; // intra/inter/extra
+    HttpDependency http_dependency = 3; // http sensor dependency
 }
 
 message InstanceSpec {
@@ -907,4 +908,11 @@ message GetBackupRequest {
 message GetBackupResponse {
     BackupSpec spec = 1;
     repeated string urn = 2;
+}
+
+message HttpDependency {
+    string name = 1;
+    string url = 2;
+    map<string, string> headers = 3;
+    map<string, string> params = 4;
 }
