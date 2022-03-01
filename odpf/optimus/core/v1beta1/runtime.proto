@@ -176,7 +176,7 @@ service RuntimeService {
 
     // DeployResourceSpecification migrate all resource specifications of a datastore in project
     // State of the world request
-    rpc DeployResourceSpecification(DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
+    rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
