@@ -65,11 +65,13 @@ message Resource {
   Status status = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
+  bool is_deleted = 10;
 }
 
 message ListResourcesRequest {
   string parent = 1;
   string kind = 2;
+  bool is_deleted = 3;
 }
 
 message ListResourcesResponse {
