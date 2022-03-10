@@ -159,6 +159,14 @@ service RuntimeService {
             get: "/v1beta1/project/{project_name}/job/{job_name}/status"
         };
     }
+
+    // JobRun returns the current and past run status of jobs on a given range
+    rpc JobRun(JobRunRequest) returns (JobRunResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/project/{project_name}/job/{job_name}/run"
+        };
+    }
+
     // RegisterJobEvent notifies optimus service about an event related to job
     rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
         option (google.api.http) = {
@@ -668,6 +676,23 @@ message JobStatusRequest {
 
 message JobStatusResponse {
     repeated JobStatus statuses = 1;
+}
+
+message JobRunRequest {
+    string project_name = 1;
+    string job_name = 2;
+    string start_date = 3;
+    string end_date = 4;
+    repeated string filter = 5;
+}
+
+message JobRunResponse {
+    repeated RunStatus run_status = 1;
+}
+
+message RunStatus {
+    string state = 1;
+    google.protobuf.Timestamp scheduled_at = 2;
 }
 
 message GetWindowRequest {
