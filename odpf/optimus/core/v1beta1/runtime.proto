@@ -681,8 +681,8 @@ message JobStatusResponse {
 message JobRunRequest {
     string project_name = 1;
     string job_name = 2;
-    string start_date = 3;
-    string end_date = 4;
+    google.protobuf.Timestamp start_date = 3;
+    google.protobuf.Timestamp end_date = 4;
     repeated string filter = 5;
 }
 
