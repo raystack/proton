@@ -687,10 +687,10 @@ message JobRunRequest {
 }
 
 message JobRunResponse {
-    repeated RunStatus run_status = 1;
+    repeated JobRun job_run = 1;
 }
 
-message RunStatus {
+message JobRun {
     string state = 1;
     google.protobuf.Timestamp scheduled_at = 2;
 }
