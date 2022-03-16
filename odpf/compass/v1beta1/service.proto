@@ -1,0 +1,327 @@
+syntax = "proto3";
+
+package odpf.compass.v1beta1;
+
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.compass";
+option java_outer_classname = "CompassServiceProto";
+option go_package = "github.com/odpf/proton/compass/v1beta1;compassv1beta1";
+
+import "odpf/compass/v1beta1/type.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: { 
+    title: "Compass";
+    description: "Documentation of our Compass API with gRPC and gRPC-Gateway.";
+    version: "0.1.9";
+    license: {
+      name: "Apache License 2.0";
+      url: "https://github.com/odpf/compass/blob/main/LICENSE";
+    };
+  };
+  external_docs: {
+    url: "https://odpf.gitbook.io/compass/";
+    description: "More about Compass";
+  },
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+};
+
+// WARNING: This is still in active development and can have breaking changes
+service CompassService {
+
+  // Domain: Discussion
+  rpc GetAllDiscussions(GetAllDiscussionsRequest) returns (GetAllDiscussionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/discussions"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get all discussions";
+      tags: "Discussion";
+    };
+  }
+
+  rpc CreateDiscussion(CreateDiscussionRequest) returns (CreateDiscussionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/discussions"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a discussion";
+      tags: "Discussion";
+    };
+  }
+
+  rpc GetDiscussion(GetDiscussionRequest) returns (GetDiscussionResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/discussions/{id}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get a discussion";
+      tags: "Discussion";
+    };
+  }
+
+  rpc PatchDiscussion(PatchDiscussionRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1beta1/discussions/{id}"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Patch a discussion";
+      tags: "Discussion";
+    };
+  }
+
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/discussions/{discussion_id}/comments"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a comment of a discussion";
+      tags: ["Discussion","Comment"];
+    };
+  }
+
+  rpc GetAllComments(GetAllCommentsRequest) returns (GetAllCommentsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/discussions/{discussion_id}/comments"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get all comments of a discussion";
+      tags: ["Discussion","Comment"];
+    };
+  }
+
+  rpc GetComment(GetCommentRequest) returns (GetCommentResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/discussions/{discussion_id}/comments/{id}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get a comment of a discussion";
+      tags: ["Discussion","Comment"];
+    };
+  }
+
+  rpc UpdateComment(UpdateCommentRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1beta1/discussions/{discussion_id}/comments/{id}"
+      body: "*"
+    };
+    
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update a comment of a discussion";
+      tags: ["Discussion","Comment"];
+    };
+  }
+
+  rpc DeleteComment(DeleteCommentRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1beta1/discussions/{discussion_id}/comments/{id}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete a comment of a discussion";
+      tags: ["Discussion","Comment"];
+    };
+  };
+};
+
+message GetAllDiscussionsRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetAllDiscussionsRequest"
+      description: "Some parameters to fetch discussions"
+    }
+  };
+
+  string type = 1 [(validate.rules).string = { in: [ "openended", "issues", "qanda", "all" ], ignore_empty: true }];
+  string state = 2 [(validate.rules).string = { in: [ "open", "closed", "all" ], ignore_empty: true }];
+  string owner = 3 [(validate.rules).string.ignore_empty = true];
+  string assignee = 4 [(validate.rules).string.ignore_empty = true];
+  string asset = 5 [(validate.rules).string.ignore_empty = true];
+  string labels = 6 [(validate.rules).string.ignore_empty = true];
+  string sort = 7 [(validate.rules).string = { in: [ "created_at", "updated_at" ], ignore_empty: true }];
+  string direction = 8 [(validate.rules).string = { in: [ "asc", "desc" ], ignore_empty: true  }];
+  uint32 size = 9 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
+  uint32 offset = 10 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+}
+
+message GetAllDiscussionsResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetAllDiscussionsResponse"
+    }
+  };
+
+  repeated Discussion data = 1;
+}
+
+message CreateDiscussionRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateDiscussionRequest"
+      description: "Request to be sent to create a discussion"
+      required: ["title", "body", "type"]
+    }
+  };
+
+  string title = 2 [(validate.rules).string.min_len = 1];
+  string body = 3 [(validate.rules).string.min_len = 1];
+  string type = 4 [(validate.rules).string = { in: [ "openended", "issues", "qanda" ] }];
+  string state = 5 [(validate.rules).string = { in: [ "open", "closed" ], ignore_empty: true }];
+  repeated string labels = 6 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string assets = 7 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string assignees = 8 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+}
+
+message CreateDiscussionResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateDiscussionResponse"
+    }
+  };
+
+  string id = 1;
+}
+
+message GetDiscussionRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetDiscussionRequest"
+    }
+  };
+
+  string id = 1;
+}
+
+message GetDiscussionResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetDiscussionResponse"
+    }
+  };
+
+  Discussion data = 1;
+}
+
+message PatchDiscussionRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "PatchDiscussionRequest"
+    }
+  };
+
+  string id = 1;
+  string title = 2 [(validate.rules).string.ignore_empty = true];
+  string body = 3 [(validate.rules).string.ignore_empty = true];
+  string type = 4 [(validate.rules).string = { in: [ "openended", "issues", "qanda" ], ignore_empty: true }];
+  string state = 5 [(validate.rules).string = { in: [ "open", "closed" ], ignore_empty: true }];
+  repeated string labels = 6 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string assets = 7 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string assignees = 8 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+}
+
+message CreateCommentRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateCommentRequest"
+      description: "Request to be sent to create a comment"
+      required: ["body"]
+    }
+  };
+
+  string discussion_id = 1;
+  string body = 2 [(validate.rules).string.min_len = 1];
+}
+
+message CreateCommentResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateCommentResponse"
+    }
+  };
+
+  string id = 1;
+}
+
+message GetAllCommentsRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetAllCommentsRequest"
+    }
+  };
+
+  string discussion_id = 1;
+  string sort = 2 [(validate.rules).string = { in: [ "created_at", "updated_at" ], ignore_empty: true }];
+  string direction = 3 [(validate.rules).string = { in: [ "asc", "desc" ], ignore_empty: true  }];
+  uint32 size = 4 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
+  uint32 offset = 5 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+}
+
+message GetAllCommentsResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetAllCommentsResponse"
+    }
+  };
+
+  repeated Comment data = 1;
+}
+
+message GetCommentRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetCommentRequest"
+    }
+  };
+
+  string discussion_id = 1;
+  string id = 2;
+}
+
+message GetCommentResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "GetCommentResponse"
+    }
+  };
+
+  Comment data = 1;
+}
+
+message UpdateCommentRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "UpdateCommentRequest"
+    }
+  };
+
+  string discussion_id = 1;
+  string id = 2;
+  string body = 3 [(validate.rules).string.min_len = 1];
+}
+
+message DeleteCommentRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "DeleteCommentRequest"
+    }
+  };
+
+  string discussion_id = 1;
+  string id = 2;
+}
