@@ -21,10 +21,17 @@ service DependencyResolverModService {
     rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
 }
 
+message PluginJobConfigs {
+    repeated Config configs = 1;
+    repeated Config secrets = 2;
+}
+
 message GenerateDestinationRequest {
-    Configs config = 1;
-    Assets assets = 2;
-    odpf.optimus.core.v1beta1.ProjectSpecification project = 3;
+    Configs config = 1  [deprecated=true];
+    Assets assets = 2  [deprecated=true];
+    odpf.optimus.core.v1beta1.ProjectSpecification project = 3  [deprecated=true];
+
+    PluginJobConfigs job_configs = 4;
 
     PluginOptions options = 40;
 }
@@ -34,9 +41,11 @@ message GenerateDestinationResponse {
 }
 
 message GenerateDependenciesRequest {
-    Configs config = 1;
+    Configs config = 1  [deprecated=true];
     Assets assets = 2;
-    odpf.optimus.core.v1beta1.ProjectSpecification project = 3;
+    odpf.optimus.core.v1beta1.ProjectSpecification project = 3  [deprecated=true];
+
+    PluginJobConfigs job_configs = 4;
 
     PluginOptions options = 40;
 }
