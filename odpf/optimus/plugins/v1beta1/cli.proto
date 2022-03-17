@@ -8,7 +8,7 @@ option java_outer_classname = "CLIModProto";
 
 import "google/protobuf/timestamp.proto";
 import "odpf/optimus/plugins/v1beta1/base.proto";
-import "odpf/optimus/core/v1beta1/runtime.proto";
+import "odpf/optimus/core/v1beta1/job_run.proto";
 
 // CLIModService must be implemented to interact with users via optimus cli
 service CLIModService {

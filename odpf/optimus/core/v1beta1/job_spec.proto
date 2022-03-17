@@ -9,7 +9,7 @@ import "google/protobuf/duration.proto";
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
 option java_package = "io.odpf.proton.optimus";
-option java_outer_classname = "JobServiceManager";
+option java_outer_classname = "JobSpecificationServiceManager";
 
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
@@ -17,14 +17,14 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "0.1";
   };
   external_docs: {
-    description: "Optimus Job Service";
+    description: "Optimus Job Specification Service";
   }
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
 };
 
-service JobService {
+service JobSpecificationService {
   // DeployJobSpecification schedules jobs for execution
   // returns a stream of messages which can be used to track the progress
   // of deployments. Message containing ack are status events other are progress
