@@ -41,6 +41,10 @@ service GuardianService {
         option (google.api.http) = {
             put: "/v1beta1/providers/{id}"
             body: "config"
+            additional_bindings: {
+                put: "/v1beta1/providers/{config.type}/{config.urn}"
+                body: "config"
+            }
         };
     }
 
