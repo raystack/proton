@@ -12,7 +12,7 @@ service BaseService {
     // PluginInfo provides basic details for this plugin
     rpc PluginInfo(PluginInfoRequest) returns (PluginInfoResponse);
 
-    rpc GetRequiredConfigs(RequiredConfigsRequest) returns (RequiredConfigsResponse);
+    rpc GetRequiredConfigs(GetRequiredConfigsRequest) returns (GetRequiredConfigsResponse);
 }
 
 // PluginType enumerates the type of plugins Optimus supports
@@ -64,8 +64,8 @@ message PluginInfoResponse {
 }
 
 
-message RequiredConfigsRequest {}
-message RequiredConfigsResponse {
+message GetRequiredConfigsRequest {}
+message GetRequiredConfigsResponse {
     repeated string configs = 1;
     repeated string secrets = 2;
 }
