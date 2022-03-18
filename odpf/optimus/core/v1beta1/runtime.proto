@@ -950,11 +950,14 @@ message NamespaceJobs {
 message RefreshJobsResponse {
 	bool success = 1;
 
-        // non ack responses are more of a progress/info response
-        // and not really success or failure statuses
+    // non ack responses are more of a progress/info response
+    // and not really success or failure statuses
 	bool ack = 2;
 
 	string message = 3;
 	string namespace_name = 4;
 	string job_name = 5;
+    
+    // response type differentiate events
+    string type = 6;
 }
