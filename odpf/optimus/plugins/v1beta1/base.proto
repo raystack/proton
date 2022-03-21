@@ -11,8 +11,6 @@ option java_outer_classname = "BasePluginProto";
 service BaseService {
     // PluginInfo provides basic details for this plugin
     rpc PluginInfo(PluginInfoRequest) returns (PluginInfoResponse);
-
-    rpc GetRequiredConfigs(GetRequiredConfigsRequest) returns (GetRequiredConfigsResponse);
 }
 
 // PluginType enumerates the type of plugins Optimus supports
@@ -61,13 +59,6 @@ message PluginInfoResponse {
     // Experimental
     // will be mounted inside the container as volume
     string secret_path = 30 [deprecated=true];
-}
-
-
-message GetRequiredConfigsRequest {}
-message GetRequiredConfigsResponse {
-    repeated string configs = 1;
-    repeated string secrets = 2;
 }
 
 message PluginOptions {

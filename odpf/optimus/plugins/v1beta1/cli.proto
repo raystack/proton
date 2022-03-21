@@ -73,11 +73,11 @@ message ValidateQuestionResponse {
     string error = 2;
 }
 
-message Config {
-    string name = 1;
-    string value = 2;
-}
 message Configs {
+    message Config {
+        string name = 1;
+        string value = 2;
+    }
     repeated Config configs = 1;
 }
 
