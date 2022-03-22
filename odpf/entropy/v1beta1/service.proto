@@ -44,6 +44,13 @@ service ResourceService {
       delete: "/v1beta1/resources/{urn}"
     };
   }
+
+  rpc ApplyAction(ApplyActionRequest) returns (ApplyActionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources/{urn}/actions/{action}"
+      body: "params"
+    };
+  }
 }
 
 message Resource {
@@ -106,3 +113,13 @@ message DeleteResourceRequest {
 }
 
 message DeleteResourceResponse {}
+
+message ApplyActionRequest {
+  string urn = 1;
+  string action = 2;
+  google.protobuf.Value params = 3;
+}
+
+message ApplyActionResponse {
+  Resource resource = 1;
+}
