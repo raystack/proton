@@ -40,7 +40,7 @@ service RuntimeService {
     // of deployments. Message containing ack are status events other are progress
     // events
     // State of the world request
-    rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
+    rpc DeployJobSpecification(stream DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
     // CreateJobSpecification registers a new job for a namespace which belongs to a project
     rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
@@ -176,7 +176,7 @@ service RuntimeService {
 
     // DeployResourceSpecification migrate all resource specifications of a datastore in project
     // State of the world request
-    rpc DeployResourceSpecification(DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
+    rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
     // ListResourceSpecification lists all resource specifications of a datastore in project
     rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
         option (google.api.http) = {
