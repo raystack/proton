@@ -687,7 +687,7 @@ message JobRunRequest {
 }
 
 message JobRunResponse {
-    repeated JobRun job_run = 1;
+    repeated JobRun job_runs = 1;
 }
 
 message JobRun {
