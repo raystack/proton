@@ -26,7 +26,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 service ResourceService {
   // DeployResourceSpecification migrate all resource specifications of a datastore in project
   // State of the world request
-  rpc DeployResourceSpecification(DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
+  rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
   // ListResourceSpecification lists all resource specifications of a datastore in project
   rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
     option (google.api.http) = {

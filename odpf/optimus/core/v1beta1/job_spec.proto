@@ -30,7 +30,7 @@ service JobSpecificationService {
   // of deployments. Message containing ack are status events other are progress
   // events
   // State of the world request
-  rpc DeployJobSpecification(DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
+  rpc DeployJobSpecification(stream DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
   // CreateJobSpecification registers a new job for a namespace which belongs to a project
   rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {

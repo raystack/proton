@@ -18,7 +18,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     external_docs: {
         description: "Optimus Runtime Service";
     }
-    schemes: HTTP; 
+    schemes: HTTP;
     host: "127.0.0.1:9100";
     base_path: "/api";
 };
