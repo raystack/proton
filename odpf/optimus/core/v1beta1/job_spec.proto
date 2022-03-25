@@ -1,0 +1,257 @@
+syntax = "proto3";
+package odpf.optimus.core.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/duration.proto";
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus";
+option java_outer_classname = "JobSpecificationServiceManager";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Job Specification Service";
+  }
+  schemes: HTTP;
+  host: "127.0.0.1:9100";
+  base_path: "/api";
+};
+
+service JobSpecificationService {
+  // DeployJobSpecification schedules jobs for execution
+  // returns a stream of messages which can be used to track the progress
+  // of deployments. Message containing ack are status events other are progress
+  // events
+  // State of the world request
+  rpc DeployJobSpecification(stream DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
+
+  // CreateJobSpecification registers a new job for a namespace which belongs to a project
+  rpc CreateJobSpecification(CreateJobSpecificationRequest) returns (CreateJobSpecificationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"
+      body: "*"
+    };
+  }
+
+  // GetJobSpecification reads a provided job spec of a namespace
+  rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
+    };
+  }
+
+  // DeleteJobSpecification deletes a job spec of a namespace
+  rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
+    };
+  }
+
+  // ListJobSpecification returns list of jobs created in a project
+  rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"
+    };
+  }
+
+  // CheckJobSpecification checks if a job specification is valid
+  rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/job/check"
+    };
+  }
+  // CheckJobSpecifications checks if the job specifications are valid
+  rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
+}
+
+message DeployJobSpecificationRequest {
+  string project_name = 1; // unique project identifier
+  repeated JobSpecification jobs = 2;
+  string namespace_name = 4;
+}
+
+message DeployJobSpecificationResponse {
+  bool success = 1;
+
+  // non ack responses are more of a progress/info response
+  // and not really success or failure statuses
+  bool ack = 2;
+
+  string message = 3;
+  string job_name = 4;
+}
+
+message CreateJobSpecificationRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  JobSpecification spec = 3;
+}
+
+message CreateJobSpecificationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetJobSpecificationRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string job_name = 3;
+}
+
+message GetJobSpecificationResponse {
+  JobSpecification spec = 1;
+}
+
+message DeleteJobSpecificationRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string job_name = 3;
+}
+
+message DeleteJobSpecificationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ListJobSpecificationRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+}
+
+message ListJobSpecificationResponse{
+  repeated JobSpecification jobs = 1;
+}
+
+message CheckJobSpecificationRequest {
+  string project_name = 1;
+  JobSpecification job = 2;
+  string namespace_name = 3;
+}
+
+message CheckJobSpecificationResponse {
+  bool success = 1;
+}
+
+message CheckJobSpecificationsRequest {
+  string project_name = 1;
+  repeated JobSpecification jobs = 2;
+  string namespace_name = 3;
+}
+
+message CheckJobSpecificationsResponse {
+  bool success = 1;
+
+  // non ack responses are more of a progress/info response
+  // and not really success or failure statuses
+  bool ack = 2;
+
+  string message = 3;
+  string job_name = 4;
+}
+
+message JobSpecification {
+  int32 version = 1;
+  string name = 2;
+  string owner = 3;
+
+  string start_date = 4;
+  string end_date = 5; // optional
+  string interval = 6;
+
+  bool depends_on_past = 7; // should only execute today if yesterday was completed with success?
+  bool catch_up = 8; // should backfill till today?
+
+  string task_name = 9;
+  repeated JobConfigItem config = 10;
+
+  string window_size = 11;
+  string window_offset = 12;
+  string window_truncate_to = 13;
+
+  repeated JobDependency dependencies = 14; // static dependencies
+  map<string, string> assets = 15;
+
+  repeated JobSpecHook hooks = 16; // optional
+
+  string description = 17; // optional
+  map<string, string> labels = 18;
+
+  message Behavior {
+
+    // retry behaviour if job failed to execute for the first time
+    message Retry {
+      int32 count = 1;
+      google.protobuf.Duration delay = 2;
+      bool exponential_backoff = 3;
+    }
+    Retry retry = 1;
+
+    // Notifiers are used to set custom alerting in case of job failure/sla_miss
+    message Notifiers {
+      JobEvent.Type on = 1;
+      repeated string channels = 2;
+      map<string, string> config = 3;
+    }
+    repeated Notifiers notify = 2;
+  }
+  Behavior behavior = 19;
+
+  JobMetadata metadata = 20;
+}
+
+message JobDependency {
+  string name = 1;
+  string type = 2; // intra/inter/extra
+  HttpDependency http_dependency = 3; // http sensor dependency
+}
+
+message HttpDependency {
+  string name = 1;
+  string url = 2;
+  map<string, string> headers = 3;
+  map<string, string> params = 4;
+}
+
+message JobSpecHook {
+  string name = 1;
+  repeated JobConfigItem config = 2;
+}
+
+message JobConfigItem {
+  string name = 1;
+  string value = 2;
+}
+
+message JobEvent {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_SLA_MISS = 1;
+    TYPE_FAILURE = 2;
+    TYPE_SUCCESS = 3;
+  }
+  Type type = 1;
+  google.protobuf.Struct value = 2;
+}
+
+message JobMetadata {
+  JobSpecMetadataResource resource = 1;
+}
+
+message JobSpecMetadataResource {
+  JobSpecMetadataResourceConfig request = 1;
+  JobSpecMetadataResourceConfig limit = 2;
+}
+
+message JobSpecMetadataResourceConfig {
+  string cpu = 1;
+  string memory = 2;
+}
+
+

@@ -1,0 +1,118 @@
+syntax = "proto3";
+package odpf.optimus.core.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus";
+option java_outer_classname = "BackupServiceManager";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+      version: "0.1";
+    };
+    external_docs: {
+      description: "Optimus Backup Service";
+    }
+    schemes: HTTP;
+    host: "127.0.0.1:9100";
+    base_path: "/api";
+};
+
+service BackupService {
+  rpc BackupDryRun(BackupDryRunRequest) returns (BackupDryRunResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backupDryrun"
+      body: "*"
+    };
+  }
+  rpc CreateBackup(CreateBackupRequest) returns (CreateBackupResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup"
+      body: "*"
+    };
+  }
+  rpc ListBackups(ListBackupsRequest) returns (ListBackupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup"
+    };
+  }
+  rpc GetBackup(GetBackupRequest) returns (GetBackupResponse) {
+    option (google.api.http) = {
+      get: "/v1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup/{id}"
+    };
+  }
+}
+
+message BackupDryRunRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string resource_name = 3;
+  string namespace_name = 4;
+  string description = 5;
+  bool ignore_downstream = 6 [deprecated=true];
+
+  // represents which downstream to be backed up.
+  // possible values are the namespace names, *, or empty.
+  // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+  repeated string allowed_downstream_namespaces = 7;
+}
+
+message BackupDryRunResponse {
+  repeated string resource_name = 1;
+  repeated string ignored_resources = 2;
+}
+
+message CreateBackupRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string resource_name = 3;
+  string namespace_name = 4;
+  string description = 5;
+  bool ignore_downstream = 6 [deprecated=true];
+  map<string, string> config = 7;
+
+  // represents which downstream to be backed up.
+  // possible values are the namespace names, *, or empty.
+  // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
+  repeated string allowed_downstream_namespaces = 8;
+}
+
+message CreateBackupResponse {
+  repeated string urn = 1;
+  repeated string ignored_resources = 2;
+}
+
+message ListBackupsRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string namespace_name = 3;
+}
+
+message ListBackupsResponse {
+  repeated BackupSpec backups = 1;
+}
+
+message BackupSpec {
+  string id = 1;
+  string resource_name = 2;
+  google.protobuf.Timestamp created_at = 3;
+  string description = 4;
+  map<string, string> config = 5;
+}
+
+message GetBackupRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string namespace_name = 3;
+  string id = 4;
+}
+
+message GetBackupResponse {
+  BackupSpec spec = 1;
+  repeated string urn = 2;
+}
