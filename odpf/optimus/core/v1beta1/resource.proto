@@ -1,0 +1,137 @@
+syntax = "proto3";
+package odpf.optimus.core.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus";
+option java_outer_classname = "ResourceServiceManager";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+      version: "0.1";
+    };
+    external_docs: {
+      description: "Optimus Resource Management Service";
+    }
+    schemes: HTTP;
+    host: "127.0.0.1:9100";
+    base_path: "/api";
+};
+
+service ResourceService {
+  // DeployResourceSpecification migrate all resource specifications of a datastore in project
+  // State of the world request
+  rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
+  // ListResourceSpecification lists all resource specifications of a datastore in project
+  rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
+    };
+  }
+
+  // Database CRUD
+  // CreateResource registers a new resource of a namespace which belongs to a project
+  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
+      body: "*"
+    };
+  }
+  // ReadResource reads a provided resource spec of a namespace
+  rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"
+    };
+  }
+  // UpdateResource updates a resource specification of a datastore in project
+  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
+      body: "*"
+    };
+  }
+}
+
+message DeployResourceSpecificationRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  repeated ResourceSpecification resources = 3;
+  string namespace_name = 4;
+}
+
+message DeployResourceSpecificationResponse {
+  bool success = 1;
+
+  // non ack responses are more of a progress/info response
+  // and not success or failure statuses
+  bool ack = 2;
+
+  string message = 3;
+  string resource_name = 4;
+}
+
+// ListResourceSpecificationRequest lists all resource specifications of a datastore in project
+message ListResourceSpecificationRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string namespace_name = 3;
+}
+
+message ListResourceSpecificationResponse {
+  repeated ResourceSpecification resources = 1;
+}
+
+message CreateResourceRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  ResourceSpecification resource = 3;
+  string namespace_name = 4;
+}
+
+message CreateResourceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ReadResourceRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  string resource_name = 3;
+  string namespace_name = 4;
+}
+
+message ReadResourceResponse {
+  bool success = 1;
+  string message = 2;
+  ResourceSpecification resource = 3;
+}
+
+message UpdateResourceRequest {
+  string project_name = 1;
+  string datastore_name = 2;
+  ResourceSpecification resource = 3;
+  string namespace_name = 4;
+}
+
+message UpdateResourceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// ResourceSpecification are datastore specification representation of a resource
+message ResourceSpecification {
+  reserved 3; // depricated "datastore"
+
+  int32 version = 1;
+  string name = 2;
+  string type = 4;
+
+  google.protobuf.Struct spec = 5;
+  map<string, string> assets = 6;
+  map<string, string> labels = 7;
+}

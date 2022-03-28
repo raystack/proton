@@ -8,7 +8,7 @@ option java_outer_classname = "DependencyResolverModProto";
 
 import "odpf/optimus/plugins/v1beta1/cli.proto";
 import "odpf/optimus/plugins/v1beta1/base.proto";
-import "odpf/optimus/core/v1beta1/runtime.proto";
+import "odpf/optimus/core/v1beta1/project.proto";
 
 // DependencyResolverModService must be implemented by all plugins want to support automatic
 // dependency resolution
