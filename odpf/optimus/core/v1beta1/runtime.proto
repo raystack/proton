@@ -39,10 +39,6 @@ service RuntimeService {
             body: "*"
         };
     }
-    // RefreshJobs do redeployment using the current persisted state.
-    // It will returns a stream of messages which can be used to track the progress. 
-    // Message containing ack are status events other are progress events
-    rpc RefreshJobs(RefreshJobsRequest) returns (stream RefreshJobsResponse) {}
 }
 // rpc req/res
 
@@ -63,23 +59,3 @@ message RegisterJobEventRequest {
 }
 
 message RegisterJobEventResponse {}
-
-message RefreshJobsRequest {
-	string project_name = 1;
-	repeated NamespaceJobs namespace_jobs = 2;
-}
-
-message NamespaceJobs {
-	string namespace_name = 1;
-	repeated string job_names = 2;
-}
-
-message RefreshJobsResponse {
-	bool success = 1;
-    
-    // response type differentiate events
-    string type = 2;
-	string message = 3;
-	
-    string job_name = 4;
-}
