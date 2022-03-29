@@ -1216,6 +1216,10 @@ message UpdateRelationRequest {
  }
 
  message ListResourcesRequest {
+  string group_id = 1;
+  string project_id = 2;
+  string organization_id = 3;
+  string namespace_id = 4;
  }
 
  message ListResourcesResponse {
