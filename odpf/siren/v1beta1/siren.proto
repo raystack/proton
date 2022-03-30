@@ -569,7 +569,7 @@ message SendReceiverNotificationRequest{
     uint64 id = 1;
     message SlackPayload {
         string message = 1;
-        string receiver_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+        string receiver_name = 2;
         string receiver_type = 3 [(validate.rules).string = {in: ["channel", "user"]}];
         repeated google.protobuf.Struct blocks = 4;
     }
