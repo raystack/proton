@@ -37,6 +37,13 @@ service NamespaceService {
       get: "/v1beta1/project/{project_name}/namespace"
     };
   }
+
+  // GetNamespace returns namespace details based on project_name and namespace_name
+  rpc GetNamespace(GetNamespaceRequest) returns(GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}"
+    };
+  }
 }
 
 message RegisterProjectNamespaceRequest {
@@ -55,6 +62,15 @@ message ListProjectNamespacesRequest {
 
 message ListProjectNamespacesResponse {
   repeated NamespaceSpecification namespaces = 1;
+}
+
+message GetNamespaceRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+}
+
+message GetNamespaceResponse {
+  NamespaceSpecification namespace = 1;
 }
 
 message NamespaceSpecification {
