@@ -51,6 +51,12 @@ service ResourceService {
       body: "params"
     };
   }
+
+  rpc GetLog(GetLogRequest) returns (stream GetLogResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}/logs"
+    };
+  }
 }
 
 message Resource {
@@ -122,4 +128,18 @@ message ApplyActionRequest {
 
 message ApplyActionResponse {
   Resource resource = 1;
+}
+
+message LogChunk {
+  bytes data = 1;
+  map<string, string> labels = 2;
+}
+
+message GetLogRequest {
+  string urn = 1;
+  map<string, string> filter = 6;
+}
+
+message GetLogResponse {
+  LogChunk chunk = 1;
 }
