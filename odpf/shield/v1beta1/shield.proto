@@ -1172,6 +1172,7 @@ message Resource {
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
   User user = 9;
+  string urn = 10;
 }
 
 message ListRelationsRequest {
