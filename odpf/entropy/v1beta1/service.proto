@@ -59,6 +59,21 @@ service ResourceService {
   }
 }
 
+service ProviderService {
+  rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/providers"
+    };
+  }
+
+  rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/providers"
+      body: "provider"
+    };
+  }
+}
+
 message Resource {
   string urn = 1;
   string name = 2;
@@ -76,8 +91,25 @@ message Resource {
     STATUS_COMPLETED = 5;
   }
   Status status = 7;
-  google.protobuf.Timestamp created_at = 8;
-  google.protobuf.Timestamp updated_at = 9;
+  repeated ProviderSelector providers = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message ProviderSelector {
+  string urn = 1;
+  string target = 2;
+}
+
+message Provider {
+  string urn = 1;
+  string name = 2;
+  string kind = 3;
+  string parent = 4;
+  google.protobuf.Struct configs = 5;
+  map<string, string> labels = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 message ListResourcesRequest {
@@ -119,6 +151,23 @@ message DeleteResourceRequest {
 }
 
 message DeleteResourceResponse {}
+
+message CreateProviderRequest {
+  Provider provider = 1;
+}
+
+message CreateProviderResponse {
+  Provider provider = 1;
+}
+
+message ListProvidersRequest {
+  string parent = 1;
+  string kind = 2;
+}
+
+message ListProvidersResponse {
+  repeated Provider providers = 1;
+}
 
 message ApplyActionRequest {
   string urn = 1;
