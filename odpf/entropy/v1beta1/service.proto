@@ -106,7 +106,7 @@ message Provider {
   string name = 2;
   string kind = 3;
   string parent = 4;
-  google.protobuf.Struct configs = 5;
+  google.protobuf.Value configs = 5;
   map<string, string> labels = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
