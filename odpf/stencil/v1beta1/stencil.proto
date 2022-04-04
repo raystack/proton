@@ -328,6 +328,7 @@ message SearchHits {
   int32 version_id = 3;
   repeated string fields = 4;
   repeated string types = 5;
+  string path = 6;
 }
 
 message SearchMeta {
