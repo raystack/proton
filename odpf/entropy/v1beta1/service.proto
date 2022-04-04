@@ -91,12 +91,12 @@ message Resource {
     STATUS_COMPLETED = 5;
   }
   Status status = 7;
-  repeated ProviderFilter provider = 8;
+  repeated ProviderSelector providers = 8;
   google.protobuf.Timestamp created_at = 9;
   google.protobuf.Timestamp updated_at = 10;
 }
 
-message ProviderFilter {
+message ProviderSelector {
   string urn = 1;
   string target = 2;
 }
