@@ -221,6 +221,19 @@ service CompassService {
     };
   };
 
+  rpc GetAllTypes(GetAllTypesRequest) returns (GetAllTypesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/types"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "fetch all types";
+      description: "used to fetch all types";
+      tags: ["Type"];
+    };
+  };
+
+
   rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets"
@@ -663,6 +676,12 @@ message GetGraphRequest {
 
 message GetGraphResponse {
   repeated LineageEdge data = 1;
+}
+
+message GetAllTypesRequest {}
+
+message GetAllTypesResponse {
+  repeated Type data = 1;
 }
 
 message GetAllAssetsRequest {
@@ -1135,4 +1154,9 @@ message TagTemplateField {
   bool required = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
+}
+
+message Type {
+  string name = 1;
+  uint32 count = 2;
 }
