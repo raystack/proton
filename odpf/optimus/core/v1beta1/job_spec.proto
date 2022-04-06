@@ -261,12 +261,8 @@ message JobSpecMetadataResourceConfig {
 
 message RefreshJobsRequest {
   string project_name = 1;
-  repeated NamespaceJobs namespace_jobs = 2;
-}
-
-message NamespaceJobs {
-  string namespace_name = 1;
-  repeated string job_names = 2;
+  repeated string namespace_names = 2;
+  repeated string job_names = 3;
 }
 
 message RefreshJobsResponse {
