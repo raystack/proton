@@ -982,16 +982,6 @@ message User {
     google.protobuf.Timestamp updated_at = 6;
 }
 
-message Changelog {
-  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
-    json_schema: {
-      title: "Changelog"
-    }
-  };
-
-  repeated Change changes = 1;
-}
-
 message Change {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
@@ -1023,7 +1013,7 @@ message Asset {
   repeated User owners = 9;
   string version = 10;
   User updated_by = 11;
-  Changelog changelog = 12;
+  repeated Change changelog = 12;
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
 }
