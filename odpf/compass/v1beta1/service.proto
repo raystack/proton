@@ -221,6 +221,19 @@ service CompassService {
     };
   };
 
+  rpc GetAllTypes(GetAllTypesRequest) returns (GetAllTypesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/types"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "fetch all types";
+      description: "used to fetch all types";
+      tags: ["Type"];
+    };
+  };
+
+
   rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets"
@@ -665,6 +678,12 @@ message GetGraphResponse {
   repeated LineageEdge data = 1;
 }
 
+message GetAllTypesRequest {}
+
+message GetAllTypesResponse {
+  repeated Type data = 1;
+}
+
 message GetAllAssetsRequest {
   string text = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by text"}];
   string type = 2[(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by type"}];
@@ -963,16 +982,6 @@ message User {
     google.protobuf.Timestamp updated_at = 6;
 }
 
-message Changelog {
-  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
-    json_schema: {
-      title: "Changelog"
-    }
-  };
-
-  repeated Change changes = 1;
-}
-
 message Change {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
@@ -1004,7 +1013,7 @@ message Asset {
   repeated User owners = 9;
   string version = 10;
   User updated_by = 11;
-  Changelog changelog = 12;
+  repeated Change changelog = 12;
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
 }
@@ -1135,4 +1144,9 @@ message TagTemplateField {
   bool required = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
+}
+
+message Type {
+  string name = 1;
+  uint32 count = 2;
 }
