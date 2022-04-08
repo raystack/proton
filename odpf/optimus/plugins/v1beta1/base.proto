@@ -58,9 +58,8 @@ message PluginInfoResponse {
 
     // Experimental
     // will be mounted inside the container as volume
-    string secret_path = 30;
+    string secret_path = 30 [deprecated=true];
 }
-
 
 message PluginOptions {
     bool dry_run = 1;
