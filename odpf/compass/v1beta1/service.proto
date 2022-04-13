@@ -715,6 +715,7 @@ message UpsertAssetRequest {
     string description = 5 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "description of an asset"}];
     google.protobuf.Struct data = 6;
     google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "labels of an asset"}];
+    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of owners of the asset"}];
   }
   BaseAsset asset = 1;
   repeated LineageNode upstreams = 2;
@@ -734,6 +735,7 @@ message UpsertPatchAssetRequest {
     google.protobuf.StringValue description = 5 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "description of an asset"}];
     google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "dynamic data of an asset"}];
     google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "labels of an asset"}];
+    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of owners of the asset"}];
   }
   BaseAsset asset = 1;
   repeated LineageNode upstreams = 2;
