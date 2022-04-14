@@ -247,6 +247,7 @@ message JobEvent {
 
 message JobMetadata {
   JobSpecMetadataResource resource = 1;
+  JobSpecMetadataAirflow airflow = 2;
 }
 
 message JobSpecMetadataResource {
@@ -257,6 +258,11 @@ message JobSpecMetadataResource {
 message JobSpecMetadataResourceConfig {
   string cpu = 1;
   string memory = 2;
+}
+
+message JobSpecMetadataAirflow {
+  string pool = 1;
+  string queue = 2;
 }
 
 message RefreshJobsRequest {
