@@ -293,7 +293,6 @@ message GetDeployJobsStatusResponse {
 
   repeated DeployJobFailure failures = 2;
   int32 total_succeed = 3;
-  int32 total_failed = 4;
 }
 
 message DeployJobFailure {
