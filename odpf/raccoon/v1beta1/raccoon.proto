@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package odpf.raccoon.v1;
+package odpf.raccoon.v1beta1;
 
 import "google/protobuf/timestamp.proto";
 
@@ -13,7 +13,7 @@ option go_package = "github.com/odpf/proton/raccoon/v1;raccoonv1";
 
 
 service EventService {
-  rpc SendEvent (EventRequest) returns (EventResponse);
+  rpc SendEvent (SendEventRequest) returns (SendEventResponse);
 }
 
 
@@ -24,7 +24,7 @@ service EventService {
  are wrapped inside `events` repeated field. All of the fields on `EventRequest`
  are required.
 */
-message EventRequest {
+message SendEventRequest {
   /*
   `req_guid` is unique identifier of the request the client is making.
 
@@ -89,7 +89,7 @@ message Event {
  established.
 */
 
-message EventResponse {
+message SendEventResponse {
   /*
   `status` denotes status of the request.
 
