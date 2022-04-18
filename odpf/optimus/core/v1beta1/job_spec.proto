@@ -289,7 +289,7 @@ message GetDeployJobsStatusRequest {
 }
 
 message GetDeployJobsStatusResponse {
-  bool success = 1;
+  string status = 1;
 
   repeated DeployJobFailure failures = 2;
   int32 total_succeed = 3;
