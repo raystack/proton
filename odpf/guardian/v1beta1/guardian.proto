@@ -431,7 +431,7 @@ message Provider {
 
 message ProviderType {
     string name = 1;
-    repeated string resource_type = 2;
+    repeated string resource_types = 2;
 }
 
 message Condition {
