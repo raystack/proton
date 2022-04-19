@@ -30,6 +30,12 @@ service GuardianService {
         };
     }
 
+    rpc GetProviderTypes(GetProviderTypesRequest) returns (GetProviderTypesResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/providers/types"
+        };
+    }
+
     rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
         option (google.api.http) = {
             post: "/v1beta1/providers"
@@ -169,6 +175,12 @@ message GetProviderRequest {
 
 message GetProviderResponse {
     Provider provider = 1;
+}
+
+message GetProviderTypesRequest {}
+
+message GetProviderTypesResponse {
+    repeated ProviderType provider_types = 1;
 }
 
 message CreateProviderRequest {
@@ -415,6 +427,11 @@ message Provider {
 
     google.protobuf.Timestamp created_at = 5;
     google.protobuf.Timestamp updated_at = 6;
+}
+
+message ProviderType {
+    string name = 1;
+    repeated string resource_types = 2;
 }
 
 message Condition {
