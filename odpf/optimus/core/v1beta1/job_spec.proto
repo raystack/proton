@@ -292,7 +292,8 @@ message GetDeployJobsStatusResponse {
   string status = 1;
 
   repeated DeployJobFailure failures = 2;
-  int32 total_succeed = 3;
+  int32 success_count = 3;
+  int32 failure_count = 3;
 }
 
 message DeployJobFailure {
