@@ -77,6 +77,7 @@ service StencilService {
     };
   }
   rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {}
+  rpc CheckCompatibility(CheckCompatibilityRequest) returns (CheckCompatibilityResponse) {}
   rpc GetSchemaMetadata(GetSchemaMetadataRequest) returns (GetSchemaMetadataResponse) {
     option (google.api.http) = {
       get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/meta"
@@ -245,6 +246,15 @@ message CreateSchemaResponse {
   string location = 3;
 }
 
+message CheckCompatibilityRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  bytes data = 3 [(google.api.field_behavior) = REQUIRED];
+  Schema.Compatibility compatibility = 4;
+}
+
+message CheckCompatibilityResponse {}
+
 message GetSchemaMetadataRequest {
   string namespace_id = 1;
   string schema_id = 2;
@@ -309,7 +319,7 @@ message DeleteVersionResponse {
 message SearchRequest {
   string namespace_id = 1;
   string schema_id = 2;
-  string query = 3;
+  string query = 3 [(google.api.field_behavior) = REQUIRED];
   
   oneof version {
     bool history = 4;
