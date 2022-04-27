@@ -72,8 +72,11 @@ service JobSpecificationService {
 
   // RefreshJobs do redeployment using the current persisted state.
   // It will returns a stream of messages which can be used to track the progress. 
-  // Message containing ack are status events other are progress events
   rpc RefreshJobs(RefreshJobsRequest) returns (stream RefreshJobsResponse) {}
+
+  // GetDeployJobsStatus check status of job deployment.
+  // It will returns status of the job deployment and the failure details.
+  rpc GetDeployJobsStatus(GetDeployJobsStatusRequest) returns (GetDeployJobsStatusResponse) {}
 }
 
 message DeployJobSpecificationRequest {
@@ -276,7 +279,24 @@ message RefreshJobsResponse {
 
   // response type differentiate events
   string type = 2;
-  string message = 3;
+  string value = 3;
 
   string job_name = 4;
+}
+
+message GetDeployJobsStatusRequest {
+  string deploy_id = 1;
+}
+
+message GetDeployJobsStatusResponse {
+  string status = 1;
+
+  repeated DeployJobFailure failures = 2;
+  int32 success_count = 3;
+  int32 failure_count = 4;
+}
+
+message DeployJobFailure {
+  string job_name = 1;
+  string message = 2;
 }
