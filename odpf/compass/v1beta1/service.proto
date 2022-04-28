@@ -656,11 +656,7 @@ message SearchAssetsResponse {
 }
 
 message SuggestAssetsRequest {
-  string text = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "text to search for (fuzzy)"}];
-  string rankby = 2 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "descendingly sort based on a numeric field in the record. the nested field is written with period separated field name. eg, \"data.profile.usage_count]\""}];
-  uint32 size = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "number of results to return"}];
-  map<string, string> filter = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"filter[data.landscape]\""}];
-  map<string, string> query = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"query[data.owner]\""}];
+  string text = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "text to search for suggestions"}];
 }
 
 message SuggestAssetsResponse {
