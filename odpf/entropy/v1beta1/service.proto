@@ -59,61 +59,45 @@ service ResourceService {
   }
 }
 
-service ProviderService {
-  rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/providers"
-    };
-  }
-
-  rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/providers"
-      body: "provider"
-    };
-  }
+message ResourceDependency {
+    string key = 1;
+    string kind = 2;
 }
 
-message Resource {
-  string urn = 1;
-  string name = 2;
-  string parent = 3;
-  string kind = 4;
-  google.protobuf.Value configs = 5;
-  map<string, string> labels = 6;
+message ResourceSpec {
+  google.protobuf.Value configs = 1;
+  repeated ResourceDependency dependencies = 2;
+}
 
+message ResourceState {
   enum Status {
     STATUS_UNSPECIFIED = 0;
     STATUS_PENDING = 1;
     STATUS_ERROR = 2;
-    STATUS_RUNNING = 3;
-    STATUS_STOPPED = 4;
-    STATUS_COMPLETED = 5;
+    STATUS_DELETED = 3;
+    STATUS_COMPLETED = 4;
   }
-  Status status = 7;
-  repeated ProviderSelector providers = 8;
-  google.protobuf.Timestamp created_at = 9;
-  google.protobuf.Timestamp updated_at = 10;
+
+  Status status = 1;
+  google.protobuf.Value output = 2;
+  bytes module_data = 3;
 }
 
-message ProviderSelector {
+message Resource {
   string urn = 1;
-  string target = 2;
-}
+  string kind = 2;
+  string name = 3;
+  string project = 4;
+  map<string, string> labels = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 
-message Provider {
-  string urn = 1;
-  string name = 2;
-  string kind = 3;
-  string parent = 4;
-  google.protobuf.Value configs = 5;
-  map<string, string> labels = 6;
-  google.protobuf.Timestamp created_at = 7;
-  google.protobuf.Timestamp updated_at = 8;
+  ResourceSpec spec = 8;
+  ResourceState state = 9;
 }
 
 message ListResourcesRequest {
-  string parent = 1;
+  string project = 1;
   string kind = 2;
 }
 
@@ -139,7 +123,7 @@ message CreateResourceResponse {
 
 message UpdateResourceRequest {
   string urn = 1;
-  google.protobuf.Value configs = 2;
+  ResourceSpec new_spec = 2;
 }
 
 message UpdateResourceResponse {
@@ -151,23 +135,6 @@ message DeleteResourceRequest {
 }
 
 message DeleteResourceResponse {}
-
-message CreateProviderRequest {
-  Provider provider = 1;
-}
-
-message CreateProviderResponse {
-  Provider provider = 1;
-}
-
-message ListProvidersRequest {
-  string parent = 1;
-  string kind = 2;
-}
-
-message ListProvidersResponse {
-  repeated Provider providers = 1;
-}
 
 message ApplyActionRequest {
   string urn = 1;
