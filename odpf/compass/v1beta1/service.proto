@@ -193,7 +193,7 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Search for an asset";
-      description: "API for querying documents. 'text' is fuzzy matched against all the available datasets, and matched results are returned. You can specify additional match criteria using 'filter.*' query parameters. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/search/?text=<text>&filter.environment=integration&filter.landscape=vn&filter.landscape=th`";
+      description: "API for querying documents. 'text' is fuzzy matched against all the available datasets, and matched results are returned. You can specify additional match criteria using 'filter[.*]' query parameters. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/search/?text=<text>&filter[environment]=integration&filter[landscape]=vn&filter[landscape]=th`. As an alternative, this API also supports fuzzy filter match with 'query' query params. For instance, searching assets that has 'bigqu' term in its description `/search/?text=<text>&query[description]=bigqu`";
       tags: ["Search","Asset"];
     };
   };
@@ -205,6 +205,7 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Suggest an asset";
+      description: "API for retreiving N number of asset names that similar with the `text`. By default, N = 5 for now and hardcoded in the code.";
       tags: ["Search","Asset"];
     };
   };
@@ -216,7 +217,7 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get Lineage Graph";
-      description: "Get lineage graph of an asset";
+      description: "Returns the lineage graph. Each entry in the graph describes a (edge) directed relation of assets with source and destination using it's urn, type, and service.";
       tags: ["Lineage", "Asset"];
     };
   };
@@ -228,7 +229,7 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "fetch all types";
-      description: "used to fetch all types";
+      description: "Fetch all types supported in Compass";
       tags: ["Type"];
     };
   };
@@ -378,7 +379,7 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Star an asset";
-      description: "Mark an asset by me with a star";
+      description: "Mark an asset with a star";
       tags: ["User","Star"];
     };
   }
