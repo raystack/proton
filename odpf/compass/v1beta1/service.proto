@@ -409,64 +409,64 @@ service CompassService {
   }
 
   // Domain: Tag Templates
-  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse) {
+  rpc CreateTagAsset(CreateTagAssetRequest) returns (CreateTagAssetResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/tags"
+      post: "/v1beta1/tags/assets"
       body: "*"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Tag a record";
-      description: "Tag a record in a type with a tag template";
+      summary: "Tag an asset";
+      description: "Tag an asset with a tag template";
       tags: ["Tag"];
     };
   }
 
-  rpc GetTagsByRecordAndTemplate(GetTagsByRecordAndTemplateRequest) returns (GetTagsByRecordAndTemplateResponse) {
+  rpc GetTagsByAssetAndTemplate(GetTagsByAssetAndTemplateRequest) returns (GetTagsByAssetAndTemplateResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/tags/types/{type}/records/{record_urn}/templates/{template_urn}"
+      get: "/v1beta1/tags/assets/{asset_id}/templates/{template_urn}"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Find a tag by record and template";
-      description: "Find a single tag using record urn and template urn";
+      summary: "Find a tag by asset and template";
+      description: "Find a single tag using asset id and template urn";
       tags: ["Tag"];
     };
   }
 
-  rpc UpdateTag(UpdateTagRequest) returns (UpdateTagResponse) {
+  rpc UpdateTagAsset(UpdateTagAssetRequest) returns (UpdateTagAssetResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/tags/types/{type}/records/{record_urn}/templates/{template_urn}"
+      put: "/v1beta1/tags/assets/{asset_id}/templates/{template_urn}"
       body: "*"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Update a tag on a record";
-      description: "Update a tag on a record in a type";
+      summary: "Update a tag on an asset";
+      description: "Update a tag on an asset";
       tags: ["Tag"];
     };
   }
 
-  rpc DeleteTag(DeleteTagRequest) returns (DeleteTagResponse) {
+  rpc DeleteTagAsset(DeleteTagAssetRequest) returns (DeleteTagAssetResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/tags/types/{type}/records/{record_urn}/templates/{template_urn}"
+      delete: "/v1beta1/tags/assets/{asset_id}/templates/{template_urn}"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Remove a tag on a record";
-      description: "Remove a tag on a record in a type";
+      summary: "Remove a tag on an asset";
+      description: "Remove a tag on an asset in a type";
       tags: ["Tag"];
     };
   }
 
-  rpc GetTagsByRecord(GetTagsByRecordRequest) returns (GetTagsByRecordResponse) {
+  rpc GetAllTagsByAsset(GetAllTagsByAssetRequest) returns (GetAllTagsByAssetResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/tags/types/{type}/records/{record_urn}"
+      get: "/v1beta1/tags/assets/{asset_id}"
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Get a record's tags";
-      description: "Get all tags for a record in a type";
+      summary: "Get an asset's tags";
+      description: "Get all tags for an assets";
       tags: ["Tag"];
     };
   }
@@ -836,72 +836,67 @@ message GetMyDiscussionsResponse {
   repeated Discussion data = 1;
 }
 
-message CreateTagRequest {
+message CreateTagAssetRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
-      title: "CreateTagRequest"
+      title: "CreateTagAssetRequest"
       description: "Request to be sent to create a tag"
-      required: ["record_urn", "template_urn", "tag_values"]
+      required: ["asset_id", "template_urn", "tag_values"]
     }
   };
 
-  string record_type = 1;
-  string record_urn = 2; // required
-  string template_urn = 3; // required
-  repeated TagValue tag_values = 4; // required
-  string template_display_name = 5;
-  string template_description = 6;
+  string asset_id = 1; // required
+  string template_urn = 2; // required
+  repeated TagValue tag_values = 3; // required
+  string template_display_name = 4;
+  string template_description = 5;
 }
 
-message CreateTagResponse {
+message CreateTagAssetResponse {
   Tag data = 1;
 }
 
-message GetTagsByRecordAndTemplateRequest {
-  string type = 1;
-  string record_urn = 2;
+message GetTagsByAssetAndTemplateRequest {
+  string asset_id = 1;
   string template_urn = 3;
 }
 
-message GetTagsByRecordAndTemplateResponse {
+message GetTagsByAssetAndTemplateResponse {
   Tag data = 1;
 }
 
-message UpdateTagRequest {
+message UpdateTagAssetRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
-      title: "UpdateTagRequest"
-      description: "Request to be sent to update a tag"
-      required: ["tag_values"]
+      title: "UpdateTagAssetRequest"
+      description: "Request to be sent to update an asset tag"
+      required: ["asset_id","tag_values"]
     }
   };
 
-  string type = 1;
-  string record_urn = 2;
-  string template_urn = 3;
-  repeated TagValue tag_values = 4; // required
-  string template_display_name = 5;
-  string template_description = 6;
+  string asset_id = 1; // required
+  string template_urn = 2;
+  repeated TagValue tag_values = 3; // required
+  string template_display_name = 4;
+  string template_description = 5;
 }
 
-message UpdateTagResponse {
+message UpdateTagAssetResponse {
   Tag data = 1;
 }
 
-message DeleteTagRequest {
-  string type = 1;
-  string record_urn = 2;
-  string template_urn = 3;
+message DeleteTagAssetRequest {
+  string asset_id = 1;
+  string template_urn = 2;
 }
 
-message DeleteTagResponse {}
+message DeleteTagAssetResponse {}
 
-message GetTagsByRecordRequest {
-  string type = 1;
-  string record_urn = 2;
+message GetAllTagsByAssetRequest {
+  string asset_id = 1;
 }
 
-message GetTagsByRecordResponse {
+message GetAllTagsByAssetResponse {
   repeated Tag data = 1;
 }
 
@@ -1086,12 +1081,11 @@ message Tag {
     }
   };
 
-  string record_type = 1;
-  string record_urn = 2;
-  string template_urn = 3;
-  repeated TagValue tag_values = 4; 
-  string template_display_name = 5;
-  string template_description = 6;
+  string asset_id = 1;
+  string template_urn = 2;
+  repeated TagValue tag_values = 3; 
+  string template_display_name = 4;
+  string template_description = 5;
 }
 
 message TagValue {
