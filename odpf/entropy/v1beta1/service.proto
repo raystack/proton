@@ -60,12 +60,19 @@ service ResourceService {
 }
 
 message ResourceDependency {
+    // Key should be as defined by the module being used for
+    // the resource.
     string key = 1;
-    string kind = 2;
+
+    // Value should refer to an existing resource via URN.
+    string value = 2; 
 }
 
 message ResourceSpec {
   google.protobuf.Value configs = 1;
+
+  // dependencies can be used to refer to other existing resources
+  // as dependency of this resource.
   repeated ResourceDependency dependencies = 2;
 }
 
