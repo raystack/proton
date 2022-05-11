@@ -18,7 +18,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Compass";
     description: "Documentation of our Compass API with gRPC and gRPC-Gateway.";
-    version: "0.1.9";
+    version: "0.2.1";
     license: {
       name: "Apache License 2.0";
       url: "https://github.com/odpf/compass/blob/main/LICENSE";
