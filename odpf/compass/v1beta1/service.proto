@@ -2,18 +2,17 @@ syntax = "proto3";
 
 package odpf.compass.v1beta1;
 
-option java_multiple_files = true;
-option java_package = "io.odpf.proton.compass";
-option java_outer_classname = "CompassServiceProto";
-option go_package = "github.com/odpf/proton/compass/v1beta1;compassv1beta1";
-
 import "google/api/annotations.proto";
-import "google/protobuf/wrappers.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
+option go_package = "github.com/odpf/proton/compass/v1beta1;compassv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "CompassServiceProto";
+option java_package = "io.odpf.proton.compass";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Compass";
@@ -33,54 +32,53 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   consumes: "application/json";
   produces: "application/json";
   responses: {
-		key: "400";
-		value: {
-			description: "Returned when the data that user input is wrong.";
-			schema: {
-				json_schema: {
-					ref: ".google.rpc.Status";
-				}
-			}
-		}
-	}
-	responses: {
-		key: "404";
-		value: {
-			description: "Returned when the resource does not exist.";
-			schema: {
-				json_schema: {
-					ref: ".google.rpc.Status";
-				}
-			}
-		}
-	}
-	responses: {
-		key: "409";
-		value: {
-			description: "Returned when the resource already exist.";
-			schema: {
-				json_schema: {
-					ref: ".google.rpc.Status";
-				}
-			}
-		}
-	}
+    key: "400";
+    value: {
+      description: "Returned when the data that user input is wrong.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
   responses: {
-		key: "500";
-		value: {
-			description: "Returned when theres is something wrong on the server side.";
-			schema: {
-				json_schema: {
-					ref: ".google.rpc.Status";
-				}
-			}
-		}
-	}
+    key: "404";
+    value: {
+      description: "Returned when the resource does not exist.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "409";
+    value: {
+      description: "Returned when the resource already exist.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "500";
+    value: {
+      description: "Returned when theres is something wrong on the server side.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
 };
 
 // WARNING: This is still in active development and can have breaking changes
 service CompassService {
-
   // Domain: Discussion
   rpc GetAllDiscussions(GetAllDiscussionsRequest) returns (GetAllDiscussionsResponse) {
     option (google.api.http) = {
@@ -136,7 +134,10 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Create a comment of a discussion";
-      tags: ["Discussion","Comment"];
+      tags: [
+        "Discussion",
+        "Comment"
+      ];
     };
   }
 
@@ -147,7 +148,10 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get all comments of a discussion";
-      tags: ["Discussion","Comment"];
+      tags: [
+        "Discussion",
+        "Comment"
+      ];
     };
   }
 
@@ -158,7 +162,10 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get a comment of a discussion";
-      tags: ["Discussion","Comment"];
+      tags: [
+        "Discussion",
+        "Comment"
+      ];
     };
   }
 
@@ -170,7 +177,10 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Update a comment of a discussion";
-      tags: ["Discussion","Comment"];
+      tags: [
+        "Discussion",
+        "Comment"
+      ];
     };
   }
 
@@ -181,9 +191,13 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Delete a comment of a discussion";
-      tags: ["Discussion","Comment"];
+      tags: [
+        "Discussion",
+        "Comment"
+      ];
     };
-  };
+  }
+
 
   // Domain: Asset
   rpc SearchAssets(SearchAssetsRequest) returns (SearchAssetsResponse) {
@@ -194,9 +208,13 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Search for an asset";
       description: "API for querying documents. 'text' is fuzzy matched against all the available datasets, and matched results are returned. You can specify additional match criteria using 'filter[.*]' query parameters. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/search/?text=<text>&filter[environment]=integration&filter[landscape]=vn&filter[landscape]=th`. As an alternative, this API also supports fuzzy filter match with 'query' query params. For instance, searching assets that has 'bigqu' term in its description `/search/?text=<text>&query[description]=bigqu`";
-      tags: ["Search","Asset"];
+      tags: [
+        "Search",
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc SuggestAssets(SuggestAssetsRequest) returns (SuggestAssetsResponse) {
     option (google.api.http) = {
@@ -206,9 +224,13 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Suggest an asset";
       description: "API for retreiving N number of asset names that similar with the `text`. By default, N = 5 for now and hardcoded in the code.";
-      tags: ["Search","Asset"];
+      tags: [
+        "Search",
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetGraph(GetGraphRequest) returns (GetGraphResponse) {
     option (google.api.http) = {
@@ -218,9 +240,13 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get Lineage Graph";
       description: "Returns the lineage graph. Each entry in the graph describes a (edge) directed relation of assets with source and destination using it's urn, type, and service.";
-      tags: ["Lineage", "Asset"];
+      tags: [
+        "Lineage",
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetAllTypes(GetAllTypesRequest) returns (GetAllTypesResponse) {
     option (google.api.http) = {
@@ -230,9 +256,11 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "fetch all types";
       description: "Fetch all types supported in Compass";
-      tags: ["Type"];
+      tags: [
+        "Type"
+      ];
     };
-  };
+  }
 
 
   rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse) {
@@ -243,9 +271,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get list of assets";
       description: "Returns list of assets, optionally filtered by types, services, sorting, fields in asset.data and querying fields ";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetAssetByID(GetAssetByIDRequest) returns (GetAssetByIDResponse) {
     option (google.api.http) = {
@@ -255,22 +286,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Find an asset";
       description: "Returns a single asset with given ID";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
 
-  rpc UpsertAsset(UpsertAssetRequest) returns (UpsertAssetResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/assets"
-      body: "*"
-    };
-
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Upsert an asset";
-      description: "Create a new asset if a combination of urn, type and service does not exist. If exists update instead";
-      tags: ["Asset"];
-    };
-  };
 
   rpc UpsertPatchAsset(UpsertPatchAssetRequest) returns (UpsertPatchAssetResponse) {
     option (google.api.http) = {
@@ -281,9 +302,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Patch/Create an asset";
       description: "Similar to Upsert but with patch strategy and different body format";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc DeleteAsset(DeleteAssetRequest) returns (DeleteAssetResponse) {
     option (google.api.http) = {
@@ -293,9 +317,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Delete an asset";
       description: "Delete a single asset with given ID";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetAssetStargazers(GetAssetStargazersRequest) returns (GetAssetStargazersResponse) {
     option (google.api.http) = {
@@ -305,9 +332,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Find users that stars an asset";
       description: "Returns a list of users that stars an asset";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetAssetVersionHistory(GetAssetVersionHistoryRequest) returns (GetAssetVersionHistoryResponse) {
     option (google.api.http) = {
@@ -317,9 +347,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get version history of an asset";
       description: "Returns a list of asset version history";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   rpc GetAssetByVersion(GetAssetByVersionRequest) returns (GetAssetByVersionResponse) {
     option (google.api.http) = {
@@ -329,9 +362,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get asset's previous version";
       description: "Returns a specific version of an asset";
-      tags: ["Asset"];
+      tags: [
+        "Asset"
+      ];
     };
-  };
+  }
+
 
   // Domain: User * Star
   rpc GetUserStarredAssets(GetUserStarredAssetsRequest) returns (GetUserStarredAssetsResponse) {
@@ -342,10 +378,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get assets starred by a user";
       description: "Get all assets starred by a user";
-      tags: ["User","Star"];
+      tags: [
+        "User",
+        "Star"
+      ];
     };
   }
-
 
   rpc GetMyStarredAssets(GetMyStarredAssetsRequest) returns (GetMyStarredAssetsResponse) {
     option (google.api.http) = {
@@ -355,7 +393,10 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get my starred assets";
       description: "Get all assets starred by me";
-      tags: ["User","Star"];
+      tags: [
+        "User",
+        "Star"
+      ];
     };
   }
 
@@ -367,10 +408,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get my starred asset";
       description: "Get an asset starred by me";
-      tags: ["User","Star"];
+      tags: [
+        "User",
+        "Star"
+      ];
     };
   }
-
 
   rpc StarAsset(StarAssetRequest) returns (StarAssetResponse) {
     option (google.api.http) = {
@@ -380,7 +423,10 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Star an asset";
       description: "Mark an asset with a star";
-      tags: ["User","Star"];
+      tags: [
+        "User",
+        "Star"
+      ];
     };
   }
 
@@ -392,7 +438,10 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Unstar an asset";
       description: "Unmark my starred asset";
-      tags: ["User","Star"];
+      tags: [
+        "User",
+        "Star"
+      ];
     };
   }
 
@@ -404,7 +453,10 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get all discussions of a user";
       description: "Returns all discussions given possible filters of a user";
-      tags: ["User","Discussion"];
+      tags: [
+        "User",
+        "Discussion"
+      ];
     };
   }
 
@@ -418,7 +470,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Tag an asset";
       description: "Tag an asset with a tag template";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -430,7 +484,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Find a tag by asset and template";
       description: "Find a single tag using asset id and template urn";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -443,7 +499,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Update a tag on an asset";
       description: "Update a tag on an asset";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -455,7 +513,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Remove a tag on an asset";
       description: "Remove a tag on an asset in a type";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -467,7 +527,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get an asset's tags";
       description: "Get all tags for an assets";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -479,7 +541,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get all tag templates";
       description: "Get all available tag templates";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -492,7 +556,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Create a template";
       description: "Create a new tag template";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -504,7 +570,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get a tag template";
       description: "Get a single tag template";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -517,7 +585,9 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Update a template";
       description: "Update an existing tag template";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
 
@@ -529,10 +599,12 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Delete a tag template";
       description: "Delete a single tag template";
-      tags: ["Tag"];
+      tags: [
+        "Tag"
+      ];
     };
   }
-};
+}
 
 message GetAllDiscussionsRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
@@ -549,8 +621,14 @@ message GetAllDiscussionsRequest {
   string labels = 6 [(validate.rules).string.ignore_empty = true];
   string sort = 7 [(validate.rules).string.ignore_empty = true];
   string direction = 8 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 9 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 10 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 9 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 10 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetAllDiscussionsResponse {
@@ -561,7 +639,10 @@ message CreateDiscussionRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
       description: "Request to be sent to create a discussion"
-      required: ["title", "body"]
+      required: [
+        "title",
+        "body"
+      ]
     }
   };
 
@@ -569,9 +650,18 @@ message CreateDiscussionRequest {
   string body = 3 [(validate.rules).string.min_len = 1];
   string type = 4;
   string state = 5 [(validate.rules).string.ignore_empty = true];
-  repeated string labels = 6 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
-  repeated string assets = 7 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
-  repeated string assignees = 8 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string labels = 6 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
+  repeated string assets = 7 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
+  repeated string assignees = 8 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
 }
 
 message CreateDiscussionResponse {
@@ -592,9 +682,18 @@ message PatchDiscussionRequest {
   string body = 3 [(validate.rules).string.ignore_empty = true];
   string type = 4 [(validate.rules).string.ignore_empty = true];
   string state = 5 [(validate.rules).string.ignore_empty = true];
-  repeated string labels = 6 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
-  repeated string assets = 7 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
-  repeated string assignees = 8 [(validate.rules).repeated = {unique: true, ignore_empty: true}];
+  repeated string labels = 6 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
+  repeated string assets = 7 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
+  repeated string assignees = 8 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
 }
 
 message CreateCommentRequest {
@@ -612,8 +711,14 @@ message GetAllCommentsRequest {
   string discussion_id = 1;
   string sort = 2 [(validate.rules).string.ignore_empty = true];
   string direction = 3 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 4 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 5 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 4 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 5 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetAllCommentsResponse {
@@ -645,11 +750,33 @@ message DeleteCommentRequest {
 message DeleteCommentResponse {}
 
 message SearchAssetsRequest {
-  string text = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "text to search for (fuzzy)"}];
-  string rankby = 2 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "descendingly sort based on a numeric field in the record. the nested field is written with period separated field name. eg, \"rankby[data.profile.usage_count]\""}];
-  uint32 size = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "number of results to return"}];
-  map<string, string> filter = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"filter[data.landscape]\""}];
-  map<string, string> query = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"query[data.owner]\""}];
+  string text = 1 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "text to search for (fuzzy)"
+    }
+  ];
+  string rankby = 2 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "descendingly sort based on a numeric field in the asset. the nested field is written with period separated field name. eg, \"rankby[data.profile.usage_count]\""
+    }
+  ];
+  uint32 size = 3 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "number of results to return"
+    }
+  ];
+  map<string, string> filter = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "filter result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"filter[data.landscape]\""
+  }];
+  map<string, string> query = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"query[data.owner]\""
+  }];
 }
 
 message SearchAssetsResponse {
@@ -657,7 +784,12 @@ message SearchAssetsResponse {
 }
 
 message SuggestAssetsRequest {
-  string text = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "text to search for suggestions"}];
+  string text = 1 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "text to search for suggestions"
+    }
+  ];
 }
 
 message SuggestAssetsResponse {
@@ -679,16 +811,66 @@ message GetAllTypesResponse {
 }
 
 message GetAllAssetsRequest {
-  string q = 1 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by specific query"}];
-  string q_fields = 2 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by multiple query fields"}];
-  string types = 3 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by multiple types"}];
-  string services = 4 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter by multiple services"}];
-  string sort = 5 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "sorting based on fields"}];
-  string direction = 6 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "sorting direction can either be asc or desc "}];
-  map<string, string> data = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on a (nested) field of the data asset. the nested field is written with period separated field name. eg, \"data[name.entity]\""}];
-  uint32 size = 8 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } , (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "maximum size to fetch"}];
-  uint32 offset = 9 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } , (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "offset to fetch from"}];
-  bool with_total = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if set include total field in response"}];
+  string q = 1 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by specific query"
+    }
+  ];
+  string q_fields = 2 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple query fields"
+    }
+  ];
+  string types = 3 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple types"
+    }
+  ];
+  string services = 4 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple services"
+    }
+  ];
+  string sort = 5 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "sorting based on fields"
+    }
+  ];
+  string direction = 6 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "sorting direction can either be asc or desc "
+    }
+  ];
+  map<string, string> data = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on a (nested) field of the data asset. the nested field is written with period separated field name. eg, \"data[name.entity]\""
+  }];
+  uint32 size = 8 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "maximum size to fetch"
+    }
+  ];
+  uint32 offset = 9 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "offset to fetch from"
+    }
+  ];
+  bool with_total = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "if set include total field in response"
+  }];
 }
 
 message GetAllAssetsResponse {
@@ -704,36 +886,32 @@ message GetAssetByIDResponse {
   Asset data = 1;
 }
 
-message UpsertAssetRequest {
-  message BaseAsset {
-    string urn = 1;
-    string type = 2;
-    string name = 3;
-    string service = 4;
-    string description = 5 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "description of an asset"}];
-    google.protobuf.Struct data = 6;
-    google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "labels of an asset"}];
-    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of owners of the asset"}];
-  }
-  BaseAsset asset = 1;
-  repeated LineageNode upstreams = 2;
-  repeated LineageNode downstreams = 3;
-}
-
-message UpsertAssetResponse {
-  string id = 1;
-}
-
 message UpsertPatchAssetRequest {
   message BaseAsset {
     string urn = 1;
     string type = 2;
-    google.protobuf.StringValue name = 3 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "name of an asset"}];
+    google.protobuf.StringValue name = 3 [
+      (validate.rules).string.ignore_empty = true,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "name of an asset"
+      }
+    ];
     string service = 4;
-    google.protobuf.StringValue description = 5 [(validate.rules).string.ignore_empty = true, (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "description of an asset"}];
-    google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "dynamic data of an asset"}];
-    google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "labels of an asset"}];
-    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of owners of the asset"}];
+    google.protobuf.StringValue description = 5 [
+      (validate.rules).string.ignore_empty = true,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "description of an asset"
+      }
+    ];
+    google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "dynamic data of an asset"
+    }];
+    google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "labels of an asset"
+    }];
+    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "list of owners of the asset"
+    }];
   }
   BaseAsset asset = 1;
   repeated LineageNode upstreams = 2;
@@ -752,8 +930,14 @@ message DeleteAssetResponse {}
 
 message GetAssetStargazersRequest {
   string id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 2 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 3 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetAssetStargazersResponse {
@@ -762,8 +946,14 @@ message GetAssetStargazersResponse {
 
 message GetAssetVersionHistoryRequest {
   string id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 2 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 3 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetAssetVersionHistoryResponse {
@@ -781,8 +971,14 @@ message GetAssetByVersionResponse {
 
 message GetUserStarredAssetsRequest {
   string user_id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 2 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 3 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetUserStarredAssetsResponse {
@@ -790,8 +986,14 @@ message GetUserStarredAssetsResponse {
 }
 
 message GetMyStarredAssetsRequest {
-  uint32 size = 1 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 2 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 1 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 2 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetMyStarredAssetsResponse {
@@ -828,8 +1030,14 @@ message GetMyDiscussionsRequest {
   string labels = 5 [(validate.rules).string.ignore_empty = true];
   string sort = 6 [(validate.rules).string.ignore_empty = true];
   string direction = 7 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 8 [(validate.rules).uint32 = { gte: 0, ignore_empty: true } ];
-  uint32 offset = 9 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 8 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 9 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message GetMyDiscussionsResponse {
@@ -841,7 +1049,11 @@ message CreateTagAssetRequest {
     json_schema: {
       title: "CreateTagAssetRequest"
       description: "Request to be sent to create a tag"
-      required: ["asset_id", "template_urn", "tag_values"]
+      required: [
+        "asset_id",
+        "template_urn",
+        "tag_values"
+      ]
     }
   };
 
@@ -870,7 +1082,10 @@ message UpdateTagAssetRequest {
     json_schema: {
       title: "UpdateTagAssetRequest"
       description: "Request to be sent to update an asset tag"
-      required: ["asset_id","tag_values"]
+      required: [
+        "asset_id",
+        "tag_values"
+      ]
     }
   };
 
@@ -913,7 +1128,12 @@ message CreateTagTemplateRequest {
     json_schema: {
       title: "CreateTagTemplateRequest"
       description: "Request to be sent to create a tag's template"
-      required: ["urn","display_name","description","tag_values"]
+      required: [
+        "urn",
+        "display_name",
+        "description",
+        "tag_values"
+      ]
     }
   };
 
@@ -940,7 +1160,12 @@ message UpdateTagTemplateRequest {
     json_schema: {
       title: "UpdateTagTemplateRequest"
       description: "Request to be sent to update a tag's template"
-      required: ["template_urn","display_name","description","fields"]
+      required: [
+        "template_urn",
+        "display_name",
+        "description",
+        "fields"
+      ]
     }
   };
 
@@ -969,12 +1194,12 @@ message User {
     }
   };
 
-    string id = 1;
-    string uuid = 2;
-    string email = 3;
-    string provider = 4;
-    google.protobuf.Timestamp created_at = 5;
-    google.protobuf.Timestamp updated_at = 6;
+  string id = 1;
+  string uuid = 2;
+  string email = 3;
+  string provider = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message Change {
@@ -984,10 +1209,10 @@ message Change {
     }
   };
 
-    string type = 1;
-    repeated string path = 2;
-    google.protobuf.Value from = 3;
-    google.protobuf.Value to = 4;
+  string type = 1;
+  repeated string path = 2;
+  google.protobuf.Value from = 3;
+  google.protobuf.Value to = 4;
 }
 
 message Asset {
@@ -1020,35 +1245,34 @@ message Discussion {
     }
   };
 
-  string  id = 1;
-  string    title = 2;
-  string    body = 3;
+  string id = 1;
+  string title = 2;
+  string body = 3;
   string type = 4;
   string state = 5;
-  repeated string  labels = 6;
-  repeated string  assets = 7;
-  repeated string  assignees = 8;
+  repeated string labels = 6;
+  repeated string assets = 7;
+  repeated string assignees = 8;
   User owner = 9;
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
 }
 
-message Comment  {
+message Comment {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
       title: "Comment"
     }
   };
 
-    string id = 1;
-    string discussion_id = 2;
-    string body = 3;
-    User owner = 4;
-    User updated_by = 5;
-    google.protobuf.Timestamp created_at = 6;
-    google.protobuf.Timestamp updated_at = 7;
+  string id = 1;
+  string discussion_id = 2;
+  string body = 3;
+  User owner = 4;
+  User updated_by = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
-
 
 message LineageEdge {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
@@ -1083,7 +1307,7 @@ message Tag {
 
   string asset_id = 1;
   string template_urn = 2;
-  repeated TagValue tag_values = 3; 
+  repeated TagValue tag_values = 3;
   string template_display_name = 4;
   string template_description = 5;
 }
