@@ -93,11 +93,15 @@ message DeployJobSpecificationResponse {
   // this is deprecated and being replaced with type field
   bool ack = 2 [deprecated=true];
 
-  string message = 3;
+  // message is deprecated and being replaced with value field
+  string message = 3 [deprecated=true];
+  
   string job_name = 4;
 
   // response type differentiate events
   string type = 5;
+  
+  string value = 6;
 }
 
 message CreateJobSpecificationRequest {
