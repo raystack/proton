@@ -90,10 +90,14 @@ message DeployJobSpecificationResponse {
 
   // non ack responses are more of a progress/info response
   // and not really success or failure statuses
-  bool ack = 2;
+  // this is deprecated and being replaced with type field
+  bool ack = 2 [deprecated=true];
 
   string message = 3;
   string job_name = 4;
+
+  // response type differentiate events
+  string type = 5;
 }
 
 message CreateJobSpecificationRequest {
