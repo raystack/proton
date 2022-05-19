@@ -476,7 +476,7 @@ service CompassService {
     };
   }
 
-  rpc GetTagsByAssetAndTemplate(GetTagsByAssetAndTemplateRequest) returns (GetTagsByAssetAndTemplateResponse) {
+  rpc GetTagByAssetAndTemplate(GetTagByAssetAndTemplateRequest) returns (GetTagByAssetAndTemplateResponse) {
     option (google.api.http) = {
       get: "/v1beta1/tags/assets/{asset_id}/templates/{template_urn}"
     };
@@ -1068,12 +1068,12 @@ message CreateTagAssetResponse {
   Tag data = 1;
 }
 
-message GetTagsByAssetAndTemplateRequest {
+message GetTagByAssetAndTemplateRequest {
   string asset_id = 1;
   string template_urn = 3;
 }
 
-message GetTagsByAssetAndTemplateResponse {
+message GetTagByAssetAndTemplateResponse {
   Tag data = 1;
 }
 
