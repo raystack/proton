@@ -3,7 +3,6 @@ package odpf.guardian.v1beta1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -55,7 +54,7 @@ service GuardianService {
         };
     }
 
-    rpc DeleteProvider(DeleteProviderRequest) returns (google.protobuf.Empty) {
+    rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
         option (google.api.http) = {
             delete: "/v1beta1/providers/{id}"
         };
@@ -112,7 +111,7 @@ service GuardianService {
         };
     }
 
-     rpc DeleteResource(DeleteResourceRequest) returns (google.protobuf.Empty) {
+     rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
         option (google.api.http) = {
             delete: "/v1beta1/resources/{id}"
         };
@@ -217,6 +216,8 @@ message DeleteProviderRequest {
     string id = 1;
 }
 
+message DeleteProviderResponse {}
+
 message ListRolesRequest {
     string id = 1;
     string resource_type = 2;
@@ -292,6 +293,8 @@ message UpdateResourceResponse {
 message DeleteResourceRequest {
     string id = 1;
 }
+
+message DeleteResourceResponse {}
 
 message ListUserAppealsRequest {
     repeated string statuses = 1;
