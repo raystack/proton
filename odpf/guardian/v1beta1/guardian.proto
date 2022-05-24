@@ -54,6 +54,12 @@ service GuardianService {
         };
     }
 
+    rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/providers/{id}"
+        };
+    }
+
     rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
         option (google.api.http) = {
             get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"
@@ -102,6 +108,12 @@ service GuardianService {
         option (google.api.http) = {
             put: "/v1beta1/resources/{id}"
             body: "resource"
+        };
+    }
+
+     rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/resources/{id}"
         };
     }
 
@@ -200,6 +212,12 @@ message UpdateProviderResponse {
     Provider provider = 1;
 }
 
+message DeleteProviderRequest {
+    string id = 1;
+}
+
+message DeleteProviderResponse {}
+
 message ListRolesRequest {
     string id = 1;
     string resource_type = 2;
@@ -271,6 +289,12 @@ message UpdateResourceRequest {
 message UpdateResourceResponse {
     Resource resource = 1;
 }
+
+message DeleteResourceRequest {
+    string id = 1;
+}
+
+message DeleteResourceResponse {}
 
 message ListUserAppealsRequest {
     repeated string statuses = 1;
