@@ -54,7 +54,6 @@ service JobRunService {
       get: "/v1beta1/project/{project_name}/job/{job_name}/run"
     };
   }
-
   // GetWindow provides the start and end dates provided a scheduled date
   // of the execution window
   rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
