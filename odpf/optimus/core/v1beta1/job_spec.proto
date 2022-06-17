@@ -47,10 +47,10 @@ service JobSpecificationService {
     };
   }
 
-  // GetJob read a job spec for provided filters
-  rpc GetJob(GetJobRequest) returns (GetJobResponse) {
+  // GetJobSpecifications read a job spec for provided filters
+  rpc GetJobSpecifications(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/job"
+      get: "/v1beta1/jobs"
     };
   }
 
@@ -308,11 +308,12 @@ message DeployJobFailure {
   string message = 2;
 }
 
-message GetJobRequest {
-  string resource_destination = 1;
-  string job_name = 2;
+message GetJobSpecificationsRequest {
+  string project_name = 1;
+  string resource_destination = 2;
+  string job_name = 3;
 }
 
-message GetJobResponse {
-  JobSpecification job = 1; 
+message GetJobSpecificationsResponse {
+  repeated JobSpecification job = 1; 
 }

@@ -55,12 +55,6 @@ service JobRunService {
     };
   }
 
-  rpc GetJobRunByFilter(GetJobRunByFilterRequest) returns (GetJobRunByFilterResponse){
-    option (google.api.http) = {
-      get: "/v1beta1/jobrun"
-    };
-  }
-
   // GetWindow provides the start and end dates provided a scheduled date
   // of the execution window
   rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
@@ -133,18 +127,7 @@ message JobRunRequest {
   repeated string filter = 5;
 }
 
-message GetJobRunByFilterRequest {
-  string job_name = 1;
-  string resoure_destination = 2;
-  google.protobuf.Timestamp start_date = 3;
-  google.protobuf.Timestamp end_date = 4;
-}
-
 message JobRunResponse {
-  repeated JobRun job_runs = 1;
-}
-
-message GetJobRunByFilterResponse {
   repeated JobRun job_runs = 1;
 }
 
