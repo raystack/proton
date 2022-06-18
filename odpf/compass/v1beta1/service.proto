@@ -198,7 +198,6 @@ service CompassService {
     };
   }
 
-
   // Domain: Asset
   rpc SearchAssets(SearchAssetsRequest) returns (SearchAssetsResponse) {
     option (google.api.http) = {
@@ -215,7 +214,6 @@ service CompassService {
     };
   }
 
-
   rpc SuggestAssets(SuggestAssetsRequest) returns (SuggestAssetsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/search/suggest"
@@ -230,7 +228,6 @@ service CompassService {
       ];
     };
   }
-
 
   rpc GetGraph(GetGraphRequest) returns (GetGraphResponse) {
     option (google.api.http) = {
@@ -247,7 +244,6 @@ service CompassService {
     };
   }
 
-
   rpc GetAllTypes(GetAllTypesRequest) returns (GetAllTypesResponse) {
     option (google.api.http) = {
       get: "/v1beta1/types"
@@ -261,7 +257,6 @@ service CompassService {
       ];
     };
   }
-
 
   rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse) {
     option (google.api.http) = {
@@ -277,7 +272,6 @@ service CompassService {
     };
   }
 
-
   rpc GetAssetByID(GetAssetByIDRequest) returns (GetAssetByIDResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets/{id}"
@@ -291,7 +285,6 @@ service CompassService {
       ];
     };
   }
-
 
   rpc UpsertPatchAsset(UpsertPatchAssetRequest) returns (UpsertPatchAssetResponse) {
     option (google.api.http) = {
@@ -308,7 +301,6 @@ service CompassService {
     };
   }
 
-
   rpc DeleteAsset(DeleteAssetRequest) returns (DeleteAssetResponse) {
     option (google.api.http) = {
       delete: "/v1beta1/assets/{id}"
@@ -322,7 +314,6 @@ service CompassService {
       ];
     };
   }
-
 
   rpc GetAssetStargazers(GetAssetStargazersRequest) returns (GetAssetStargazersResponse) {
     option (google.api.http) = {
@@ -338,7 +329,6 @@ service CompassService {
     };
   }
 
-
   rpc GetAssetVersionHistory(GetAssetVersionHistoryRequest) returns (GetAssetVersionHistoryResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets/{id}/versions"
@@ -353,7 +343,6 @@ service CompassService {
     };
   }
 
-
   rpc GetAssetByVersion(GetAssetByVersionRequest) returns (GetAssetByVersionResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets/{id}/versions/{version}"
@@ -367,7 +356,6 @@ service CompassService {
       ];
     };
   }
-
 
   // Domain: User * Star
   rpc GetUserStarredAssets(GetUserStarredAssetsRequest) returns (GetUserStarredAssetsResponse) {
@@ -804,7 +792,35 @@ message GetGraphResponse {
   repeated LineageEdge data = 1;
 }
 
-message GetAllTypesRequest {}
+message GetAllTypesRequest {
+  string q = 1 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by specific query"
+    }
+  ];
+  string q_fields = 2 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple query fields"
+    }
+  ];
+  string types = 3 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple types"
+    }
+  ];
+  string services = 4 [
+    (validate.rules).string.ignore_empty = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by multiple services"
+    }
+  ];
+  map<string, string> data = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on a (nested) field of the data asset. the nested field is written with period separated field name. eg, \"data[name.entity]\""
+  }];
+}
 
 message GetAllTypesResponse {
   repeated Type data = 1;
