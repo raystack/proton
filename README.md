@@ -20,7 +20,7 @@ Proton has flat structure where proto files are put under /odpf/proton/\<applica
 
 ### Generating go code using buf
 
-***This guide is last tried on buf version `1.0.0-rc4`.***
+***This guide is last tried on buf version `1.5.0`.***
 
 Add this `buf.gen.yaml` at the root folder.
 
