@@ -48,7 +48,7 @@ service JobSpecificationService {
   }
 
   // GetJobSpecifications read a job spec for provided filters
-  rpc GetJobSpecifications(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
+  rpc GetJobSpecifications(GetJobSpecificationsRequest) returns (GetJobSpecificationsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/jobs"
     };
