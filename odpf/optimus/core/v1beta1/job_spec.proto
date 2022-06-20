@@ -241,8 +241,23 @@ message JobEvent {
   enum Type {
     TYPE_UNSPECIFIED = 0;
     TYPE_SLA_MISS = 1;
-    TYPE_FAILURE = 2;
-    TYPE_SUCCESS = 3;
+    TYPE_FAILURE  = 2;
+    TYPE_SUCCESS  = 3;
+    TYPE_RETRY    = 4;
+
+    TYPE_JOB_START    = 5;
+    TYPE_JOB_SUCCESS  = 6;
+    TYPE_JOB_FAIL     = 7;
+
+    TYPE_TASK_RETRY   = 8;
+    TYPE_TASK_SUCCESS = 9;
+    TYPE_TASK_START   = 10;
+    TYPE_TASK_FAIL    = 11;
+
+    TYPE_SENSOR_POKE    = 12;
+    TYPE_SENSOR_SUCCESS = 13;
+    TYPE_SENSOR_START   = 14;
+    TYPE_SENSOR_FAIL    = 15;
   }
   Type type = 1;
   google.protobuf.Struct value = 2;
