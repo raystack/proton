@@ -3,9 +3,7 @@ syntax = "proto3";
 package odpf.siren.v1beta1;
 
 import "google/api/annotations.proto";
-import "google/api/field_behavior.proto";
 import "google/protobuf/descriptor.proto";
-import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
@@ -26,6 +24,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service SirenService {
+  // TODO this can be removed once we wire ping http with grpc healthcheck ref: https://github.com/odpf/siren/issues/100
   rpc Ping(PingRequest) returns (PingResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "ping";
@@ -48,7 +47,7 @@ service SirenService {
     };
   }
 
-  rpc CreateProvider(CreateProviderRequest) returns (Provider) {
+  rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "create a provider";
       tags: "Provider";
@@ -60,7 +59,7 @@ service SirenService {
     };
   }
 
-  rpc GetProvider(GetProviderRequest) returns (Provider) {
+  rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "get a provider";
       tags: "Provider";
@@ -71,7 +70,7 @@ service SirenService {
     };
   }
 
-  rpc UpdateProvider(UpdateProviderRequest) returns (Provider) {
+  rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "update a provider";
       tags: "Provider";
@@ -83,7 +82,7 @@ service SirenService {
     };
   }
 
-  rpc DeleteProvider(DeleteProviderRequest) returns (google.protobuf.Empty) {
+  rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "delete a provider";
       tags: "Provider";
@@ -163,7 +162,7 @@ service SirenService {
     };
   }
 
-  rpc ListSubscriptions(google.protobuf.Empty) returns (ListSubscriptionsResponse) {
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "List subscriptions";
       tags: "Subscription";
@@ -174,7 +173,7 @@ service SirenService {
     };
   }
 
-  rpc CreateSubscription(CreateSubscriptionRequest) returns (Subscription) {
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Create a subscription";
       tags: "Subscription";
@@ -186,7 +185,7 @@ service SirenService {
     };
   }
 
-  rpc GetSubscription(GetSubscriptionRequest) returns (Subscription) {
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get a subscription";
       tags: "Subscription";
@@ -197,7 +196,7 @@ service SirenService {
     };
   }
 
-  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (Subscription) {
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Update a subscription";
       tags: "Subscription";
@@ -208,7 +207,7 @@ service SirenService {
     };
   }
 
-  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (google.protobuf.Empty) {
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Delete a subscription";
       tags: "Subscription";
@@ -219,7 +218,7 @@ service SirenService {
     };
   }
 
-  rpc ListReceivers(google.protobuf.Empty) returns (ListReceiversResponse) {
+  rpc ListReceivers(ListReceiversRequest) returns (ListReceiversResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "list receivers";
       tags: "Receiver";
@@ -276,7 +275,7 @@ service SirenService {
     };
   }
 
-  rpc ListAlerts(ListAlertsRequest) returns (Alerts) {
+  rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "list alerts";
       tags: "Alert";
@@ -287,7 +286,7 @@ service SirenService {
     };
   }
 
-  rpc CreateCortexAlerts(CreateCortexAlertsRequest) returns (Alerts) {
+  rpc CreateCortexAlerts(CreateCortexAlertsRequest) returns (CreateCortexAlertsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "create cortex alerts";
       tags: "Alert";
@@ -333,7 +332,7 @@ service SirenService {
     };
   }
 
-  rpc GetTemplateByName(GetTemplateByNameRequest) returns (TemplateResponse) {
+  rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "get a template";
       tags: "Template";
@@ -344,7 +343,7 @@ service SirenService {
     };
   }
 
-  rpc UpsertTemplate(UpsertTemplateRequest) returns (TemplateResponse) {
+  rpc UpsertTemplate(UpsertTemplateRequest) returns (UpsertTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "add/update a template";
       tags: "Template";
@@ -408,7 +407,7 @@ message ListProvidersRequest {
 }
 
 message ListProvidersResponse {
-  repeated Provider providers = 1;
+  repeated Provider data = 1;
 }
 
 message CreateProviderRequest {
@@ -424,8 +423,16 @@ message CreateProviderRequest {
   map<string, string> labels = 6;
 }
 
+message CreateProviderResponse {
+  uint64 id = 1;
+}
+
 message GetProviderRequest {
   uint64 id = 1;
+}
+
+message GetProviderResponse {
+  Provider data = 1;
 }
 
 message UpdateProviderRequest {
@@ -441,9 +448,15 @@ message UpdateProviderRequest {
   map<string, string> labels = 6;
 }
 
+message UpdateProviderResponse {
+  uint64 id = 1;
+}
+
 message DeleteProviderRequest {
   uint64 id = 1;
 }
+
+message DeleteProviderResponse {}
 
 message Namespace {
   uint64 id = 1;
@@ -517,8 +530,10 @@ message Subscription {
   google.protobuf.Timestamp updated_at = 7;
 }
 
+message ListSubscriptionsRequest {}
+
 message ListSubscriptionsResponse {
-  repeated Subscription subscriptions = 1;
+  repeated Subscription data = 1;
 }
 
 message CreateSubscriptionRequest {
@@ -528,8 +543,16 @@ message CreateSubscriptionRequest {
   map<string, string> match = 4;
 }
 
+message CreateSubscriptionResponse {
+  uint64 id = 1;
+}
+
 message GetSubscriptionRequest {
   uint64 id = 1;
+}
+
+message GetSubscriptionResponse {
+  Subscription data = 1;
 }
 
 message UpdateSubscriptionRequest {
@@ -540,9 +563,15 @@ message UpdateSubscriptionRequest {
   map<string, string> match = 5;
 }
 
+message UpdateSubscriptionResponse {
+  uint64 id = 1;
+}
+
 message DeleteSubscriptionRequest {
   uint64 id = 1;
 }
+
+message DeleteSubscriptionResponse {}
 
 message Receiver {
   uint64 id = 1;
@@ -623,6 +652,17 @@ message NotifyReceiverRequest {
 
 message NotifyReceiverResponse {}
 
+message Alert {
+  uint64 id = 1;
+  uint64 provider_id = 2;
+  string resource_name = 3;
+  string metric_name = 4;
+  string metric_value = 5;
+  string severity = 6;
+  string rule = 7;
+  google.protobuf.Timestamp triggered_at = 8;
+}
+
 message ListAlertsRequest {
   string provider_name = 1 [(validate.rules).string = {
     in: [
@@ -635,24 +675,8 @@ message ListAlertsRequest {
   uint64 end_time = 5;
 }
 
-message Alerts {
-  repeated Alert alerts = 1;
-}
-
-message Alert {
-  uint64 id = 1;
-  uint64 provider_id = 2;
-  string resource_name = 3;
-  string metric_name = 4;
-  string metric_value = 5;
-  string severity = 6;
-  string rule = 7;
-  google.protobuf.Timestamp triggered_at = 8;
-}
-
-message CreateCortexAlertsRequest {
-  uint64 provider_id = 1;
-  repeated CortexAlert alerts = 2;
+message ListAlertsResponse {
+  repeated Alert data = 1;
 }
 
 message CortexAlert {
@@ -660,6 +684,15 @@ message CortexAlert {
   Labels labels = 2;
   string status = 3;
   google.protobuf.Timestamp starts_at = 4;
+}
+
+message CreateCortexAlertsRequest {
+  uint64 provider_id = 1;
+  repeated CortexAlert alerts = 2;
+}
+
+message CreateCortexAlertsResponse {
+  repeated Alert data = 1;
 }
 
 message Annotations {
@@ -684,7 +717,6 @@ message Rule {
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
   uint64 provider_namespace = 10 [(validate.rules).uint64.gte = 0];
-
 }
 
 message Variables {
@@ -703,11 +735,7 @@ message ListRulesRequest {
 }
 
 message ListRulesResponse {
-  repeated Rule rules = 1;
-}
-
-message UpdateRuleResponse {
-  Rule rule = 1;
+  repeated Rule data = 1;
 }
 
 message UpdateRuleRequest {
@@ -719,8 +747,8 @@ message UpdateRuleRequest {
   uint64 provider_namespace = 6;
 }
 
-message ListTemplatesRequest {
-  string tag = 1;
+message UpdateRuleResponse {
+  uint64 id = 1;
 }
 
 message TemplateVariables {
@@ -740,8 +768,12 @@ message Template {
   repeated TemplateVariables variables = 7 [(validate.rules).repeated.min_items = 1];
 }
 
-message TemplateResponse {
-  Template template = 1;
+message ListTemplatesRequest {
+  string tag = 1;
+}
+
+message ListTemplatesResponse {
+  repeated Template data = 1;
 }
 
 message UpsertTemplateRequest {
@@ -752,12 +784,16 @@ message UpsertTemplateRequest {
   repeated TemplateVariables variables = 5 [(validate.rules).repeated.min_items = 1];
 }
 
-message ListTemplatesResponse {
-  repeated Template templates = 1;
+message UpsertTemplateResponse {
+  uint64 id = 1;
 }
 
-message GetTemplateByNameRequest {
+message GetTemplateRequest {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message GetTemplateResponse {
+  Template data = 1;
 }
 
 message DeleteTemplateRequest {
