@@ -323,5 +323,5 @@ message GetJobSpecificationsRequest {
 }
 
 message GetJobSpecificationsResponse {
-  repeated JobSpecification job = 1; 
+  repeated JobSpecification jobs = 1; 
 }
