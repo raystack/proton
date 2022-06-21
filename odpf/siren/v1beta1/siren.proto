@@ -407,7 +407,7 @@ message ListProvidersRequest {
 }
 
 message ListProvidersResponse {
-  repeated Provider data = 1;
+  repeated Provider providers = 1;
 }
 
 message CreateProviderRequest {
@@ -432,7 +432,7 @@ message GetProviderRequest {
 }
 
 message GetProviderResponse {
-  Provider data = 1;
+  Provider provider = 1;
 }
 
 message UpdateProviderRequest {
@@ -472,7 +472,7 @@ message Namespace {
 message ListNamespacesRequest {}
 
 message ListNamespacesResponse {
-  repeated Namespace data = 1;
+  repeated Namespace namespaces = 1;
 }
 
 message CreateNamespaceRequest {
@@ -494,7 +494,7 @@ message GetNamespaceRequest {
 }
 
 message GetNamespaceResponse {
-  Namespace data = 1;
+  Namespace namespace = 1;
 }
 
 message UpdateNamespaceRequest {
@@ -533,7 +533,7 @@ message Subscription {
 message ListSubscriptionsRequest {}
 
 message ListSubscriptionsResponse {
-  repeated Subscription data = 1;
+  repeated Subscription subscriptions = 1;
 }
 
 message CreateSubscriptionRequest {
@@ -552,7 +552,7 @@ message GetSubscriptionRequest {
 }
 
 message GetSubscriptionResponse {
-  Subscription data = 1;
+  Subscription subscription = 1;
 }
 
 message UpdateSubscriptionRequest {
@@ -593,7 +593,7 @@ message Receiver {
 message ListReceiversRequest {}
 
 message ListReceiversResponse {
-  repeated Receiver data = 1;
+  repeated Receiver receivers = 1;
 }
 
 message CreateReceiverRequest {
@@ -618,7 +618,7 @@ message GetReceiverRequest {
 }
 
 message GetReceiverResponse {
-  Receiver data = 1;
+  Receiver receiver = 1;
 }
 
 message UpdateReceiverRequest {
@@ -676,7 +676,7 @@ message ListAlertsRequest {
 }
 
 message ListAlertsResponse {
-  repeated Alert data = 1;
+  repeated Alert alerts = 1;
 }
 
 message CortexAlert {
@@ -692,7 +692,7 @@ message CreateCortexAlertsRequest {
 }
 
 message CreateCortexAlertsResponse {
-  repeated Alert data = 1;
+  repeated Alert alerts = 1;
 }
 
 message Annotations {
@@ -735,7 +735,7 @@ message ListRulesRequest {
 }
 
 message ListRulesResponse {
-  repeated Rule data = 1;
+  repeated Rule rules = 1;
 }
 
 message UpdateRuleRequest {
@@ -773,7 +773,7 @@ message ListTemplatesRequest {
 }
 
 message ListTemplatesResponse {
-  repeated Template data = 1;
+  repeated Template templates = 1;
 }
 
 message UpsertTemplateRequest {
@@ -793,7 +793,7 @@ message GetTemplateRequest {
 }
 
 message GetTemplateResponse {
-  Template data = 1;
+  Template template = 1;
 }
 
 message DeleteTemplateRequest {
