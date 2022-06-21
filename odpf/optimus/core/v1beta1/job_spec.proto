@@ -47,6 +47,13 @@ service JobSpecificationService {
     };
   }
 
+  // GetJobSpecifications read a job spec for provided filters
+  rpc GetJobSpecifications(GetJobSpecificationsRequest) returns (GetJobSpecificationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/jobs"
+    };
+  }
+
   // DeleteJobSpecification deletes a job spec of a namespace
   rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
     option (google.api.http) = {
@@ -322,4 +329,14 @@ message GetDeployJobsStatusResponse {
 message DeployJobFailure {
   string job_name = 1;
   string message = 2;
+}
+
+message GetJobSpecificationsRequest {
+  string project_name = 1;
+  string resource_destination = 2;
+  string job_name = 3;
+}
+
+message GetJobSpecificationsResponse {
+  repeated JobSpecification jobs = 1; 
 }
