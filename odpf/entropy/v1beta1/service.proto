@@ -57,6 +57,12 @@ service ResourceService {
       get: "/v1beta1/resources/{urn}/logs"
     };
   }
+
+  rpc GetResourceHistory(GetResourceHistoryRequest) returns (GetResourceHistoryResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}/history"
+    };
+  }
 }
 
 message ResourceDependency {
@@ -165,4 +171,20 @@ message GetLogRequest {
 
 message GetLogResponse {
   LogChunk chunk = 1;
+}
+
+message ResourceHistory {
+  string urn = 1;
+  map<string, string> labels = 2;
+  google.protobuf.Timestamp created_at = 3;
+
+  google.protobuf.Value difference = 4;
+}
+
+message GetResourceHistoryRequest {
+  string urn = 1;
+}
+
+message GetResourceHistoryResponse {
+  repeated ResourceHistory history = 1;
 }
