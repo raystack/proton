@@ -216,12 +216,6 @@ message InstanceSpecData {
   Type type = 5;
 }
 
-message InstanceContext {
-  map<string, string> envs = 1;
-  map<string, string> files = 2;
-  map<string, string> secrets = 3;
-}
-
 message JobStatus {
   string state = 1;
   google.protobuf.Timestamp scheduled_at = 2;

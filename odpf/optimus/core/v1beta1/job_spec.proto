@@ -4,6 +4,7 @@ package odpf.optimus.core.v1beta1;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
@@ -126,10 +127,32 @@ message GetJobSpecificationRequest {
   string project_name = 1;
   string namespace_name = 2;
   string job_name = 3;
+  
+  bool compiled_spec = 4;
+  google.protobuf.Timestamp scheduled_at = 5;
+  string instance_name = 6;
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_TASK = 1;
+    TYPE_HOOK = 2;
+  }
+  Type instance_type = 7;
+
+  // either set job_name if this is a scheduled execution
+  // or set jonrun_id if this is a manual triggered execution
+  // and not really registered as a valid job
+  string jobrun_id = 8;
+}
+
+message InstanceContext {
+  map<string, string> envs = 1;
+  map<string, string> files = 2;
+  map<string, string> secrets = 3;
 }
 
 message GetJobSpecificationResponse {
   JobSpecification spec = 1;
+  InstanceContext context = 2;
 }
 
 message DeleteJobSpecificationRequest {
@@ -227,6 +250,13 @@ message JobSpecification {
   Behavior behavior = 19;
 
   JobMetadata metadata = 20;
+
+  message InstanceContext {
+    map<string, string> envs = 1;
+    map<string, string> files = 2;
+    map<string, string> secrets = 3;
+  }
+  InstanceContext context = 21;
 }
 
 message JobDependency {
