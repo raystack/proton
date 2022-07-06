@@ -678,7 +678,9 @@ message GetCurrentUserRequest {
 }
 
 message ListUsersRequest {
-  google.protobuf.Struct fields = 1;
+  int32 limit = 1;
+  int32 page = 2;
+  string keyword = 3;
 }
 
 message ListUsersResponse {
