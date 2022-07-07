@@ -42,6 +42,12 @@ service JobRunService {
       body: "*"
     };
   }
+  rpc GetJobRunInput(RegisterInstanceRequest) returns (JobRunInputResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/job/{job_name}/run_input"
+      body: "*"
+    };
+  }
   // JobStatus returns the current and past run status of jobs
   rpc JobStatus(JobStatusRequest) returns (JobStatusResponse) {
     option (google.api.http) = {
@@ -78,10 +84,10 @@ message GetJobTaskRequest {
   string job_name = 3;
 }
 
+
 message GetJobTaskResponse {
   JobTask task = 1;
 }
-
 message RegisterInstanceRequest {
   reserved 3;
 
@@ -104,7 +110,7 @@ message RegisterInstanceResponse {
   JobSpecification job = 2;
 
   InstanceSpec instance = 3;
-  InstanceContext context = 5;
+  JobRunInputResponse context = 5;
 }
 
 message JobStatusRequest {
@@ -214,6 +220,12 @@ message InstanceSpecData {
     TYPE_FILE = 2;
   }
   Type type = 5;
+}
+
+message JobRunInputResponse {
+  map<string, string> envs = 1;
+  map<string, string> files = 2;
+  map<string, string> secrets = 3;
 }
 
 message JobStatus {
