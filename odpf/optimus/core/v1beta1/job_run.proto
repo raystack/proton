@@ -126,6 +126,9 @@ message RegisterInstanceResponse {
   JobSpecification job = 2;
 
   InstanceSpec instance = 3;
+  
+  reserved 5;
+  
   JobRunInputResponse context = 6;
 }
 
