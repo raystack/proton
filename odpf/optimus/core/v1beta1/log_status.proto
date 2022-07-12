@@ -1,0 +1,21 @@
+syntax = "proto3";
+package odpf.optimus.core.v1beta1;
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_package = "io.odpf.proton.optimus";
+option java_outer_classname = "LogStatus";
+
+message Log {
+  Level level = 1;
+  string message = 2;
+}
+
+enum Level {
+  Trace = 0;
+  Debug = 1;
+  Info = 2;
+  Warning = 3;
+  Error = 4;
+  Fatal = 5;
+}

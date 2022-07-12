@@ -5,6 +5,7 @@ import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/duration.proto";
+import "odpf/optimus/core/v1beta1/log_status.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -92,8 +93,12 @@ message DeployJobSpecificationRequest {
   string namespace_name = 4;
 }
 
+// DeployJobSpecificationResponse hold the value of DeploymentID
+// and the log messages
 message DeployJobSpecificationResponse {
-  bool success = 1;
+  // success or not is not the part of the response anymore
+  // any message that been sent is marked as successfully delivered
+  bool success = 1 [deprecated=true];
 
   // non ack responses are more of a progress/info response
   // and not really success or failure statuses
@@ -103,12 +108,20 @@ message DeployJobSpecificationResponse {
   // message is deprecated and being replaced with value field
   string message = 3 [deprecated=true];
   
-  string job_name = 4;
+  // job_name is deprecated since client / receiver
+  // doesn't need to know the job_name anymore
+  string job_name = 4 [deprecated=true];
 
   // response type differentiate events
-  string type = 5;
+  // this is deprecated
+  string type = 5 [deprecated=true];
   
-  string value = 6;
+  // this is deprecated and being replaced with deploymentID
+  // and log status message
+  string value = 6 [deprecated=true];
+
+  string deployment_id = 7;
+  odpf.optimus.core.v1beta1.Log log_status = 8;
 }
 
 message CreateJobSpecificationRequest {
