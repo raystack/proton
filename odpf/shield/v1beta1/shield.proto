@@ -678,11 +678,16 @@ message GetCurrentUserRequest {
 }
 
 message ListUsersRequest {
-  google.protobuf.Struct fields = 1;
+  int32 page_size = 1;
+  string page_token = 2;
+  string keyword = 3;
 }
 
 message ListUsersResponse {
-  repeated User users = 1;
+  int32 count = 1;
+  string previous = 2;
+  string  next = 3;
+  repeated User users = 4;
 }
 
 message GroupRequestBody {
