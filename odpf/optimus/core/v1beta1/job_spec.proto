@@ -338,7 +338,7 @@ message GetJobSpecificationsRequest {
 }
 
 message GetJobSpecificationsResponse {
-  repeated JobSpecification jobs = 1; [deprecated=true];
+  repeated JobSpecification jobs = 1 [deprecated=true];
   repeated JobSpecificationResponse job_specification_responses = 2; 
 }
 
