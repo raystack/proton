@@ -8,9 +8,8 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/entropy/v1beta1;entropyv1beta1";
 option java_multiple_files = true;
-option java_package = "io.odpf.proton.entropy";
 option java_outer_classname = "EntropyServiceProto";
-
+option java_package = "io.odpf.proton.entropy";
 
 service ResourceService {
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
@@ -57,15 +56,21 @@ service ResourceService {
       get: "/v1beta1/resources/{urn}/logs"
     };
   }
+
+  rpc GetResourceRevisions(GetResourceRevisionsRequest) returns (GetResourceRevisionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}/revisions"
+    };
+  }
 }
 
 message ResourceDependency {
-    // Key should be as defined by the module being used for
-    // the resource.
-    string key = 1;
+  // Key should be as defined by the module being used for
+  // the resource.
+  string key = 1;
 
-    // Value should refer to an existing resource via URN.
-    string value = 2; 
+  // Value should refer to an existing resource via URN.
+  string value = 2;
 }
 
 message ResourceSpec {
@@ -165,4 +170,21 @@ message GetLogRequest {
 
 message GetLogResponse {
   LogChunk chunk = 1;
+}
+
+message ResourceRevision {
+  string id = 1;
+  string urn = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Timestamp created_at = 4;
+
+  ResourceSpec spec = 5;
+}
+
+message GetResourceRevisionsRequest {
+  string urn = 1;
+}
+
+message GetResourceRevisionsResponse {
+  repeated ResourceRevision revisions = 1;
 }
