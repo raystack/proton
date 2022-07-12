@@ -183,12 +183,8 @@ message ResourceHistory {
 
 message GetResourceHistoryRequest {
   string urn = 1;
-  int32 page_size = 2;
-  string page_token = 3;
 }
 
 message GetResourceHistoryResponse {
   repeated ResourceHistory history = 1;
-  string previous_page_token = 2;
-  string next_page_token = 3;
 }
