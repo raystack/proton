@@ -57,9 +57,9 @@ service ResourceService {
     };
   }
 
-  rpc GetResourceHistory(GetResourceHistoryRequest) returns (GetResourceHistoryResponse) {
+  rpc GetResourceRevisions(GetResourceRevisionsRequest) returns (GetResourceRevisionsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/resources/{urn}/history"
+      get: "/v1beta1/resources/{urn}/revisions"
     };
   }
 }
@@ -172,7 +172,7 @@ message GetLogResponse {
   LogChunk chunk = 1;
 }
 
-message ResourceHistory {
+message ResourceRevision {
   string id = 1;
   string urn = 2;
   map<string, string> labels = 3;
@@ -181,10 +181,10 @@ message ResourceHistory {
   ResourceSpec spec = 5;
 }
 
-message GetResourceHistoryRequest {
+message GetResourceRevisionsRequest {
   string urn = 1;
 }
 
-message GetResourceHistoryResponse {
-  repeated ResourceHistory history = 1;
+message GetResourceRevisionsResponse {
+  repeated ResourceRevision revisions = 1;
 }
