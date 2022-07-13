@@ -42,6 +42,7 @@ service JobRunService {
       body: "*"
     };
   }
+  // JobRunInput is used to fetch task/hook compiled configuration and assets.
   rpc JobRunInput(JobRunInputRequest) returns (JobRunInputResponse) {
     option (google.api.http) = {
       post: "/v1beta1/project/{project_name}/job/{job_name}/run_input"
