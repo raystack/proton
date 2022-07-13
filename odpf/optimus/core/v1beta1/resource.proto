@@ -4,6 +4,7 @@ package odpf.optimus.core.v1beta1;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
+import "odpf/optimus/core/v1beta1/log_status.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -65,14 +66,15 @@ message DeployResourceSpecificationRequest {
 }
 
 message DeployResourceSpecificationResponse {
-  bool success = 1;
+  bool success = 1 [deprecated=true];
 
   // non ack responses are more of a progress/info response
   // and not success or failure statuses
-  bool ack = 2;
+  bool ack = 2 [deprecated=true];
 
-  string message = 3;
+  string message = 3 [deprecated=true];
   string resource_name = 4;
+  odpf.optimus.core.v1beta1.Log log_status = 5;
 }
 
 // ListResourceSpecificationRequest lists all resource specifications of a datastore in project
