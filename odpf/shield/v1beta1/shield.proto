@@ -679,7 +679,7 @@ message GetCurrentUserRequest {
 
 message ListUsersRequest {
   int32 page_size = 1;
-  string page_num = 2;
+  int32 page_num = 2;
   string keyword = 3;
 }
 
