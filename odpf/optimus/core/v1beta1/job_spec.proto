@@ -318,13 +318,16 @@ message RefreshJobsRequest {
 }
 
 message RefreshJobsResponse {
-  bool success = 1;
+  bool success = 1 [deprecated=true];
 
   // response type differentiate events
-  string type = 2;
-  string value = 3;
+  string type = 2 [deprecated=true];
+  string value = 3 [deprecated=true];
 
-  string job_name = 4;
+  string job_name = 4 [deprecated=true];
+
+  string deployment_id = 5;
+  odpf.optimus.core.v1beta1.Log log_status = 6;
 }
 
 message GetDeployJobsStatusRequest {
