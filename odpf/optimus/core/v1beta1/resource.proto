@@ -74,7 +74,7 @@ message DeployResourceSpecificationResponse {
 
   string message = 3 [deprecated=true];
   string resource_name = 4;
-  odpf.optimus.core.v1beta1.Log log_status = 5;
+  Log log_status = 5;
 }
 
 // ListResourceSpecificationRequest lists all resource specifications of a datastore in project

@@ -121,7 +121,7 @@ message DeployJobSpecificationResponse {
   string value = 6 [deprecated=true];
 
   string deployment_id = 7;
-  odpf.optimus.core.v1beta1.Log log_status = 8;
+  Log log_status = 8;
 }
 
 message CreateJobSpecificationRequest {
@@ -327,7 +327,7 @@ message RefreshJobsResponse {
   string job_name = 4 [deprecated=true];
 
   string deployment_id = 5;
-  odpf.optimus.core.v1beta1.Log log_status = 6;
+  Log log_status = 6;
 }
 
 message GetDeployJobsStatusRequest {
