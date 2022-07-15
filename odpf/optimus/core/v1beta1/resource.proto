@@ -4,7 +4,7 @@ package odpf.optimus.core.v1beta1;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
-import "odpf/optimus/core/v1beta1/log_status.proto";
+import "odpf/optimus/core/v1beta1/status.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -73,8 +73,9 @@ message DeployResourceSpecificationResponse {
   bool ack = 2 [deprecated=true];
 
   string message = 3 [deprecated=true];
-  string resource_name = 4;
+  string resource_name = 4 [deprecated=true];
   Log log_status = 5;
+  Progress progress = 6;
 }
 
 // ListResourceSpecificationRequest lists all resource specifications of a datastore in project

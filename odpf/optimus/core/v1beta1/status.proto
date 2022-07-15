@@ -4,7 +4,11 @@ package odpf.optimus.core.v1beta1;
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
 option java_package = "io.odpf.proton.optimus";
-option java_outer_classname = "LogStatus";
+option java_outer_classname = "Status";
+
+message Progress {
+  int32 count = 1;
+}
 
 message Log {
   Level level = 1;
