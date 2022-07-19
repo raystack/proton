@@ -18,24 +18,12 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Siren APIs";
     description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
-    version: "0.3.0";
+    version: "0.4.0";
   };
   schemes: HTTP;
 };
 
 service SirenService {
-  // TODO this can be removed once we wire ping http with grpc healthcheck ref: https://github.com/odpf/siren/issues/100
-  rpc Ping(PingRequest) returns (PingResponse) {
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "ping";
-      tags: "Ping";
-    };
-
-    option (google.api.http) = {
-      get: "/ping"
-    };
-  }
-
   rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "list providers";
@@ -377,12 +365,6 @@ service SirenService {
       body: "*"
     };
   }
-}
-
-message PingRequest {}
-
-message PingResponse {
-  string message = 1;
 }
 
 message Provider {
