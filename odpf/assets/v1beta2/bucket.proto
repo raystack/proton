@@ -7,7 +7,7 @@ option java_outer_classname = "BucketProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
 import "google/protobuf/timestamp.proto";
-import "odpf/assets/common/v1beta2/ownership.proto";
+import "odpf/assets/common/v1beta2/owner.proto";
 
 message Bucket {
   // The description of the bucket.
@@ -51,7 +51,7 @@ message Blob {
 
   // The ownership of the blob.
   // For an example check out ownership.
-  odpf.assets.common.v1beta2.Ownership ownership = 31;
+  repeated odpf.assets.common.v1beta2.Owner ownership = 31;
 
   // The timestamp of the blob's creation.
   google.protobuf.Timestamp create_time = 101;

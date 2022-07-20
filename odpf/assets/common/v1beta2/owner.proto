@@ -3,15 +3,8 @@ syntax = "proto3";
 package odpf.assets.common.v1beta2;
 
 option java_package = "io.odpf.assets.common";
-option java_outer_classname = "OwnershipProto";
+option java_outer_classname = "OwnerProto";
 option go_package = "github.com/odpf/proton/assets/common/v1beta2;commonv1beta2";
-
-// Ownership is a facet that describes the ownership of a resource.
-message Ownership {
-  // Required: The list of owners of the resource.
-  // For an example check the owner schema.
-  repeated Owner owners = 7;
-}
 
 // Owner is a facet that describes the owner of a resource.
 message Owner {
