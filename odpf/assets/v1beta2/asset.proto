@@ -6,10 +6,8 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "AssetsProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
-import "odpf/assets/common/v1beta2/owner.proto";
-import "odpf/assets/common/v1beta2/lineage.proto";
+import "odpf/assets/v1beta2/common.proto";
 
-import "odpf/assets/common/v1beta2/event.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
@@ -48,18 +46,18 @@ message Asset {
 
     // The ownership of the job.
     // For an example check out ownership.
-    repeated odpf.assets.common.v1beta2.Owner owners = 31;
+    repeated odpf.assets.v1beta2.Owner owners = 31;
 
     // The lineage of the job.
     // For an example check out lineage schema.
-    odpf.assets.common.v1beta2.Lineage lineage = 32;
+    odpf.assets.v1beta2.Lineage lineage = 32;
 
     //Optional. List of labels the user has.
     map<string,string> labels = 33;
 
     // The timestamp of the generated event.
     // Event schemas is defined in the common event schema.
-    odpf.assets.common.v1beta2.Event event = 100;
+    odpf.assets.v1beta2.Event event = 100;
 
     // The timestamp when the object was created.
     google.protobuf.Timestamp create_time = 101;
