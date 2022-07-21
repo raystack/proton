@@ -30,11 +30,11 @@ message Event {
 message Lineage {
     // The resource that is the source of the relationship.
     // Example: a resource that is the parent of another resource.
-    Resource upstreams = 1;
+    repeated Resource upstreams = 1;
 
     // The resource that is the destination of the relationship.
     // Example: a resource that is the child of another resource.
-    Resource downstreams = 2;
+    repeated Resource downstreams = 2;
 }
 
 message Resource {

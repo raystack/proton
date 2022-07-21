@@ -8,6 +8,7 @@ option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
 import "odpf/assets/v1beta2/common.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 // Dashboard is a resource that represents a dashboard.
 message Dashboard {
@@ -61,15 +62,18 @@ message Chart {
   // For an example check out ownership.
   repeated odpf.assets.v1beta2.Owner owners = 31;
 
+  // Optional: List of properties the user has.
+  google.protobuf.Struct attributes = 32;
+
   // The lineage of the chart.
   // For an example check out lineage schema.
-  odpf.assets.v1beta2.Lineage lineage = 32;
+  odpf.assets.v1beta2.Lineage lineage = 33;
 
   // The timestamp when the object was created.
-  google.protobuf.Timestamp create_time = 33;
+  google.protobuf.Timestamp create_time = 34;
 
   // The timestamp when the object was last modified.
-  google.protobuf.Timestamp update_time = 34;
+  google.protobuf.Timestamp update_time = 35;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
