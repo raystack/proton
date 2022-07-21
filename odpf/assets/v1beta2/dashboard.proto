@@ -13,7 +13,7 @@ import "google/protobuf/timestamp.proto";
 message Dashboard {
   // The list of the charts in the dashboard.
   // For an example, check the schema of the chart.
-  repeated Chart charts = 21;
+  repeated Chart charts = 1;
 }
 
 message Chart {

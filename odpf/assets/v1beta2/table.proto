@@ -13,19 +13,19 @@ import "google/protobuf/struct.proto";
 message Table {
   // The metrics about the table.
   // For example check the profile schem.
-  TableProfile profile = 21;
+  TableProfile profile = 1;
 
   // The columns of the table.
   // Example: 'id', `name`, `age'.
-  ColumnProfile schema = 22;
+  repeated Column columns = 2;
 
   // Previews of the table.
   // fields is a list of fields.
-  repeated string fields = 23;
+  repeated string fields = 3;
 
   // rows is a multidimensional array containing 
   // Optional: List of properties the user has.
-  google.protobuf.ListValue rows = 24;
+  google.protobuf.ListValue rows = 4;
 }
 
 // TableProfile is the metrics about the table.
@@ -59,13 +59,6 @@ message Join {
 
   // The information of `join conditions` applied to the table
   repeated string conditions = 3;
-}
-
-// Columns represents a list of columns.
-// It is facet used to specify the schema of a table or a file.
-message Columns {
-  // The list of columns.
-  repeated Column columns = 1;
 }
 
 // Column represents a column in a table or a file.
