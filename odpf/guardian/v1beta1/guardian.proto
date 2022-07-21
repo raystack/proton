@@ -425,8 +425,7 @@ message RevokeAppealsRequest {
     repeated string provider_urns = 3;
     repeated string resource_types = 4;
     repeated string resource_urns = 5;
-    repeated string created_by = 6;
-    string reason = 7;
+    string reason = 6;
 }
 
 message Role {
@@ -578,6 +577,7 @@ message Appeal {
     string account_type = 18;
     string created_by = 19;
     google.protobuf.Value creator = 20;
+    repeated string permissions = 21;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
