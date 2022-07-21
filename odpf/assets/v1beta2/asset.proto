@@ -14,32 +14,32 @@ import "google/protobuf/timestamp.proto";
 
 // Job is a resource that represents a job.
 message Asset {
-    // Represents Data in asset, can be of type bucket, dashboard, group ... user
-    google.protobuf.Any data = 1;
-
     // The unique identifier of the asset/resource. 
     // Example: `user:jdoe` or `group:accounting`.
-    string urn = 2;
+    string urn = 1;
 
     // The name of the resource.
     // Example: `John Doe` or `Accounting`.
-    string name = 3;
+    string name = 2;
 
     // The source of the resource.
     // Example: `github` or `bigquery`.
-    string service = 4;
+    string service = 3;
 
     // The type of the asset.
     // Example: `user` or `group`.
-    string type = 5;
+    string type = 4;
 
     // The REST URL for accessing the resource. URL returns the resource itself. 
     // Example: `https://xyz.com/v1/users/user-123`
-    string url = 6;
+    string url = 5;
 
     // The description of the resource. 
     // Example: `This resource is being used for storing important number`
-    string description = 7;
+    string description = 6;
+
+    // Represents Data in asset, can be of type bucket, dashboard, group ... user
+    google.protobuf.Any data = 7;
 
     // Optional: List of properties the user has.
     google.protobuf.Struct attributes = 8;

@@ -12,18 +12,18 @@ import "odpf/assets/v1beta2/common.proto";
 message Bucket {
   // The description of the bucket.
   // Example: `This bucket was created by the product team.`
-  string description = 4;
+  string description = 1;
 
   // The location of the bucket. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
   // Example: `ASIA`
-  string location = 5;
+  string location = 2;
 
   // The type of the storage. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
   // Example: `STANDARD`
-  string storage_type = 6;
+  string storage_type = 3;
 
   // List of blobs in the bucket.
-  repeated Blob blobs = 7;
+  repeated Blob blobs = 4;
 }
 
 message Blob {
