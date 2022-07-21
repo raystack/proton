@@ -42,14 +42,14 @@ message TableProfile {
   int64 usage_count = 4;
   
   // The information of `join` applied to the table
-  repeated Join joins = 5;
+  repeated TableCommonJoin common_joins = 5;
 
   // The information of `filter` applied to the table
   repeated string filters = 6;
 }
 
 // Join is the metric of which are other tables that are joined with this table
-message Join {
+message TableCommonJoin {
   string urn = 1;
 
   // The number of how many times table is being joined with a certain table urn
