@@ -557,6 +557,7 @@ message Appeal {
     string account_type = 18;
     string created_by = 19;
     google.protobuf.Value creator = 20;
+    repeated string permissions = 21;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
