@@ -173,6 +173,19 @@ service GuardianService {
             body: "action"
         };
     }
+
+    rpc AddApprover(AddApproverRequest) returns (AddApproverResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers"
+            body: "*"
+        };
+    }
+
+    rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
+        };
+    }
 }
 
 message ListProvidersRequest {}
@@ -405,6 +418,26 @@ message UpdateApprovalRequest {
 }
 
 message UpdateApprovalResponse {
+    Appeal appeal = 1;
+}
+
+message AddApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message AddApproverResponse {
+    Appeal appeal = 1;
+}
+
+message DeleteApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message DeleteApproverResponse {
     Appeal appeal = 1;
 }
 
