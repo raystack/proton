@@ -75,7 +75,6 @@ message DeployResourceSpecificationResponse {
   string message = 3 [deprecated=true];
   string resource_name = 4 [deprecated=true];
   Log log_status = 5;
-  Progress progress = 6;
 }
 
 // ListResourceSpecificationRequest lists all resource specifications of a datastore in project
