@@ -523,6 +523,15 @@ message Policy {
         map<string, string> schema = 3;
     }
     IAM iam = 9;
+
+    message PolicyAppealConfig {
+        message DurationOptions {
+            string name = 1;
+            string value = 2;
+        }
+        repeated DurationOptions duration_options = 1;
+    }
+    PolicyAppealConfig appeal = 10;
 }
 
 message AppealOptions {
