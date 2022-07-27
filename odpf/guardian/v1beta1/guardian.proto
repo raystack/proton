@@ -92,6 +92,12 @@ service GuardianService {
         };
     }
 
+    rpc GetPolicyAppealConfig(GetPolicyAppealConfigRequest) returns (GetPolicyAppealConfigResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/policies/{id}/versions/{version}/appeal_options"
+        };
+    }
+
     rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
         option (google.api.http) = {
             get: "/v1beta1/resources"
@@ -236,6 +242,15 @@ message ListPoliciesResponse {
 message GetPolicyRequest {
     string id = 1;
     uint32 version = 2;
+}
+
+message GetPolicyAppealConfigRequest {
+    string id = 1;
+    uint32 version = 2;
+}
+
+message GetPolicyAppealConfigResponse {
+    PolicyAppealConfig appeal = 1;
 }
 
 message GetPolicyResponse {
@@ -467,6 +482,14 @@ message Condition {
     MatchCondition match = 2;
 }
 
+message PolicyAppealConfig {
+    message DurationOptions {
+        string name = 1;
+        string value = 2;
+    }
+    repeated DurationOptions duration_options = 1;
+}
+
 // Policy is a configurable steps for appeal's approval
 message Policy {
     string id = 1;
@@ -524,13 +547,6 @@ message Policy {
     }
     IAM iam = 9;
 
-    message PolicyAppealConfig {
-        message DurationOptions {
-            string name = 1;
-            string value = 2;
-        }
-        repeated DurationOptions duration_options = 1;
-    }
     PolicyAppealConfig appeal = 10;
 }
 
