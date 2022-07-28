@@ -324,6 +324,7 @@ message GetDeployJobsStatusResponse {
   repeated DeployJobFailure failures = 2;
   int32 success_count = 3;
   int32 failure_count = 4;
+  map<string, string> unknown_dependencies = 5;
 }
 
 message DeployJobFailure {
