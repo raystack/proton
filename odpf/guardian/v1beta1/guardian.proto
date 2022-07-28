@@ -66,6 +66,12 @@ service GuardianService {
     };
   }
 
+  rpc ImportAccess(ImportAccessRequest) returns (ImportAccessResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/providers/{id}/import-access"
+    };
+  }
+
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
     option (google.api.http) = {
       get: "/v1beta1/policies"
@@ -261,6 +267,14 @@ message DeleteProviderRequest {
 }
 
 message DeleteProviderResponse {}
+
+message ImportAccessRequest {
+    string id = 1;
+}
+
+message ImportAccessResponse {
+    repeated Appeal appeals = 1;
+}
 
 message ListRolesRequest {
   string id = 1;
