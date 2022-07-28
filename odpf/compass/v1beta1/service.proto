@@ -911,27 +911,31 @@ message GetAssetByIDResponse {
 message UpsertPatchAssetRequest {
   message BaseAsset {
     string urn = 1;
-    string type = 2;
-    google.protobuf.StringValue name = 3 [
+    string url = 2;
+    string type = 3;
+    google.protobuf.StringValue name = 4 [
       (validate.rules).string.ignore_empty = true,
       (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
         description: "name of an asset"
       }
     ];
-    string service = 4;
-    google.protobuf.StringValue description = 5 [
+    string service = 5;
+    google.protobuf.StringValue description = 6 [
       (validate.rules).string.ignore_empty = true,
       (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
         description: "description of an asset"
       }
     ];
-    google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    google.protobuf.Struct attributes = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "attributes of an asset"
+    }];
+    google.protobuf.Struct data = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "dynamic data of an asset"
     }];
-    google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    google.protobuf.Struct labels = 9 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "labels of an asset"
     }];
-    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    repeated User owners = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "list of owners of the asset"
     }];
   }
@@ -1246,18 +1250,20 @@ message Asset {
 
   string id = 1;
   string urn = 2;
-  string type = 3;
-  string service = 4;
-  string name = 5;
-  string description = 6;
-  google.protobuf.Struct data = 7;
-  google.protobuf.Struct labels = 8;
-  repeated User owners = 9;
-  string version = 10;
-  User updated_by = 11;
-  repeated Change changelog = 12;
-  google.protobuf.Timestamp created_at = 13;
-  google.protobuf.Timestamp updated_at = 14;
+  string url = 3;
+  string type = 4;
+  string service = 5;
+  string name = 6;
+  string description = 7;
+  google.protobuf.Struct data = 8;
+  google.protobuf.Struct attributes = 9;
+  google.protobuf.Struct labels = 10;
+  repeated User owners = 11;
+  string version = 12;
+  User updated_by = 13;
+  repeated Change changelog = 14;
+  google.protobuf.Timestamp created_at = 15;
+  google.protobuf.Timestamp updated_at = 16;
 }
 
 message Discussion {
