@@ -92,9 +92,9 @@ service GuardianService {
         };
     }
 
-    rpc GetPolicyConfigurations(GetPolicyConfigRequest) returns (GetPolicyConfigResponse) {
+    rpc GetPolicyPreferences(GetPolicyPreferencesRequest) returns (GetPolicyPreferencesResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/policies/{id}/versions/{version}/configurations"
+            get: "/v1beta1/policies/{id}/versions/{version}/preferences"
         };
     }
 
@@ -244,12 +244,12 @@ message GetPolicyRequest {
     uint32 version = 2;
 }
 
-message GetPolicyConfigRequest {
+message GetPolicyPreferencesRequest {
     string id = 1;
     uint32 version = 2;
 }
 
-message GetPolicyConfigResponse {
+message GetPolicyPreferencesResponse {
     PolicyAppealConfig appeal = 1;
 }
 
