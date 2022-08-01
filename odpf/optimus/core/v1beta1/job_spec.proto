@@ -182,14 +182,15 @@ message CheckJobSpecificationsRequest {
 }
 
 message CheckJobSpecificationsResponse {
-  bool success = 1;
+  bool success = 1 [deprecated=true];
 
   // non ack responses are more of a progress/info response
   // and not really success or failure statuses
-  bool ack = 2;
+  bool ack = 2 [deprecated=true];
 
-  string message = 3;
-  string job_name = 4;
+  string message = 3 [deprecated=true];
+  string job_name = 4 [deprecated=true];
+  Log log_status = 5;
 }
 
 message JobSpecification {
