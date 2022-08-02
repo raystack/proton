@@ -12,10 +12,11 @@ message Log {
 }
 
 enum Level {
-  Trace = 0;
-  Debug = 1;
-  Info = 2;
-  Warning = 3;
-  Error = 4;
-  Fatal = 5;
+  LEVEL_UNSPECIFIED = 0;
+  LEVEL_TRACE = 1;
+  LEVEL_DEBUG = 2;
+  LEVEL_INFO = 3;
+  LEVEL_WARNING = 4;
+  LEVEL_ERROR = 5;
+  LEVEL_FATAL = 6;
 }
