@@ -66,16 +66,14 @@ message DeployResourceSpecificationRequest {
 }
 
 message DeployResourceSpecificationResponse {
-  bool success = 1 [deprecated=true];
-
-  // non ack responses are more of a progress/info response
-  // and not success or failure statuses
-  bool ack = 2 [deprecated=true];
-
-  string message = 3 [deprecated=true];
-  string resource_name = 4 [deprecated=true];
+  reserved 1 to 4;
+  // bool success = 1 [deprecated=true];
+  // bool ack = 2 [deprecated=true];
+  // string message = 3 [deprecated=true];
+  // string resource_name = 4 [deprecated=true];
   Log log_status = 5;
 }
+
 
 // ListResourceSpecificationRequest lists all resource specifications of a datastore in project
 message ListResourceSpecificationRequest {

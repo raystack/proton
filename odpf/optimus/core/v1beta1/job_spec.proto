@@ -96,30 +96,13 @@ message DeployJobSpecificationRequest {
 // DeployJobSpecificationResponse hold the value of DeploymentID
 // and the log messages
 message DeployJobSpecificationResponse {
-  // success or not is not the part of the response anymore
-  // any message that been sent is marked as successfully delivered
-  bool success = 1 [deprecated=true];
-
-  // non ack responses are more of a progress/info response
-  // and not really success or failure statuses
-  // this is deprecated and being replaced with type field
-  bool ack = 2 [deprecated=true];
-
-  // message is deprecated and being replaced with value field
-  string message = 3 [deprecated=true];
-  
-  // job_name is deprecated since client / receiver
-  // doesn't need to know the job_name anymore
-  string job_name = 4 [deprecated=true];
-
-  // response type differentiate events
-  // this is deprecated
-  string type = 5 [deprecated=true];
-  
-  // this is deprecated and being replaced with deploymentID
-  // and log status message
-  string value = 6 [deprecated=true];
-
+  reserved 1 to 6;
+  // bool success = 1 [deprecated=true];
+  // bool ack = 2 [deprecated=true];
+  // string message = 3 [deprecated=true];
+  // string job_name = 4 [deprecated=true];
+  // string type = 5 [deprecated=true];
+  // string value = 6 [deprecated=true];
   string deployment_id = 7;
   Log log_status = 8;
 }
@@ -182,14 +165,11 @@ message CheckJobSpecificationsRequest {
 }
 
 message CheckJobSpecificationsResponse {
-  bool success = 1 [deprecated=true];
-
-  // non ack responses are more of a progress/info response
-  // and not really success or failure statuses
-  bool ack = 2 [deprecated=true];
-
-  string message = 3 [deprecated=true];
-  string job_name = 4 [deprecated=true];
+  reserved 1 to 4;
+  // bool success = 1 [deprecated=true];
+  // bool ack = 2 [deprecated=true];
+  // string message = 3 [deprecated=true];
+  // string job_name = 4 [deprecated=true];
   Log log_status = 5;
 }
 
@@ -319,14 +299,11 @@ message RefreshJobsRequest {
 }
 
 message RefreshJobsResponse {
-  bool success = 1 [deprecated=true];
-
-  // response type differentiate events
-  string type = 2 [deprecated=true];
-  string value = 3 [deprecated=true];
-
-  string job_name = 4 [deprecated=true];
-
+  reserved 1 to 4;
+  // bool success = 1 [deprecated=true];
+  // string type = 2 [deprecated=true];
+  // string value = 3 [deprecated=true];
+  // string job_name = 4 [deprecated=true];
   string deployment_id = 5;
   Log log_status = 6;
 }
