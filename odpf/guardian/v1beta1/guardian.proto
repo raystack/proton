@@ -186,6 +186,13 @@ service GuardianService {
             delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
         };
     }
+
+    rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
+        option (google.api.http) = {
+          post: "/v1beta1/appeals/revoke"
+          body: "*"
+        };
+    }
 }
 
 message ListProvidersRequest {}
@@ -366,6 +373,19 @@ message RevokeAppealRequest {
 
 message RevokeAppealResponse {
     Appeal appeal = 1;
+}
+
+message RevokeAppealsRequest {
+    repeated string account_ids = 1;
+    repeated string provider_types = 2;
+    repeated string provider_urns = 3;
+    repeated string resource_types = 4;
+    repeated string resource_urns = 5;
+    string reason = 6;
+}
+
+message RevokeAppealsResponse {
+  repeated Appeal appeals = 1;
 }
 
 message CreateAppealRequest {
