@@ -180,6 +180,19 @@ service GuardianService {
         };
     }
 
+    rpc AddApprover(AddApproverRequest) returns (AddApproverResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers"
+            body: "*"
+        };
+    }
+
+    rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
+        };
+    }
+
     rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
         option (google.api.http) = {
           post: "/v1beta1/appeals/revoke"
@@ -377,6 +390,15 @@ message RevokeAppealResponse {
     Appeal appeal = 1;
 }
 
+message RevokeAppealsRequest {
+    repeated string account_ids = 1;
+    repeated string provider_types = 2;
+    repeated string provider_urns = 3;
+    repeated string resource_types = 4;
+    repeated string resource_urns = 5;
+    string reason = 6;
+}
+
 message RevokeAppealsResponse {
   repeated Appeal appeals = 1;
 }
@@ -434,13 +456,24 @@ message UpdateApprovalResponse {
     Appeal appeal = 1;
 }
 
-message RevokeAppealsRequest {
-    repeated string account_ids = 1;
-    repeated string provider_types = 2;
-    repeated string provider_urns = 3;
-    repeated string resource_types = 4;
-    repeated string resource_urns = 5;
-    string reason = 6;
+message AddApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message AddApproverResponse {
+    Appeal appeal = 1;
+}
+
+message DeleteApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message DeleteApproverResponse {
+    Appeal appeal = 1;
 }
 
 message Role {
