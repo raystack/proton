@@ -92,6 +92,12 @@ service GuardianService {
         };
     }
 
+    rpc GetPolicyPreferences(GetPolicyPreferencesRequest) returns (GetPolicyPreferencesResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/policies/{id}/versions/{version}/preferences"
+        };
+    }
+
     rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
         option (google.api.http) = {
             get: "/v1beta1/resources"
@@ -173,6 +179,26 @@ service GuardianService {
             body: "action"
         };
     }
+
+    rpc AddApprover(AddApproverRequest) returns (AddApproverResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers"
+            body: "*"
+        };
+    }
+
+    rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
+        };
+    }
+
+    rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
+        option (google.api.http) = {
+          post: "/v1beta1/appeals/revoke"
+          body: "*"
+        };
+    }
 }
 
 message ListProvidersRequest {}
@@ -236,6 +262,15 @@ message ListPoliciesResponse {
 message GetPolicyRequest {
     string id = 1;
     uint32 version = 2;
+}
+
+message GetPolicyPreferencesRequest {
+    string id = 1;
+    uint32 version = 2;
+}
+
+message GetPolicyPreferencesResponse {
+    PolicyAppealConfig appeal = 1;
 }
 
 message GetPolicyResponse {
@@ -355,6 +390,19 @@ message RevokeAppealResponse {
     Appeal appeal = 1;
 }
 
+message RevokeAppealsRequest {
+    repeated string account_ids = 1;
+    repeated string provider_types = 2;
+    repeated string provider_urns = 3;
+    repeated string resource_types = 4;
+    repeated string resource_urns = 5;
+    string reason = 6;
+}
+
+message RevokeAppealsResponse {
+  repeated Appeal appeals = 1;
+}
+
 message CreateAppealRequest {
     string account_id = 1;
 
@@ -405,6 +453,26 @@ message UpdateApprovalRequest {
 }
 
 message UpdateApprovalResponse {
+    Appeal appeal = 1;
+}
+
+message AddApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message AddApproverResponse {
+    Appeal appeal = 1;
+}
+
+message DeleteApproverRequest {
+    string appeal_id = 1;
+    string approval_id = 2;
+    string email = 3;
+}
+
+message DeleteApproverResponse {
     Appeal appeal = 1;
 }
 
@@ -467,6 +535,14 @@ message Condition {
     MatchCondition match = 2;
 }
 
+message PolicyAppealConfig {
+    message DurationOptions {
+        string name = 1;
+        string value = 2;
+    }
+    repeated DurationOptions duration_options = 1;
+}
+
 // Policy is a configurable steps for appeal's approval
 message Policy {
     string id = 1;
@@ -523,6 +599,8 @@ message Policy {
         map<string, string> schema = 3;
     }
     IAM iam = 9;
+
+    PolicyAppealConfig appeal = 10;
 }
 
 message AppealOptions {
@@ -557,6 +635,7 @@ message Appeal {
     string account_type = 18;
     string created_by = 19;
     google.protobuf.Value creator = 20;
+    repeated string permissions = 21;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
