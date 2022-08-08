@@ -195,8 +195,20 @@ service GuardianService {
 
     rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
         option (google.api.http) = {
-          post: "/v1beta1/appeals/revoke"
-          body: "*"
+            post: "/v1beta1/appeals/revoke"
+            body: "*"
+        };
+    }
+
+    rpc ListAccess(ListAccessRequest) returns (ListAccessResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/access"
+        };
+    }
+
+    rpc GetAccess(GetAccessRequest) returns (GetAccessResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/access/{id}"
         };
     }
 }
@@ -476,6 +488,25 @@ message DeleteApproverResponse {
     Appeal appeal = 1;
 }
 
+message ListAccessRequest {
+    repeated string statuses = 1;
+	repeated string account_ids = 2;
+	repeated string account_types = 3;
+	repeated string resource_ids = 4;
+}
+
+message ListAccessResponse {
+    repeated Access access = 1;
+}
+
+message GetAccessRequest {
+    string id = 1;
+}
+
+message GetAccessResponse {
+    Access access = 1;
+}
+
 message Role {
     string id = 1;
     string name = 2;
@@ -667,4 +698,23 @@ message Resource {
     google.protobuf.Timestamp created_at = 9;
     google.protobuf.Timestamp updated_at = 10;
     bool is_deleted = 11;
+}
+
+message Access {
+    string id = 1;
+    string status = 2;
+    string account_id = 3;
+    string account_type = 4;
+    string resource_id = 5;
+    repeated string permissions = 6;
+    google.protobuf.Timestamp expiration_date = 7;
+    string appeal_id = 8;
+    string revoked_by = 9;
+    google.protobuf.Timestamp revoked_at = 10;
+    string revoke_reason = 11;
+    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp updated_at = 13;
+
+    Resource resource = 14;
+    Appeal appeal = 15;
 }
