@@ -67,10 +67,6 @@ message DeployResourceSpecificationRequest {
 
 message DeployResourceSpecificationResponse {
   reserved 1 to 4;
-  // bool success = 1 [deprecated=true];
-  // bool ack = 2 [deprecated=true];
-  // string message = 3 [deprecated=true];
-  // string resource_name = 4 [deprecated=true];
   Log log_status = 5;
 }
 
