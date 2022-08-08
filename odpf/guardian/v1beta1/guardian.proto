@@ -200,15 +200,15 @@ service GuardianService {
         };
     }
 
-    rpc ListAccess(ListAccessRequest) returns (ListAccessResponse) {
+    rpc ListAccesses(ListAccessesRequest) returns (ListAccessesResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/access"
+            get: "/v1beta1/accesses"
         };
     }
 
     rpc GetAccess(GetAccessRequest) returns (GetAccessResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/access/{id}"
+            get: "/v1beta1/accesses/{id}"
         };
     }
 }
@@ -488,15 +488,15 @@ message DeleteApproverResponse {
     Appeal appeal = 1;
 }
 
-message ListAccessRequest {
+message ListAccessesRequest {
     repeated string statuses = 1;
 	repeated string account_ids = 2;
 	repeated string account_types = 3;
 	repeated string resource_ids = 4;
 }
 
-message ListAccessResponse {
-    repeated Access access = 1;
+message ListAccessesResponse {
+    repeated Access accesses = 1;
 }
 
 message GetAccessRequest {
