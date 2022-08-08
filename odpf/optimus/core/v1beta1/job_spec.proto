@@ -5,6 +5,7 @@ import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/duration.proto";
+import "odpf/optimus/core/v1beta1/status.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -92,23 +93,12 @@ message DeployJobSpecificationRequest {
   string namespace_name = 4;
 }
 
+// DeployJobSpecificationResponse hold the value of DeploymentID
+// and the log messages
 message DeployJobSpecificationResponse {
-  bool success = 1;
-
-  // non ack responses are more of a progress/info response
-  // and not really success or failure statuses
-  // this is deprecated and being replaced with type field
-  bool ack = 2 [deprecated=true];
-
-  // message is deprecated and being replaced with value field
-  string message = 3 [deprecated=true];
-  
-  string job_name = 4;
-
-  // response type differentiate events
-  string type = 5;
-  
-  string value = 6;
+  reserved 1 to 6;
+  string deployment_id = 7;
+  Log log_status = 8;
 }
 
 message CreateJobSpecificationRequest {
@@ -169,14 +159,8 @@ message CheckJobSpecificationsRequest {
 }
 
 message CheckJobSpecificationsResponse {
-  bool success = 1;
-
-  // non ack responses are more of a progress/info response
-  // and not really success or failure statuses
-  bool ack = 2;
-
-  string message = 3;
-  string job_name = 4;
+  reserved 1 to 4;
+  Log log_status = 5;
 }
 
 message JobSpecification {
@@ -305,13 +289,9 @@ message RefreshJobsRequest {
 }
 
 message RefreshJobsResponse {
-  bool success = 1;
-
-  // response type differentiate events
-  string type = 2;
-  string value = 3;
-
-  string job_name = 4;
+  reserved 1 to 4;
+  string deployment_id = 5;
+  Log log_status = 6;
 }
 
 message GetDeployJobsStatusRequest {
