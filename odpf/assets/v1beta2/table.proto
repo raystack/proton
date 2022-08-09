@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "TableProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+import "google/protobuf/struct.proto";
+
+// Table is a table in a database.
+// It can be a file, a table, a view, a materialized view, a temporary table, or a virtual table.
+message Table {
+  // The metrics about the table.
+  // For example check the profile schem.
+  TableProfile profile = 1;
+
+  // The columns of the table.
+  // Example: 'id', `name`, `age'.
+  repeated Column columns = 2;
+
+  // preview_fields of the table.
+  repeated string preview_fields = 3;
+
+  // preview_rows is a multidimensional array containing preview of table
+  google.protobuf.ListValue preview_rows = 4;
+}
+
+// TableProfile is the metrics about the table.
+message TableProfile {
+  // The number of rows in the table.
+  // Example: `100`.
+  int64 total_rows = 1;
+
+  // The number of rows in the table that are not deleted.
+  // Example: `event_timestamp`.
+  string partition_key = 2;
+
+  string partition_value = 3;
+
+  // The number of how many times table is being used
+  int64 usage_count = 4;
+  
+  // The information of `join` applied to the table
+  repeated TableCommonJoin common_joins = 5;
+
+  // The information of `filter` applied to the table
+  repeated string filters = 6;
+}
+
+// Join is the metric of which are other tables that are joined with this table
+message TableCommonJoin {
+  string urn = 1;
+
+  // The number of how many times table is being joined with a certain table urn
+  int64 count = 2;
+
+  // The information of `join conditions` applied to the table
+  repeated string conditions = 3;
+}
+
+// Column represents a column in a table or a file.
+message Column {
+  // The name of the column.
+  // Example: `customer_id`.
+  string name = 1;
+
+  // The description of the column.
+  // Example: `The unique id of the customer`
+  string description = 2;
+
+  // The data type of the column.
+  // Example: `INT64`.
+
+  string data_type = 3;
+  // The format of the column.
+  // Example: `true`.
+  bool is_nullable = 4;
+
+  // The length of the column.
+  // Example: `10`.
+  int64 length = 5;
+
+  // The profile of the column.
+  ColumnProfile profile = 6;
+
+  // Representation of the column properties.
+  // Properties facet can be used to set custom properties, tags and labels for a column.
+  google.protobuf.Struct attributes = 31;
+}
+
+message ColumnProfile {
+  string min = 1;
+  string max = 2;
+  double avg = 3;
+  double med = 4;
+  int64 unique = 5;
+  int64 count = 6;
+  string top = 7;
+}

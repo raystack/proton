@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "GroupProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+// Group represents a group of users and resources.
+message Group {
+  // The email of the group.
+  // Example: `xyz@xyz.com`
+  string email = 1;
+
+  // The members of the group.
+  // For example look at schema of the member.
+  repeated Member members = 2;
+}
+
+// Member represents a user.
+message Member {
+  // The unique identifier for the user.
+  // Example: `user:example`.
+  string urn = 1;
+  // The role of the user.
+  // Example: `owner`.
+  string role = 2;
+}

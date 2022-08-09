@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "UserProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+// User is a person who uses or operates something. 
+// It can be a user of the system, or a user of a device.
+// User is a resource that represents a user.
+message User {
+  // The emai address of the user.
+  // Example: `job.deo@gmail.com`
+  string email = 3;
+
+  // The username of the user.
+  // Example: `johndoe`
+  string username = 4;
+
+  // The first name of the user.
+  // Example: `john`
+  string first_name = 5;
+
+  // The last name of the user.
+  // Example: `doe`
+  string last_name = 6;
+  
+  // The full name of the user.
+  // Example: `john mayer doe`
+  string full_name = 7;
+
+  // The display name of the user.
+  // Example: `John M. Doe`
+  string display_name = 8;
+
+  // The job title of the user,
+  // Example: `data engineer`
+  string title = 9;
+
+  // The status of the user.
+  // Example: `active`
+  string status = 10;
+
+  // The email of the manger of the user.
+  // Example: `rambo.ryan@gmail.com`
+  string manager_email = 11;
+
+  // List of the user social media accounts.
+  // For an example check out the profile schema.
+  repeated Profile profiles = 21;
+
+  // List of the groups user belongs to.
+  // A user can be part of multiple groups and have a different role in every group.
+  repeated Membership memberships = 22;
+}
+
+// Membership is a relationship between a user and a group.
+message Membership {
+  // The unique identifier of the group.
+  // Example: `group:mygroup`
+  string group_urn = 1;
+
+  // The role user has in the group.
+  // Example: "owner"
+  repeated string role = 2;
+}
+
+// Profile is a social media account of the user.
+message Profile {
+  // The unique identifier of the profile.
+  // Example: `profile:jdoe`
+  string id = 1;
+
+  // The type of the profile.
+  // Example: `github`
+  string platform = 2;
+
+  // The url of the profile.
+  // Example: `http://github.com/jdoe`
+  string url = 3;
+}

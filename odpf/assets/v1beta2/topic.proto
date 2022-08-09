@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "TopicProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+// Topic is resource that represents a logical group of messages 
+// in message bus like kafka, pubsub, pulsar etc.
+message Topic {
+  // The metrics of the topic.
+  // For an example check out topic profile schema.
+  TopicProfile profile = 21;
+
+  // The schama of the topic.
+  // For an example check out topic schema.
+  TopicSchema schema = 31;
+}
+
+// TopicProfile is the profile of the topic.
+message TopicProfile {
+  // The thrroughput of the topic.
+  // Example: `1m/minute`.
+  string throughput = 1;
+
+  // The number of partitions in the topic.
+  // Example: `12`.
+  int64 number_of_partitions = 2;
+}
+
+// TopicSchema represents a schema for message bus.
+// It is facet used to specify the schema of a message bus.
+message TopicSchema {
+  string schema_url = 1;
+  string format = 2;
+}

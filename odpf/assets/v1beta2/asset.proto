@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "AssetsProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+import "odpf/assets/v1beta2/common.proto";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+// Job is a resource that represents a job.
+message Asset {
+    // The unique identifier of the asset/resource. 
+    // Example: `user:jdoe` or `group:accounting`.
+    string urn = 1;
+
+    // The name of the resource.
+    // Example: `John Doe` or `Accounting`.
+    string name = 2;
+
+    // The source of the resource.
+    // Example: `github` or `bigquery`.
+    string service = 3;
+
+    // The type of the asset.
+    // Example: `user` or `group`.
+    string type = 4;
+
+    // The REST URL for accessing the resource. URL returns the resource itself. 
+    // Example: `https://xyz.com/v1/users/user-123`
+    string url = 5;
+
+    // The description of the resource. 
+    // Example: `This resource is being used for storing important number`
+    string description = 6;
+
+    // Represents Data in asset, can be of type bucket, dashboard, group ... user
+    google.protobuf.Any data = 7;
+
+    // Optional: List of properties the user has.
+    google.protobuf.Struct attributes = 8;
+
+    // The ownership of the job.
+    // For an example check out ownership.
+    repeated odpf.assets.v1beta2.Owner owners = 31;
+
+    // The lineage of the job.
+    // For an example check out lineage schema.
+    odpf.assets.v1beta2.Lineage lineage = 32;
+
+    //Optional. List of labels the user has.
+    map<string,string> labels = 33;
+
+    // The timestamp of the generated event.
+    // Event schemas is defined in the common event schema.
+    odpf.assets.v1beta2.Event event = 100;
+
+    // The timestamp when the object was created.
+    google.protobuf.Timestamp create_time = 101;
+
+    // The timestamp when the object was last modified.
+    google.protobuf.Timestamp update_time = 102;
+}
+

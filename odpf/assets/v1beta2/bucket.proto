@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "BucketProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+import "google/protobuf/timestamp.proto";
+import "odpf/assets/v1beta2/common.proto";
+
+message Bucket {
+  // The description of the bucket.
+  // Example: `This bucket was created by the product team.`
+  string description = 1;
+
+  // The location of the bucket. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `ASIA`
+  string location = 2;
+
+  // The type of the storage. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `STANDARD`
+  string storage_type = 3;
+
+  // List of blobs in the bucket.
+  repeated Blob blobs = 4;
+}
+
+message Blob {
+  // The URN of the blob.
+  // Example: `location/bucket-name/file-name`.
+  string urn = 1;
+
+  // The name of the blob.
+  // Example: `file-name`.
+  string name = 2;
+
+  // The source of the blob.
+  // Example: `gcs`.
+  string source = 3;
+
+  // The length of the object content.
+  // Example: `300`
+  int64 size = 4;
+
+  // Delete time of the blob object.
+  google.protobuf.Timestamp delete_time = 5;
+
+  // Expire time of the blob object.
+  google.protobuf.Timestamp expire_time = 6;
+
+  // The ownership of the blob.
+  // For an example check out ownership.
+  repeated odpf.assets.v1beta2.Owner ownership = 31;
+
+  // The timestamp of the blob's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the blob was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}

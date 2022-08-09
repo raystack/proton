@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "DashboardProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+import "odpf/assets/v1beta2/common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+// Dashboard is a resource that represents a dashboard.
+message Dashboard {
+  // The list of the charts in the dashboard.
+  // For an example, check the schema of the chart.
+  repeated Chart charts = 1;
+}
+
+message Chart {
+  // The URN of the chart.
+  // Example: `chart:1`.
+  string urn = 1;
+
+  // The name of the chart.
+  // Example: `My Chart`.
+  string name = 2;
+
+  // The type of the chart.
+  // Example: `line`.
+  string type = 3;
+
+  // The source of the chart.
+  // Example: `metabase`.
+  string source = 4;
+
+  // The description of the chart.
+  // Example: `This is a chart for my dashboard.`
+  string description = 5;
+
+  // The url of the chart.
+  // Example: `http://metabase.com/charts/mychart`.
+  string url = 6;
+
+  // The raw query of the chart.
+  // Example: `SELECT * FROM my_table`.
+  string raw_query = 7;
+
+  // The source of the data.
+  // Example: `bigquery,graphite`.
+  string data_source = 8;
+
+  // The dashboard ur of the chart.
+  // Example: `dashboard:1`.
+  string dashboard_urn = 9;
+
+  // The source of the dashboard of the chart.
+  // Example: `metabase`.
+  string dashboard_source = 10;
+
+  // The ownership of the dashboard.
+  // For an example check out ownership.
+  repeated odpf.assets.v1beta2.Owner owners = 31;
+
+  // Optional: List of properties the user has.
+  google.protobuf.Struct attributes = 32;
+
+  // The lineage of the chart.
+  // For an example check out lineage schema.
+  odpf.assets.v1beta2.Lineage lineage = 33;
+
+  // The timestamp when the object was created.
+  google.protobuf.Timestamp create_time = 34;
+
+  // The timestamp when the object was last modified.
+  google.protobuf.Timestamp update_time = 35;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  odpf.assets.v1beta2.Event event = 100;
+
+}
