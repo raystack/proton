@@ -253,10 +253,15 @@ message JobEvent {
     TYPE_TASK_START   = 10;
     TYPE_TASK_FAIL    = 11;
 
-    TYPE_SENSOR_POKE    = 12;
+    TYPE_SENSOR_RETRY   = 12;
     TYPE_SENSOR_SUCCESS = 13;
     TYPE_SENSOR_START   = 14;
     TYPE_SENSOR_FAIL    = 15;
+
+    TYPE_HOOK_START   = 16;
+    TYPE_HOOK_RETRY   = 17;
+    TYPE_HOOK_FAIL    = 18;
+    TYPE_HOOK_SUCCESS = 19;
   }
   Type type = 1;
   google.protobuf.Struct value = 2;
