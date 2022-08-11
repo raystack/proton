@@ -100,7 +100,7 @@ message RegisterInstanceRequest {
   InstanceSpec.Type instance_type = 6;
 
   // either set job_name if this is a scheduled execution
-  // or set jonrun_id if this is a manual triggered execution
+  // or set jobrun_id if this is a manual triggered execution
   // and not really registered as a valid job
   string jobrun_id = 7;
 }
@@ -116,7 +116,7 @@ message JobRunInputRequest {
   InstanceSpec.Type instance_type = 6;
 
   // either set job_name if this is a scheduled execution
-  // or set jonrun_id if this is a manual triggered execution
+  // or set jobrun_id if this is a manual triggered execution
   // and not really registered as a valid job
   string jobrun_id = 7;
 }
