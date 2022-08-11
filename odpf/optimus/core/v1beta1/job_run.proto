@@ -42,6 +42,13 @@ service JobRunService {
       body: "*"
     };
   }
+  // JobRunInput is used to fetch task/hook compiled configuration and assets.
+  rpc JobRunInput(JobRunInputRequest) returns (JobRunInputResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/job/{job_name}/run_input"
+      body: "*"
+    };
+  }
   // JobStatus returns the current and past run status of jobs
   rpc JobStatus(JobStatusRequest) returns (JobStatusResponse) {
     option (google.api.http) = {
@@ -78,10 +85,10 @@ message GetJobTaskRequest {
   string job_name = 3;
 }
 
+
 message GetJobTaskResponse {
   JobTask task = 1;
 }
-
 message RegisterInstanceRequest {
   reserved 3;
 
@@ -93,7 +100,23 @@ message RegisterInstanceRequest {
   InstanceSpec.Type instance_type = 6;
 
   // either set job_name if this is a scheduled execution
-  // or set jonrun_id if this is a manual triggered execution
+  // or set jobrun_id if this is a manual triggered execution
+  // and not really registered as a valid job
+  string jobrun_id = 7;
+}
+
+message JobRunInputRequest {
+  reserved 3;
+
+  string project_name = 1;
+  string job_name = 2;
+  google.protobuf.Timestamp scheduled_at = 4;
+
+  string instance_name = 5;
+  InstanceSpec.Type instance_type = 6;
+
+  // either set job_name if this is a scheduled execution
+  // or set jobrun_id if this is a manual triggered execution
   // and not really registered as a valid job
   string jobrun_id = 7;
 }
@@ -104,7 +127,8 @@ message RegisterInstanceResponse {
   JobSpecification job = 2;
 
   InstanceSpec instance = 3;
-  InstanceContext context = 5;
+  
+  JobRunInputResponse context = 5;
 }
 
 message JobStatusRequest {
@@ -216,7 +240,7 @@ message InstanceSpecData {
   Type type = 5;
 }
 
-message InstanceContext {
+message JobRunInputResponse {
   map<string, string> envs = 1;
   map<string, string> files = 2;
   map<string, string> secrets = 3;
