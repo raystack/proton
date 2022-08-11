@@ -707,15 +707,16 @@ message Access {
     string account_id = 3;
     string account_type = 4;
     string resource_id = 5;
-    repeated string permissions = 6;
-    google.protobuf.Timestamp expiration_date = 7;
-    string appeal_id = 8;
-    string revoked_by = 9;
-    google.protobuf.Timestamp revoked_at = 10;
-    string revoke_reason = 11;
-    google.protobuf.Timestamp created_at = 12;
-    google.protobuf.Timestamp updated_at = 13;
+    string role = 6;
+    repeated string permissions = 7;
+    google.protobuf.Timestamp expiration_date = 8;
+    string appeal_id = 9;
+    string revoked_by = 10;
+    google.protobuf.Timestamp revoked_at = 11;
+    string revoke_reason = 12;
+    google.protobuf.Timestamp created_at = 13;
+    google.protobuf.Timestamp updated_at = 14;
 
-    Resource resource = 14;
-    Appeal appeal = 15;
+    Resource resource = 15;
+    Appeal appeal = 16;
 }
