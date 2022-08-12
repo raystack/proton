@@ -218,6 +218,13 @@ service GuardianService {
             body: "*"
         };
     }
+
+    rpc RevokeAccesses(RevokeAccessesRequest) returns (RevokeAccessesResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/accesses/revoke"
+            body: "*"
+        };
+    }
 }
 
 message ListProvidersRequest {}
@@ -521,6 +528,19 @@ message RevokeAccessRequest {
 
 message RevokeAccessResponse {
     Access access = 1;
+}
+
+message RevokeAccessesRequest {
+    repeated string account_ids = 1;
+    repeated string provider_types = 2;
+    repeated string provider_urns = 3;
+    repeated string resource_types = 4;
+    repeated string resource_urns = 5;
+    string reason = 6;
+}
+
+message RevokeAccessesResponse {
+    repeated Access accesses = 1;
 }
 
 message Role {
