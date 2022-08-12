@@ -211,6 +211,13 @@ service GuardianService {
             get: "/v1beta1/accesses/{id}"
         };
     }
+
+    rpc RevokeAccess(RevokeAccessRequest) returns (RevokeAccessResponse) {
+        option (google.api.http) = {
+            put: "/v1beta1/accesses/{id}/revoke"
+            body: "*"
+        };
+    }
 }
 
 message ListProvidersRequest {}
@@ -504,6 +511,15 @@ message GetAccessRequest {
 }
 
 message GetAccessResponse {
+    Access access = 1;
+}
+
+message RevokeAccessRequest {
+    string id = 1;
+    string reason = 2;
+}
+
+message RevokeAccessResponse {
     Access access = 1;
 }
 
