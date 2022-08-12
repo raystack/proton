@@ -152,6 +152,7 @@ service GuardianService {
             put: "/v1beta1/appeals/{id}/revoke"
             body: "reason"
         };
+        option deprecated = true;
     }
 
     rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
@@ -198,6 +199,7 @@ service GuardianService {
             post: "/v1beta1/appeals/revoke"
             body: "*"
         };
+        option deprecated = true;
     }
 
     rpc ListAccesses(ListAccessesRequest) returns (ListAccessesResponse) {
