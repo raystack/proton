@@ -118,6 +118,7 @@ message JobExplainRequest {
 message JobExplainResponse {
   bool success = 1;
   JobSpecification spec = 2;
+  map<string, JobSpecification> dependencies = 3;
 }
 
 message CreateJobSpecificationRequest {
