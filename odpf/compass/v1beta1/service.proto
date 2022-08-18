@@ -928,12 +928,13 @@ message UpsertPatchAssetRequest {
     google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "dynamic data of an asset"
     }];
-    google.protobuf.Struct labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    map<string, string> labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "labels of an asset"
     }];
     repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "list of owners of the asset"
     }];
+    string service = 9;
   }
   BaseAsset asset = 1;
   repeated LineageNode upstreams = 2;
@@ -1251,13 +1252,14 @@ message Asset {
   string name = 5;
   string description = 6;
   google.protobuf.Struct data = 7;
-  google.protobuf.Struct labels = 8;
+  map<string,string> labels = 8;
   repeated User owners = 9;
   string version = 10;
   User updated_by = 11;
   repeated Change changelog = 12;
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
+  string url = 15;
 }
 
 message Discussion {
