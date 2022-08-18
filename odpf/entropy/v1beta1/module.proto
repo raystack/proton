@@ -45,24 +45,14 @@ service ModuleService {
   }
 }
 
-message ModuleSpec {
-  enum LoaderType {
-    LOADER_TYPE_UNSPECIFIED = 0;
-    LOADER_TYPE_GO = 1;
-  }
-
-  LoaderType loader = 1;
-  string path = 2;
-  google.protobuf.Value configs = 3;
-}
-
 message Module {
   string urn = 1;
   string name = 2;
   string project = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
-  ModuleSpec spec = 6;
+  reserved 6; // removed the ModuleSpec field.
+  google.protobuf.Value configs = 7;
 }
 
 message ListModulesRequest {
@@ -91,7 +81,8 @@ message CreateModuleResponse {
 
 message UpdateModuleRequest {
   string urn = 1;
-  ModuleSpec new_spec = 2;
+  reserved 2; // removed the ModuleSpec field.
+  google.protobuf.Value configs = 3;
 }
 
 message UpdateModuleResponse {
