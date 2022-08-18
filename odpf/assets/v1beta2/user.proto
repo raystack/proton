@@ -6,6 +6,8 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "UserProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
+import "google/protobuf/struct.proto";
+
 // User is a person who uses or operates something. 
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
