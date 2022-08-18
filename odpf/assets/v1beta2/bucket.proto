@@ -24,6 +24,9 @@ message Bucket {
 
   // List of blobs in the bucket.
   repeated Blob blobs = 4;
+  
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
 
 message Blob {
@@ -48,6 +51,9 @@ message Blob {
 
   // Expire time of the blob object.
   google.protobuf.Timestamp expire_time = 6;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 7;
 
   // The ownership of the blob.
   // For an example check out ownership.

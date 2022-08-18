@@ -53,6 +53,10 @@ message User {
   // List of the groups user belongs to.
   // A user can be part of multiple groups and have a different role in every group.
   repeated Membership memberships = 22;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 30;
+
 }
 
 // Membership is a relationship between a user and a group.

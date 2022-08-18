@@ -15,6 +15,9 @@ message Group {
   // The members of the group.
   // For example look at schema of the member.
   repeated Member members = 2;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
 
 // Member represents a user.

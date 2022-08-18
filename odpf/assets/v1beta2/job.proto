@@ -8,5 +8,6 @@ option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
 // Job is a resource that represents a job.
 message Job {
-
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
