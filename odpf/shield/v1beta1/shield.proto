@@ -75,12 +75,12 @@ service ShieldService {
 
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/users/{id}",
+      put: "/v1beta1/users/{id_or_email}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Update User by ID";
+      summary: "Update User by ID or Upsert by email";
     };
   }
 
@@ -661,7 +661,7 @@ message UpdateCurrentUserResponse {
 }
 
 message UpdateUserRequest {
-  string id = 1;
+  string id_or_email = 1;
   UserRequestBody body = 2;
 }
 
