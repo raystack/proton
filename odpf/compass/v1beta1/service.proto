@@ -934,7 +934,7 @@ message UpsertPatchAssetRequest {
     repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "list of owners of the asset"
     }];
-    string service = 9;
+    string url = 9;
   }
   BaseAsset asset = 1;
   repeated LineageNode upstreams = 2;
