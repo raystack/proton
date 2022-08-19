@@ -6,6 +6,8 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "UserProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
+import "google/protobuf/struct.proto";
+
 // User is a person who uses or operates something. 
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
@@ -53,6 +55,10 @@ message User {
   // List of the groups user belongs to.
   // A user can be part of multiple groups and have a different role in every group.
   repeated Membership memberships = 22;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 30;
+
 }
 
 // Membership is a relationship between a user and a group.

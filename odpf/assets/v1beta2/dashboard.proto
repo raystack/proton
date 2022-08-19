@@ -15,6 +15,9 @@ message Dashboard {
   // The list of the charts in the dashboard.
   // For an example, check the schema of the chart.
   repeated Chart charts = 1;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 8;
 }
 
 message Chart {
@@ -62,7 +65,7 @@ message Chart {
   // For an example check out ownership.
   repeated odpf.assets.v1beta2.Owner owners = 31;
 
-  // Optional: List of properties the user has.
+  // List of properties the model has.
   google.protobuf.Struct attributes = 32;
 
   // The lineage of the chart.

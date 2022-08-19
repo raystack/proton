@@ -6,16 +6,21 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "TopicProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
+import "google/protobuf/struct.proto";
+
 // Topic is resource that represents a logical group of messages 
 // in message bus like kafka, pubsub, pulsar etc.
 message Topic {
   // The metrics of the topic.
   // For an example check out topic profile schema.
-  TopicProfile profile = 21;
+  TopicProfile profile = 1;
 
   // The schama of the topic.
   // For an example check out topic schema.
-  TopicSchema schema = 31;
+  TopicSchema schema = 2;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
 
 // TopicProfile is the profile of the topic.

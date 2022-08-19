@@ -24,6 +24,9 @@ message Table {
 
   // preview_rows is a multidimensional array containing preview of table
   google.protobuf.ListValue preview_rows = 4;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
 
 // TableProfile is the metrics about the table.
