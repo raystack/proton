@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package odpf.predator.v1;
+package odpf.predator.v1beta1;
 
 option go_package = "github.com/odpf/proton/predator";
 option java_multiple_files = true;
