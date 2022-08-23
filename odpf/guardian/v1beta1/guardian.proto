@@ -208,6 +208,12 @@ service GuardianService {
         };
     }
 
+    rpc ListUserAccesses(ListUserAccessesRequest) returns (ListUserAccessesResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/me/accesses"
+        };
+    }
+
     rpc GetAccess(GetAccessRequest) returns (GetAccessResponse) {
         option (google.api.http) = {
             get: "/v1beta1/accesses/{id}"
@@ -506,12 +512,35 @@ message DeleteApproverResponse {
 
 message ListAccessesRequest {
     repeated string statuses = 1;
-	repeated string account_ids = 2;
-	repeated string account_types = 3;
-	repeated string resource_ids = 4;
+    repeated string account_ids = 2;
+    repeated string account_types = 3;
+    repeated string resource_ids = 4;
+    repeated string provider_types = 5;
+    repeated string provider_urns = 6;
+    repeated string resource_types = 7;
+    repeated string resource_urns = 8;
+    repeated string roles = 9;
+    string created_by = 10;
 }
 
 message ListAccessesResponse {
+    repeated Access accesses = 1;
+}
+
+message ListUserAccessesRequest {
+    repeated string statuses = 1;
+    repeated string account_ids = 2;
+    repeated string account_types = 3;
+    repeated string resource_ids = 4;
+    repeated string provider_types = 5;
+    repeated string provider_urns = 6;
+    repeated string resource_types = 7;
+    repeated string resource_urns = 8;
+    repeated string roles = 9;
+    string created_by = 10;
+}
+
+message ListUserAccessesResponse {
     repeated Access accesses = 1;
 }
 
