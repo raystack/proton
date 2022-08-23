@@ -781,9 +781,10 @@ message Access {
     string revoked_by = 10;
     google.protobuf.Timestamp revoked_at = 11;
     string revoke_reason = 12;
-    google.protobuf.Timestamp created_at = 13;
-    google.protobuf.Timestamp updated_at = 14;
+    string created_by = 13;
+    google.protobuf.Timestamp created_at = 14;
+    google.protobuf.Timestamp updated_at = 15;
 
-    Resource resource = 15;
-    Appeal appeal = 16;
+    Resource resource = 16;
+    Appeal appeal = 17;
 }
