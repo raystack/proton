@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+option java_package = "io.odpf.assets";
+option java_outer_classname = "CommonProto";
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+
+import "google/protobuf/timestamp.proto";
+
+// Event represents an event in the system.
+// Event is majorly used to represent the state of the system in the form of events.
+// It can be used in any schema which intend to produce events to message bus.
+message Event {
+  // The timestamp of the event.
+  // Example: `2018-01-01T00:00:00Z`.
+  google.protobuf.Timestamp timestamp = 1;
+  
+  // The activity that created the event. 
+  // Example: `create`, `update`.
+  string action = 2;
+
+  // The description of the event.
+  // Example: `user is created from signup form`.
+  string description = 3;
+}
+
+// Linage reprsents the relationship of resource to other resources.
+// Relation is way of describing the relationship between two resources.
+message Lineage {
+    // The resource that is the source of the relationship.
+    // Example: a resource that is the parent of another resource.
+    repeated Resource upstreams = 1;
+
+    // The resource that is the destination of the relationship.
+    // Example: a resource that is the child of another resource.
+    repeated Resource downstreams = 2;
+}
+
+message Resource {
+    // The unique identifier of the resource. 
+    // Example: `user:jdoe` or `group:accounting`.
+    string urn = 1;
+
+    // The name of the resource.
+    // Example: `John Doe` or `Accounting`.
+    string name = 2;
+
+    // The source of the resource.
+    // Example: `github` or `bigquery`.
+    string service = 3;
+
+    // The type of the asset.
+    // Example: `user` or `group`.
+    string type = 4;
+}
+
+// Owner is a facet that describes the owner of a resource.
+message Owner {
+    // The name of the owner.
+    // Example: `user:johndoe`.
+
+    string urn = 1;
+    // The name of the owner.
+    // Example: `John Doe`.
+    string name = 2;
+    
+    // The role of the owner.
+    // Example: `admin`, `steward`.
+    string role = 3;
+
+    // The email of the owner.
+    // Example: `abc@email.com`
+    string email = 4;
+}
