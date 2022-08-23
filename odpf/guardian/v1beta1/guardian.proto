@@ -223,7 +223,7 @@ service GuardianService {
 
     rpc RevokeAccesses(RevokeAccessesRequest) returns (RevokeAccessesResponse) {
         option (google.api.http) = {
-            post: "/v1beta1/accesses/revoke"
+            put: "/v1beta1/accesses/revoke"
             body: "*"
         };
     }
