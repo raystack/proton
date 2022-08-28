@@ -521,6 +521,7 @@ message ListAccessesRequest {
     repeated string resource_urns = 8;
     repeated string roles = 9;
     string created_by = 10;
+    repeated string order_by = 11;
 }
 
 message ListAccessesResponse {
@@ -537,6 +538,7 @@ message ListUserAccessesRequest {
     repeated string resource_types = 7;
     repeated string resource_urns = 8;
     repeated string roles = 9;
+    repeated string order_by = 10;
 }
 
 message ListUserAccessesResponse {
