@@ -6,6 +6,7 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "BucketProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "odpf/assets/v1beta2/common.proto";
 
@@ -24,6 +25,9 @@ message Bucket {
 
   // List of blobs in the bucket.
   repeated Blob blobs = 4;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }
 
 message Blob {
@@ -48,6 +52,9 @@ message Blob {
 
   // Expire time of the blob object.
   google.protobuf.Timestamp expire_time = 6;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 7;
 
   // The ownership of the blob.
   // For an example check out ownership.

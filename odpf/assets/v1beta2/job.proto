@@ -6,7 +6,10 @@ option java_package = "io.odpf.assets";
 option java_outer_classname = "JobProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 
+import "google/protobuf/struct.proto";
+
 // Job is a resource that represents a job.
 message Job {
-
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
 }

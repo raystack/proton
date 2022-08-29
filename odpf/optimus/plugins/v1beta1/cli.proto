@@ -110,9 +110,12 @@ message DefaultAssetsResponse {
 message CompileAssetsRequest {
     Configs configs = 1;
     Assets assets = 2;
-    odpf.optimus.core.v1beta1.TaskWindow window = 3;
-    google.protobuf.Timestamp instance_schedule = 4;
+    odpf.optimus.core.v1beta1.TaskWindow window = 3 [deprecated=true];
+    google.protobuf.Timestamp instance_schedule = 4 [deprecated=true];
     repeated odpf.optimus.core.v1beta1.InstanceSpecData instance_data = 5;
+
+    google.protobuf.Timestamp start_time = 6;
+    google.protobuf.Timestamp end_time = 7;
 
     PluginOptions options = 40;
 }
