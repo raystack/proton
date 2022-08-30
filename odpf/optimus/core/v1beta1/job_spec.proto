@@ -104,6 +104,7 @@ message DeployJobSpecificationResponse {
 message CreateJobSpecificationRequest {
   string project_name = 1;
   string namespace_name = 2;
+
   JobSpecification spec = 3 [deprecated=true];
   repeated JobSpecification specs = 4;
 }
@@ -112,7 +113,6 @@ message CreateJobSpecificationResponse {
   bool success = 1;
   string message = 2;
   string deployment_id = 3;
-
 }
 
 message GetJobSpecificationRequest {
