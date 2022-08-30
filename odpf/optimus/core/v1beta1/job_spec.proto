@@ -116,7 +116,7 @@ message AddJobSpecificationsRequest {
 }
 message AddJobSpecificationsResponse {
   string deployment_id = 7;
-  Log log_status = 8;
+  string log = 8;
 }
 
 message CreateJobSpecificationRequest {
