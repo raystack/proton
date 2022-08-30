@@ -41,6 +41,14 @@ service JobSpecificationService {
     };
   }
 
+  // AddJobSpecification registers new jobs for a namespace which belongs to the given project
+  rpc AddJobSpecifications(AddJobSpecificationsRequest) returns (AddJobSpecificationsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/add/jobs"
+      body: "*"
+    };
+  }
+
   // GetJobSpecification reads a provided job spec of a namespace
   rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
     option (google.api.http) = {
@@ -101,18 +109,25 @@ message DeployJobSpecificationResponse {
   Log log_status = 8;
 }
 
+message AddJobSpecificationsRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  repeated JobSpecification specs = 4;
+}
+message AddJobSpecificationsResponse {
+  string deployment_id = 7;
+  Log log_status = 8;
+}
+
 message CreateJobSpecificationRequest {
   string project_name = 1;
   string namespace_name = 2;
-
-  JobSpecification spec = 3 [deprecated=true];
-  repeated JobSpecification specs = 4;
+  JobSpecification spec = 3;
 }
 
 message CreateJobSpecificationResponse {
   bool success = 1;
   string message = 2;
-  string deployment_id = 3;
 }
 
 message GetJobSpecificationRequest {
