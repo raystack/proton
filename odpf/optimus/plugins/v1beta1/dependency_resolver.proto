@@ -1,46 +1,46 @@
 syntax = "proto3";
+
 package odpf.optimus.plugins.v1beta1;
+
+import "odpf/optimus/core/v1beta1/project.proto";
+import "odpf/optimus/plugins/v1beta1/base.proto";
+import "odpf/optimus/plugins/v1beta1/cli.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
-option java_package = "io.odpf.proton.optimus.plugins";
 option java_outer_classname = "DependencyResolverModProto";
-
-import "odpf/optimus/plugins/v1beta1/cli.proto";
-import "odpf/optimus/plugins/v1beta1/base.proto";
-import "odpf/optimus/core/v1beta1/project.proto";
+option java_package = "io.odpf.proton.optimus.plugins";
 
 // DependencyResolverModService must be implemented by all plugins want to support automatic
 // dependency resolution
 service DependencyResolverModService {
-    // GenerateDestination derive destination from config and assets
-    rpc GenerateDestination(GenerateDestinationRequest) returns (GenerateDestinationResponse);
+  // GenerateDestination derive destination from config and assets
+  rpc GenerateDestination(GenerateDestinationRequest) returns (GenerateDestinationResponse);
 
-    // GenerateDependencies return names of job destination on which this unit
-    // is dependent on
-    rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
+  // GenerateDependencies return names of job destination on which this unit
+  // is dependent on
+  rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
 }
-
 
 message GenerateDestinationRequest {
-    Configs config = 1;
-    Assets assets = 2;
-    odpf.optimus.core.v1beta1.ProjectSpecification project = 3  [deprecated=true];
+  Configs config = 1;
+  Assets assets = 2;
+  odpf.optimus.core.v1beta1.ProjectSpecification project = 3 [deprecated = true];
 
-    PluginOptions options = 40;
+  PluginOptions options = 40;
 }
 message GenerateDestinationResponse {
-    string destination = 1;
-    string destination_type = 2;
+  string destination = 1;
+  string destination_type = 2;
 }
 
 message GenerateDependenciesRequest {
-    Configs config = 1;
-    Assets assets = 2;
-    odpf.optimus.core.v1beta1.ProjectSpecification project = 3  [deprecated=true];
+  Configs config = 1;
+  Assets assets = 2;
+  odpf.optimus.core.v1beta1.ProjectSpecification project = 3 [deprecated = true];
 
-    PluginOptions options = 40;
+  PluginOptions options = 40;
 }
 message GenerateDependenciesResponse {
-    repeated string dependencies = 1;
+  repeated string dependencies = 1;
 }

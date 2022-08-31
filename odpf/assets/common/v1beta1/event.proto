@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package odpf.assets.common.v1beta1;
 
-option java_package = "io.odpf.assets.common";
-option java_outer_classname = "EventProto";
-option go_package = "github.com/odpf/proton/assets/common/v1beta1;commonv1beta1";
-
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/assets/common/v1beta1;commonv1beta1";
+option java_outer_classname = "EventProto";
+option java_package = "io.odpf.assets.common";
 
 // Event represents an event in the system.
 // Event is majorly used to represent the state of the system in the form of events.
@@ -15,8 +15,8 @@ message Event {
   // The timestamp of the event.
   // Example: `2018-01-01T00:00:00Z`.
   google.protobuf.Timestamp timestamp = 1;
-  
-  // The activity that created the event. 
+
+  // The activity that created the event.
   // Example: `create`, `update`.
   string action = 2;
 

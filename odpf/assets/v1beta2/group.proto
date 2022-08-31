@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "GroupProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "GroupProto";
+option java_package = "io.odpf.assets";
 
 // Group represents a group of users and resources.
 message Group {

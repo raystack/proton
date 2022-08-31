@@ -789,7 +789,9 @@ message GetGraphRequest {
   uint32 level = 2;
   string direction = 3 [(validate.rules).string = {
     in: [
-      "upstream", "downstream", ""
+      "upstream",
+      "downstream",
+      ""
     ]
   }];
 }

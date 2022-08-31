@@ -2,11 +2,9 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "JobProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "JobProto";
+option java_package = "io.odpf.assets";
 
 // Job is a resource that represents a job.
-message Job {
-
-}
+message Job {}

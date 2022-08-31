@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "TopicProto";
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "TopicProto";
+option java_package = "io.odpf.assets";
 
-// Topic is resource that represents a logical group of messages 
+// Topic is resource that represents a logical group of messages
 // in message bus like kafka, pubsub, pulsar etc.
 message Topic {
   // The metrics of the topic.
