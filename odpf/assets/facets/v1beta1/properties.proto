@@ -2,21 +2,19 @@ syntax = "proto3";
 
 package odpf.assets.facets.v1beta1;
 
-option java_package = "io.odpf.assets.facets";
-option java_outer_classname = "PropertiesProto";
-option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
-
 import "google/protobuf/struct.proto";
 
-message Properties {
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
+option java_outer_classname = "PropertiesProto";
+option java_package = "io.odpf.assets.facets";
 
+message Properties {
   // Optional: List of tags the user has.
   repeated string tags = 1;
 
   //Optional. List of labels the user has.
-  map<string,string> labels = 2;
+  map<string, string> labels = 2;
 
   // Optional: List of properties the user has.
   google.protobuf.Struct attributes = 3;
- 
 }

@@ -1,26 +1,26 @@
 syntax = "proto3";
+
 package odpf.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
-option java_package = "io.odpf.proton.optimus";
 option java_outer_classname = "BackupServiceManager";
-
+option java_package = "io.odpf.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-    info: {
-      version: "0.1";
-    };
-    external_docs: {
-      description: "Optimus Backup Service";
-    }
-    schemes: HTTP;
-    host: "127.0.0.1:9100";
-    base_path: "/api";
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Backup Service";
+  }
+  schemes: HTTP;
+  host: "127.0.0.1:9100";
+  base_path: "/api";
 };
 
 service BackupService {
@@ -54,7 +54,7 @@ message BackupDryRunRequest {
   string resource_name = 3;
   string namespace_name = 4;
   string description = 5;
-  bool ignore_downstream = 6 [deprecated=true];
+  bool ignore_downstream = 6 [deprecated = true];
 
   // represents which downstream to be backed up.
   // possible values are the namespace names, *, or empty.
@@ -73,7 +73,7 @@ message CreateBackupRequest {
   string resource_name = 3;
   string namespace_name = 4;
   string description = 5;
-  bool ignore_downstream = 6 [deprecated=true];
+  bool ignore_downstream = 6 [deprecated = true];
   map<string, string> config = 7;
 
   // represents which downstream to be backed up.

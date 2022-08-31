@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "BucketProto";
-option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
-
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "odpf/assets/v1beta2/common.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "BucketProto";
+option java_package = "io.odpf.assets";
 
 message Bucket {
   // The description of the bucket.

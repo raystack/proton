@@ -1,199 +1,199 @@
 syntax = "proto3";
+
 package odpf.guardian.v1beta1;
 
 import "google/api/annotations.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/guardian/v1beta1;guardianv1beta1";
-
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-    info: {
-        version: "0.1.0";
-    };
-    schemes: HTTP;
+  info: {
+    version: "0.1.0";
+  };
+  schemes: HTTP;
 };
 
 // WARNING: This is still in active development and can have breaking changes
 service GuardianService {
-    rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/providers"
-        };
-    }
+  rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/providers"
+    };
+  }
 
-    rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/providers/{id}"
-        };
-    }
+  rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/providers/{id}"
+    };
+  }
 
-    rpc GetProviderTypes(GetProviderTypesRequest) returns (GetProviderTypesResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/providers/types"
-        };
-    }
+  rpc GetProviderTypes(GetProviderTypesRequest) returns (GetProviderTypesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/providers/types"
+    };
+  }
 
-    rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/providers"
-            body: "config"
-        };
-    }
+  rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/providers"
+      body: "config"
+    };
+  }
 
-    rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/providers/{id}"
-            body: "config"
-            additional_bindings: {
-                put: "/v1beta1/providers/{config.type}/{config.urn}"
-                body: "config"
-            }
-        };
-    }
+  rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/providers/{id}"
+      body: "config"
+      additional_bindings: {
+        put: "/v1beta1/providers/{config.type}/{config.urn}"
+        body: "config"
+      }
+    };
+  }
 
-    rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
-        option (google.api.http) = {
-            delete: "/v1beta1/providers/{id}"
-        };
-    }
+  rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/providers/{id}"
+    };
+  }
 
-    rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"
-        };
-    }
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"
+    };
+  }
 
-    rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/policies"
-        };
-    }
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies"
+    };
+  }
 
-    rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/policies/{id}/versions/{version}"
-        };
-    }
+  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies/{id}/versions/{version}"
+    };
+  }
 
-    rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/policies"
-            body: "policy"
-        };
-    }
+  rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/policies"
+      body: "policy"
+    };
+  }
 
-    rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/policies/{id}"
-            body: "policy"
-        };
-    }
+  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/policies/{id}"
+      body: "policy"
+    };
+  }
 
-    rpc GetPolicyPreferences(GetPolicyPreferencesRequest) returns (GetPolicyPreferencesResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/policies/{id}/versions/{version}/preferences"
-        };
-    }
+  rpc GetPolicyPreferences(GetPolicyPreferencesRequest) returns (GetPolicyPreferencesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies/{id}/versions/{version}/preferences"
+    };
+  }
 
-    rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/resources"
-        };
-    }
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources"
+    };
+  }
 
-    rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/resources/{id}"
-        };
-    }
+  rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{id}"
+    };
+  }
 
-    rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/resources/{id}"
-            body: "resource"
-        };
-    }
+  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/resources/{id}"
+      body: "resource"
+    };
+  }
 
-     rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
-        option (google.api.http) = {
-            delete: "/v1beta1/resources/{id}"
-        };
-    }
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/resources/{id}"
+    };
+  }
 
-    rpc ListUserAppeals(ListUserAppealsRequest) returns (ListUserAppealsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/me/appeals"
-        };
-    }
+  rpc ListUserAppeals(ListUserAppealsRequest) returns (ListUserAppealsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/me/appeals"
+    };
+  }
 
-    rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/appeals"
-        };
-    }
+  rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/appeals"
+    };
+  }
 
-    rpc GetAppeal(GetAppealRequest) returns (GetAppealResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/appeals/{id}"
-        };
-    }
+  rpc GetAppeal(GetAppealRequest) returns (GetAppealResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/appeals/{id}"
+    };
+  }
 
-    rpc CancelAppeal(CancelAppealRequest) returns (CancelAppealResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/appeals/{id}/cancel"
-        };
-    }
+  rpc CancelAppeal(CancelAppealRequest) returns (CancelAppealResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/appeals/{id}/cancel"
+    };
+  }
 
-    rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/appeals/{id}/revoke"
-            body: "reason"
-        };
-        option deprecated = true;
-    }
+  rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
+    option (google.api.http) = {
+       put: "/v1beta1/appeals/{id}/revoke"
+       body: "reason"
+     };
+     option deprecated = true;
+  }
 
-    rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/appeals"
-            body: "*"
-        };
-    }
+  rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/appeals"
+      body: "*"
+    };
+  }
 
-    rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/me/approvals"
-        };
-    }
+  rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/me/approvals"
+    };
+  }
 
-    rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/approvals"
-        };
-    }
+  rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/approvals"
+    };
+  }
 
-    rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/appeals/{id}/approvals/{approval_name}"
-            body: "action"
-        };
-    }
+  rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/appeals/{id}/approvals/{approval_name}"
+      body: "action"
+    };
+  }
 
-    rpc AddApprover(AddApproverRequest) returns (AddApproverResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers"
-            body: "*"
-        };
-    }
+  rpc AddApprover(AddApproverRequest) returns (AddApproverResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers"
+      body: "*"
+    };
+  }
 
-    rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
-        option (google.api.http) = {
-            delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
-        };
-    }
-
+  rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
+    };
+  }
+  
     rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
         option (google.api.http) = {
             post: "/v1beta1/appeals/revoke"
@@ -238,199 +238,199 @@ service GuardianService {
 message ListProvidersRequest {}
 
 message ListProvidersResponse {
-    repeated Provider providers = 1;
+  repeated Provider providers = 1;
 }
 
 message GetProviderRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message GetProviderResponse {
-    Provider provider = 1;
+  Provider provider = 1;
 }
 
 message GetProviderTypesRequest {}
 
 message GetProviderTypesResponse {
-    repeated ProviderType provider_types = 1;
+  repeated ProviderType provider_types = 1;
 }
 
 message CreateProviderRequest {
-    ProviderConfig config = 1;
+  ProviderConfig config = 1;
 }
 
 message CreateProviderResponse {
-    Provider provider = 1;
+  Provider provider = 1;
 }
 
 message UpdateProviderRequest {
-    string id = 1;
-    ProviderConfig config = 2;
+  string id = 1;
+  ProviderConfig config = 2;
 }
 
 message UpdateProviderResponse {
-    Provider provider = 1;
+  Provider provider = 1;
 }
 
 message DeleteProviderRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message DeleteProviderResponse {}
 
 message ListRolesRequest {
-    string id = 1;
-    string resource_type = 2;
+  string id = 1;
+  string resource_type = 2;
 }
 
 message ListRolesResponse {
-    repeated Role roles = 1;
+  repeated Role roles = 1;
 }
 
 message ListPoliciesRequest {}
 
 message ListPoliciesResponse {
-    repeated Policy policies = 1;
+  repeated Policy policies = 1;
 }
 
 message GetPolicyRequest {
-    string id = 1;
-    uint32 version = 2;
+  string id = 1;
+  uint32 version = 2;
 }
 
 message GetPolicyPreferencesRequest {
-    string id = 1;
-    uint32 version = 2;
+  string id = 1;
+  uint32 version = 2;
 }
 
 message GetPolicyPreferencesResponse {
-    PolicyAppealConfig appeal = 1;
+  PolicyAppealConfig appeal = 1;
 }
 
 message GetPolicyResponse {
-    Policy policy = 1;
+  Policy policy = 1;
 }
 
 message CreatePolicyRequest {
-    Policy policy = 1;
+  Policy policy = 1;
 }
 
 message CreatePolicyResponse {
-    Policy policy = 1;
+  Policy policy = 1;
 }
 
 message UpdatePolicyRequest {
-    string id = 1;
-    Policy policy = 2;
+  string id = 1;
+  Policy policy = 2;
 }
 
 message UpdatePolicyResponse {
-    Policy policy = 1;
+  Policy policy = 1;
 }
 
 message ListResourcesRequest {
-    bool is_deleted = 1;
-    string provider_type = 2;
-    string provider_urn = 3;
-    string type = 4;
-    string urn = 5;
-    string name = 6;
-    repeated string details = 7;
+  bool is_deleted = 1;
+  string provider_type = 2;
+  string provider_urn = 3;
+  string type = 4;
+  string urn = 5;
+  string name = 6;
+  repeated string details = 7;
 }
 
 message ListResourcesResponse {
-    repeated Resource resources = 1;
+  repeated Resource resources = 1;
 }
 
 message GetResourceRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message GetResourceResponse {
-    Resource resource = 1;
+  Resource resource = 1;
 }
 
 message UpdateResourceRequest {
-    string id = 1;
-    Resource resource = 2;
+  string id = 1;
+  Resource resource = 2;
 }
 
 message UpdateResourceResponse {
-    Resource resource = 1;
+  Resource resource = 1;
 }
 
 message DeleteResourceRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message DeleteResourceResponse {}
 
 message ListUserAppealsRequest {
-    repeated string statuses = 1;
-    string role = 2;
-    repeated string provider_types = 3;
-    repeated string provider_urns = 4;
-    repeated string resource_types = 5;
-    repeated string resource_urns = 6;
-    repeated string order_by = 7;
+  repeated string statuses = 1;
+  string role = 2;
+  repeated string provider_types = 3;
+  repeated string provider_urns = 4;
+  repeated string resource_types = 5;
+  repeated string resource_urns = 6;
+  repeated string order_by = 7;
 }
 
 message ListUserAppealsResponse {
-    repeated Appeal appeals = 1;
+  repeated Appeal appeals = 1;
 }
 
 message ListAppealsRequest {
-    string account_id = 1;
-    repeated string statuses = 2;
-    string role = 3;
-    repeated string provider_types = 4;
-    repeated string provider_urns = 5;
-    repeated string resource_types = 6;
-    repeated string resource_urns = 7;
-    repeated string order_by = 8;
-    string created_by = 9;
+  string account_id = 1;
+  repeated string statuses = 2;
+  string role = 3;
+  repeated string provider_types = 4;
+  repeated string provider_urns = 5;
+  repeated string resource_types = 6;
+  repeated string resource_urns = 7;
+  repeated string order_by = 8;
+  string created_by = 9;
 }
 
 message ListAppealsResponse {
-    repeated Appeal appeals = 1;
+  repeated Appeal appeals = 1;
 }
 
 message GetAppealRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message GetAppealResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message CancelAppealRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message CancelAppealResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message RevokeAppealRequest {
-    string id = 1;
+  string id = 1;
 
-    message Reason {
-        string reason = 1;
-    }
-    Reason reason = 2;
+  message Reason {
+    string reason = 1;
+  }
+  Reason reason = 2;
 }
 
 message RevokeAppealResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message RevokeAppealsRequest {
-    repeated string account_ids = 1;
-    repeated string provider_types = 2;
-    repeated string provider_urns = 3;
-    repeated string resource_types = 4;
-    repeated string resource_urns = 5;
-    string reason = 6;
+  repeated string account_ids = 1;
+  repeated string provider_types = 2;
+  repeated string provider_urns = 3;
+  repeated string resource_types = 4;
+  repeated string resource_urns = 5;
+  string reason = 6;
 }
 
 message RevokeAppealsResponse {
@@ -438,76 +438,76 @@ message RevokeAppealsResponse {
 }
 
 message CreateAppealRequest {
-    string account_id = 1;
+  string account_id = 1;
 
-    message Resource {
-        string id = 1;
-        string role = 2;
-        google.protobuf.Struct options = 3;
-        google.protobuf.Struct details = 4;
-    }
-    repeated Resource resources = 2;
-    string account_type = 3;
+  message Resource {
+    string id = 1;
+    string role = 2;
+    google.protobuf.Struct options = 3;
+    google.protobuf.Struct details = 4;
+  }
+  repeated Resource resources = 2;
+  string account_type = 3;
 }
 
 message CreateAppealResponse {
-    repeated Appeal appeals = 1;
+  repeated Appeal appeals = 1;
 }
 
 message ListUserApprovalsRequest {
-    repeated string statuses = 2;
-    repeated string order_by = 3;
-    string account_id = 4;
+  repeated string statuses = 2;
+  repeated string order_by = 3;
+  string account_id = 4;
 }
 
 message ListUserApprovalsResponse {
-    repeated Approval approvals = 1;
+  repeated Approval approvals = 1;
 }
 
 message ListApprovalsRequest {
-    string account_id = 1;
-    repeated string statuses = 2;
-    repeated string order_by = 3;
-    string created_by = 4;
+  string account_id = 1;
+  repeated string statuses = 2;
+  repeated string order_by = 3;
+  string created_by = 4;
 }
 
 message ListApprovalsResponse {
-    repeated Approval approvals = 1;
+  repeated Approval approvals = 1;
 }
 
 message UpdateApprovalRequest {
-    string id = 1;
-    string approval_name = 2;
+  string id = 1;
+  string approval_name = 2;
 
-    message Action {
-        string action = 1;
-        string reason = 2;
-    }
-    Action action = 3;
+  message Action {
+    string action = 1;
+    string reason = 2;
+  }
+  Action action = 3;
 }
 
 message UpdateApprovalResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message AddApproverRequest {
-    string appeal_id = 1;
-    string approval_id = 2;
-    string email = 3;
+  string appeal_id = 1;
+  string approval_id = 2;
+  string email = 3;
 }
 
 message AddApproverResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message DeleteApproverRequest {
-    string appeal_id = 1;
-    string approval_id = 2;
-    string email = 3;
+  string appeal_id = 1;
+  string approval_id = 2;
+  string email = 3;
 }
 
 message DeleteApproverResponse {
-    Appeal appeal = 1;
+  Appeal appeal = 1;
 }
 
 message ListGrantsRequest {
@@ -576,162 +576,161 @@ message RevokeGrantsResponse {
 }
 
 message Role {
-    string id = 1;
-    string name = 2;
-    string description = 3;
-    repeated google.protobuf.Value permissions = 4;
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  repeated google.protobuf.Value permissions = 4;
 }
 
 message PolicyConfig {
-    string id = 1;
-    int32 version = 2;
+  string id = 1;
+  int32 version = 2;
 }
 
 message ProviderConfig {
+  string type = 1;
+  string urn = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Value credentials = 4;
+
+  message AppealConfig {
+    bool allow_permanent_access = 1;
+    string allow_active_access_extension_in = 2;
+  }
+  AppealConfig appeal = 5;
+
+  message ResourceConfig {
     string type = 1;
-    string urn = 2;
-    map<string, string> labels = 3;
-    google.protobuf.Value credentials = 4;
-
-    message AppealConfig {
-        bool allow_permanent_access = 1;
-        string allow_active_access_extension_in = 2;
-    }
-    AppealConfig appeal = 5;
-
-    message ResourceConfig {
-        string type = 1;
-        PolicyConfig policy = 2;
-        repeated Role roles = 4;
-    }
-    repeated ResourceConfig resources = 6;
-    repeated string allowed_account_types = 7;
+    PolicyConfig policy = 2;
+    repeated Role roles = 4;
+  }
+  repeated ResourceConfig resources = 6;
+  repeated string allowed_account_types = 7;
 }
 
 // Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles
 message Provider {
-    string id = 1;
-    string type = 2;
-    string urn = 3;
+  string id = 1;
+  string type = 2;
+  string urn = 3;
 
-    ProviderConfig config = 4;
+  ProviderConfig config = 4;
 
-    google.protobuf.Timestamp created_at = 5;
-    google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message ProviderType {
-    string name = 1;
-    repeated string resource_types = 2;
+  string name = 1;
+  repeated string resource_types = 2;
 }
 
 message Condition {
-    string field = 1;
+  string field = 1;
 
-    message MatchCondition {
-        google.protobuf.Value eq = 1;
-    }
-    MatchCondition match = 2;
+  message MatchCondition {
+    google.protobuf.Value eq = 1;
+  }
+  MatchCondition match = 2;
 }
 
 message PolicyAppealConfig {
-    message DurationOptions {
-        string name = 1;
-        string value = 2;
-    }
-    repeated DurationOptions duration_options = 1;
-    bool  allow_on_behalf = 2;
+  message DurationOptions {
+    string name = 1;
+    string value = 2;
+  }
+  repeated DurationOptions duration_options = 1;
+  bool allow_on_behalf = 2;
 }
 
 // Policy is a configurable steps for appeal's approval
 message Policy {
-    string id = 1;
-    uint32 version = 2;
-    string description = 3;
+  string id = 1;
+  uint32 version = 2;
+  string description = 3;
 
-    message ApprovalStep {
-        string name = 1;
-        string description = 2;
-        bool allow_failed = 3;
-        string when = 4;
-        string strategy = 5;
-        string approve_if = 6;
-        repeated string approvers = 7;
-        string rejection_reason = 8;
+  message ApprovalStep {
+    string name = 1;
+    string description = 2;
+    bool allow_failed = 3;
+    string when = 4;
+    string strategy = 5;
+    string approve_if = 6;
+    repeated string approvers = 7;
+    string rejection_reason = 8;
+  }
+  repeated ApprovalStep steps = 4;
+
+  map<string, string> labels = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+
+  message Requirement {
+    message RequirementTrigger {
+      string provider_type = 1;
+      string provider_urn = 2;
+      string resource_type = 3;
+      string resource_urn = 4;
+      string role = 5;
+      repeated Condition conditions = 6;
     }
-    repeated ApprovalStep steps = 4;
+    RequirementTrigger on = 1;
 
-    map<string, string> labels = 5;
-    google.protobuf.Timestamp created_at = 6;
-    google.protobuf.Timestamp updated_at = 7;
-
-    message Requirement {
-        message RequirementTrigger {
-            string provider_type = 1;
-            string provider_urn = 2;
-            string resource_type = 3;
-            string resource_urn = 4;
-            string role = 5;
-            repeated Condition conditions = 6;
-        }
-        RequirementTrigger on = 1;
-
-        message AdditionalAppeal {
-            message ResourceIdentifier {
-                string provider_type = 1;
-                string provider_urn = 2;
-                string type = 3;
-                string urn = 4;
-                string id = 5;
-            }
-            ResourceIdentifier resource = 1;
-            string role = 2;
-            AppealOptions options = 3;
-            PolicyConfig policy = 4;
-        }
-        repeated AdditionalAppeal appeals = 2;
+    message AdditionalAppeal {
+      message ResourceIdentifier {
+        string provider_type = 1;
+        string provider_urn = 2;
+        string type = 3;
+        string urn = 4;
+        string id = 5;
+      }
+      ResourceIdentifier resource = 1;
+      string role = 2;
+      AppealOptions options = 3;
+      PolicyConfig policy = 4;
     }
-    repeated Requirement requirements = 8;
+    repeated AdditionalAppeal appeals = 2;
+  }
+  repeated Requirement requirements = 8;
 
-    message IAM {
-        string provider = 1;
-        google.protobuf.Value config = 2;
-        map<string, string> schema = 3;
-    }
-    IAM iam = 9;
+  message IAM {
+    string provider = 1;
+    google.protobuf.Value config = 2;
+    map<string, string> schema = 3;
+  }
+  IAM iam = 9;
 
-    PolicyAppealConfig appeal = 10;
+  PolicyAppealConfig appeal = 10;
 }
 
 message AppealOptions {
-    google.protobuf.Timestamp expiration_date = 1;  // optional
-    string duration = 2;
+  google.protobuf.Timestamp expiration_date = 1; // optional
+  string duration = 2;
 }
 
 // Appeal is created by user to get access to one or more resources
 message Appeal {
-    string id = 1;
-    string resource_id = 2;
-    string policy_id = 3;
-    uint32 policy_version = 4;
-    string status = 5;
-    string account_id = 6;
-    string role = 7;
+  string id = 1;
+  string resource_id = 2;
+  string policy_id = 3;
+  uint32 policy_version = 4;
+  string status = 5;
+  string account_id = 6;
+  string role = 7;
 
-    AppealOptions options = 8;  // optional
+  AppealOptions options = 8; // optional
 
-    map<string, string> labels = 9;
-    Resource resource = 10;  // optional
-    repeated Approval approvals = 11;
+  map<string, string> labels = 9;
+  Resource resource = 10; // optional
+  repeated Approval approvals = 11;
 
-    google.protobuf.Timestamp created_at = 12;
-    google.protobuf.Timestamp updated_at = 13;
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
 
-    string revoked_by = 14;
-    google.protobuf.Timestamp revoked_at = 15;
-    string revoke_reason = 16;
-    google.protobuf.Struct details = 17;
-
+  string revoked_by = 14;
+  google.protobuf.Timestamp revoked_at = 15;
+  string revoke_reason = 16;
+  google.protobuf.Struct details = 17;
     string account_type = 18;
     string created_by = 19;
     google.protobuf.Value creator = 20;
@@ -741,33 +740,33 @@ message Appeal {
 
 // Approval is an approval item that generated in an appeal based on the selected policy
 message Approval {
-    string id = 1;
-    string name = 2;
-    string appeal_id = 3;
-    string status = 4;
-    string actor = 5;
-    string policy_id = 6;
-    uint32 policy_version = 7;
-    repeated string approvers = 8;
-    Appeal appeal = 9;
-    google.protobuf.Timestamp created_at = 10;
-    google.protobuf.Timestamp updated_at = 11;
-    string reason = 12;
+  string id = 1;
+  string name = 2;
+  string appeal_id = 3;
+  string status = 4;
+  string actor = 5;
+  string policy_id = 6;
+  uint32 policy_version = 7;
+  repeated string approvers = 8;
+  Appeal appeal = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+  string reason = 12;
 }
 
 // Resource contains information of resource from providers
 message Resource {
-    string id = 1;
-    string provider_type = 2;
-    string provider_urn = 3;
-    string type = 4;
-    string urn = 5;
-    string name = 6;
-    google.protobuf.Struct details = 7;
-    map<string, string> labels = 8;
-    google.protobuf.Timestamp created_at = 9;
-    google.protobuf.Timestamp updated_at = 10;
-    bool is_deleted = 11;
+  string id = 1;
+  string provider_type = 2;
+  string provider_urn = 3;
+  string type = 4;
+  string urn = 5;
+  string name = 6;
+  google.protobuf.Struct details = 7;
+  map<string, string> labels = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+  bool is_deleted = 11;
 }
 
 message Grant {

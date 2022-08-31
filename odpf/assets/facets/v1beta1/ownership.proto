@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package odpf.assets.facets.v1beta1;
 
-option java_package = "io.odpf.assets.facets";
-option java_outer_classname = "OwnershipProto";
 option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
+option java_outer_classname = "OwnershipProto";
+option java_package = "io.odpf.assets.facets";
 
 // Ownership is a facet that describes the ownership of a resource.
 message Ownership {
@@ -22,7 +22,7 @@ message Owner {
   // The name of the owner.
   // Example: `John Doe`.
   string name = 2;
-  
+
   // The role of the owner.
   // Example: `admin`, `steward`.
   string role = 3;
