@@ -149,10 +149,10 @@ service GuardianService {
 
   rpc RevokeAppeal(RevokeAppealRequest) returns (RevokeAppealResponse) {
     option (google.api.http) = {
-       put: "/v1beta1/appeals/{id}/revoke"
-       body: "reason"
-     };
-     option deprecated = true;
+      put: "/v1beta1/appeals/{id}/revoke"
+      body: "reason"
+    };
+    option deprecated = true;
   }
 
   rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
@@ -193,46 +193,46 @@ service GuardianService {
       delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
     };
   }
-  
-    rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
-        option (google.api.http) = {
-            post: "/v1beta1/appeals/revoke"
-            body: "*"
-        };
-        option deprecated = true;
-    }
 
-    rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/grants"
-        };
-    }
+  rpc RevokeAppeals(RevokeAppealsRequest) returns (RevokeAppealsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/appeals/revoke"
+      body: "*"
+    };
+    option deprecated = true;
+  }
 
-    rpc ListUserGrants(ListUserGrantsRequest) returns (ListUserGrantsResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/me/grants"
-        };
-    }
+  rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/grants"
+    };
+  }
 
-    rpc GetGrant(GetGrantRequest) returns (GetGrantResponse) {
-        option (google.api.http) = {
-            get: "/v1beta1/grants/{id}"
-        };
-    }
+  rpc ListUserGrants(ListUserGrantsRequest) returns (ListUserGrantsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/me/grants"
+    };
+  }
 
-    rpc RevokeGrant(RevokeGrantRequest) returns (RevokeGrantResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/grants/{id}/revoke"
-            body: "*"
-        };
-    }
+  rpc GetGrant(GetGrantRequest) returns (GetGrantResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/grants/{id}"
+    };
+  }
 
-    rpc RevokeGrants(RevokeGrantsRequest) returns (RevokeGrantsResponse) {
-        option (google.api.http) = {
-            put: "/v1beta1/grants/revoke"
-            body: "*"
-        };
-    }
+  rpc RevokeGrant(RevokeGrantRequest) returns (RevokeGrantResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/grants/{id}/revoke"
+      body: "*"
+    };
+  }
+
+  rpc RevokeGrants(RevokeGrantsRequest) returns (RevokeGrantsResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/grants/revoke"
+      body: "*"
+    };
+  }
 }
 
 message ListProvidersRequest {}
@@ -511,68 +511,68 @@ message DeleteApproverResponse {
 }
 
 message ListGrantsRequest {
-    repeated string statuses = 1;
-    repeated string account_ids = 2;
-    repeated string account_types = 3;
-    repeated string resource_ids = 4;
-    repeated string provider_types = 5;
-    repeated string provider_urns = 6;
-    repeated string resource_types = 7;
-    repeated string resource_urns = 8;
-    repeated string roles = 9;
-    string created_by = 10;
-    repeated string order_by = 11;
+  repeated string statuses = 1;
+  repeated string account_ids = 2;
+  repeated string account_types = 3;
+  repeated string resource_ids = 4;
+  repeated string provider_types = 5;
+  repeated string provider_urns = 6;
+  repeated string resource_types = 7;
+  repeated string resource_urns = 8;
+  repeated string roles = 9;
+  string created_by = 10;
+  repeated string order_by = 11;
 }
 
 message ListGrantsResponse {
-    repeated Grant grants = 1;
+  repeated Grant grants = 1;
 }
 
 message ListUserGrantsRequest {
-    repeated string statuses = 1;
-    repeated string account_ids = 2;
-    repeated string account_types = 3;
-    repeated string resource_ids = 4;
-    repeated string provider_types = 5;
-    repeated string provider_urns = 6;
-    repeated string resource_types = 7;
-    repeated string resource_urns = 8;
-    repeated string roles = 9;
-    repeated string order_by = 10;
+  repeated string statuses = 1;
+  repeated string account_ids = 2;
+  repeated string account_types = 3;
+  repeated string resource_ids = 4;
+  repeated string provider_types = 5;
+  repeated string provider_urns = 6;
+  repeated string resource_types = 7;
+  repeated string resource_urns = 8;
+  repeated string roles = 9;
+  repeated string order_by = 10;
 }
 
 message ListUserGrantsResponse {
-    repeated Grant grants = 1;
+  repeated Grant grants = 1;
 }
 
 message GetGrantRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message GetGrantResponse {
-    Grant grant = 1;
+  Grant grant = 1;
 }
 
 message RevokeGrantRequest {
-    string id = 1;
-    string reason = 2;
+  string id = 1;
+  string reason = 2;
 }
 
 message RevokeGrantResponse {
-    Grant grant = 1;
+  Grant grant = 1;
 }
 
 message RevokeGrantsRequest {
-    repeated string account_ids = 1;
-    repeated string provider_types = 2;
-    repeated string provider_urns = 3;
-    repeated string resource_types = 4;
-    repeated string resource_urns = 5;
-    string reason = 6;
+  repeated string account_ids = 1;
+  repeated string provider_types = 2;
+  repeated string provider_urns = 3;
+  repeated string resource_types = 4;
+  repeated string resource_urns = 5;
+  string reason = 6;
 }
 
 message RevokeGrantsResponse {
-    repeated Grant grants = 1;
+  repeated Grant grants = 1;
 }
 
 message Role {
@@ -731,11 +731,11 @@ message Appeal {
   google.protobuf.Timestamp revoked_at = 15;
   string revoke_reason = 16;
   google.protobuf.Struct details = 17;
-    string account_type = 18;
-    string created_by = 19;
-    google.protobuf.Value creator = 20;
-    repeated string permissions = 21;
-    Grant grant = 22;
+  string account_type = 18;
+  string created_by = 19;
+  google.protobuf.Value creator = 20;
+  repeated string permissions = 21;
+  Grant grant = 22;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
@@ -770,22 +770,22 @@ message Resource {
 }
 
 message Grant {
-    string id = 1;
-    string status = 2;
-    string account_id = 3;
-    string account_type = 4;
-    string resource_id = 5;
-    string role = 6;
-    repeated string permissions = 7;
-    google.protobuf.Timestamp expiration_date = 8;
-    string appeal_id = 9;
-    string revoked_by = 10;
-    google.protobuf.Timestamp revoked_at = 11;
-    string revoke_reason = 12;
-    string created_by = 13;
-    google.protobuf.Timestamp created_at = 14;
-    google.protobuf.Timestamp updated_at = 15;
+  string id = 1;
+  string status = 2;
+  string account_id = 3;
+  string account_type = 4;
+  string resource_id = 5;
+  string role = 6;
+  repeated string permissions = 7;
+  google.protobuf.Timestamp expiration_date = 8;
+  string appeal_id = 9;
+  string revoked_by = 10;
+  google.protobuf.Timestamp revoked_at = 11;
+  string revoke_reason = 12;
+  string created_by = 13;
+  google.protobuf.Timestamp created_at = 14;
+  google.protobuf.Timestamp updated_at = 15;
 
-    Resource resource = 16;
-    Appeal appeal = 17;
+  Resource resource = 16;
+  Appeal appeal = 17;
 }
