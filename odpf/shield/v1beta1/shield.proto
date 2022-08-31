@@ -1284,7 +1284,6 @@ message ResourceActionAuthzRequest {
   string action_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
   string namespace_id = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-
 }
 
 message ResourceActionAuthzResponse {
