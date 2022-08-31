@@ -95,8 +95,7 @@ service ShieldService {
     };
   }
 
-  //Metadata Keys
-    rpc CreateMetadataKey(CreateMetadataKeyRequest) returns (rpc CreateMetadataKeyResponse) {
+  rpc CreateMetadataKey(CreateMetadataKeyRequest) returns (CreateMetadataKeyResponse) {
     option (google.api.http) = {
       post: "/v1beta1/metadatakey",
       body: "body";
