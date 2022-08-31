@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package odpf.assets.facets.v1beta1;
 
-option java_package = "io.odpf.assets.facets";
-option java_outer_classname = "LineageProto";
-option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
-
 import "odpf/assets/common/v1beta1/resource.proto";
+
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
+option java_outer_classname = "LineageProto";
+option java_package = "io.odpf.assets.facets";
 
 // Linage reprsents the relationship of resource to other resources.
 // Relation is way of describing the relationship between two resources.

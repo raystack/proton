@@ -2,18 +2,16 @@ syntax = "proto3";
 
 package odpf.assets.v1beta1;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "BucketProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
-
 import "google/protobuf/timestamp.proto";
-
+import "odpf/assets/common/v1beta1/event.proto";
+import "odpf/assets/common/v1beta1/resource.proto";
+import "odpf/assets/common/v1beta1/timestamp.proto";
 import "odpf/assets/facets/v1beta1/ownership.proto";
 import "odpf/assets/facets/v1beta1/properties.proto";
 
-import "odpf/assets/common/v1beta1/resource.proto";
-import "odpf/assets/common/v1beta1/timestamp.proto";
-import "odpf/assets/common/v1beta1/event.proto";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "BucketProto";
+option java_package = "io.odpf.assets";
 
 message Bucket {
   // Representation of the resource
@@ -49,7 +47,6 @@ message Bucket {
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   odpf.assets.common.v1beta1.Event event = 100;
-
 }
 
 message Blob {
