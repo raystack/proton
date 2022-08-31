@@ -789,7 +789,9 @@ message GetGraphRequest {
   uint32 level = 2;
   string direction = 3 [(validate.rules).string = {
     in: [
-      "upstream", "downstream", ""
+      "upstream",
+      "downstream",
+      ""
     ]
   }];
 }
@@ -1252,7 +1254,7 @@ message Asset {
   string name = 5;
   string description = 6;
   google.protobuf.Struct data = 7;
-  map<string,string> labels = 8;
+  map<string, string> labels = 8;
   repeated User owners = 9;
   string version = 10;
   User updated_by = 11;
