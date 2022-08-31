@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package odpf.kay.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/kay/v1beta1;kayv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "KayServiceProto";
+option java_package = "io.odpf.proton.kay.v1beta1";
+
+service KayService {
+    rpc ListClusters(ListClustersRequest) returns (ListClustersResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/clusters"
+        };
+    }
+
+    rpc GetCluster(GetClusterRequest) returns (GetClusterResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/clusters/{id}"
+        };
+    }
+
+    rpc CreateCluster(CreateClusterRequest) returns (CreateClusterResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/clusters"
+            body: "body"
+        };
+    }
+
+    rpc DeleteCluster(DeleteClusterRequest) returns (DeleteClusterResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/clusters/{id}"
+        };
+    }
+
+    rpc ListTopics(ListTopicsRequest) returns (ListTopicsResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/topics"
+        };
+    }
+
+    rpc GetTopic(GetTopicRequest) returns (GetTopicResponse) {
+        option (google.api.http) = {
+            get: "/v1beta1/topics/{id}"
+        };
+    }
+
+    rpc CreateTopic(CreateTopicRequest) returns (CreateTopicResponse) {
+        option (google.api.http) = {
+            post: "/v1beta1/topics"
+            body: "body"
+        };
+    }
+
+    rpc DeleteTopic(DeleteTopicRequest) returns (DeleteTopicResponse) {
+        option (google.api.http) = {
+            delete: "/v1beta1/topics/{id}"
+        };
+    }
+}
+
+message ListClustersRequest {}
+
+message ListClustersResponse {
+    repeated Cluster clusters = 1;
+}
+
+message GetClusterRequest {
+    string id = 1;
+}
+
+message GetClusterResponse {
+    Cluster cluster = 1;
+}
+
+message CreateClusterRequest {
+    ClusterRequestBody body = 1;
+}
+
+message CreateClusterResponse {
+    Cluster cluster = 1;
+}
+
+message UpdateClusterRequest {
+    string id = 1;
+    ClusterRequestBody body = 2;
+}
+
+message UpdateClusterResponse {
+    Cluster cluster = 1;
+}
+
+message DeleteClusterRequest {
+    string id = 1;
+}
+
+message DeleteClusterResponse {}
+
+message ListTopicsRequest {}
+
+message ListTopicsResponse {
+    repeated Topic topics = 1;
+}
+
+message GetTopicRequest {
+    string id = 1;
+}
+
+message GetTopicResponse {
+    Topic topic = 1;
+}
+
+message CreateTopicRequest {
+    message Body {
+        string name = 1;
+        string description = 2;
+        string cluster_id = 3;
+        TopicConfig config = 4;
+        map<string, string> labels = 9;
+    }
+
+    Body body = 1;
+}
+
+message CreateTopicResponse {
+    Topic topic = 1;
+}
+
+message UpdateTopicRequest {
+    string id = 1;
+    TopicConfig config = 2;
+}
+
+message UpdateTopicResponse {
+    Topic topic = 1;
+}
+
+message DeleteTopicRequest {
+    string id = 1;
+}
+
+message DeleteTopicResponse {}
+
+message ClusterRequestBody {
+    string name = 1;
+    string description = 2;
+    string bootstrap_server = 3;
+    string type = 4;
+    map<string, string> labels = 8;
+}
+
+message Cluster {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string bootstrap_server = 4;
+    string type = 5;
+    map<string, string> labels = 6;
+    google.protobuf.Timestamp created_at = 7;
+    google.protobuf.Timestamp updated_at = 8;
+}
+
+message Topic {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string cluster = 4;
+    TopicConfig config = 5;
+    map<string, string> labels = 10;
+    google.protobuf.Timestamp created_at = 11;
+    google.protobuf.Timestamp updated_at = 12;
+}
+
+message TopicConfig {
+    string partition_count = 1;
+    string replication_factor = 2;
+    string retention_time = 3;
+    string retention_bytes = 4;
+}
