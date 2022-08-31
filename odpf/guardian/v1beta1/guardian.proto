@@ -202,34 +202,34 @@ service GuardianService {
         option deprecated = true;
     }
 
-    rpc ListAccesses(ListAccessesRequest) returns (ListAccessesResponse) {
+    rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/accesses"
+            get: "/v1beta1/grants"
         };
     }
 
-    rpc ListUserAccesses(ListUserAccessesRequest) returns (ListUserAccessesResponse) {
+    rpc ListUserGrants(ListUserGrantsRequest) returns (ListUserGrantsResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/me/accesses"
+            get: "/v1beta1/me/grants"
         };
     }
 
-    rpc GetAccess(GetAccessRequest) returns (GetAccessResponse) {
+    rpc GetGrant(GetGrantRequest) returns (GetGrantResponse) {
         option (google.api.http) = {
-            get: "/v1beta1/accesses/{id}"
+            get: "/v1beta1/grants/{id}"
         };
     }
 
-    rpc RevokeAccess(RevokeAccessRequest) returns (RevokeAccessResponse) {
+    rpc RevokeGrant(RevokeGrantRequest) returns (RevokeGrantResponse) {
         option (google.api.http) = {
-            put: "/v1beta1/accesses/{id}/revoke"
+            put: "/v1beta1/grants/{id}/revoke"
             body: "*"
         };
     }
 
-    rpc RevokeAccesses(RevokeAccessesRequest) returns (RevokeAccessesResponse) {
+    rpc RevokeGrants(RevokeGrantsRequest) returns (RevokeGrantsResponse) {
         option (google.api.http) = {
-            put: "/v1beta1/accesses/revoke"
+            put: "/v1beta1/grants/revoke"
             body: "*"
         };
     }
@@ -510,7 +510,7 @@ message DeleteApproverResponse {
     Appeal appeal = 1;
 }
 
-message ListAccessesRequest {
+message ListGrantsRequest {
     repeated string statuses = 1;
     repeated string account_ids = 2;
     repeated string account_types = 3;
@@ -524,11 +524,11 @@ message ListAccessesRequest {
     repeated string order_by = 11;
 }
 
-message ListAccessesResponse {
-    repeated Access accesses = 1;
+message ListGrantsResponse {
+    repeated Grant grants = 1;
 }
 
-message ListUserAccessesRequest {
+message ListUserGrantsRequest {
     repeated string statuses = 1;
     repeated string account_ids = 2;
     repeated string account_types = 3;
@@ -541,28 +541,28 @@ message ListUserAccessesRequest {
     repeated string order_by = 10;
 }
 
-message ListUserAccessesResponse {
-    repeated Access accesses = 1;
+message ListUserGrantsResponse {
+    repeated Grant grants = 1;
 }
 
-message GetAccessRequest {
+message GetGrantRequest {
     string id = 1;
 }
 
-message GetAccessResponse {
-    Access access = 1;
+message GetGrantResponse {
+    Grant grant = 1;
 }
 
-message RevokeAccessRequest {
+message RevokeGrantRequest {
     string id = 1;
     string reason = 2;
 }
 
-message RevokeAccessResponse {
-    Access access = 1;
+message RevokeGrantResponse {
+    Grant grant = 1;
 }
 
-message RevokeAccessesRequest {
+message RevokeGrantsRequest {
     repeated string account_ids = 1;
     repeated string provider_types = 2;
     repeated string provider_urns = 3;
@@ -571,8 +571,8 @@ message RevokeAccessesRequest {
     string reason = 6;
 }
 
-message RevokeAccessesResponse {
-    repeated Access accesses = 1;
+message RevokeGrantsResponse {
+    repeated Grant grants = 1;
 }
 
 message Role {
@@ -736,7 +736,7 @@ message Appeal {
     string created_by = 19;
     google.protobuf.Value creator = 20;
     repeated string permissions = 21;
-    Access access = 22;
+    Grant grant = 22;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
@@ -770,7 +770,7 @@ message Resource {
     bool is_deleted = 11;
 }
 
-message Access {
+message Grant {
     string id = 1;
     string status = 2;
     string account_id = 3;
