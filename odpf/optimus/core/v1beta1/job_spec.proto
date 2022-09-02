@@ -44,7 +44,7 @@ service JobSpecificationService {
   // AddJobSpecification registers new jobs for a namespace which belongs to the given project
   rpc AddJobSpecifications(AddJobSpecificationsRequest) returns (AddJobSpecificationsResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/add/jobs"
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/jobs"
       body: "*"
     };
   }
