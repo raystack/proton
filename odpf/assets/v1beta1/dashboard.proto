@@ -2,21 +2,20 @@ syntax = "proto3";
 
 package odpf.assets.v1beta1;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "DashboardProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
-
-import "odpf/assets/facets/v1beta1/ownership.proto";
-import "odpf/assets/facets/v1beta1/lineage.proto";
-import "odpf/assets/facets/v1beta1/properties.proto";
-
+import "odpf/assets/common/v1beta1/event.proto";
 import "odpf/assets/common/v1beta1/resource.proto";
 import "odpf/assets/common/v1beta1/timestamp.proto";
-import "odpf/assets/common/v1beta1/event.proto";
+import "odpf/assets/facets/v1beta1/lineage.proto";
+import "odpf/assets/facets/v1beta1/ownership.proto";
+import "odpf/assets/facets/v1beta1/properties.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "DashboardProto";
+option java_package = "io.odpf.assets";
 
 // Dashboard is a resource that represents a dashboard.
 message Dashboard {
-    // Representation of the resource
+  // Representation of the resource
   odpf.assets.common.v1beta1.Resource resource = 1;
 
   // The list of the charts in the dashboard.
@@ -42,7 +41,6 @@ message Dashboard {
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   odpf.assets.common.v1beta1.Event event = 100;
-
 }
 
 message Chart {
@@ -105,5 +103,4 @@ message Chart {
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   odpf.assets.common.v1beta1.Event event = 100;
-
 }

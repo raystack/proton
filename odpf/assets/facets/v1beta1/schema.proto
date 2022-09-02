@@ -2,12 +2,11 @@ syntax = "proto3";
 
 package odpf.assets.facets.v1beta1;
 
-option java_package = "io.odpf.assets.facets";
-option java_outer_classname = "SchemaProto";
-option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
-
-
 import "odpf/assets/facets/v1beta1/properties.proto";
+
+option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
+option java_outer_classname = "SchemaProto";
+option java_package = "io.odpf.assets.facets";
 
 // Columns represents a list of columns.
 // It is facet used to specify the schema of a table or a file.

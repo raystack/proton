@@ -1,17 +1,17 @@
 syntax = "proto3";
+
 package odpf.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
-import "google/protobuf/struct.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
 import "odpf/optimus/core/v1beta1/status.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
-option java_package = "io.odpf.proton.optimus";
 option java_outer_classname = "JobSpecificationServiceManager";
-
+option java_package = "io.odpf.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
@@ -87,7 +87,7 @@ service JobSpecificationService {
   rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
 
   // RefreshJobs do redeployment using the current persisted state.
-  // It will returns a stream of messages which can be used to track the progress. 
+  // It will returns a stream of messages which can be used to track the progress.
   rpc RefreshJobs(RefreshJobsRequest) returns (stream RefreshJobsResponse) {}
 
   // GetDeployJobsStatus check status of job deployment.
@@ -156,7 +156,7 @@ message ListJobSpecificationRequest {
   string namespace_name = 2;
 }
 
-message ListJobSpecificationResponse{
+message ListJobSpecificationResponse {
   repeated JobSpecification jobs = 1;
 }
 
@@ -209,7 +209,6 @@ message JobSpecification {
   map<string, string> labels = 18;
 
   message Behavior {
-
     // retry behaviour if job failed to execute for the first time
     message Retry {
       int32 count = 1;
@@ -258,27 +257,27 @@ message JobEvent {
   enum Type {
     TYPE_UNSPECIFIED = 0;
     TYPE_SLA_MISS = 1;
-    TYPE_FAILURE  = 2;
-    TYPE_SUCCESS  = 3;
-    TYPE_RETRY    = 4;
+    TYPE_FAILURE = 2;
+    TYPE_SUCCESS = 3;
+    TYPE_RETRY = 4;
 
-    TYPE_JOB_START    = 5;
-    TYPE_JOB_SUCCESS  = 6;
-    TYPE_JOB_FAIL     = 7;
+    TYPE_JOB_START = 5;
+    TYPE_JOB_SUCCESS = 6;
+    TYPE_JOB_FAIL = 7;
 
-    TYPE_TASK_RETRY   = 8;
+    TYPE_TASK_RETRY = 8;
     TYPE_TASK_SUCCESS = 9;
-    TYPE_TASK_START   = 10;
-    TYPE_TASK_FAIL    = 11;
+    TYPE_TASK_START = 10;
+    TYPE_TASK_FAIL = 11;
 
-    TYPE_SENSOR_RETRY   = 12;
+    TYPE_SENSOR_RETRY = 12;
     TYPE_SENSOR_SUCCESS = 13;
-    TYPE_SENSOR_START   = 14;
-    TYPE_SENSOR_FAIL    = 15;
+    TYPE_SENSOR_START = 14;
+    TYPE_SENSOR_FAIL = 15;
 
-    TYPE_HOOK_START   = 16;
-    TYPE_HOOK_RETRY   = 17;
-    TYPE_HOOK_FAIL    = 18;
+    TYPE_HOOK_START = 16;
+    TYPE_HOOK_RETRY = 17;
+    TYPE_HOOK_FAIL = 18;
     TYPE_HOOK_SUCCESS = 19;
   }
   Type type = 1;
@@ -342,8 +341,8 @@ message GetJobSpecificationsRequest {
 }
 
 message GetJobSpecificationsResponse {
-  repeated JobSpecification jobs = 1 [deprecated=true];
-  repeated JobSpecificationResponse job_specification_responses = 2; 
+  repeated JobSpecification jobs = 1 [deprecated = true];
+  repeated JobSpecificationResponse job_specification_responses = 2;
 }
 
 message JobSpecificationResponse {

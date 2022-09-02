@@ -2,18 +2,16 @@ syntax = "proto3";
 
 package odpf.assets.v1beta1;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "UserProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
-
-
-import "odpf/assets/common/v1beta1/timestamp.proto";
 import "odpf/assets/common/v1beta1/event.proto";
 import "odpf/assets/common/v1beta1/resource.proto";
-
+import "odpf/assets/common/v1beta1/timestamp.proto";
 import "odpf/assets/facets/v1beta1/properties.proto";
 
-// User is a person who uses or operates something. 
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "UserProto";
+option java_package = "io.odpf.assets";
+
+// User is a person who uses or operates something.
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
 message User {
@@ -35,7 +33,7 @@ message User {
   // The last name of the user.
   // Example: `doe`
   string last_name = 6;
-  
+
   // The full name of the user.
   // Example: `john mayer doe`
   string full_name = 7;

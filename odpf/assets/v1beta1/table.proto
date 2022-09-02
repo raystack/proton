@@ -2,19 +2,18 @@ syntax = "proto3";
 
 package odpf.assets.v1beta1;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "TableProto";
-option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
-
-import "odpf/assets/facets/v1beta1/schema.proto";
-import "odpf/assets/facets/v1beta1/preview.proto";
-import "odpf/assets/facets/v1beta1/ownership.proto";
-import "odpf/assets/facets/v1beta1/lineage.proto";
-import "odpf/assets/facets/v1beta1/properties.proto";
-
+import "odpf/assets/common/v1beta1/event.proto";
 import "odpf/assets/common/v1beta1/resource.proto";
 import "odpf/assets/common/v1beta1/timestamp.proto";
-import "odpf/assets/common/v1beta1/event.proto";
+import "odpf/assets/facets/v1beta1/lineage.proto";
+import "odpf/assets/facets/v1beta1/ownership.proto";
+import "odpf/assets/facets/v1beta1/preview.proto";
+import "odpf/assets/facets/v1beta1/properties.proto";
+import "odpf/assets/facets/v1beta1/schema.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "TableProto";
+option java_package = "io.odpf.assets";
 
 // Table is a table in a database.
 // It can be a file, a table, a view, a materialized view, a temporary table, or a virtual table.
@@ -69,7 +68,7 @@ message TableProfile {
 
   // The number of how many times table is being used
   int64 usage_count = 4;
-  
+
   // The information of `join` applied to the table
   repeated Join joins = 5;
 
