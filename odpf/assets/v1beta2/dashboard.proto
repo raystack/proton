@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
-option java_package = "io.odpf.assets";
-option java_outer_classname = "DashboardProto";
-option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
-
-import "odpf/assets/v1beta2/common.proto";
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "odpf/assets/v1beta2/common.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "DashboardProto";
+option java_package = "io.odpf.assets";
 
 // Dashboard is a resource that represents a dashboard.
 message Dashboard {
@@ -81,5 +81,4 @@ message Chart {
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   odpf.assets.v1beta2.Event event = 100;
-
 }

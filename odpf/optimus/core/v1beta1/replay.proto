@@ -1,26 +1,26 @@
 syntax = "proto3";
+
 package odpf.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
-option java_package = "io.odpf.proton.optimus";
 option java_outer_classname = "ReplayServiceManager";
-
+option java_package = "io.odpf.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-    info: {
-      version: "0.1";
-    };
-    external_docs: {
-      description: "Optimus Replay Service";
-    }
-    schemes: HTTP;
-    host: "127.0.0.1:9100";
-    base_path: "/api";
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Replay Service";
+  }
+  schemes: HTTP;
+  host: "127.0.0.1:9100";
+  base_path: "/api";
 };
 
 service ReplayService {
@@ -82,7 +82,7 @@ message ReplayDryRunRequest {
 
 message ReplayDryRunResponse {
   bool success = 1;
-  ReplayExecutionTreeNode response = 2 [deprecated=true];
+  ReplayExecutionTreeNode response = 2 [deprecated = true];
   ReplayExecutionTreeNode execution_tree = 3;
   repeated string ignored_jobs = 4;
 }

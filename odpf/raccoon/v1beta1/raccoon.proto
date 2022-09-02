@@ -4,18 +4,14 @@ package odpf.raccoon.v1beta1;
 
 import "google/protobuf/timestamp.proto";
 
-option java_multiple_files = true;
-option java_package = "io.odpf.proton.raccoon";
-option java_outer_classname = "EventProto";
-
 option go_package = "github.com/odpf/proton/raccoon/v1;raccoonv1";
-
-
+option java_multiple_files = true;
+option java_outer_classname = "EventProto";
+option java_package = "io.odpf.proton.raccoon";
 
 service EventService {
-  rpc SendEvent (SendEventRequest) returns (SendEventResponse);
+  rpc SendEvent(SendEventRequest) returns (SendEventResponse);
 }
-
 
 /*
  `EventRequest` defines the contract to push events to Raccoon
@@ -38,7 +34,7 @@ message SendEventRequest {
 
   Apart from sending response, `req_guid` is used to log some informations on 'debug' level. You can search the 
   debug logs with `ReqGUID` keyword.
-  */ 
+  */
   string req_guid = 1;
   /*
   `sent_time` defines the time the request is sent.
@@ -55,7 +51,6 @@ message SendEventRequest {
   */
   repeated Event events = 3;
 }
-
 
 /*
  `Event` defines wrapper of the event you want to push to Raccoon
@@ -80,8 +75,7 @@ message Event {
   string type = 2;
 }
 
-
- /*
+/*
  `EventResponse` defines the response contract from Raccoon
 
  Raccoon sends `EventResponse` for each `EventRequest` received. For WebSocket, 
@@ -121,7 +115,7 @@ message SendEventResponse {
   of `data`. The client may fetch req_guid as key to get the `req_guid` value.
   */
   map<string, string> data = 5;
-  }
+}
 
 enum Status {
   STATUS_UNSPECIFIED = 0;
