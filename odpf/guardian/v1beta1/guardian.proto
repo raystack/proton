@@ -711,9 +711,6 @@ message Appeal {
   google.protobuf.Timestamp created_at = 12;
   google.protobuf.Timestamp updated_at = 13;
 
-  string revoked_by = 14;
-  google.protobuf.Timestamp revoked_at = 15;
-  string revoke_reason = 16;
   google.protobuf.Struct details = 17;
   string account_type = 18;
   string created_by = 19;
