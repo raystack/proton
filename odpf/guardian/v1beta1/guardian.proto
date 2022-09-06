@@ -694,6 +694,7 @@ message AppealOptions {
 
 // Appeal is created by user to get access to one or more resources
 message Appeal {
+  reserved 14, 15, 16;
   string id = 1;
   string resource_id = 2;
   string policy_id = 3;
