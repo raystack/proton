@@ -148,7 +148,6 @@ message CreateJobSpecificationRequest {
 message CreateJobSpecificationResponse {
   bool success = 1;
   string message = 2;
-  string deployment_id = 3;
 }
 
 message GetJobSpecificationRequest {
