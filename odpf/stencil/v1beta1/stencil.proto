@@ -175,7 +175,7 @@ message Schema {
 message ListNamespacesRequest {}
 
 message ListNamespacesResponse {
-  repeated string namespaces = 1;
+  repeated Namespace namespaces = 1;
 }
 
 message GetNamespaceRequest {
@@ -219,7 +219,7 @@ message ListSchemasRequest {
   string id = 1;
 }
 message ListSchemasResponse {
-  repeated string schemas = 1;
+  repeated Schema schemas = 1;
 }
 
 message GetLatestSchemaRequest {
@@ -263,6 +263,9 @@ message GetSchemaMetadataResponse {
   Schema.Format format = 1;
   Schema.Compatibility compatibility = 2;
   string authority = 3;
+  string name = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 message UpdateSchemaMetadataRequest {
