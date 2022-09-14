@@ -273,7 +273,7 @@ message ImportAccessRequest {
 }
 
 message ImportAccessResponse {
-    repeated Appeal appeals = 1;
+    repeated Grant grants = 1;
 }
 
 message ListRolesRequest {
