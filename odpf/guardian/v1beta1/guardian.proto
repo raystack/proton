@@ -270,6 +270,9 @@ message DeleteProviderResponse {}
 
 message ImportAccessRequest {
     string id = 1;
+    repeated string resource_ids = 2;
+    repeated string resource_types = 3;
+    repeated string resource_urns = 4;
 }
 
 message ImportAccessResponse {
