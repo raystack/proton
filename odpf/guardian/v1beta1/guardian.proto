@@ -69,6 +69,7 @@ service GuardianService {
   rpc ImportAccess(ImportAccessRequest) returns (ImportAccessResponse) {
     option (google.api.http) = {
       post: "/v1beta1/providers/{id}/import-access"
+      body: "*"
     };
   }
 
