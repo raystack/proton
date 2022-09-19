@@ -33,10 +33,10 @@ service JobSpecificationService {
   // State of the world request
   rpc DeployJobSpecification(stream DeployJobSpecificationRequest) returns (stream DeployJobSpecificationResponse) {}
 
-  // JobExplain return a new jobSpec for a namespace which belongs to a project
-  rpc JobExplain(JobExplainRequest) returns (JobExplainResponse) {
+  // JobInspect return a new jobSpec for a namespace which belongs to a project
+  rpc JobInspect(JobInspectRequest) returns (JobInspectResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/explain"
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/inspect"
       body: "*"
     };
   }
@@ -127,13 +127,14 @@ message AddJobSpecificationsResponse {
   string log = 2;
 }
 
-message JobExplainRequest {
+message JobInspectRequest {
   string project_name = 1;
   string namespace_name = 2;
-  JobSpecification spec = 3;
+  string job_name = 3;
+  JobSpecification spec = 4;
 }
 
-message JobExplainResponse {
+message JobInspectResponse {
   bool success = 1;
   JobSpecification spec = 2;
   map<string, JobSpecification> dependencies = 3;
