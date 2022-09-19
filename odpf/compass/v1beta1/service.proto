@@ -374,11 +374,12 @@ service CompassService {
 
   rpc CreateAssetProbe(CreateAssetProbeRequest) returns (CreateAssetProbeResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/assets/{urn}/probes"
+      post: "/v1beta1/assets/{asset_urn}/probes";
+      body: "probe";
     };
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Create a new asset's probe";
+      summary: "Create asset's probe";
       description: "Add a new probe to an asset";
       tags: [
         "Asset"
@@ -1051,13 +1052,25 @@ message GetAssetByVersionResponse {
 }
 
 message CreateAssetProbeRequest {
-  string status = 1 [(validate.rules).string = {
+  message BaseProbe {
+    string status = 1 [
+      (validate.rules).string = {
+        min_len: 1,
+      },
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        required: [
+          "status"
+        ]
+      }
+    ];
+    string status_reason = 2;
+    google.protobuf.Struct metadata = 3;
+    google.protobuf.Timestamp timestamp = 4;
+  }
+  string asset_urn = 1 [(validate.rules).string = {
     min_len: 1,
-    ignore_empty: true
   }];
-  string status_reason = 2;
-  google.protobuf.Struct metadata = 3;
-  google.protobuf.Timestamp timestamp = 4;
+  BaseProbe probe = 2;
 }
 
 message CreateAssetProbeResponse {
