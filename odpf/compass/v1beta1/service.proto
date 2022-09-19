@@ -372,6 +372,20 @@ service CompassService {
     };
   }
 
+  rpc CreateAssetProbe(CreateAssetProbeRequest) returns (CreateAssetProbeResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/assets/{urn}/probes"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a new asset's probe";
+      description: "Add a new probe to an asset";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
   // Domain: User * Star
   rpc GetUserStarredAssets(GetUserStarredAssetsRequest) returns (GetUserStarredAssetsResponse) {
     option (google.api.http) = {
@@ -1036,6 +1050,20 @@ message GetAssetByVersionResponse {
   Asset data = 1;
 }
 
+message CreateAssetProbeRequest {
+  string status = 1 [(validate.rules).string = {
+    min_len: 1,
+    ignore_empty: true
+  }];
+  string status_reason = 2;
+  google.protobuf.Struct metadata = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message CreateAssetProbeResponse {
+  Probe probe = 1;
+}
+
 message GetUserStarredAssetsRequest {
   string user_id = 1;
   uint32 size = 2 [(validate.rules).uint32 = {
@@ -1304,6 +1332,22 @@ message Asset {
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
   string url = 15;
+}
+
+message Probe {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Probe"
+    }
+  };
+
+  string id = 1;
+  string asset_urn = 2;
+  string status = 3;
+  string status_reason = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp timestamp = 6;
+  google.protobuf.Timestamp created_at = 7;
 }
 
 message Discussion {
