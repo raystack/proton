@@ -1074,7 +1074,7 @@ message CreateAssetProbeRequest {
 }
 
 message CreateAssetProbeResponse {
-  Probe probe = 1;
+  string id = 1;
 }
 
 message GetUserStarredAssetsRequest {
@@ -1345,22 +1345,6 @@ message Asset {
   google.protobuf.Timestamp created_at = 13;
   google.protobuf.Timestamp updated_at = 14;
   string url = 15;
-}
-
-message Probe {
-  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
-    json_schema: {
-      title: "Probe"
-    }
-  };
-
-  string id = 1;
-  string asset_urn = 2;
-  string status = 3;
-  string status_reason = 4;
-  google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp timestamp = 6;
-  google.protobuf.Timestamp created_at = 7;
 }
 
 message Discussion {
