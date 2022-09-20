@@ -137,7 +137,10 @@ message JobInspectRequest {
 
 message JobInspectResponse {
   JobSpecification spec = 1;
-  Log logs = 2;
+  repeated string sources = 2;
+  string destination = 3;
+  repeated Log log = 4;
+  
 }
 
 message CreateJobSpecificationRequest {
