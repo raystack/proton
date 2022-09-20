@@ -134,10 +134,10 @@ message JobInspectRequest {
   JobSpecification spec = 4;
 }
 
+
 message JobInspectResponse {
-  bool success = 1;
-  JobSpecification spec = 2;
-  map<string, JobSpecification> dependencies = 3;
+  JobSpecification spec = 1;
+  Log logs = 2;
 }
 
 message CreateJobSpecificationRequest {
