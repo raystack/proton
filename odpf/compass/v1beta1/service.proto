@@ -941,7 +941,7 @@ message GetAssetByIDResponse {
 }
 
 message UpsertAssetRequest {
-  message BaseAsset {
+  message Asset {
     string urn = 1;
     string type = 2;
     string name = 3;
@@ -958,7 +958,7 @@ message UpsertAssetRequest {
     }];
     string url = 9;
   }
-  BaseAsset asset = 1;
+  Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
 }
@@ -968,7 +968,7 @@ message UpsertAssetResponse {
 }
 
 message UpsertPatchAssetRequest {
-  message BaseAsset {
+  message Asset {
     string urn = 1;
     string type = 2;
     google.protobuf.StringValue name = 3 [
@@ -995,7 +995,7 @@ message UpsertPatchAssetRequest {
     }];
     string url = 9;
   }
-  BaseAsset asset = 1;
+  Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
 }
