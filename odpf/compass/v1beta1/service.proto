@@ -286,6 +286,21 @@ service CompassService {
     };
   }
 
+  rpc UpsertAsset(UpsertAssetRequest) returns (UpsertAssetResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/assets"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update/Create an asset";
+      description: "Upsert will update an asset or create a new one if it does not exist yet";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
   rpc UpsertPatchAsset(UpsertPatchAssetRequest) returns (UpsertPatchAssetResponse) {
     option (google.api.http) = {
       patch: "/v1beta1/assets"
@@ -351,6 +366,21 @@ service CompassService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get asset's previous version";
       description: "Returns a specific version of an asset";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
+  rpc CreateAssetProbe(CreateAssetProbeRequest) returns (CreateAssetProbeResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/assets/{asset_urn}/probes";
+      body: "probe";
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create asset's probe";
+      description: "Add a new probe to an asset";
       tags: [
         "Asset"
       ];
@@ -910,8 +940,35 @@ message GetAssetByIDResponse {
   Asset data = 1;
 }
 
+message UpsertAssetRequest {
+  message Asset {
+    string urn = 1;
+    string type = 2;
+    string name = 3;
+    string service = 4;
+    string description = 5;
+    google.protobuf.Struct data = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "dynamic data of an asset"
+    }];
+    map<string, string> labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "labels of an asset"
+    }];
+    repeated User owners = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "list of owners of the asset"
+    }];
+    string url = 9;
+  }
+  Asset asset = 1;
+  repeated LineageNode upstreams = 2;
+  repeated LineageNode downstreams = 3;
+}
+
+message UpsertAssetResponse {
+  string id = 1;
+}
+
 message UpsertPatchAssetRequest {
-  message BaseAsset {
+  message Asset {
     string urn = 1;
     string type = 2;
     google.protobuf.StringValue name = 3 [
@@ -938,7 +995,7 @@ message UpsertPatchAssetRequest {
     }];
     string url = 9;
   }
-  BaseAsset asset = 1;
+  Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
 }
@@ -992,6 +1049,32 @@ message GetAssetByVersionRequest {
 
 message GetAssetByVersionResponse {
   Asset data = 1;
+}
+
+message CreateAssetProbeRequest {
+  message Probe {
+    string status = 1 [
+      (validate.rules).string = {
+        min_len: 1,
+      },
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        required: [
+          "status"
+        ]
+      }
+    ];
+    string status_reason = 2;
+    google.protobuf.Struct metadata = 3;
+    google.protobuf.Timestamp timestamp = 4;
+  }
+  string asset_urn = 1 [(validate.rules).string = {
+    min_len: 1,
+  }];
+  Probe probe = 2;
+}
+
+message CreateAssetProbeResponse {
+  string id = 1;
 }
 
 message GetUserStarredAssetsRequest {
