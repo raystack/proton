@@ -1052,7 +1052,7 @@ message GetAssetByVersionResponse {
 }
 
 message CreateAssetProbeRequest {
-  message BaseProbe {
+  message Probe {
     string status = 1 [
       (validate.rules).string = {
         min_len: 1,
@@ -1070,7 +1070,7 @@ message CreateAssetProbeRequest {
   string asset_urn = 1 [(validate.rules).string = {
     min_len: 1,
   }];
-  BaseProbe probe = 2;
+  Probe probe = 2;
 }
 
 message CreateAssetProbeResponse {
