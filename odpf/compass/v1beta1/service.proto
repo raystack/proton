@@ -372,6 +372,21 @@ service CompassService {
     };
   }
 
+  rpc CreateAssetProbe(CreateAssetProbeRequest) returns (CreateAssetProbeResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/assets/{asset_urn}/probes";
+      body: "probe";
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create asset's probe";
+      description: "Add a new probe to an asset";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
   // Domain: User * Star
   rpc GetUserStarredAssets(GetUserStarredAssetsRequest) returns (GetUserStarredAssetsResponse) {
     option (google.api.http) = {
@@ -1034,6 +1049,32 @@ message GetAssetByVersionRequest {
 
 message GetAssetByVersionResponse {
   Asset data = 1;
+}
+
+message CreateAssetProbeRequest {
+  message Probe {
+    string status = 1 [
+      (validate.rules).string = {
+        min_len: 1,
+      },
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        required: [
+          "status"
+        ]
+      }
+    ];
+    string status_reason = 2;
+    google.protobuf.Struct metadata = 3;
+    google.protobuf.Timestamp timestamp = 4;
+  }
+  string asset_urn = 1 [(validate.rules).string = {
+    min_len: 1,
+  }];
+  Probe probe = 2;
+}
+
+message CreateAssetProbeResponse {
+  string id = 1;
 }
 
 message GetUserStarredAssetsRequest {
