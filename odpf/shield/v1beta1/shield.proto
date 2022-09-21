@@ -837,7 +837,7 @@ message Role {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated string types = 3;
-  Namespace namespace = 4;
+  Namespace namespace = 4 [deprecated=true];
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
@@ -1040,7 +1040,7 @@ message RemoveProjectAdminResponse {
 message Action {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  Namespace namespace = 3;
+  Namespace namespace = 3 [deprecated=true];
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
   string namespace_id = 6;
@@ -1057,7 +1057,7 @@ message Policy {
   string id = 1;
   Role role = 2;
   Action action = 3;
-  Namespace namespace = 4;
+  Namespace namespace = 4 [deprecated=true];
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
   string namespace_id = 7;
