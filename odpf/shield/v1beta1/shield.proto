@@ -841,6 +841,7 @@ message Role {
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
+  string namespace_id = 8;
 }
 
 message RoleRequestBody {
@@ -1042,6 +1043,7 @@ message Action {
   Namespace namespace = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
+  string namespace_id = 6;
 }
 
 message Namespace {
@@ -1058,6 +1060,7 @@ message Policy {
   Namespace namespace = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
+  string namespace_id = 7;
 }
 
 message ActionRequestBody {
