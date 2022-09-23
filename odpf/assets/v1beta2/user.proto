@@ -3,6 +3,7 @@ syntax = "proto3";
 package odpf.assets.v1beta2;
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 option java_outer_classname = "UserProto";
@@ -12,7 +13,7 @@ option java_package = "io.odpf.assets";
 // It can be a user of the system, or a user of a device.
 // User is a resource that represents a user.
 message User {
-  // The emai address of the user.
+  // The email address of the user.
   // Example: `job.deo@gmail.com`
   string email = 3;
 
@@ -36,7 +37,7 @@ message User {
   // Example: `John M. Doe`
   string display_name = 8;
 
-  // The job title of the user,
+  // The job title of the user.
   // Example: `data engineer`
   string title = 9;
 
@@ -58,6 +59,12 @@ message User {
 
   // List of attributes the model has.
   google.protobuf.Struct attributes = 30;
+
+  // The timestamp of the user's account creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the user's account details were last modified.
+  google.protobuf.Timestamp update_time = 102;
 }
 
 // Membership is a relationship between a user and a group.

@@ -54,9 +54,11 @@ message Asset {
   // Event schemas is defined in the common event schema.
   odpf.assets.v1beta2.Event event = 100;
 
-  // The timestamp when the object was created.
+  // The timestamp when the asset was created.
+  // This information is expected to be maintained by the system.
   google.protobuf.Timestamp create_time = 101;
 
-  // The timestamp when the object was last modified.
+  // The timestamp when the asset was last modified.
+  // This information is expected to be maintained by the system.
   google.protobuf.Timestamp update_time = 102;
 }

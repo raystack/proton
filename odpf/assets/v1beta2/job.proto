@@ -3,6 +3,7 @@ syntax = "proto3";
 package odpf.assets.v1beta2;
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 option java_outer_classname = "JobProto";
@@ -12,4 +13,10 @@ option java_package = "io.odpf.assets";
 message Job {
   // List of attributes the model has.
   google.protobuf.Struct attributes = 10;
+
+  // The timestamp of the job's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the job was last modified.
+  google.protobuf.Timestamp update_time = 102;
 }
