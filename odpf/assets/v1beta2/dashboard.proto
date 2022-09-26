@@ -18,6 +18,12 @@ message Dashboard {
 
   // List of attributes the model has.
   google.protobuf.Struct attributes = 8;
+
+  // The timestamp of the dashboard's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the dashboard was last modified.
+  google.protobuf.Timestamp update_time = 102;
 }
 
 message Chart {

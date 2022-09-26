@@ -3,6 +3,7 @@ syntax = "proto3";
 package odpf.assets.v1beta2;
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 option java_outer_classname = "TopicProto";
@@ -15,17 +16,23 @@ message Topic {
   // For an example check out topic profile schema.
   TopicProfile profile = 1;
 
-  // The schama of the topic.
+  // The schema of the topic.
   // For an example check out topic schema.
   TopicSchema schema = 2;
 
   // List of attributes the model has.
   google.protobuf.Struct attributes = 10;
+
+  // The timestamp of the topic's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the topic was last modified.
+  google.protobuf.Timestamp update_time = 102;
 }
 
 // TopicProfile is the profile of the topic.
 message TopicProfile {
-  // The thrroughput of the topic.
+  // The throughput of the topic.
   // Example: `1m/minute`.
   string throughput = 1;
 
