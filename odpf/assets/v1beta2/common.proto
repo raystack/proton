@@ -25,7 +25,7 @@ message Event {
   string description = 3;
 }
 
-// Linage reprsents the relationship of resource to other resources.
+// Linage represents the relationship of resource to other resources.
 // Relation is way of describing the relationship between two resources.
 message Lineage {
   // The resource that is the source of the relationship.

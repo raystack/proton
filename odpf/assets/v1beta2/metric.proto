@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "MetricProto";
+option java_package = "io.odpf.assets";
+
+// A metric is a timeseries aggregation over a table that supports zero or more dimensions.
+message Metric {
+  // Namespace of the metric. Something like `{project}-{model}` for dbt and
+  // `schema` for Cube.
+  string namespace = 1;
+
+  // The field being used to calculate a metric.
+  string field_name = 2;
+
+  // Type of the evaluated metric. ex: count_distinct, average etc.
+  string measure_type = 3;
+
+  // Optional: The SQL representation of the query with filters and aggregations.
+  string sql = 4;
+
+  // Optional: List of attributes the metric has. This could include the
+  // following:
+  // - time_grains[repeated string]: One or more "grains" at which the metric
+  //   can be evaluated. Ex: [day, week, month].
+  // - dimensions[repeated string]: A list of dimensions to group or filter the
+  //   metric by. Ex: [plan, country].
+  // - filters[repeated map<string, string>]: Predicates for the metric. Ex:
+  //   [{"field": "is_paying", "operator": "is", "value": "true"}].
+  google.protobuf.Struct attributes = 5;
+
+  // The timestamp of the metric's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the metric was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}

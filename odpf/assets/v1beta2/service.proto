@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "ServiceProto";
+option java_package = "io.odpf.assets";
+
+message Service {
+  // The service/application's ID
+  string application_id = 1;
+
+  // Optional: The version of the service.
+  string version = 2;
+
+  // The timestamp of the service's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the service was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}
