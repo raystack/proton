@@ -667,6 +667,9 @@ message CortexAlert {
   map<string, string> labels = 2;
   string status = 3;
   google.protobuf.Timestamp starts_at = 4;
+  google.protobuf.Timestamp ends_at = 5;
+  string generator_url = 6;
+  string fingerprint = 7;
 }
 
 message CreateCortexAlertsRequest {
