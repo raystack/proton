@@ -141,8 +141,37 @@ message BasicInfoSection {
   repeated Log notice =4;
 }
 
+message OptimusDependency {
+  string Name = 1;
+  string Host = 2;
+  string ProjectName = 3;
+  string NamespaceName = 4;
+  string TaskName = 5;
+  map<string, string> Headers = 7;
+}
+
+message UnknownDependencies {
+  string JobName = 1;
+  string ProjectName = 2;
+}
+
+message UpstreamSection {
+  repeated OptimusDependency external_dependency = 1;
+  repeated OptimusDependency internal_dependency = 2;
+  repeated HttpDependency http_dependency = 3;
+  repeated UnknownDependencies unknown_dependencies = 4;
+  repeated Log notice = 5;
+}
+
+message DownstreamSection {
+  repeated OptimusDependency downstream_jobs = 1;
+  repeated Log notice = 2;
+}
+
 message JobInspectResponse {
-  BasicInfoSection basicInfo = 1;
+  BasicInfoSection basic_info = 1;
+  UpstreamSection upstreams = 2;
+  DownstreamSection downstreams = 3;
 }
 
 message CreateJobSpecificationRequest {
