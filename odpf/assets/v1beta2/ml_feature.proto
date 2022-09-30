@@ -12,33 +12,11 @@ option java_package = "io.odpf.assets";
 // is an individual measurable property, typically represented by a column,
 // that serves as an input for Machine Learning (ML) algorithms.
 message MLFeature {
-  // Feature value type. Used to define data types in Feature Tables.
-  enum DataType {
-    DATA_TYPE_UNSPECIFIED = 0;
-    DATA_TYPE_BYTES = 1;
-    DATA_TYPE_STRING = 2;
-    DATA_TYPE_INT32 = 3;
-    DATA_TYPE_INT64 = 4;
-    DATA_TYPE_DOUBLE = 5;
-    DATA_TYPE_FLOAT = 6;
-    DATA_TYPE_BOOL = 7;
-    DATA_TYPE_UNIX_TIMESTAMP = 8;
-    DATA_TYPE_BYTES_LIST = 11;
-    DATA_TYPE_STRING_LIST = 12;
-    DATA_TYPE_INT32_LIST = 13;
-    DATA_TYPE_INT64_LIST = 14;
-    DATA_TYPE_DOUBLE_LIST = 15;
-    DATA_TYPE_FLOAT_LIST = 16;
-    DATA_TYPE_BOOL_LIST = 17;
-    DATA_TYPE_UNIX_TIMESTAMP_LIST = 18;
-    DATA_TYPE_NULL = 19;
-  }
-
   // The name of the field.
   string name = 1;
 
   // The data type associated with an individual ML Feature.
-  DataType data_type = 2;
+  string data_type = 2;
 
   // Optional: Name of the algorithm used to compute the feature, e.g., PCA,
   // bucketing etc.

@@ -21,8 +21,8 @@ message Metric {
   // Type of the evaluated metric. ex: count_distinct, average etc.
   string measure_type = 3;
 
-  // Optional: The SQL representation of the query with filters and aggregations.
-  string sql = 4;
+  // Optional: The query, possibly in SQL representation, with filters and aggregations.
+  string query = 4;
 
   // Optional: List of attributes the metric has. This could include the
   // following:

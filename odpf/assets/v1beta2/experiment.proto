@@ -36,7 +36,7 @@ message Experiment {
   string entity = 1;
 
   // Optional: Percentage of the traffic that the experiment is enabled for.
-  float experiment_traffic = 2;
+  float traffic_percent = 2;
 
   // The variants of the experiment possibly including the control group.
   repeated Variant variants = 3;
