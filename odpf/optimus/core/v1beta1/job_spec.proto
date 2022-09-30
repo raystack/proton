@@ -134,13 +134,15 @@ message JobInspectRequest {
   JobSpecification spec = 4;
 }
 
+message BasicInfoSection {
+  JobSpecification job =1;
+  repeated string source =2;
+  string destination =3;
+  repeated Log notice =4;
+}
 
 message JobInspectResponse {
-  JobSpecification spec = 1;
-  repeated string sources = 2;
-  string destination = 3;
-  repeated Log log = 4;
-  
+  BasicInfoSection basicInfo = 1;
 }
 
 message CreateJobSpecificationRequest {
