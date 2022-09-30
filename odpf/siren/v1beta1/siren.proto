@@ -663,7 +663,7 @@ message ListAlertsResponse {
 }
 
 message CortexAlert {
-  google.protobuf.Struct annotations = 1;
+  map<string, string> annotations = 1;
   map<string, string> labels = 2;
   string status = 3;
   google.protobuf.Timestamp starts_at = 4;
