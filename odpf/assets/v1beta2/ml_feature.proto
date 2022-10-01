@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "MLFeatureProto";
+option java_package = "io.odpf.assets";
+
+// MLFeature is a Machine Learning(ML) feature. In machine learning, a feature
+// is an individual measurable property, typically represented by a column,
+// that serves as an input for Machine Learning (ML) algorithms.
+message MLFeature {
+  // The name of the field.
+  string name = 1;
+
+  // The data type associated with an individual ML Feature.
+  string data_type = 2;
+
+  // Optional: Name of the algorithm used to compute the feature, e.g., PCA,
+  // bucketing etc.
+  string algorithm = 3;
+
+  // Optional: Name of the entity instance.
+  string entity_name = 4;
+}
+
+// MLFeatureTable is a Machine Learning(ML) feature table or view that
+// represents a logical group of time-series feature data as it is found in a
+// data source.
+message MLFeatureTable {
+  // An entity is a collection of semantically related features. Users define
+  // entities to map to the domain of their use case. For example, a
+  // ride-hailing service could have customers and drivers as their entities,
+  // which group related features that correspond to these customers and drivers.
+  message Entity {
+    // The unique name of the entity.
+    string name = 1;
+
+    // A property that uniquely identifies different entities within the
+    // collection. The join_key property is typically used for joining entities
+    // with their associated features.
+    repeated string join_keys = 2;
+
+    // Optional: Arbitrary metadata.
+    map<string, string> labels = 3;
+  }
+
+  // Optional: Feature store's namespace or project.
+  string namespace = 1;
+
+  // Optional: The list of entities that this feature view is associated with.
+  repeated Entity entities = 2;
+
+  // Features that are part of the table, akin to columns in a table.
+  repeated MLFeature features = 3;
+
+  // The timestamp when the feature table was created.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the feature table was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}

@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package odpf.assets.v1beta2;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "MLModelProto";
+option java_package = "io.odpf.assets";
+
+// MLModel represents a Machine Learning(ML) Model. Models are algorithms trained
+// on data to find patterns or make predictions. Models typically consume
+// ML features to generate a meaningful output. The inputs can also include
+// contextual information that is made available in realtime as part of the
+// request to the model server.
+message MLModel {
+  // Schema of the model's inputs and outputs. Strongly inspired by
+  // https://mlflow.org/docs/latest/python_api/mlflow.models.html#mlflow.models.ModelSignature.
+  message Signature {
+    // Specification of name and type of a single column in a dataset.
+    message Parameter {
+      // Optional: Name of the input or output parameter.
+      string name = 1;
+
+      // Data type of the parameter. Ex: boolean, double, numpy's dtypes etc.
+      string data_type = 2;
+
+      // Optional: The tensor shape.
+      repeated int64 shape = 3;
+    }
+
+    repeated Parameter inputs = 1;
+    repeated Parameter outputs = 2;
+  }
+
+  // Optional: Model's namespace or project.
+  string namespace = 1;
+
+  // Flavor of the ML Model. ex: pytorch, tensorflow etc.
+  string flavor = 2;
+
+  // Optional: Algorithm used to train the ML Model.
+  string algorithm = 3;
+
+  // The schema of a model’s inputs and outputs.
+  Signature signature = 4;
+
+  // Status of the model. ex: pending/ready/serving/terminated etc.
+  string state = 5;
+
+  // Version of the model
+  string version = 6;
+
+  // List of attributes the model has. This could include the following:
+  // - endpoint_url[string]: Endpoint that the model is serving requests on.
+  //   Ex: http://<model_name>-<version>.<project_name>.<merlin_base_url>.
+  // - version_endpoint_url[string]: Endpoint that the model is serving
+  //   requests on for the specific version. Ex:
+  //   http://<model_name>-<version>.<project_name>.<merlin_base_url>.
+  // - traffic[double]: Percentage of traffic being served by this version of
+  //   the model.
+  // - params[map<string, string>]: Parameters for the Model's run.
+  // - metrics[map<string, double>]: Metrics for the model's run.
+  google.protobuf.Struct attributes = 7;
+
+  // The timestamp of the model's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the model was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}
