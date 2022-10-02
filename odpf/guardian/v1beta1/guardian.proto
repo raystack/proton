@@ -790,4 +790,5 @@ message Grant {
   Appeal appeal = 17;
   bool is_permanent = 18;
   string source = 19;
+  string status_in_provider = 20;
 }
