@@ -770,4 +770,5 @@ message Grant {
 
   Resource resource = 16;
   Appeal appeal = 17;
+  bool is_permanent = 18;
 }
