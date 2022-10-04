@@ -81,6 +81,14 @@ message ResourceSpec {
   repeated ResourceDependency dependencies = 2;
 }
 
+message ListString {
+  repeated string values = 1;
+}
+
+message LogOptions {
+  map <string, ListString> filters = 1;
+}
+
 message ResourceState {
   enum Status {
     STATUS_UNSPECIFIED = 0;
@@ -93,6 +101,7 @@ message ResourceState {
   Status status = 1;
   google.protobuf.Value output = 2;
   bytes module_data = 3;
+  LogOptions log_options = 4;
 }
 
 message Resource {
