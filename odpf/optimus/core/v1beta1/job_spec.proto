@@ -134,12 +134,7 @@ message JobInspectRequest {
   JobSpecification spec = 4;
 }
 
-message BasicInfoSection {
-  JobSpecification job =1;
-  repeated string source =2;
-  string destination =3;
-  repeated Log notice =4;
-}
+
 
 message OptimusDependency {
   string name = 1;
@@ -150,27 +145,33 @@ message OptimusDependency {
   map<string, string> headers = 7;
 }
 
-message UnknownDependencies {
-  string job_name = 1;
-  string project_name = 2;
-}
-
-message UpstreamSection {
-  repeated OptimusDependency external_dependency = 1;
-  repeated OptimusDependency internal_dependency = 2;
-  repeated HttpDependency http_dependency = 3;
-  repeated UnknownDependencies unknown_dependencies = 4;
-  repeated Log notice = 5;
-}
-
-message DownstreamSection {
-  repeated OptimusDependency downstream_jobs = 1;
-  repeated Log notice = 2;
-}
-
 message JobInspectResponse {
+  message BasicInfoSection {
+    JobSpecification job =1;
+    repeated string source =2;
+    string destination =3;
+    repeated Log notice =4;
+  }
   BasicInfoSection basic_info = 1;
+
+  message UpstreamSection {
+    repeated OptimusDependency external_dependency = 1;
+    repeated OptimusDependency internal_dependency = 2;
+    repeated HttpDependency http_dependency = 3;
+    
+    message UnknownDependencies {
+      string job_name = 1;
+      string project_name = 2;
+    }
+    repeated UnknownDependencies unknown_dependencies = 4;
+    repeated Log notice = 5;
+  }
   UpstreamSection upstreams = 2;
+  
+  message DownstreamSection {
+    repeated OptimusDependency downstream_jobs = 1;
+    repeated Log notice = 2;
+  }
   DownstreamSection downstreams = 3;
 }
 
