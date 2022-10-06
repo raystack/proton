@@ -132,6 +132,7 @@ message JobInspectRequest {
   string namespace_name = 2;
   string job_name = 3;
   JobSpecification spec = 4;
+  google.protobuf.Timestamp scheduled_at = 5;
 }
 
 
