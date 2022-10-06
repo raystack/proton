@@ -136,15 +136,13 @@ message JobInspectRequest {
   google.protobuf.Timestamp scheduled_at = 5;
 }
 
-
-
 message OptimusDependency {
   string name = 1;
   string host = 2;
   string project_name = 3;
   string namespace_name = 4;
   string task_name = 5;
-  map<string, string> headers = 7;
+  repeated google.protobuf.Timestamp runs = 6;
 }
 
 message JobInspectResponse {
