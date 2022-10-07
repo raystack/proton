@@ -142,7 +142,7 @@ message OptimusDependency {
   string project_name = 3;
   string namespace_name = 4;
   string task_name = 5;
-  repeated google.protobuf.Timestamp runs = 6;
+  repeated JobRun runs = 6;
 }
 
 message JobInspectResponse {
