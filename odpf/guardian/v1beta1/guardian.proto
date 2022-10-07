@@ -524,6 +524,7 @@ message ListGrantsRequest {
   repeated string roles = 9;
   string created_by = 10;
   repeated string order_by = 11;
+  string owner = 12;
 }
 
 message ListGrantsResponse {
@@ -791,4 +792,5 @@ message Grant {
   bool is_permanent = 18;
   string source = 19;
   string status_in_provider = 20;
+  string owner = 21;
 }
