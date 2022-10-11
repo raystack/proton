@@ -487,17 +487,6 @@ service ShieldService {
     };
   }
 
-  rpc AssignRoleToNamespace(AssignRoleToNamespaceRequest) returns (AssignRoleToNamespaceResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/namespaces/{object_namespace_id}/{object_id}/assign_role",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Assign role";
-    };
-  }
-
   // Policies
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
     option (google.api.http) = {
