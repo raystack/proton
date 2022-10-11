@@ -142,7 +142,7 @@ service StencilService {
 message Namespace {
   string id = 1;
   Schema.Format format = 2;
-  Schema.Compatibility Compatibility = 3;
+  Schema.Compatibility compatibility = 3;
   string description = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
