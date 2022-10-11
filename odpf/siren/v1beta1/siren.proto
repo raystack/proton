@@ -13,6 +13,7 @@ option go_package = "github.com/odpf/proton/siren/v1beta1;sirenv1beta1";
 option java_multiple_files = true;
 option java_outer_classname = "ServiceManager";
 option java_package = "io.odpf.proton.siren";
+
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
@@ -662,15 +663,21 @@ message ListAlertsResponse {
 }
 
 message CortexAlert {
-  Annotations annotations = 1;
-  Labels labels = 2;
+  map<string, string> annotations = 1;
+  map<string, string> labels = 2;
   string status = 3;
   google.protobuf.Timestamp starts_at = 4;
+  google.protobuf.Timestamp ends_at = 5;
+  string generator_url = 6;
+  string fingerprint = 7;
 }
 
 message CreateCortexAlertsRequest {
   uint64 provider_id = 1;
   repeated CortexAlert alerts = 2;
+  string group_key = 3;
+  string external_url = 4;
+  string version = 5;
 }
 
 message CreateCortexAlertsResponse {
