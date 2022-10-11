@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package odpf.assets.facets.v1beta1;
 
-import "odpf/assets/common/v1beta1/resource.proto";
+import "odpf/assets/v1beta1/common/resource.proto";
 
 option go_package = "github.com/odpf/proton/assets/facets/v1beta1;facetsv1beta1";
 option java_outer_classname = "LineageProto";
