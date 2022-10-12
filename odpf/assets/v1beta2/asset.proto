@@ -10,17 +10,17 @@ option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 option java_outer_classname = "AssetsProto";
 option java_package = "io.odpf.assets";
 
-// Job is a resource that represents a job.
+// Asset is a resource that represents any type of asset.
 message Asset {
-  // The unique identifier of the asset/resource.
+  // The unique identifier of the asset.
   // Example: `user:jdoe` or `group:accounting`.
   string urn = 1;
 
-  // The name of the resource.
+  // The name of the asset.
   // Example: `John Doe` or `Accounting`.
   string name = 2;
 
-  // The source of the resource.
+  // The source of the asset.
   // Example: `github` or `bigquery`.
   string service = 3;
 
@@ -40,7 +40,7 @@ message Asset {
   google.protobuf.Any data = 7;
 
   // The ownership of the job.
-  // For an example check out ownership.
+  // For an example check out Owner.
   repeated odpf.assets.v1beta2.Owner owners = 31;
 
   // The lineage of the job.

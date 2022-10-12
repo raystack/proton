@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package odpf.assets.common.v1beta1;
+package odpf.assets.v1beta1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/odpf/proton/assets/common/v1beta1;commonv1beta1";
+option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 option java_outer_classname = "TimestampProto";
-option java_package = "io.odpf.assets.common";
+option java_package = "io.odpf.assets";
 
 // Timestamp represents created and modified timestamps.
 message Timestamp {
