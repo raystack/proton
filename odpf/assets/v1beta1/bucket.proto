@@ -34,11 +34,11 @@ message Bucket {
 
   // The ownership of the bucket.
   // For an example check out ownership.
-  odpf.assets.facets.v1beta1.Ownership ownership = 31;
+  odpf.assets.v1beta1.Ownership ownership = 31;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.v1beta1.Properties properties = 32;
+  odpf.assets.v1beta1.Properties properties = 32;
 
   // The timestamp of the bucket's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a bucket.
@@ -74,11 +74,11 @@ message Blob {
 
   // The ownership of the blob.
   // For an example check out ownership.
-  odpf.assets.facets.v1beta1.Ownership ownership = 31;
+  odpf.assets.v1beta1.Ownership ownership = 31;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.v1beta1.Properties properties = 32;
+  odpf.assets.v1beta1.Properties properties = 32;
 
   // The timestamp of the blob's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a blob.

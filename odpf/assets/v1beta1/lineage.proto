@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package odpf.assets.facets.v1beta1;
+package odpf.assets.v1beta1;
 
 import "odpf/assets/v1beta1/resource.proto";
 

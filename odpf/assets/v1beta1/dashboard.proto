@@ -24,11 +24,11 @@ message Dashboard {
 
   // The ownership of the dashboard.
   // For an example check out ownership.
-  odpf.assets.facets.v1beta1.Ownership ownership = 31;
+  odpf.assets.v1beta1.Ownership ownership = 31;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.v1beta1.Properties properties = 32;
+  odpf.assets.v1beta1.Properties properties = 32;
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
@@ -36,7 +36,7 @@ message Dashboard {
 
   // The lineage of the dashboard.
   // For an example check out lineage schema.
-  odpf.assets.facets.v1beta1.Lineage lineage = 34;
+  odpf.assets.v1beta1.Lineage lineage = 34;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
@@ -86,15 +86,15 @@ message Chart {
 
   // The ownership of the dashboard.
   // For an example check out ownership.
-  odpf.assets.facets.v1beta1.Ownership ownership = 31;
+  odpf.assets.v1beta1.Ownership ownership = 31;
 
   // The lineage of the chart.
   // For an example check out lineage schema.
-  odpf.assets.facets.v1beta1.Lineage lineage = 32;
+  odpf.assets.v1beta1.Lineage lineage = 32;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a dashboard.
-  odpf.assets.facets.v1beta1.Properties properties = 33;
+  odpf.assets.v1beta1.Properties properties = 33;
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a dashboard.
