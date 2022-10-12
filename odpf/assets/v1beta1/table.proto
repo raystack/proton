@@ -27,23 +27,23 @@ message Table {
 
   // The columns of the table.
   // Example: 'id', `name`, `age'.
-  odpf.assets.facets.v1beta1.Columns schema = 22;
+  odpf.assets.v1beta1.Columns schema = 22;
 
   // Previews of the table.
   // For an example check out preview facet.
-  odpf.assets.facets.v1beta1.Preview preview = 23;
+  odpf.assets.v1beta1.Preview preview = 23;
 
   // The ownership of the table.
   // For an example check out ownership.
-  odpf.assets.facets.v1beta1.Ownership ownership = 31;
+  odpf.assets.v1beta1.Ownership ownership = 31;
 
   // The lineage of the table.
   // For an example check out lineage.
-  odpf.assets.facets.v1beta1.Lineage lineage = 32;
+  odpf.assets.v1beta1.Lineage lineage = 32;
 
   // List of the user's custom properties.
   // Properties facet can be used to set custom properties, tags and labels for a user.
-  odpf.assets.facets.v1beta1.Properties properties = 33;
+  odpf.assets.v1beta1.Properties properties = 33;
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
