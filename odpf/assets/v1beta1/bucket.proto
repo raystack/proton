@@ -3,11 +3,11 @@ syntax = "proto3";
 package odpf.assets.v1beta1;
 
 import "google/protobuf/timestamp.proto";
-import "odpf/assets/v1beta1/common/event.proto";
-import "odpf/assets/v1beta1/common/resource.proto";
-import "odpf/assets/v1beta1/common/timestamp.proto";
-import "odpf/assets/v1beta1/facets/ownership.proto";
-import "odpf/assets/v1beta1/facets/properties.proto";
+import "odpf/assets/v1beta1/event.proto";
+import "odpf/assets/v1beta1/resource.proto";
+import "odpf/assets/v1beta1/timestamp.proto";
+import "odpf/assets/v1beta1/ownership.proto";
+import "odpf/assets/v1beta1/properties.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 option java_outer_classname = "BucketProto";
@@ -15,7 +15,7 @@ option java_package = "io.odpf.assets";
 
 message Bucket {
   // Representation of the resource
-  odpf.assets.common.v1beta1.Resource resource = 1;
+  odpf.assets.v1beta1.Resource resource = 1;
 
   // The description of the bucket.
   // Example: `This bucket was created by the product team.`
@@ -42,11 +42,11 @@ message Bucket {
 
   // The timestamp of the bucket's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a bucket.
-  odpf.assets.common.v1beta1.Timestamp timestamps = 33;
+  odpf.assets.v1beta1.Timestamp timestamps = 33;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
-  odpf.assets.common.v1beta1.Event event = 100;
+  odpf.assets.v1beta1.Event event = 100;
 }
 
 message Blob {
@@ -82,5 +82,5 @@ message Blob {
 
   // The timestamp of the blob's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a blob.
-  odpf.assets.common.v1beta1.Timestamp timestamps = 33;
+  odpf.assets.v1beta1.Timestamp timestamps = 33;
 }

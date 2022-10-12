@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package odpf.assets.v1beta1;
 
-import "odpf/assets/v1beta1/common/event.proto";
-import "odpf/assets/v1beta1/common/resource.proto";
-import "odpf/assets/v1beta1/common/timestamp.proto";
-import "odpf/assets/v1beta1/facets/properties.proto";
+import "odpf/assets/v1beta1/event.proto";
+import "odpf/assets/v1beta1/resource.proto";
+import "odpf/assets/v1beta1/timestamp.proto";
+import "odpf/assets/v1beta1/properties.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta1;assetsv1beta1";
 option java_outer_classname = "GroupProto";
@@ -14,7 +14,7 @@ option java_package = "io.odpf.assets";
 // Group represents a group of users and resources.
 message Group {
   // Representation of the resource
-  odpf.assets.common.v1beta1.Resource resource = 1;
+  odpf.assets.v1beta1.Resource resource = 1;
 
   // The email of the group.
   // Example: `xyz@xyz.com`
@@ -30,11 +30,11 @@ message Group {
 
   // The timestamp of the user's creation.
   // Timstamp facet can be used to set the creation and updation timestamp of a user.
-  odpf.assets.common.v1beta1.Timestamp timestamps = 32;
+  odpf.assets.v1beta1.Timestamp timestamps = 32;
 
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
-  odpf.assets.common.v1beta1.Event event = 100;
+  odpf.assets.v1beta1.Event event = 100;
 }
 
 // Member represents a user.
