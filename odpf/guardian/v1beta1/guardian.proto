@@ -66,13 +66,6 @@ service GuardianService {
     };
   }
 
-  rpc ImportAccess(ImportAccessRequest) returns (ImportAccessResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/providers/{id}/import-access"
-      body: "*"
-    };
-  }
-
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
     option (google.api.http) = {
       get: "/v1beta1/policies"
@@ -224,6 +217,13 @@ service GuardianService {
       body: "*"
     };
   }
+
+  rpc ImportAccess(ImportAccessRequest) returns (ImportAccessResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/grants/import"
+      body: "*"
+    };
+  }
 }
 
 message ListProvidersRequest {}
@@ -270,7 +270,7 @@ message DeleteProviderRequest {
 message DeleteProviderResponse {}
 
 message ImportAccessRequest {
-    string id = 1;
+    string provider_id = 1;
     repeated string resource_ids = 2;
     repeated string resource_types = 3;
     repeated string resource_urns = 4;
