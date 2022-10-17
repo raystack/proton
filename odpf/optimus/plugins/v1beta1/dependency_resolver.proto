@@ -20,6 +20,9 @@ service DependencyResolverModService {
   // GenerateDependencies return names of job destination on which this unit
   // is dependent on
   rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
+
+  // CompileAssets overrides the default asset compilation behaviour
+  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse);
 }
 
 message GenerateDestinationRequest {

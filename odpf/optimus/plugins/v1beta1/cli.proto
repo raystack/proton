@@ -33,7 +33,9 @@ service CLIModService {
   rpc DefaultAssets(DefaultAssetsRequest) returns (DefaultAssetsResponse);
 
   // CompileAssets overrides the default asset compilation behaviour
-  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse);
+  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse) {
+    option deprecated = true;
+  }
 }
 
 message PluginQuestion {
