@@ -5,13 +5,13 @@ package odpf.assets.v1beta2;
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
-option java_outer_classname = "MLFeatureProto";
+option java_outer_classname = "FeatureProto";
 option java_package = "io.odpf.assets";
 
-// MLFeature is a Machine Learning(ML) feature. In machine learning, a feature
+// Feature is a Machine Learning(ML) feature. In machine learning, a feature
 // is an individual measurable property, typically represented by a column,
 // that serves as an input for Machine Learning (ML) algorithms.
-message MLFeature {
+message Feature {
   // The name of the field.
   string name = 1;
 
@@ -26,10 +26,10 @@ message MLFeature {
   string entity_name = 4;
 }
 
-// MLFeatureTable is a Machine Learning(ML) feature table or view that
+// FeatureTable is a Machine Learning(ML) feature table or view that
 // represents a logical group of time-series feature data as it is found in a
 // data source.
-message MLFeatureTable {
+message FeatureTable {
   // An entity is a collection of semantically related features. Users define
   // entities to map to the domain of their use case. For example, a
   // ride-hailing service could have customers and drivers as their entities,
@@ -54,7 +54,7 @@ message MLFeatureTable {
   repeated Entity entities = 2;
 
   // Features that are part of the table, akin to columns in a table.
-  repeated MLFeature features = 3;
+  repeated Feature features = 3;
 
   // The timestamp when the feature table was created.
   google.protobuf.Timestamp create_time = 101;
