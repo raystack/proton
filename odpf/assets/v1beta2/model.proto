@@ -6,15 +6,15 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
-option java_outer_classname = "MLModelProto";
+option java_outer_classname = "ModelProto";
 option java_package = "io.odpf.assets";
 
-// MLModel represents a Machine Learning(ML) Model. Models are algorithms trained
-// on data to find patterns or make predictions. Models typically consume
-// ML features to generate a meaningful output. The inputs can also include
-// contextual information that is made available in realtime as part of the
-// request to the model server.
-message MLModel {
+// Model represents a Data Science Model commonly used for Machine Learning
+// (ML). Models are algorithms trained on data to find patterns or make
+// predictions. Models typically consume ML features to generate a meaningful
+// output. The inputs can also include contextual information that is made
+// available in realtime as part of the request to the model server.
+message Model {
   // Schema of the model's inputs and outputs. Strongly inspired by
   // https://mlflow.org/docs/latest/python_api/mlflow.models.html#mlflow.models.ModelSignature.
   message Signature {
