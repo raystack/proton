@@ -135,6 +135,10 @@ message JobInspectRequest {
   JobSpecification spec = 4;
   google.protobuf.Timestamp scheduled_at = 5;
 }
+message JobRun {
+  string state = 1;
+  google.protobuf.Timestamp scheduled_at = 2;
+}
 
 message OptimusDependency {
   string name = 1;
