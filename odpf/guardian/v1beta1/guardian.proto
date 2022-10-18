@@ -217,6 +217,13 @@ service GuardianService {
       body: "*"
     };
   }
+
+  rpc ImportGrantsFromProvider(ImportGrantsFromProviderRequest) returns (ImportGrantsFromProviderResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/grants/import"
+      body: "*"
+    };
+  }
 }
 
 message ListProvidersRequest {}
@@ -261,6 +268,17 @@ message DeleteProviderRequest {
 }
 
 message DeleteProviderResponse {}
+
+message ImportGrantsFromProviderRequest {
+    string provider_id = 1;
+    repeated string resource_ids = 2;
+    repeated string resource_types = 3;
+    repeated string resource_urns = 4;
+}
+
+message ImportGrantsFromProviderResponse {
+    repeated Grant grants = 1;
+}
 
 message ListRolesRequest {
   string id = 1;
@@ -506,6 +524,7 @@ message ListGrantsRequest {
   repeated string roles = 9;
   string created_by = 10;
   repeated string order_by = 11;
+  string owner = 12;
 }
 
 message ListGrantsResponse {
@@ -771,4 +790,7 @@ message Grant {
   Resource resource = 16;
   Appeal appeal = 17;
   bool is_permanent = 18;
+  string source = 19;
+  string status_in_provider = 20;
+  string owner = 21;
 }
