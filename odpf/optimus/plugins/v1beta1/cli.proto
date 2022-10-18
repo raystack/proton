@@ -13,6 +13,7 @@ option java_package = "io.odpf.proton.optimus.plugins";
 
 // CLIModService must be implemented to interact with users via optimus cli
 service CLIModService {
+  option deprecated = true;
   // GetQuestions list down all the cli inputs required to generate spec files
   // name used for question will be directly mapped to DefaultConfig() parameters
   rpc GetQuestions(GetQuestionsRequest) returns (GetQuestionsResponse);
@@ -33,9 +34,7 @@ service CLIModService {
   rpc DefaultAssets(DefaultAssetsRequest) returns (DefaultAssetsResponse);
 
   // CompileAssets overrides the default asset compilation behaviour
-  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse) {
-    option deprecated = true;
-  }
+  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse);
 }
 
 message PluginQuestion {
