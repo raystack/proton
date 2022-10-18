@@ -643,7 +643,9 @@ message PolicyAppealConfig {
     string value = 2;
   }
   repeated DurationOptions duration_options = 1;
-  bool allow_on_behalf = 2;
+  bool allow_on_behalf = 2;  
+  bool allow_permanent_access = 3;
+  string allow_active_access_extension_in = 4;
 }
 
 // Policy is a configurable steps for appeal's approval
