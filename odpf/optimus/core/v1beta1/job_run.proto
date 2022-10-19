@@ -37,6 +37,7 @@ service JobRunService {
   // RegisterInstance is an internal admin command used during task/hook execution
   // to pull task/hook compiled configuration and assets.
   rpc RegisterInstance(RegisterInstanceRequest) returns (RegisterInstanceResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       post: "/v1beta1/project/{project_name}/job/{job_name}/instance"
       body: "*"
