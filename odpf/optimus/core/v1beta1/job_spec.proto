@@ -140,14 +140,7 @@ message JobRun {
   google.protobuf.Timestamp scheduled_at = 2;
 }
 
-message OptimusDependency {
-  string name = 1;
-  string host = 2;
-  string project_name = 3;
-  string namespace_name = 4;
-  string task_name = 5;
-  repeated JobRun runs = 6;
-}
+
 
 message JobInspectResponse {
   message BasicInfoSection {
@@ -158,9 +151,17 @@ message JobInspectResponse {
   }
   BasicInfoSection basic_info = 1;
 
+  message JobDependency {
+    string name = 1;
+    string host = 2;
+    string project_name = 3;
+    string namespace_name = 4;
+    string task_name = 5;
+    repeated JobRun runs = 6;
+  }
   message UpstreamSection {
-    repeated OptimusDependency external_dependency = 1;
-    repeated OptimusDependency internal_dependency = 2;
+    repeated JobDependency external_dependency = 1;
+    repeated JobDependency internal_dependency = 2;
     repeated HttpDependency http_dependency = 3;
     
     message UnknownDependencies {
@@ -173,7 +174,7 @@ message JobInspectResponse {
   UpstreamSection upstreams = 2;
   
   message DownstreamSection {
-    repeated OptimusDependency downstream_jobs = 1;
+    repeated JobDependency downstream_jobs = 1;
     repeated Log notice = 2;
   }
   DownstreamSection downstreams = 3;
