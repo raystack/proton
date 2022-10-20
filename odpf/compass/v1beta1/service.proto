@@ -827,7 +827,19 @@ message GetGraphRequest {
 }
 
 message GetGraphResponse {
+  message ProbesInfo {
+    Probe latest = 1;
+  }
+
+  message NodeAttributes {
+    ProbesInfo probes = 1;
+  }
+
+  // Edges in the graph.
   repeated LineageEdge data = 1;
+  // Key is the asset URN. Node attributes, if present, will be returned for
+  // source and target nodes in the LineageEdge.
+  map<string, NodeAttributes> node_attrs = 2;
 }
 
 message GetAllTypesRequest {
@@ -1420,8 +1432,8 @@ message LineageNode {
   };
 
   string urn = 1;
-  string type = 2;
-  string service = 3;
+  string type = 2 [deprecated = true];
+  string service = 3 [deprecated = true];
 }
 
 message Tag {
