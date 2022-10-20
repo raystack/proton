@@ -153,11 +153,6 @@ message JobRunResponse {
   repeated JobRun job_runs = 1;
 }
 
-message JobRun {
-  string state = 1;
-  google.protobuf.Timestamp scheduled_at = 2;
-}
-
 message GetWindowRequest {
   google.protobuf.Timestamp scheduled_at = 1;
   string size = 2;
