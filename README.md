@@ -1,14 +1,21 @@
 # Proton
 
-This repository is home for the [protocol buffer](https://developers.google.com/protocol-buffers) API definitions which are used throughout ODPF ecosystem.
+This repository contains the original interface definitions of ODPF APIs that support both REST and gRPC protocols. Reading the original interface definitions can provide a better understanding of ODPF APIs and help you to utilize them more efficiently. You can also use these definitions with open source tools to generate client libraries, documentation, and other artifacts.
 
-### Why a single protos repository?
+## Overview
 
-Following are the considerations for going with single repository:
+ODPF APIs are typically deployed as API services that are hosted under different DNS names. One API service may implement multiple APIs and multiple versions of the same API.
 
-- This repository contains protocol buffers that have common patterns and APIs that services can reuse instead of spending effort in writing these protobufs. Each subdirectory contains details of the respective protos.
-- Validation, generation, and other proto-related operations can be placed in one place. Thus, avoid duplication.
-- We also see good possibility to reuse proto schema. Have it in one place make it easy to import proto.
+ODPF APIs use [Protocol Buffers](https://github.com/google/protobuf) version 3 (proto3) as their Interface Definition Language (IDL) to define the API interface and the structure of the payload messages. The same interface definition is used for both REST and RPC versions of the API, which can be accessed over different wire protocols.
+
+There are several ways of accessing ODPF APIs:
+
+1.  JSON over HTTP: You can access all ODPF APIs directly using JSON over HTTP, using any API client libraries.
+2.  Protocol Buffers over gRPC: You can access ODPF APIs published in this repository through [GRPC](https://github.com/grpc), which is a high-performance binary RPC protocol over HTTP/2. It offers many useful features, including request/response multiplex and full-duplex streaming.
+
+## Structure
+
+This repository uses a directory hierarchy that reflects the ODPF API product structure. In general, every API has its own root directory, and each major version of the API has its own subdirectory. The proto package names exactly match the directory: this makes it easy to locate the proto definitions and ensures that the generated client libraries have idiomatic namespaces in most programming languages.
 
 ## Usage
 
@@ -16,16 +23,9 @@ Proton does not provide compiled language specific proto files or the descriptor
 
 <p align="center"><img src="./docs/assets/usage.svg" /></p>
 
-## Prerequisites
-
-- [Buf](https://docs.buf.build/installation)
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-
-## Structure
-
-Proton has flat structure where proto files are put under `/odpf/proton/\<application\>/`. Each application's sub directory read me provides details on how to use the respective proto.
-
 ## Guide
+
+To generate gRPC source code for Google APIs in this repository, you first need to install buf on your local machine.
 
 ### Generating go code using buf
 
@@ -33,7 +33,7 @@ Proton has flat structure where proto files are put under `/odpf/proton/\<applic
 
 Add this `buf.gen.yaml` at the root folder.
 
-```
+```yaml
 version: v1beta1
 plugins:
   - name: go
@@ -44,23 +44,35 @@ plugins:
 Run below command to generate your proto to `/dst` folder.
 
 ```
-buf generate
+$ buf generate
 ```
 
 Use below command if you just want to target specific package/folder
 
 ```
-buf generate --path odpf/assets
+$ buf generate --path odpf/assets
 ```
 
 ## Contribute
 
-Prerequisite: You need to have [buf](https://buf.build/) installed
+<details>
+  <summary>Prerequisites:</summary>
+  
+- [Buf](https://docs.buf.build/installation)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+</details>
+
+You can run following command for linting protobuf files
+
+```sh
+$ buf lint
+```
 
 You can add proto files when you need to introduce proto for ODPF projects. If you need to modify proto files, you need to ensure backward compatibility. To ensure the backward compatibility of your changes, you can run
 
 ```
-buf breaking --against '.git#branch=master'
+$ buf breaking --against '.git#branch=master'
 ```
 
 ## License
