@@ -1185,6 +1185,7 @@ message Resource {
   google.protobuf.Timestamp updated_at = 8;
   User user = 9;
   string urn = 10;
+  string creator = 11;
 }
 
 message ListRelationsRequest {}
@@ -1238,11 +1239,9 @@ message ListResourcesResponse {
 
 message ResourceRequestBody {
   string name = 1;
-  string group_id = 2;
-  string project_id = 3;
-  string organization_id = 4;
-  string namespace_id = 5;
-  string user_id = 6;
+  string project_id = 2;
+  string namespace_id = 3;
+  repeated Relation = 4;
 }
 
 message CreateResourceRequest {
