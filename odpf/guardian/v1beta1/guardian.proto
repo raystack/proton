@@ -790,6 +790,8 @@ message Resource {
   google.protobuf.Timestamp created_at = 9;
   google.protobuf.Timestamp updated_at = 10;
   bool is_deleted = 11;
+  string parent_id = 12;
+  repeated Resource children = 13;
 }
 
 message Grant {
