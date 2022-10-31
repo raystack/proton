@@ -14,6 +14,9 @@ option java_package = "io.odpf.proton.optimus.plugins";
 // DependencyResolverModService must be implemented by all plugins want to support automatic
 // dependency resolution
 service DependencyResolverModService {
+  // GetName returns name of the plugin
+  rpc GetName(GetNameRequest) returns (GetNameResponse);
+
   // GenerateDestination derive destination from config and assets
   rpc GenerateDestination(GenerateDestinationRequest) returns (GenerateDestinationResponse);
 
@@ -23,6 +26,12 @@ service DependencyResolverModService {
 
   // CompileAssets overrides the default asset compilation behaviour
   rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse);
+}
+
+message GetNameRequest {}
+
+message GetNameResponse {
+  string name = 1;
 }
 
 message GenerateDestinationRequest {
