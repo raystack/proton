@@ -488,7 +488,7 @@ message DeleteNamespaceResponse {}
 
 message ReceiverMetadata {
   uint64 id = 1;
-  map<string, string> configuration = 4;
+  google.protobuf.Struct configuration = 4;
 }
 
 message Subscription {
