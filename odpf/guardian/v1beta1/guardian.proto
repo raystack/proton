@@ -450,6 +450,7 @@ message CreateAppealRequest {
   }
   repeated Resource resources = 2;
   string account_type = 3;
+  string description = 4;
 }
 
 message CreateAppealResponse {
@@ -739,6 +740,7 @@ message Appeal {
   google.protobuf.Value creator = 20;
   repeated string permissions = 21;
   Grant grant = 22;
+  string description = 23;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
