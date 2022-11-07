@@ -275,15 +275,15 @@ service SirenService {
     };
   }
 
-  rpc CreateCortexAlerts(CreateCortexAlertsRequest) returns (CreateCortexAlertsResponse) {
+  rpc CreateAlerts(CreateAlertsRequest) returns (CreateAlertsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create cortex alerts";
+      summary: "create alerts";
       tags: "Alert";
     };
 
     option (google.api.http) = {
-      post: "/v1beta1/alerts/cortex/{provider_id}"
-      body: "*"
+      post: "/v1beta1/alerts/{provider_type}/{provider_id}"
+      body: "body"
     };
   }
 
@@ -488,7 +488,7 @@ message DeleteNamespaceResponse {}
 
 message ReceiverMetadata {
   uint64 id = 1;
-  map<string, string> configuration = 4;
+  google.protobuf.Struct configuration = 4;
 }
 
 message Subscription {
@@ -628,25 +628,13 @@ message ListAlertsResponse {
   repeated Alert alerts = 1;
 }
 
-message CortexAlert {
-  map<string, string> annotations = 1;
-  map<string, string> labels = 2;
-  string status = 3;
-  google.protobuf.Timestamp starts_at = 4;
-  google.protobuf.Timestamp ends_at = 5;
-  string generator_url = 6;
-  string fingerprint = 7;
+message CreateAlertsRequest {
+  string provider_type= 1;
+  uint64 provider_id = 2;
+  google.protobuf.Struct body = 3;
 }
 
-message CreateCortexAlertsRequest {
-  uint64 provider_id = 1;
-  repeated CortexAlert alerts = 2;
-  string group_key = 3;
-  string external_url = 4;
-  string version = 5;
-}
-
-message CreateCortexAlertsResponse {
+message CreateAlertsResponse {
   repeated Alert alerts = 1;
 }
 
