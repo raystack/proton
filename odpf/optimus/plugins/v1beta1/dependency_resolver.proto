@@ -2,9 +2,10 @@ syntax = "proto3";
 
 package odpf.optimus.plugins.v1beta1;
 
+import "google/protobuf/timestamp.proto";
+import "odpf/optimus/core/v1beta1/job_run.proto";
 import "odpf/optimus/core/v1beta1/project.proto";
 import "odpf/optimus/plugins/v1beta1/base.proto";
-import "odpf/optimus/plugins/v1beta1/cli.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
 option java_multiple_files = true;
@@ -20,6 +21,9 @@ service DependencyResolverModService {
   // GenerateDependencies return names of job destination on which this unit
   // is dependent on
   rpc GenerateDependencies(GenerateDependenciesRequest) returns (GenerateDependenciesResponse);
+
+  // CompileAssets overrides the default asset compilation behaviour
+  rpc CompileAssets(CompileAssetsRequest) returns (CompileAssetsResponse);
 }
 
 message GenerateDestinationRequest {
@@ -43,4 +47,36 @@ message GenerateDependenciesRequest {
 }
 message GenerateDependenciesResponse {
   repeated string dependencies = 1;
+}
+
+message Configs {
+  message Config {
+    string name = 1;
+    string value = 2;
+  }
+  repeated Config configs = 1;
+}
+
+message Assets {
+  message Asset {
+    string name = 1;
+    string value = 2;
+  }
+  repeated Asset assets = 1;
+}
+
+message CompileAssetsRequest {
+  Configs configs = 1;
+  Assets assets = 2;
+  odpf.optimus.core.v1beta1.TaskWindow window = 3 [deprecated = true];
+  google.protobuf.Timestamp instance_schedule = 4 [deprecated = true];
+  repeated odpf.optimus.core.v1beta1.InstanceSpecData instance_data = 5;
+
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp end_time = 7;
+
+  PluginOptions options = 40;
+}
+message CompileAssetsResponse {
+  Assets assets = 1;
 }
