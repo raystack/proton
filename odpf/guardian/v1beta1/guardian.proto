@@ -610,6 +610,13 @@ message ProviderConfig {
   }
   repeated ResourceConfig resources = 6;
   repeated string allowed_account_types = 7;
+  message ProviderParameter {
+    string key = 1;
+    string label = 2;
+    bool required = 3;
+    string description = 4;
+  }
+  repeated ProviderParameter parameters = 8;
 }
 
 // Provider contains information about external data provider such as BigQuery, Metabase, etc., credentials, policy, and allowed roles
@@ -647,6 +654,13 @@ message PolicyAppealConfig {
   bool allow_on_behalf = 2;  
   bool allow_permanent_access = 3;
   string allow_active_access_extension_in = 4;
+  message Question {
+    string key = 1;
+    string question = 2;
+    bool required = 3;
+    string description = 4;
+  }
+  repeated Question questions = 5;
 }
 
 // Policy is a configurable steps for appeal's approval
