@@ -605,7 +605,8 @@ message ProviderConfig {
 
   message ResourceConfig {
     string type = 1;
-    PolicyConfig policy = 2;
+    string filter = 2;
+    PolicyConfig policy = 3;
     repeated Role roles = 4;
   }
   repeated ResourceConfig resources = 6;
