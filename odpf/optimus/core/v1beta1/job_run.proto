@@ -49,7 +49,25 @@ service JobRunService {
       body: "*"
     };
   }
+   // UploadToScheduler comiles jobSpec from database into DAGs and uploads the generated DAGs to scheduler
+   rpc UploadToScheduler(UploadToSchedulerRequest) returns (UploadToSchedulerResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/project/{project_name}/upload"
+      body: "*"
+    };
+  }
 }
+
+message UploadToSchedulerRequest {
+  string project_name = 1;
+  optional string namespace_name = 2;
+}
+
+message UploadToSchedulerResponse {
+  bool status = 1;
+  string error_message = 2;
+}
+
 
 message RegisterJobEventRequest {
   string project_name = 1;
