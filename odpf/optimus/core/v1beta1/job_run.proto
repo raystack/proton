@@ -42,13 +42,6 @@ service JobRunService {
       get: "/v1beta1/project/{project_name}/job/{job_name}/run"
     };
   }
-  // GetWindow provides the start and end dates provided a scheduled date
-  // of the execution window
-  rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/window"
-    };
-  }
   // RegisterJobEvent notifies optimus service about an event related to job
   rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
     option (google.api.http) = {
@@ -94,19 +87,6 @@ message JobRunRequest {
 
 message JobRunResponse {
   repeated JobRun job_runs = 1;
-}
-
-message GetWindowRequest {
-  google.protobuf.Timestamp scheduled_at = 1;
-  string size = 2;
-  string offset = 3;
-  string truncate_to = 4;
-  int32 version = 5;
-}
-
-message GetWindowResponse {
-  google.protobuf.Timestamp start = 1;
-  google.protobuf.Timestamp end = 2;
 }
 
 message InstanceSpec {
