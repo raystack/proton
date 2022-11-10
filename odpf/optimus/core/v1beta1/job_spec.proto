@@ -124,7 +124,7 @@ message AddJobSpecificationsRequest {
   repeated JobSpecification specs = 3;
 }
 message AddJobSpecificationsResponse {
-  string deployment_id = 1;
+  string deployment_id = 1 [deprecated = true];
   string log = 2;
 }
 
