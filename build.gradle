@@ -32,7 +32,7 @@ repositories {
 sourceSets {
     main {
         proto {
-            srcDir 'odpf/raccoon/v1beta1/'
+            srcDir 'odpf/raccoon/'
         }
     }
 }
