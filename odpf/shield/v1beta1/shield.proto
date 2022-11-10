@@ -608,7 +608,7 @@ service ShieldService {
   // Authz
   rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/check/{resource_id}",
+      post: "/v1beta1/check",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1271,11 +1271,11 @@ message UpdateResourceResponse {
 }
 
 message CheckResourcePermissionRequest {
-  string resource_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
-  string action_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
-  string namespace_id = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message CheckResourcePermissionResponse {
