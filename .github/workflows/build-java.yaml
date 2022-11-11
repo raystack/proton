@@ -18,6 +18,8 @@ jobs:
         with:
           java-version: 1.8
       - name: Grant execute permission for gradlew
+        working-directory: ./java
         run: chmod +x gradlew
       - name: Build
-        run: cd java/ && ./gradlew build --stacktrace --no-daemon
+        working-directory: ./java
+        run: ./gradlew build --stacktrace --no-daemon

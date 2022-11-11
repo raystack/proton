@@ -15,8 +15,10 @@ jobs:
         with:
           java-version: 1.8
       - name: Grant execute permission for gradlew
-        run: cd java/ && chmod +x gradlew
+        working-directory: ./java
+        run: chmod +x gradlew
       - name: Build
+        working-directory: ./java
         run: ./gradlew build
 
   publish:
@@ -30,9 +32,10 @@ jobs:
           distribution: adopt
           java-version: 8
       - name: Publish depot
+        working-directory: ./java
         run: |
           printf "$GPG_SIGNING_KEY" | base64 --decode > private.key
-          cd java/ && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Psigning.keyId=${GPG_SIGNING_KEY_ID} -Psigning.password=${GPG_SIGNING_PASSWORD} -Psigning.secretKeyRingFile=private.key --console=verbose
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Psigning.keyId=${GPG_SIGNING_KEY_ID} -Psigning.password=${GPG_SIGNING_PASSWORD} -Psigning.secretKeyRingFile=private.key --console=verbose
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
