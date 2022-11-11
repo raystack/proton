@@ -32,7 +32,7 @@ repositories {
 sourceSets {
     main {
         proto {
-            srcDir 'odpf/raccoon/'
+            srcDir "${projectDir}/../odpf/raccoon/"
         }
     }
 }
@@ -45,7 +45,7 @@ dependencies {
 }
 
 protobuf {
-    generatedFilesBaseDir = "build/protos/"
+    generatedFilesBaseDir = "${projectDir}/build/protos/"
     protoc {
         artifact = "com.google.protobuf:protoc:3.1.0"
     }
