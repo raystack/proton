@@ -58,7 +58,7 @@ message BackupDryRunRequest {
   repeated string resource_names = 8;
 }
 
-message ignored_resource {
+message IgnoredResource {
   string name = 1;
   string reason = 2;
 }
@@ -67,7 +67,7 @@ message BackupDryRunResponse {
   reserved 2;
 
   repeated string resource_names = 1;
-  repeated ignored_resource ignored_resources = 3;
+  repeated IgnoredResource ignored_resources = 3;
 }
 
 message CreateBackupRequest {
@@ -86,7 +86,7 @@ message CreateBackupResponse {
   reserved 2;
 
   repeated string resource_names = 1;
-  repeated ignored_resource ignored_resources = 3;
+  repeated IgnoredResource ignored_resources = 3;
 }
 
 message ListBackupsRequest {
@@ -116,12 +116,14 @@ message GetBackupRequest {
   string id = 4;
 }
 
-message resource_pair {
+message ResourcePair {
   string source_name = 1;
   string destination_name = 2;
 }
 
 message GetBackupResponse {
+  reserved 2;
+
   BackupSpec spec = 1;
-  repeated resource_pair pairs = 6;
+  repeated ResourcePair pairs = 3;
 }
