@@ -248,6 +248,7 @@ message GetProviderTypesResponse {
 
 message CreateProviderRequest {
   ProviderConfig config = 1;
+  bool dry_run = 2;
 }
 
 message CreateProviderResponse {
@@ -257,6 +258,7 @@ message CreateProviderResponse {
 message UpdateProviderRequest {
   string id = 1;
   ProviderConfig config = 2;
+  bool dry_run = 3;
 }
 
 message UpdateProviderResponse {
@@ -315,6 +317,7 @@ message GetPolicyResponse {
 
 message CreatePolicyRequest {
   Policy policy = 1;
+  bool dry_run = 2;
 }
 
 message CreatePolicyResponse {
@@ -324,6 +327,7 @@ message CreatePolicyResponse {
 message UpdatePolicyRequest {
   string id = 1;
   Policy policy = 2;
+  bool dry_run = 3;
 }
 
 message UpdatePolicyResponse {
