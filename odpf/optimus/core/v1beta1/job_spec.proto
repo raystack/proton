@@ -205,6 +205,8 @@ message DeleteJobSpecificationRequest {
   string project_name = 1;
   string namespace_name = 2;
   string job_name = 3;
+  bool clean_history = 4;
+  bool force = 5;
 }
 
 message DeleteJobSpecificationResponse {
