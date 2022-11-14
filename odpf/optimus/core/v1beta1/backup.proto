@@ -24,12 +24,6 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service BackupService {
-  rpc BackupDryRun(BackupDryRunRequest) returns (BackupDryRunResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backupDryrun"
-      body: "*"
-    };
-  }
   rpc CreateBackup(CreateBackupRequest) returns (CreateBackupResponse) {
     option (google.api.http) = {
       post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup"
@@ -48,26 +42,9 @@ service BackupService {
   }
 }
 
-message BackupDryRunRequest {
-  reserved 3, 6, 7;
-  string project_name = 1;
-  string datastore_name = 2;
-  string namespace_name = 4;
-  string description = 5;
-
-  repeated string resource_names = 8;
-}
-
 message IgnoredResource {
   string name = 1;
   string reason = 2;
-}
-
-message BackupDryRunResponse {
-  reserved 2;
-
-  repeated string resource_names = 1;
-  repeated IgnoredResource ignored_resources = 3;
 }
 
 message CreateBackupRequest {
@@ -116,14 +93,8 @@ message GetBackupRequest {
   string id = 4;
 }
 
-message ResourcePair {
-  string source_name = 1;
-  string destination_name = 2;
-}
-
 message GetBackupResponse {
   reserved 2;
 
   BackupSpec spec = 1;
-  repeated ResourcePair pairs = 3;
 }
