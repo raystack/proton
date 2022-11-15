@@ -9,31 +9,68 @@ option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
 option java_outer_classname = "ModelProto";
 option java_package = "io.odpf.assets";
 
+// Schema of the model's inputs and outputs. Strongly inspired by
+// https://mlflow.org/docs/latest/python_api/mlflow.models.html#mlflow.models.ModelSignature.
+message ModelSignature {
+  // Specification of name and type of a single column in a dataset.
+  message Parameter {
+    // Optional: Name of the input or output parameter.
+    string name = 1;
+
+    // Data type of the parameter. Ex: boolean, double, numpy's dtypes etc.
+    string data_type = 2;
+
+    // Optional: The tensor shape.
+    repeated int64 shape = 3;
+  }
+
+  repeated Parameter inputs = 1;
+  repeated Parameter outputs = 2;
+}
+
+message ModelVersion {
+  // The schema of a model version’s inputs and outputs.
+  ModelSignature signature = 1;
+
+  // Status of the model version. ex: pending/ready/serving/terminated etc.
+  string status = 2;
+
+  // Version of the model
+  string version = 3;
+
+  // List of attributes the model version has. This could include the following:
+  // - mlflow_run_id[string]: MLFlow expriment run ID associated with the model
+  //   version. Relevant for Merlin models.
+  // - mlflow_run_url[string]: URL of MLFlow experiment run associated with
+  //   the model. Relevant for Merlin models.
+  // - endpoint_url[string]: Endpoint that the model is serving requests on.
+  //   Ex: http://<model_name>-<version>.<project_name>.<merlin_base_url>.
+  // - version_endpoint_url[string]: Endpoint that the model is serving
+  //   requests on for the specific version. Ex:
+  //   http://<model_name>-<version>.<project_name>.<merlin_base_url>.
+  // - traffic[double]: Percentage of traffic being served by this version of
+  //   the model.
+  // - weight[double]: Weightage for the model version endpoint.
+  // - params[map<string, string>]: Parameters for the Model's run.
+  // - metrics[map<string, double>]: Metrics for the model's run.
+  google.protobuf.Struct attributes = 4;
+
+  // Optional. List of labels the model version has.
+  map<string, string> labels = 5;
+
+  // The timestamp of the model's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the model was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}
+
 // Model represents a Data Science Model commonly used for Machine Learning
 // (ML). Models are algorithms trained on data to find patterns or make
 // predictions. Models typically consume ML features to generate a meaningful
 // output. The inputs can also include contextual information that is made
 // available in realtime as part of the request to the model server.
 message Model {
-  // Schema of the model's inputs and outputs. Strongly inspired by
-  // https://mlflow.org/docs/latest/python_api/mlflow.models.html#mlflow.models.ModelSignature.
-  message Signature {
-    // Specification of name and type of a single column in a dataset.
-    message Parameter {
-      // Optional: Name of the input or output parameter.
-      string name = 1;
-
-      // Data type of the parameter. Ex: boolean, double, numpy's dtypes etc.
-      string data_type = 2;
-
-      // Optional: The tensor shape.
-      repeated int64 shape = 3;
-    }
-
-    repeated Parameter inputs = 1;
-    repeated Parameter outputs = 2;
-  }
-
   // Optional: Model's namespace or project.
   string namespace = 1;
 
@@ -43,26 +80,23 @@ message Model {
   // Optional: Algorithm used to train the ML Model.
   string algorithm = 3;
 
-  // The schema of a model’s inputs and outputs.
-  Signature signature = 4;
+  // Status of the model. ex: active/deleted etc.
+  string status = 4;
 
-  // Status of the model. ex: pending/ready/serving/terminated etc.
-  string state = 5;
+  // Versions of the model, similar to experiment runs in MLFlow and model
+  // version in Merlin.
+  repeated ModelVersion versions = 5;
 
-  // Version of the model
-  string version = 6;
-
-  // List of attributes the model has. This could include the following:
-  // - endpoint_url[string]: Endpoint that the model is serving requests on.
-  //   Ex: http://<model_name>-<version>.<project_name>.<merlin_base_url>.
-  // - version_endpoint_url[string]: Endpoint that the model is serving
-  //   requests on for the specific version. Ex:
-  //   http://<model_name>-<version>.<project_name>.<merlin_base_url>.
-  // - traffic[double]: Percentage of traffic being served by this version of
-  //   the model.
-  // - params[map<string, string>]: Parameters for the Model's run.
-  // - metrics[map<string, double>]: Metrics for the model's run.
-  google.protobuf.Struct attributes = 7;
+  // List of attributes the model version has. This could include the following:
+  // - project_id[double]: ID of project the model is present in.
+  // - project_name[string]: Name of project the model is present in.
+  // - mlflow_experiment_id[double]: MLFlow experiment ID associated with the
+  //   model. Relevant for Merlin models.
+  // - mlflow_experiment_url[string]: URL of MLFlow experiment associated with
+  //   the model. Relevant for Merlin models.
+  // - endpoint_urls[repeated string]: List of URLs associated with endpoints
+  //   that are serving requests for the model. Relevant for Merlin models.
+  google.protobuf.Struct attributes = 6;
 
   // The timestamp of the model's creation.
   google.protobuf.Timestamp create_time = 101;
