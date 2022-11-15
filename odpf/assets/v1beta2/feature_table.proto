@@ -45,6 +45,12 @@ message FeatureTable {
 
     // Optional: Arbitrary metadata.
     map<string, string> labels = 3;
+
+    // Optional: Description of the entity.
+    string description = 4;
+
+    // Optional: Data type of the entity.
+    string type = 5;
   }
 
   // Optional: Feature store's namespace or project.
