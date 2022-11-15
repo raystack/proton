@@ -64,6 +64,7 @@ message CreateBackupResponse {
 
   repeated string resource_names = 1;
   repeated IgnoredResource ignored_resources = 3;
+  string backup_id = 4;
 }
 
 message ListBackupsRequest {
