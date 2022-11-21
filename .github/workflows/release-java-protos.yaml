@@ -31,7 +31,7 @@ jobs:
         with:
           distribution: adopt
           java-version: 8
-      - name: Publish depot
+      - name: Publish java protos
         working-directory: ./java
         run: |
           printf "$GPG_SIGNING_KEY" | base64 --decode > private.key
