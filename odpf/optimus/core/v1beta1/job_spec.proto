@@ -389,13 +389,14 @@ message JobSpecMetadataAirflow {
 
 message RefreshJobsRequest {
   string project_name = 1;
-  repeated string namespace_names = 2;
+  repeated string namespace_names = 2 [deprecated = true];
   repeated string job_names = 3;
+  string namespace_name = 4;
 }
 
 message RefreshJobsResponse {
   reserved 1 to 4;
-  string deployment_id = 5;
+  string deployment_id = 5 [deprecated = true];
   Log log_status = 6;
 }
 
