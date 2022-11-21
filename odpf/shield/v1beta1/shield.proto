@@ -1177,14 +1177,13 @@ message Relation {
 message Resource {
   string id = 1;
   string name = 2;
-  Group group = 3;
-  Project project = 4;
-  Organization organization = 5;
-  Namespace namespace = 6;
-  google.protobuf.Timestamp created_at = 7;
-  google.protobuf.Timestamp updated_at = 8;
-  User user = 9;
-  string urn = 10;
+  Project project = 3;
+  Organization organization = 4;
+  Namespace namespace = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  User user = 8;
+  string urn = 9;
 }
 
 message ListRelationsRequest {}
@@ -1238,11 +1237,9 @@ message ListResourcesResponse {
 
 message ResourceRequestBody {
   string name = 1;
-  string group_id = 2;
-  string project_id = 3;
-  string organization_id = 4;
-  string namespace_id = 5;
-  string user_id = 6;
+  string project_id = 2;
+  string namespace_id = 3;
+  repeated Relation relations = 4;
 }
 
 message CreateResourceRequest {
