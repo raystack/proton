@@ -110,6 +110,9 @@ service JobSpecificationService {
   // GetDeployJobsStatus check status of job deployment.
   // It will returns status of the job deployment and the failure details.
   rpc GetDeployJobsStatus(GetDeployJobsStatusRequest) returns (GetDeployJobsStatusResponse) {}
+
+  // ReplaceAllJobSpecifications replaces all jobs in server for a given tenant
+  rpc ReplaceAllJobSpecifications(stream ReplaceAllJobSpecificationsRequest) returns (stream ReplaceAllJobSpecificationsResponse) {}
 }
 
 message DeployJobSpecificationRequest {
@@ -429,4 +432,14 @@ message JobSpecificationResponse {
   string project_name = 1;
   string namespace_name = 2;
   JobSpecification job = 3;
+}
+
+message ReplaceAllJobSpecificationsRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  repeated JobSpecification jobs = 3;
+}
+
+message ReplaceAllJobSpecificationsResponse {
+  Log log_status = 1;
 }
