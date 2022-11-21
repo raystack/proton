@@ -311,6 +311,9 @@ message JobSpecification {
   Behavior behavior = 19;
 
   JobMetadata metadata = 20;
+
+  string destination = 21;
+  repeated string sources = 22;
 }
 
 message JobDependency {
