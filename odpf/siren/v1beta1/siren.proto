@@ -583,9 +583,8 @@ message GetReceiverResponse {
 message UpdateReceiverRequest {
   uint64 id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
-  string type = 3;
-  map<string, string> labels = 4;
-  google.protobuf.Struct configurations = 5;
+  map<string, string> labels = 3;
+  google.protobuf.Struct configurations = 4;
 }
 
 message UpdateReceiverResponse {
