@@ -66,6 +66,25 @@ service GuardianService {
     };
   }
 
+  rpc ImportActivities(ImportActivitiesRequest) returns (ImportActivitiesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/activities/import"
+      body: "*"
+    };
+  }
+
+  rpc GetActivity(GetActivityRequest) returns (GetActivityResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/activities/{id}"
+    };
+  }
+
+  rpc ListActivities(ListActivitiesRequest) returns (ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/activities"
+    };
+  }
+
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
     option (google.api.http) = {
       get: "/v1beta1/policies"
@@ -289,6 +308,39 @@ message ListRolesRequest {
 
 message ListRolesResponse {
   repeated Role roles = 1;
+}
+
+message ImportActivitiesRequest {
+  string provider_id = 1;
+  repeated string account_ids = 2;
+  repeated string resource_ids = 3;
+  google.protobuf.Timestamp timestamp_gte = 4;
+  google.protobuf.Timestamp timestamp_lte = 5;
+}
+
+message ImportActivitiesResponse {
+  repeated ProviderActivity activities = 1;
+}
+
+message GetActivityRequest {
+  string id = 1;
+}
+
+message GetActivityResponse {
+  ProviderActivity activity = 1;
+}
+
+message ListActivitiesRequest {
+  repeated string provider_ids = 1;
+  repeated string account_ids = 2;
+  repeated string resource_ids = 3;
+  repeated string types = 4;
+  google.protobuf.Timestamp timestamp_gte = 5;
+  google.protobuf.Timestamp timestamp_lte = 6;
+}
+
+message ListActivitiesResponse {
+  repeated ProviderActivity activities = 1;
 }
 
 message ListPoliciesRequest {}
@@ -817,4 +869,19 @@ message Grant {
   string source = 19;
   string status_in_provider = 20;
   string owner = 21;
+}
+
+message ProviderActivity {
+  string id = 1;
+  string provider_id = 2;
+  string resource_id = 3;
+  string account_id = 4;
+  string account_type = 5;
+  google.protobuf.Timestamp timestamp = 6;
+  repeated string authorizations = 7;
+  string type = 8;
+  google.protobuf.Struct metadata = 9;
+  google.protobuf.Timestamp created_at = 10;
+  Provider provider = 11;
+  Resource resource = 12;
 }
