@@ -562,7 +562,7 @@ service ShieldService {
     };
   }
 
-    rpc GetObjectRelations(GetObjectRelationsRequest) returns (GetObjectRelationsResponse) {
+  rpc ListObjectRelations(ListObjectRelationsRequest) returns (ListObjectRelationsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/objects/{id}/relations"
     };
@@ -1197,10 +1197,12 @@ message Resource {
 }
 
 message ObjectRelation {
-  string type = 1;
+  string subject_type = 1;
   string role = 2;
-  User user = 3;
-  Group group = 4;
+  oneof subject {
+    User user = 3;
+    Group group = 4;
+  }
 }
 
 message ListRelationsRequest {}
@@ -1241,13 +1243,13 @@ message UpdateRelationResponse {
   Relation relation = 1;
 }
 
-message GetObjectRelationsRequest {
+message ListObjectRelationsRequest {
   string id = 1;
-  string subject_kind = 2;
-  string relation_type = 3;
+  string subject_type = 2;
+  string role = 3;
 }
 
-message GetObjectRelationsResponse {
+message ListObjectRelationsResponse {
   repeated ObjectRelation relations = 1;
 }
 
