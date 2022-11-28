@@ -572,6 +572,16 @@ service ShieldService {
     };
   }
 
+  rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/object/{object_id}/subject/{subject_id}/role/{role}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Remove a subject having a role from an object";
+    };
+  }
+
   // Resources
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
     option (google.api.http) = {
@@ -1251,6 +1261,16 @@ message ListObjectRelationsRequest {
 
 message ListObjectRelationsResponse {
   repeated ObjectRelation relations = 1;
+}
+
+message DeleteRelationRequest {
+  string object_id = 1;
+  string subject_id = 2;
+  string role = 3;
+}
+
+message DeleteRelationResponse {
+  string message = 1;
 }
 
 message ListResourcesRequest {
