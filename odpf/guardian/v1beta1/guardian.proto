@@ -884,4 +884,6 @@ message ProviderActivity {
   google.protobuf.Timestamp created_at = 10;
   Provider provider = 11;
   Resource resource = 12;
+  string provider_activity_id = 13;
+  repeated string related_permissions = 14;
 }
