@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package odpf.assets.v1beta2;
 
+import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/odpf/proton/assets/v1beta2;assetsv1beta2";
@@ -61,6 +62,9 @@ message FeatureTable {
 
   // Features that are part of the table, akin to columns in a table.
   repeated Feature features = 3;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 4;
 
   // The timestamp when the feature table was created.
   google.protobuf.Timestamp create_time = 101;
