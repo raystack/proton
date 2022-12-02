@@ -6,8 +6,6 @@ import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "odpf/optimus/core/v1beta1/job_spec.proto";
-import "odpf/optimus/core/v1beta1/namespace.proto";
-import "odpf/optimus/core/v1beta1/project.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
