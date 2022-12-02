@@ -319,6 +319,7 @@ message JobEvent {
     TYPE_UNSPECIFIED = 0;
     
     TYPE_SLA_MISS = 1;
+    reserved 2 to 5;
     TYPE_JOB_SUCCESS = 6;
     TYPE_JOB_FAIL = 7;
 
