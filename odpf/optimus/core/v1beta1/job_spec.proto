@@ -321,7 +321,7 @@ message JobEvent {
     TYPE_SLA_MISS = 1;
     reserved 2 to 5;
     TYPE_JOB_SUCCESS = 6;
-    TYPE_JOB_FAIL = 7;
+    TYPE_FAILURE = 7;
 
     TYPE_TASK_RETRY = 8;
     TYPE_TASK_SUCCESS = 9;
