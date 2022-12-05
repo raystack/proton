@@ -317,14 +317,11 @@ message JobConfigItem {
 message JobEvent {
   enum Type {
     TYPE_UNSPECIFIED = 0;
+    
     TYPE_SLA_MISS = 1;
-    TYPE_FAILURE = 2;
-    TYPE_SUCCESS = 3;
-    TYPE_RETRY = 4;
-
-    TYPE_JOB_START = 5;
+    reserved 2 to 5;
     TYPE_JOB_SUCCESS = 6;
-    TYPE_JOB_FAIL = 7;
+    TYPE_FAILURE = 7;
 
     TYPE_TASK_RETRY = 8;
     TYPE_TASK_SUCCESS = 9;

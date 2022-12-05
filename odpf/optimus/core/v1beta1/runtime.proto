@@ -3,7 +3,6 @@ syntax = "proto3";
 package odpf.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
-import "odpf/optimus/core/v1beta1/job_spec.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/odpf/proton/optimus";
@@ -32,16 +31,7 @@ service RuntimeService {
       body: "*"
     };
   }
-  // RegisterJobEvent notifies optimus service about an event related to job
-  rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/event"
-      body: "*"
-    };
-  }
 }
-// rpc req/res
-
 
 message VersionRequest {
   string client = 1;
@@ -50,13 +40,3 @@ message VersionRequest {
 message VersionResponse {
   string server = 1;
 }
-
-message RegisterJobEventRequest {
-  string project_name = 1;
-  string job_name = 2;
-  string namespace_name = 3;
-
-  JobEvent event = 4;
-}
-
-message RegisterJobEventResponse {}
