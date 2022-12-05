@@ -45,6 +45,7 @@ service ProjectService {
 }
 
 message RegisterProjectRequest {
+  reserved 2;
   ProjectSpecification project = 1;
 }
 
