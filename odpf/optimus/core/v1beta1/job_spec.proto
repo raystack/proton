@@ -135,7 +135,7 @@ message AddJobSpecificationsRequest {
   repeated JobSpecification specs = 3;
 }
 message AddJobSpecificationsResponse {
-  string deployment_id = 1 [deprecated = true];
+  reserved 1;
   string log = 2;
 }
 
@@ -397,8 +397,7 @@ message RefreshJobsRequest {
 }
 
 message RefreshJobsResponse {
-  reserved 1 to 4;
-  string deployment_id = 5 [deprecated = true];
+  reserved 1 to 5;
   Log log_status = 6;
 }
 
