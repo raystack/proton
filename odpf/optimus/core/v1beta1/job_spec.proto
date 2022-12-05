@@ -83,7 +83,7 @@ service JobSpecificationService {
   // DeleteJobSpecification deletes a job spec of a namespace
   rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}?clean_history={clean_history}&force={force}"
+      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
     };
   }
 
