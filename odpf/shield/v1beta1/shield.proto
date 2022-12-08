@@ -210,6 +210,16 @@ service ShieldService {
     };
   }
 
+  rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groups/{id}/relations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get all relations for a group";
+    };
+  }
+
   // Roles
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http) = {
@@ -559,6 +569,16 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
       summary: "Get Relation by ID";
+    };
+  }
+
+  rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/object/{object_id}/subject/{subject_id}/role/{role}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Remove a subject having a role from an object";
     };
   }
 
@@ -1186,6 +1206,15 @@ message Resource {
   string urn = 9;
 }
 
+message GroupRelation {
+  string subject_type = 1;
+  string role = 2;
+  oneof subject {
+    User user = 3;
+    Group group = 4;
+  }
+}
+
 message ListRelationsRequest {}
 
 message ListRelationsResponse {
@@ -1222,6 +1251,26 @@ message UpdateRelationRequest {
 
 message UpdateRelationResponse {
   Relation relation = 1;
+}
+
+message ListGroupRelationsRequest {
+  string id = 1;
+  string subject_type = 2;
+  string role = 3;
+}
+
+message ListGroupRelationsResponse {
+  repeated GroupRelation relations = 1;
+}
+
+message DeleteRelationRequest {
+  string object_id = 1;
+  string subject_id = 2;
+  string role = 3;
+}
+
+message DeleteRelationResponse {
+  string message = 1;
 }
 
 message ListResourcesRequest {
