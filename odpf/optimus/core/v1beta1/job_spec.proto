@@ -58,6 +58,14 @@ service JobSpecificationService {
     };
   }
 
+  // UpdateJobSpecifications modify jobs for a namespace which belongs to the given project
+  rpc UpdateJobSpecifications(UpdateJobSpecificationsRequest) returns (UpdateJobSpecificationsResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/project/{project_name}/namespace/{namespace_name}/jobs"
+      body: "*"
+    };
+  }
+
   // GetJobSpecification reads a provided job spec of a namespace
   rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
     option (google.api.http) = {
@@ -102,6 +110,24 @@ service JobSpecificationService {
   // GetDeployJobsStatus check status of job deployment.
   // It will returns status of the job deployment and the failure details.
   rpc GetDeployJobsStatus(GetDeployJobsStatusRequest) returns (GetDeployJobsStatusResponse) {}
+
+  // ReplaceAllJobSpecifications replaces all jobs in server for a given tenant
+  rpc ReplaceAllJobSpecifications(stream ReplaceAllJobSpecificationsRequest) returns (stream ReplaceAllJobSpecificationsResponse) {}
+
+  // GetJobTask provides task details specific to plugin used in a job
+  rpc GetJobTask(GetJobTaskRequest) returns (GetJobTaskResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/task"
+    };
+  }
+
+  // GetWindow provides the start and end dates provided a scheduled date
+  // of the execution window
+  rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/window"
+    };
+  }
 }
 
 message DeployJobSpecificationRequest {
@@ -124,8 +150,17 @@ message AddJobSpecificationsRequest {
   repeated JobSpecification specs = 3;
 }
 message AddJobSpecificationsResponse {
-  string deployment_id = 1;
+  reserved 1;
   string log = 2;
+}
+
+message UpdateJobSpecificationsRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  repeated JobSpecification specs = 3;
+}
+message UpdateJobSpecificationsResponse {
+  string log = 1;
 }
 
 message JobInspectRequest {
@@ -167,6 +202,7 @@ message JobInspectResponse {
     message UnknownDependencies {
       string job_name = 1;
       string project_name = 2;
+      string resource_destination = 3;
     }
     repeated UnknownDependencies unknown_dependencies = 4;
     repeated Log notice = 5;
@@ -205,6 +241,8 @@ message DeleteJobSpecificationRequest {
   string project_name = 1;
   string namespace_name = 2;
   string job_name = 3;
+  bool clean_history = 4;
+  bool force = 5;
 }
 
 message DeleteJobSpecificationResponse {
@@ -289,6 +327,9 @@ message JobSpecification {
   Behavior behavior = 19;
 
   JobMetadata metadata = 20;
+
+  string destination = 21;
+  repeated string sources = 22;
 }
 
 message JobDependency {
@@ -369,8 +410,7 @@ message RefreshJobsRequest {
 }
 
 message RefreshJobsResponse {
-  reserved 1 to 4;
-  string deployment_id = 5;
+  reserved 1 to 5;
   Log log_status = 6;
 }
 
@@ -407,4 +447,56 @@ message JobSpecificationResponse {
   string project_name = 1;
   string namespace_name = 2;
   JobSpecification job = 3;
+}
+
+message ReplaceAllJobSpecificationsRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  repeated JobSpecification jobs = 3;
+}
+
+message ReplaceAllJobSpecificationsResponse {
+  Log log_status = 1;
+}
+
+message GetJobTaskRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string job_name = 3;
+}
+
+message GetJobTaskResponse {
+  JobTask task = 1;
+}
+
+// JobTask is part of a job that dictates main transformation
+// each job has exactly one task
+message JobTask {
+  string name = 1;
+  string description = 2;
+  string image = 3;
+
+  message Destination {
+    string destination = 1;
+    string type = 2;
+  }
+  Destination destination = 4;
+
+  message Dependency {
+    string dependency = 1;
+  }
+  repeated Dependency dependencies = 5;
+}
+
+message GetWindowRequest {
+  google.protobuf.Timestamp scheduled_at = 1;
+  string size = 2;
+  string offset = 3;
+  string truncate_to = 4;
+  int32 version = 5;
+}
+
+message GetWindowResponse {
+  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp end = 2;
 }
