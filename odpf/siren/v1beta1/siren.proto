@@ -287,6 +287,19 @@ service SirenService {
     };
   }
 
+  rpc CreateAlertsWithNamespace(CreateAlertsRequest) returns (CreateAlertsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create alerts with namespace";
+      tags: "Alert";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/alerts/{provider_type}/{provider_id}/{namespace_id}"
+      body: "body"
+    };
+  }
+
+
   rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "list rules";
@@ -613,6 +626,7 @@ message Alert {
   string severity = 6;
   string rule = 7;
   google.protobuf.Timestamp triggered_at = 8;
+  uint64 namespace_id = 9;
 }
 
 message ListAlertsRequest {
@@ -621,6 +635,8 @@ message ListAlertsRequest {
   string resource_name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 start_time = 4;
   uint64 end_time = 5;
+  uint64 namespace_id = 6;
+
 }
 
 message ListAlertsResponse {
@@ -631,6 +647,7 @@ message CreateAlertsRequest {
   string provider_type= 1;
   uint64 provider_id = 2;
   google.protobuf.Struct body = 3;
+  uint64 namespace_id = 4;
 }
 
 message CreateAlertsResponse {
