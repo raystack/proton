@@ -287,7 +287,7 @@ service SirenService {
     };
   }
 
-  rpc CreateAlertsWithNamespace(CreateAlertsRequest) returns (CreateAlertsResponse) {
+  rpc CreateAlertsWithNamespace(CreateAlertsWithNamespaceRequest) returns (CreateAlertsWithNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "create alerts with namespace";
       tags: "Alert";
@@ -647,10 +647,20 @@ message CreateAlertsRequest {
   string provider_type= 1;
   uint64 provider_id = 2;
   google.protobuf.Struct body = 3;
-  uint64 namespace_id = 4;
 }
 
 message CreateAlertsResponse {
+  repeated Alert alerts = 1;
+}
+
+message CreateAlertsWithNamespaceRequest {
+  string provider_type= 1;
+  uint64 provider_id = 2;
+  google.protobuf.Struct body = 3;
+  uint64 namespace_id = 4;
+}
+
+message CreateAlertsWithNamespaceResponse {
   repeated Alert alerts = 1;
 }
 
