@@ -190,6 +190,7 @@ message ResourceRevision {
   google.protobuf.Timestamp created_at = 4;
 
   ResourceSpec spec = 5;
+  string reason = 6;
 }
 
 message GetResourceRevisionsRequest {
