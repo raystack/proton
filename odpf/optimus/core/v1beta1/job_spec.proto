@@ -437,7 +437,6 @@ message GetJobSpecificationsRequest {
   string resource_destination = 2;
   string job_name = 3;
   string namespace_name = 4;
-  bool include_deleted = 5;
 }
 
 message GetJobSpecificationsResponse {
