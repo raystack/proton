@@ -436,6 +436,7 @@ message GetJobSpecificationsRequest {
   string project_name = 1;
   string resource_destination = 2;
   string job_name = 3;
+  string namespace_name = 4;
 }
 
 message GetJobSpecificationsResponse {
