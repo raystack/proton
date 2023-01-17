@@ -1010,6 +1010,12 @@ message UpsertPatchAssetRequest {
   Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
+
+  // overwrite_lineage determines whether the asset's lineage should be
+  // overwritten with the upstreams and downstreams specified in the request.
+  // Currently, it is only applicable when both upstreams and downstreams are
+  // empty/not specified.
+  bool overwrite_lineage = 4;
 }
 
 message UpsertPatchAssetResponse {
