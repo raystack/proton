@@ -795,6 +795,11 @@ message SearchAssetsRequest {
   map<string, string> query = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"query[data.owner]\""
   }];
+
+  repeated string include_fields = 6 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
 }
 
 message SearchAssetsResponse {
