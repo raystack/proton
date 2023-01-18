@@ -148,68 +148,6 @@ service ShieldService {
     };
   }
 
-  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/groups/{id}/users",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Get all Users in a Group";
-    };
-  }
-
-  rpc AddGroupUser(AddGroupUserRequest) returns (AddGroupUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/users",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Add User to Group";
-    };
-  }
-
-  rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/groups/{id}/users/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Remove User from Group";
-    };
-  }
-
-  rpc ListGroupAdmins(ListGroupAdminsRequest) returns (ListGroupAdminsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/groups/{id}/admins",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Get all Admins of a Group";
-    };
-  }
-
-  rpc AddGroupAdmin(AddGroupAdminRequest) returns (AddGroupAdminResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/admins",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Add Admin to Group";
-    };
-  }
-
-  rpc RemoveGroupAdmin(RemoveGroupAdminRequest) returns (RemoveGroupAdminResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/groups/{id}/admins/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Remove Admin from Group";
-    };
-  }
-
   rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/groups/{id}/relations"
@@ -780,66 +718,6 @@ message ListGroupsRequest {
 
 message ListGroupsResponse {
   repeated Group groups = 1;
-}
-
-message ListGroupUsersRequest {
-  string id = 1;
-}
-
-message ListGroupUsersResponse {
-  repeated User users = 1;
-}
-
-message AddGroupUserRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddGroupUserRequest {
-  string id = 1;
-  AddGroupUserRequestBody body = 2;
-}
-
-message AddGroupUserResponse {
-  repeated User users = 1;
-}
-
-message RemoveGroupUserRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveGroupUserResponse {
-  string message = 1;
-}
-
-message ListGroupAdminsRequest {
-  string id = 1;
-}
-
-message ListGroupAdminsResponse {
-  repeated User users = 1;
-}
-
-message AddGroupAdminRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddGroupAdminRequest {
-  string id = 1;
-  AddGroupAdminRequestBody body = 2;
-}
-
-message AddGroupAdminResponse {
-  repeated User users = 1;
-}
-
-message RemoveGroupAdminRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveGroupAdminResponse {
-  string message = 1;
 }
 
 message Role {
