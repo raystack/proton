@@ -254,26 +254,6 @@ service ShieldService {
     };
   }
 
-  rpc AddOrganizationAdmin(AddOrganizationAdminRequest) returns (AddOrganizationAdminResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/admins",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Add Admin to Organization";
-    };
-  }
-
-  rpc RemoveOrganizationAdmin(RemoveOrganizationAdminRequest) returns (RemoveOrganizationAdminResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{id}/admins/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Remove Admin from Organization";
-    };
-  }
 
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
@@ -822,28 +802,6 @@ message ListOrganizationAdminsRequest {
 
 message ListOrganizationAdminsResponse {
   repeated User users = 1;
-}
-
-message AddOrganizationAdminRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddOrganizationAdminRequest {
-  string id = 1;
-  AddOrganizationAdminRequestBody body = 2;
-}
-
-message AddOrganizationAdminResponse {
-  repeated User users = 1;
-}
-
-message RemoveOrganizationAdminRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveOrganizationAdminResponse {
-  string message = 1;
 }
 
 message ProjectRequestBody {
