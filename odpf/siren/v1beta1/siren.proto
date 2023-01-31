@@ -19,7 +19,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Siren APIs";
     description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
-    version: "0.5.0";
+    version: "0.5";
   };
   schemes: HTTP;
 };
@@ -379,6 +379,52 @@ service SirenService {
       body: "*"
     };
   }
+
+
+  rpc CreateSilence(CreateSilenceRequest) returns (CreateSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/silences",
+      body: "*"
+    };
+  }
+
+  rpc ListSilences(ListSilencesRequest) returns (ListSilencesResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get all silences";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/silences"
+    };
+  }
+
+  rpc GetSilence(GetSilenceRequest) returns (GetSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/silences/{id}"
+    };
+  }
+
+  rpc ExpireSilence(ExpireSilenceRequest) returns (ExpireSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "expire a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/silences/{id}"
+    };
+  }
 }
 
 message Provider {
@@ -514,7 +560,16 @@ message Subscription {
   google.protobuf.Timestamp updated_at = 7;
 }
 
-message ListSubscriptionsRequest {}
+message ListSubscriptionsRequest {
+  uint64 namespace_id = 1;
+  map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""
+  }];
+  map<string, string> notification_match = 3  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""
+  }];
+  string silence_id = 4;
+}
 
 message ListSubscriptionsResponse {
   repeated Subscription subscriptions = 1;
@@ -627,6 +682,7 @@ message Alert {
   string rule = 7;
   google.protobuf.Timestamp triggered_at = 8;
   uint64 namespace_id = 9;
+  string silence_status = 10;
 }
 
 message ListAlertsRequest {
@@ -636,7 +692,7 @@ message ListAlertsRequest {
   uint64 start_time = 4;
   uint64 end_time = 5;
   uint64 namespace_id = 6;
-
+  string silence_id = 7;
 }
 
 message ListAlertsResponse {
@@ -778,4 +834,56 @@ message RenderTemplateRequest {
 
 message RenderTemplateResponse {
   string body = 1;
+}
+
+message Silence {
+  string id = 1;
+  uint64 namespace_id = 2;
+  string type = 3;
+  uint64 target_id = 4;
+  google.protobuf.Struct target_expression = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp deleted_at = 8;
+}
+
+message CreateSilenceRequest {
+  uint64 namespace_id = 1;
+  string type = 2;
+  uint64 target_id = 3;
+  google.protobuf.Struct target_expression = 4;
+}
+
+message CreateSilenceResponse {
+  string id = 1;
+}
+
+message ListSilencesRequest {
+  uint64 subscription_id = 1;
+  uint64 namespace_id = 2;
+  map<string, string> match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on silences label matchers. the match key is written as map. eg, \"match[key1]\""
+  }];
+  map<string, string> subscription_match = 4  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on applied subscription label matchers. the subscription_match key is written as map. eg, \"subscription_match[key1]\""
+  }];
+}
+
+message ListSilencesResponse {
+  repeated Silence silences = 1;
+}
+
+message GetSilenceRequest {
+  string id = 1;
+}
+
+message GetSilenceResponse {
+  Silence silence = 1;
+}
+
+message ExpireSilenceRequest {
+  string id = 1;
+}
+
+message ExpireSilenceResponse {
 }
