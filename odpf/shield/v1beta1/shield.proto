@@ -148,68 +148,6 @@ service ShieldService {
     };
   }
 
-  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/groups/{id}/users",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Get all Users in a Group";
-    };
-  }
-
-  rpc AddGroupUser(AddGroupUserRequest) returns (AddGroupUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/users",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Add User to Group";
-    };
-  }
-
-  rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/groups/{id}/users/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Remove User from Group";
-    };
-  }
-
-  rpc ListGroupAdmins(ListGroupAdminsRequest) returns (ListGroupAdminsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/groups/{id}/admins",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Get all Admins of a Group";
-    };
-  }
-
-  rpc AddGroupAdmin(AddGroupAdminRequest) returns (AddGroupAdminResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/admins",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Add Admin to Group";
-    };
-  }
-
-  rpc RemoveGroupAdmin(RemoveGroupAdminRequest) returns (RemoveGroupAdminResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/groups/{id}/admins/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Remove Admin from Group";
-    };
-  }
-
   rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/groups/{id}/relations"
@@ -316,26 +254,6 @@ service ShieldService {
     };
   }
 
-  rpc AddOrganizationAdmin(AddOrganizationAdminRequest) returns (AddOrganizationAdminResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/admins",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Add Admin to Organization";
-    };
-  }
-
-  rpc RemoveOrganizationAdmin(RemoveOrganizationAdminRequest) returns (RemoveOrganizationAdminResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{id}/admins/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Remove Admin from Organization";
-    };
-  }
 
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
@@ -387,27 +305,6 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "Get all Admins of a Project";
-    };
-  }
-
-  rpc AddProjectAdmin(AddProjectAdminRequest) returns (AddProjectAdminResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects/{id}/admins",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Add Admin to Project";
-    };
-  }
-
-  rpc RemoveProjectAdmin(RemoveProjectAdminRequest) returns (RemoveProjectAdminResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/projects/{id}/admins/{user_id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Remove Admin from Project";
     };
   }
 
@@ -782,66 +679,6 @@ message ListGroupsResponse {
   repeated Group groups = 1;
 }
 
-message ListGroupUsersRequest {
-  string id = 1;
-}
-
-message ListGroupUsersResponse {
-  repeated User users = 1;
-}
-
-message AddGroupUserRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddGroupUserRequest {
-  string id = 1;
-  AddGroupUserRequestBody body = 2;
-}
-
-message AddGroupUserResponse {
-  repeated User users = 1;
-}
-
-message RemoveGroupUserRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveGroupUserResponse {
-  string message = 1;
-}
-
-message ListGroupAdminsRequest {
-  string id = 1;
-}
-
-message ListGroupAdminsResponse {
-  repeated User users = 1;
-}
-
-message AddGroupAdminRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddGroupAdminRequest {
-  string id = 1;
-  AddGroupAdminRequestBody body = 2;
-}
-
-message AddGroupAdminResponse {
-  repeated User users = 1;
-}
-
-message RemoveGroupAdminRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveGroupAdminResponse {
-  string message = 1;
-}
-
 message Role {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
@@ -946,28 +783,6 @@ message ListOrganizationAdminsResponse {
   repeated User users = 1;
 }
 
-message AddOrganizationAdminRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddOrganizationAdminRequest {
-  string id = 1;
-  AddOrganizationAdminRequestBody body = 2;
-}
-
-message AddOrganizationAdminResponse {
-  repeated User users = 1;
-}
-
-message RemoveOrganizationAdminRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveOrganizationAdminResponse {
-  string message = 1;
-}
-
 message ProjectRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 2;
@@ -1022,28 +837,6 @@ message ListProjectAdminsRequest {
 
 message ListProjectAdminsResponse {
   repeated User users = 1;
-}
-
-message AddProjectAdminRequestBody {
-  repeated string user_ids = 1;
-}
-
-message AddProjectAdminRequest {
-  string id = 1;
-  AddProjectAdminRequestBody body = 2;
-}
-
-message AddProjectAdminResponse {
-  repeated User users = 1;
-}
-
-message RemoveProjectAdminRequest {
-  string id = 1;
-  string user_id = 2;
-}
-
-message RemoveProjectAdminResponse {
-  string message = 1;
 }
 
 message Action {
