@@ -800,6 +800,16 @@ message SearchAssetsRequest {
     unique: true,
     ignore_empty: true
   }];
+
+  uint32 from = 7 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "from parameter defines the offset from the first result you want to fetch"
+    }
+  ];
 }
 
 message SearchAssetsResponse {
