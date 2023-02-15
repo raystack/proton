@@ -857,14 +857,9 @@ message Namespace {
 
 message Policy {
   string id = 1;
-  Role role = 2 [deprecated=true];
-  Action action = 3 [deprecated=true];
-  Namespace namespace = 4 [deprecated=true];
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
-  string namespace_id = 7;
-  string role_id = 8;
-  string action_id = 9;
+  string namespace_id = 2;
+  string role_id = 3;
+  string action_id = 4;
 }
 
 message ActionRequestBody {
