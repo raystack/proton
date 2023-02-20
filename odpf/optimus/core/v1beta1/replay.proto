@@ -24,26 +24,10 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service ReplayService {
-  rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/replay/dryrun"
-      body: "*"
-    };
-  }
   rpc Replay(ReplayRequest) returns (ReplayResponse) {
     option (google.api.http) = {
       post: "/v1beta1/project/{project_name}/replay"
       body: "*"
-    };
-  }
-  rpc GetReplayStatus(GetReplayStatusRequest) returns (GetReplayStatusResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/replay/{id}"
-    };
-  }
-  rpc ListReplays(ListReplaysRequest) returns (ListReplaysResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/replay"
     };
   }
 }
@@ -52,84 +36,11 @@ message ReplayRequest {
   string project_name = 1;
   string job_name = 2;
   string namespace_name = 3;
-  string start_date = 4;
-  string end_date = 5;
-  bool force = 6;
-
-  // represents which downstream to be replayed.
-  // possible values are the namespace names, *, or empty.
-  // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
-  repeated string allowed_downstream_namespaces = 7;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  bool parallel = 6;
 }
 
 message ReplayResponse {
   string id = 1;
-  repeated string ignored_jobs = 2;
-}
-
-message ReplayDryRunRequest {
-  string project_name = 1;
-  string job_name = 2;
-  string namespace_name = 3;
-  string start_date = 4;
-  string end_date = 5;
-
-  // represents which downstream to be replayed.
-  // possible values are the namespace names, *, or empty.
-  // '*' means all namespaces are allowed, empty list means all downstream will be ignored.
-  repeated string allowed_downstream_namespaces = 6;
-}
-
-message ReplayDryRunResponse {
-  bool success = 1;
-  ReplayExecutionTreeNode response = 2 [deprecated = true];
-  ReplayExecutionTreeNode execution_tree = 3;
-  repeated string ignored_jobs = 4;
-}
-
-message ReplayExecutionTreeNode {
-  string job_name = 1;
-  repeated ReplayExecutionTreeNode dependents = 2;
-  repeated google.protobuf.Timestamp runs = 3;
-}
-
-message GetReplayStatusResponse {
-  string state = 1;
-  ReplayStatusTreeNode response = 2;
-}
-
-message ReplayStatusTreeNode {
-  string job_name = 1;
-  repeated ReplayStatusTreeNode dependents = 2;
-  repeated ReplayStatusRun runs = 3;
-  string state = 4;
-}
-
-message ReplayStatusRun {
-  google.protobuf.Timestamp run = 1;
-  string state = 2;
-}
-
-message GetReplayStatusRequest {
-  string id = 1;
-  string job_name = 2;
-  string project_name = 3;
-}
-
-message ListReplaysRequest {
-  string project_name = 1;
-}
-
-message ListReplaysResponse {
-  repeated ReplaySpec replay_list = 1;
-}
-
-message ReplaySpec {
-  string id = 1;
-  string job_name = 2;
-  google.protobuf.Timestamp start_date = 3;
-  google.protobuf.Timestamp end_date = 4;
-  string state = 5;
-  google.protobuf.Timestamp created_at = 6;
-  map<string, string> config = 7;
 }
