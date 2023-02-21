@@ -39,6 +39,7 @@ message ReplayRequest {
   google.protobuf.Timestamp start_time = 4;
   google.protobuf.Timestamp end_time = 5;
   bool parallel = 6;
+  string description = 7;
 }
 
 message ReplayResponse {
