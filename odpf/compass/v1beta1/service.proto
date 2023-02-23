@@ -848,6 +848,7 @@ message GetGraphResponse {
 
   message NodeAttributes {
     ProbesInfo probes = 1;
+    google.protobuf.Struct attributes = 2;
   }
 
   // Edges in the graph.
