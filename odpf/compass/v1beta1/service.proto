@@ -839,6 +839,9 @@ message GetGraphRequest {
       ""
     ]
   }];
+  bool with_node_props = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "if set include node properties in the response"
+  }];
 }
 
 message GetGraphResponse {
