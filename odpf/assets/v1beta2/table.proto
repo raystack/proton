@@ -94,6 +94,9 @@ message Column {
   // The profile of the column.
   ColumnProfile profile = 6;
 
+  // To capture nested columns.
+  repeated Column columns = 7;
+
   // Representation of the column properties.
   // Properties facet can be used to set custom properties, tags and labels for a column.
   google.protobuf.Struct attributes = 31;
