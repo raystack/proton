@@ -40,6 +40,7 @@ message ReplayRequest {
   google.protobuf.Timestamp end_time = 5;
   bool parallel = 6;
   string description = 7;
+  string job_config = 8;
 }
 
 message ReplayResponse {
