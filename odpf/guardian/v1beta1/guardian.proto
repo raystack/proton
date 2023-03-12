@@ -223,6 +223,13 @@ service GuardianService {
     };
   }
 
+  rpc UpdateGrant(UpdateGrantRequest) returns (UpdateGrantResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/grants/{id}"
+      body: "*"
+    };
+  }
+
   rpc RevokeGrant(RevokeGrantRequest) returns (RevokeGrantResponse) {
     option (google.api.http) = {
       put: "/v1beta1/grants/{id}/revoke"
@@ -610,6 +617,15 @@ message GetGrantRequest {
 }
 
 message GetGrantResponse {
+  Grant grant = 1;
+}
+
+message UpdateGrantRequest {
+  string id = 1;
+  string owner = 2;
+}
+
+message UpdateGrantResponse {
   Grant grant = 1;
 }
 
