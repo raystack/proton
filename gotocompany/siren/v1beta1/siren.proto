@@ -773,7 +773,7 @@ message UpdateRuleRequest {
 }
 
 message UpdateRuleResponse {
-  uint64 id = 1;
+  Rule rule = 1;
 }
 
 message TemplateVariables {
