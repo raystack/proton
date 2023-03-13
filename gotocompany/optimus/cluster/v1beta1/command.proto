@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package gotocompany.optimus.cluster.v1beta1;
+
+option go_package = "github.com/goto/proton/optimus";
+
+message CommandLog {
+  CommandLogType type = 1;
+  bytes payload = 2;
+}
+
+enum CommandLogType {
+  COMMAND_LOG_TYPE_UNSPECIFIED = 0;
+  COMMAND_LOG_TYPE_NOOP = 1;
+  COMMAND_LOG_TYPE_SCHEDULE_JOB = 2;
+  COMMAND_LOG_TYPE_UPDATE_JOB = 3;
+}
+
+message CommandNoop {
+  string id = 1;
+}
+
+// CommandScheduleJob will be sent to assign job for execution to a peer
+message CommandScheduleJob {
+  // peer_id is the node name to which this job is assigned to get
+  // executed
+  string peer_id = 1;
+
+  repeated string run_ids = 2;
+}
+
+// CommandUpdateJob will be sent to update the attributes of job which was
+// previously scheduled for execution
+message CommandUpdateJob {
+  string peer_id = 1;
+  message Patch {
+    string run_id = 1;
+    string status = 2;
+  }
+  repeated Patch patches = 2;
+}

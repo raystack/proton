@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package gotocompany.optimus.core.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/goto/proton/optimus";
+option java_multiple_files = true;
+option java_outer_classname = "RuntimeServiceManager";
+option java_package = "com.gotocompany.proton.optimus";
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Runtime Service";
+  }
+  schemes: HTTP;
+  host: "127.0.0.1:9100";
+  base_path: "/api";
+};
+
+// WARNING: This is still in active development and can have breaking changes
+service RuntimeService {
+  // server ping with version
+  rpc Version(VersionRequest) returns (VersionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/version"
+      body: "*"
+    };
+  }
+}
+
+message VersionRequest {
+  string client = 1;
+}
+
+message VersionResponse {
+  string server = 1;
+}

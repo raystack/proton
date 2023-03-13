@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package gotocompany.optimus.core.v1beta1;
+
+option go_package = "github.com/goto/proton/optimus";
+option java_multiple_files = true;
+option java_outer_classname = "Status";
+option java_package = "com.gotocompany.proton.optimus";
+
+message Log {
+  Level level = 1;
+  string message = 2;
+}
+
+enum Level {
+  LEVEL_UNSPECIFIED = 0;
+  LEVEL_TRACE = 1;
+  LEVEL_DEBUG = 2;
+  LEVEL_INFO = 3;
+  LEVEL_WARNING = 4;
+  LEVEL_ERROR = 5;
+  LEVEL_FATAL = 6;
+}

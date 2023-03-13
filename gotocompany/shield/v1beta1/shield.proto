@@ -1,0 +1,1122 @@
+syntax = "proto3";
+
+package gotocompany.shield.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/goto/proton/shield/v1;shieldv1beta1";
+option java_outer_classname = "Shield";
+option java_package = "com.gotocompany.proton.shield.v1beta1";
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Shield",
+    version: "0.1.0";
+  };
+  schemes: HTTP;
+};
+
+service ShieldService {
+  // Users
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get All Users";
+    };
+  }
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Create User";
+    };
+  }
+
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get a User by id";
+    };
+  }
+
+  rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{id}/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List Groups of a User";
+    };
+  }
+
+  rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/self",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get current user";
+    };
+  }
+
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/users/{id}",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Update User by ID";
+    };
+  }
+
+  rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/users/self",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Update current User";
+    };
+  }
+
+  rpc CreateMetadataKey(CreateMetadataKeyRequest) returns (CreateMetadataKeyResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/metadatakey",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Key";
+      summary: "Create Metadata Key";
+    };
+  }
+
+  // Group
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get all Groups";
+    };
+  }
+
+  rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/groups",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Create Group";
+    };
+  }
+
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groups/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get Group by ID";
+    };
+  }
+
+  rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/groups/{id}",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Update Group by ID";
+    };
+  }
+
+  rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groups/{id}/relations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get all relations for a group";
+    };
+  }
+
+  // Roles
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/roles",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Get all Roles";
+    };
+  }
+
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/roles",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Create Role";
+    };
+  }
+
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/roles/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Get Role by ID";
+    };
+  }
+
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/roles/{id}",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Update Role by ID";
+    };
+  }
+
+  // Organizations
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all Organization";
+    };
+  }
+
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Create Organization";
+    };
+  }
+
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get Organization by ID";
+    };
+  }
+
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/organizations/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Update Organization by ID";
+    };
+  }
+
+  rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}/admins",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all Admins of an Organization";
+    };
+  }
+
+
+  // Projects
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/projects"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all Project";
+    };
+  }
+
+  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Create Project";
+    };
+  }
+
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/projects/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get Project by ID";
+    };
+  }
+
+  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/projects/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Update Project by ID";
+    };
+  }
+
+  rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/projects/{id}/admins",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all Admins of a Project";
+    };
+  }
+
+  // Actions
+  rpc ListActions(ListActionsRequest) returns (ListActionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/actions"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Get all Actions";
+    };
+  }
+
+  rpc CreateAction(CreateActionRequest) returns (CreateActionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/actions",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Create Action";
+    };
+  }
+
+  rpc GetAction(GetActionRequest) returns (GetActionResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/actions/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Get Action by ID";
+    };
+  }
+
+  rpc UpdateAction(UpdateActionRequest) returns (UpdateActionResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/actions/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Action";
+      summary: "Update Action by ID";
+    };
+  }
+
+  // Namespaces
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get all Namespaces";
+    };
+  }
+
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/namespaces",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Create Namespace";
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get Namespace by ID";
+    };
+  }
+
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/namespaces/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Update Namespace by ID";
+    };
+  }
+
+  // Policies
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get all Policy";
+    };
+  }
+
+  rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/policies",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Create Policy";
+    };
+  }
+
+  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get Policy by ID";
+    };
+  }
+
+  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/policies/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Update Policy by ID";
+    };
+  }
+
+  // Relations--------------------------------------------------------------------
+  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/relations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Get all Relations";
+    };
+  }
+
+  rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/relations",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Create Relation";
+    };
+  }
+
+  rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/relations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Get Relation by ID";
+    };
+  }
+
+  rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/object/{object_id}/subject/{subject_id}/role/{role}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Remove a subject having a role from an object";
+    };
+  }
+
+  // Resources
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Get all Resources";
+    };
+  }
+
+  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Create Resource";
+    };
+  }
+
+  rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Get Resource by ID";
+    };
+  }
+
+  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/resources/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Update Resource by ID";
+    };
+  }
+
+  // Authz
+  rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/check",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authz";
+      summary: "check permission for action on a resource by an user";
+    };
+  }
+}
+
+message UserRequestBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string email = 2 [(validate.rules).string.email = true];
+  google.protobuf.Struct metadata = 3;
+}
+
+message CreateUserRequest {
+  UserRequestBody body = 1;
+}
+
+message User {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 3;
+  string email = 4 [(validate.rules).string.email = true];
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateUserResponse {
+  User user = 1;
+}
+
+message MetadataKeyRequestBody {
+  string key = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string description = 2;
+}
+
+message CreateMetadataKeyRequest {
+  MetadataKeyRequestBody body = 1;
+}
+
+message MetadataKey {
+  string key = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string description = 2;
+}
+
+message CreateMetadataKeyResponse {
+  MetadataKey metadatakey = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message GetCurrentUserResponse {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  User user = 1;
+}
+
+message UpdateCurrentUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  UserRequestBody body = 2;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message ListUserGroupsRequest {
+  string id = 1;
+  string role = 2;
+}
+
+message GetCurrentUserRequest {}
+
+message ListUsersRequest {
+  int32 page_size = 1;
+  int32 page_num = 2;
+  string keyword = 3;
+}
+
+message ListUsersResponse {
+  int32 count = 1;
+  repeated User users = 2;
+}
+
+message GroupRequestBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 2;
+  google.protobuf.Struct metadata = 3;
+  string org_id = 4;
+}
+
+message CreateGroupRequest {
+  GroupRequestBody body = 1;
+}
+
+message ListUserGroupsResponse {
+  repeated Group groups = 1;
+}
+
+message Group {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 3;
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateGroupResponse {
+  Group group = 1;
+}
+
+message GetGroupResponse {
+  Group group = 1;
+}
+
+message UpdateGroupResponse {
+  Group group = 1;
+}
+
+message UpdateGroupRequest {
+  string id = 1;
+  GroupRequestBody body = 2;
+}
+
+message UpdateCurrentUserRequest {
+  UserRequestBody body = 1;
+}
+
+message GetGroupRequest {
+  string id = 1;
+}
+
+message ListGroupsRequest {
+  string user_id = 1 [deprecated = true];
+  string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message ListGroupsResponse {
+  repeated Group groups = 1;
+}
+
+message Role {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated string types = 3;
+  Namespace namespace = 4 [deprecated=true];
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string namespace_id = 8;
+}
+
+message RoleRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated string types = 3;
+  string namespace_id = 4;
+  google.protobuf.Struct metadata = 5;
+}
+
+message CreateRoleRequest {
+  RoleRequestBody body = 1;
+}
+
+message CreateRoleResponse {
+  Role role = 1;
+}
+
+message GetRoleResponse {
+  Role role = 1;
+}
+
+message UpdateRoleResponse {
+  Role role = 1;
+}
+
+message GetRoleRequest {
+  string id = 1;
+}
+
+message UpdateRoleRequest {
+  string id = 1;
+  RoleRequestBody body = 2;
+}
+
+message ListRolesRequest {}
+
+message ListRolesResponse {
+  repeated Role roles = 1;
+}
+
+message OrganizationRequestBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
+message CreateOrganizationRequest {
+  OrganizationRequestBody body = 1;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 3;
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message CreateOrganizationResponse {
+  Organization organization = 1;
+}
+
+message GetOrganizationResponse {
+  Organization organization = 1;
+}
+
+message UpdateOrganizationResponse {
+  Organization organization = 1;
+}
+
+message ListOrganizationsRequest {}
+
+message ListOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message GetOrganizationRequest {
+  string id = 1;
+}
+
+message UpdateOrganizationRequest {
+  string id = 1;
+  OrganizationRequestBody body = 2;
+}
+
+message ListOrganizationAdminsRequest {
+  string id = 1;
+}
+
+message ListOrganizationAdminsResponse {
+  repeated User users = 1;
+}
+
+message ProjectRequestBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 2;
+  google.protobuf.Struct metadata = 3;
+  string org_id = 4;
+}
+
+message CreateProjectRequest {
+  ProjectRequestBody body = 1;
+}
+
+message Project {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string slug = 3;
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateProjectResponse {
+  Project project = 1;
+}
+
+message GetProjectResponse {
+  Project project = 1;
+}
+
+message UpdateProjectResponse {
+  Project project = 1;
+}
+
+message ListProjectsRequest {}
+
+message ListProjectsResponse {
+  repeated Project projects = 1;
+}
+
+message GetProjectRequest {
+  string id = 1;
+}
+
+message UpdateProjectRequest {
+  string id = 1;
+  ProjectRequestBody body = 2;
+}
+
+message ListProjectAdminsRequest {
+  string id = 1;
+}
+
+message ListProjectAdminsResponse {
+  repeated User users = 1;
+}
+
+message Action {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  Namespace namespace = 3 [deprecated=true];
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  string namespace_id = 6;
+}
+
+message Namespace {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Policy {
+  string id = 1;
+  Role role = 2 [deprecated=true];
+  Action action = 3 [deprecated=true];
+  Namespace namespace = 4 [deprecated=true];
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  string namespace_id = 7;
+  string role_id = 8;
+  string action_id = 9;
+}
+
+message ActionRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string namespace_id = 3;
+}
+
+message NamespaceRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message PolicyRequestBody {
+  string role_id = 1;
+  string action_id = 2;
+  string namespace_id = 3;
+}
+
+message ListActionsRequest {}
+
+message ListActionsResponse {
+  repeated Action actions = 1;
+}
+
+message CreateActionRequest {
+  ActionRequestBody body = 1;
+}
+
+message CreateActionResponse {
+  Action action = 1;
+}
+
+message GetActionRequest {
+  string id = 1;
+}
+
+message GetActionResponse {
+  Action action = 1;
+}
+
+message UpdateActionRequest {
+  string id = 1;
+  ActionRequestBody body = 2;
+}
+
+message UpdateActionResponse {
+  Action action = 1;
+}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message CreateNamespaceRequest {
+  NamespaceRequestBody body = 1;
+}
+
+message CreateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message GetNamespaceRequest {
+  string id = 1;
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+  string id = 1;
+  NamespaceRequestBody body = 2;
+}
+
+message UpdateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message ListPoliciesRequest {}
+
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}
+
+message CreatePolicyRequest {
+  PolicyRequestBody body = 1;
+}
+
+message CreatePolicyResponse {
+  repeated Policy policies = 1;
+}
+
+message GetPolicyRequest {
+  string id = 1;
+}
+
+message GetPolicyResponse {
+  Policy policy = 1;
+}
+
+message UpdatePolicyRequest {
+  string id = 1;
+  PolicyRequestBody body = 2;
+}
+
+message UpdatePolicyResponse {
+  repeated Policy policies = 1;
+}
+
+message Relation {
+  string id = 1;
+  string object_id = 2;
+  string object_namespace = 3;
+  string subject = 4;
+  string role_name = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Resource {
+  string id = 1;
+  string name = 2;
+  Project project = 3;
+  Organization organization = 4;
+  Namespace namespace = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  User user = 8;
+  string urn = 9;
+}
+
+message GroupRelation {
+  string subject_type = 1;
+  string role = 2;
+  oneof subject {
+    User user = 3;
+    Group group = 4;
+  }
+}
+
+message ListRelationsRequest {}
+
+message ListRelationsResponse {
+  repeated Relation relations = 1;
+}
+
+message RelationRequestBody {
+  string object_id = 1;
+  string object_namespace = 2;
+  string subject = 3;
+  string role_name = 4;
+}
+
+message CreateRelationRequest {
+  RelationRequestBody body = 1;
+}
+
+message CreateRelationResponse {
+  Relation relation = 1;
+}
+
+message GetRelationRequest {
+  string id = 1;
+}
+
+message GetRelationResponse {
+  Relation relation = 1;
+}
+
+message UpdateRelationRequest {
+  string id = 1;
+  RelationRequestBody body = 2;
+}
+
+message UpdateRelationResponse {
+  Relation relation = 1;
+}
+
+message ListGroupRelationsRequest {
+  string id = 1;
+  string subject_type = 2;
+  string role = 3;
+}
+
+message ListGroupRelationsResponse {
+  repeated GroupRelation relations = 1;
+}
+
+message DeleteRelationRequest {
+  string object_id = 1;
+  string subject_id = 2;
+  string role = 3;
+}
+
+message DeleteRelationResponse {
+  string message = 1;
+}
+
+message ListResourcesRequest {
+  string group_id = 1;
+  string project_id = 2;
+  string organization_id = 3;
+  string namespace_id = 4;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
+
+message ResourceRequestBody {
+  string name = 1;
+  string project_id = 2;
+  string namespace_id = 3;
+  repeated Relation relations = 4;
+}
+
+message CreateResourceRequest {
+  ResourceRequestBody body = 1;
+}
+
+message CreateResourceResponse {
+  Resource resource = 1;
+}
+
+message GetResourceRequest {
+  string id = 1;
+}
+
+message GetResourceResponse {
+  Resource resource = 1;
+}
+
+message UpdateResourceRequest {
+  string id = 1;
+  ResourceRequestBody body = 2;
+}
+
+message UpdateResourceResponse {
+  Resource resource = 1;
+}
+
+message CheckResourcePermissionRequest {
+  string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+
+  string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message CheckResourcePermissionResponse {
+  bool status = 1;
+}

@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package gotocompany.entropy.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/goto/proton/entropy/v1beta1;entropyv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "ResourceServiceProto";
+option java_package = "com.gotocompany.proton.entropy.v1beta1";
+
+service ResourceService {
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources"
+    };
+  }
+
+  rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}"
+    };
+  }
+
+  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources"
+      body: "resource"
+    };
+  }
+
+  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/resources/{urn}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/resources/{urn}"
+    };
+  }
+
+  rpc ApplyAction(ApplyActionRequest) returns (ApplyActionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources/{urn}/actions/{action}"
+      body: "params"
+    };
+  }
+
+  rpc GetLog(GetLogRequest) returns (stream GetLogResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}/logs"
+    };
+  }
+
+  rpc GetResourceRevisions(GetResourceRevisionsRequest) returns (GetResourceRevisionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/resources/{urn}/revisions"
+    };
+  }
+}
+
+message ResourceDependency {
+  // Key should be as defined by the module being used for
+  // the resource.
+  string key = 1;
+
+  // Value should refer to an existing resource via URN.
+  string value = 2;
+}
+
+message ResourceSpec {
+  google.protobuf.Value configs = 1;
+
+  // dependencies can be used to refer to other existing resources
+  // as dependency of this resource.
+  repeated ResourceDependency dependencies = 2;
+}
+
+message ListString {
+  repeated string values = 1;
+}
+
+message LogOptions {
+  map <string, ListString> filters = 1;
+}
+
+message ResourceState {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_PENDING = 1;
+    STATUS_ERROR = 2;
+    STATUS_DELETED = 3;
+    STATUS_COMPLETED = 4;
+  }
+
+  Status status = 1;
+  google.protobuf.Value output = 2;
+  bytes module_data = 3;
+  LogOptions log_options = 4;
+}
+
+message Resource {
+  string urn = 1;
+  string kind = 2;
+  string name = 3;
+  string project = 4;
+  map<string, string> labels = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+
+  ResourceSpec spec = 8;
+  ResourceState state = 9;
+}
+
+message ListResourcesRequest {
+  string project = 1;
+  string kind = 2;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
+
+message GetResourceRequest {
+  string urn = 1;
+}
+
+message GetResourceResponse {
+  Resource resource = 1;
+}
+
+message CreateResourceRequest {
+  Resource resource = 1;
+}
+
+message CreateResourceResponse {
+  Resource resource = 1;
+}
+
+message UpdateResourceRequest {
+  string urn = 1;
+  ResourceSpec new_spec = 2;
+  map<string, string> labels = 3;
+}
+
+message UpdateResourceResponse {
+  Resource resource = 1;
+}
+
+message DeleteResourceRequest {
+  string urn = 1;
+}
+
+message DeleteResourceResponse {}
+
+message ApplyActionRequest {
+  string urn = 1;
+  string action = 2;
+  google.protobuf.Value params = 3;
+  map<string, string> labels = 4;
+}
+
+message ApplyActionResponse {
+  Resource resource = 1;
+}
+
+message LogChunk {
+  bytes data = 1;
+  map<string, string> labels = 2;
+}
+
+message GetLogRequest {
+  string urn = 1;
+  map<string, string> filter = 6;
+}
+
+message GetLogResponse {
+  LogChunk chunk = 1;
+}
+
+message ResourceRevision {
+  string id = 1;
+  string urn = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Timestamp created_at = 4;
+
+  ResourceSpec spec = 5;
+  string reason = 6;
+}
+
+message GetResourceRevisionsRequest {
+  string urn = 1;
+}
+
+message GetResourceRevisionsResponse {
+  repeated ResourceRevision revisions = 1;
+}
