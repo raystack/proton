@@ -20,7 +20,6 @@ jobs:
       - name: Build
         working-directory: ./java
         run: ./gradlew build
-
   publish:
     needs: build
     runs-on: ubuntu-latest
