@@ -5,6 +5,7 @@ package odpf.optimus.core.v1beta1;
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 import "odpf/optimus/core/v1beta1/job_spec.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -47,6 +48,13 @@ service JobRunService {
       body: "*"
     };
   }
+  // RegisterJobEvent notifies optimus service about an event related to job
+  rpc RegisterSchedulerEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/event"
+      body: "*"
+    };
+  }
    // UploadToScheduler comiles jobSpec from database into DAGs and uploads the generated DAGs to scheduler
    rpc UploadToScheduler(UploadToSchedulerRequest) returns (UploadToSchedulerResponse) {
     option (google.api.http) = {
@@ -66,6 +74,11 @@ message UploadToSchedulerResponse {
   string error_message = 2;
 }
 
+message RegisterSchedulerEventRequest {
+  string type = 1;
+  google.protobuf.Struct value = 2;
+  string chanel = 3;
+}
 
 message RegisterJobEventRequest {
   string project_name = 1;
