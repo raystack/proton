@@ -49,9 +49,9 @@ service JobRunService {
     };
   }
   // RegisterJobEvent notifies optimus service about an event related to job
-  rpc RegisterSchedulerEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
+  rpc RegisterSchedulerEvent(RegisterSchedulerEventRequest) returns (RegisterSchedulerEventResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/event"
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/event"
       body: "*"
     };
   }
@@ -77,8 +77,10 @@ message UploadToSchedulerResponse {
 message RegisterSchedulerEventRequest {
   string type = 1;
   google.protobuf.Struct value = 2;
-  string chanel = 3;
+  string channel = 3;
 }
+
+message RegisterSchedulerEventResponse {}
 
 message RegisterJobEventRequest {
   string project_name = 1;
