@@ -24,7 +24,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     };
   };
   external_docs: {
-    url: "https://gotocompany.gitbook.io/compass/";
+    url: "https://goto.github.io/compass/";
     description: "More about Compass";
   }
   schemes: HTTP;
