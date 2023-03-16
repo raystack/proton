@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/goto/proton/guardian/v1beta1;guardianv1beta1";
 // These annotations are used when generating the OpenAPI file.
@@ -524,6 +525,14 @@ message ListUserApprovalsRequest {
   repeated string statuses = 2;
   repeated string order_by = 3;
   string account_id = 4;
+  uint32 size = 5 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 6 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message ListUserApprovalsResponse {
