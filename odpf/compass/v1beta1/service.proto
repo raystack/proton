@@ -17,7 +17,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Compass";
     description: "Documentation of our Compass API with gRPC and gRPC-Gateway.";
-    version: "0.2.1";
+    version: "0.3.0";
     license: {
       name: "Apache License 2.0";
       url: "https://github.com/odpf/compass/blob/main/LICENSE";
@@ -619,6 +619,61 @@ service CompassService {
       description: "Delete a single tag template";
       tags: [
         "Tag"
+      ];
+    };
+  }
+
+  // Domain: Namespace
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/namespaces"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a namespace";
+      description: "Create a new namespace, throws error if already exists";
+      tags: [
+        "Namespace"
+      ];
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{urn}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get namespace";
+      description: "Fetch a namespace details, throws error if doesn't exists. Use id or name as urn.";
+      tags: [
+        "Namespace"
+      ];
+    };
+  }
+
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/namespaces/{urn}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update namespace";
+      description: "Update an existing namespace, throws error if doesn't exists. Use id or name as urn.";
+      tags: [
+        "Namespace"
+      ];
+    };
+  }
+
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List namespace";
+      description: "List all created namespaces";
+      tags: [
+        "Namespace"
       ];
     };
   }
@@ -1326,6 +1381,52 @@ message DeleteTagTemplateRequest {
 
 message DeleteTagTemplateResponse {}
 
+message CreateNamespaceRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "optional, if not specified will be auto generated"
+  }];
+  string name = 2 [(validate.rules).string.min_len = 3];
+  string state = 3;
+  google.protobuf.Struct metadata = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "key value pairs as metadata for the namespace"
+  }];
+}
+
+message CreateNamespaceResponse {
+  string id = 1;
+}
+
+message GetNamespaceRequest {
+  // set either id or name
+  string urn = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "set either id or name"
+  }];
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+  // set either id or name
+  string urn = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "set either id or name"
+  }];
+
+  string state = 2;
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "key value pairs as metadata for the namespace"
+  }];
+}
+
+message UpdateNamespaceResponse {}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
 // Entities
 
 message User {
@@ -1526,4 +1627,13 @@ message TagTemplateField {
 message Type {
   string name = 1;
   uint32 count = 2;
+}
+
+message Namespace {
+  string id = 1;
+  string name = 2 [(validate.rules).string.min_len = 3];
+  string state = 3;
+  google.protobuf.Struct metadata = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "key value pairs as metadata for the namespace"
+  }];
 }
