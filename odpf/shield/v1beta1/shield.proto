@@ -229,7 +229,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get Organization by ID";
+      summary: "Get Organization by ID or slug";
     };
   }
 
@@ -536,19 +536,20 @@ service ShieldService {
 }
 
 message UserRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
   string email = 2 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 3;
+  string slug = 4 [(validate.rules).string.pattern = "^[a-zA-Z][a-zA-Z0-9_]{3,64}$"];
 }
 
 message CreateUserRequest {
-  UserRequestBody body = 1;
+  UserRequestBody body = 1 [(validate.rules).message.required = true];
 }
 
 message User {
   string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string slug = 3;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string slug = 3 [(validate.rules).string.pattern = "^[a-zA-Z][a-zA-Z0-9_]{3,64}$"]; // must start with a character
   string email = 4 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
@@ -581,6 +582,8 @@ message GetUserResponse {
   User user = 1;
 }
 
+message GetCurrentUserRequest {}
+
 message GetCurrentUserResponse {
   User user = 1;
 }
@@ -606,8 +609,6 @@ message ListUserGroupsRequest {
   string id = 1;
   string role = 2;
 }
-
-message GetCurrentUserRequest {}
 
 message ListUsersRequest {
   int32 page_size = 1;
