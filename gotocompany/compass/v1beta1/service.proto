@@ -810,6 +810,21 @@ message SearchAssetsRequest {
       description: "offset parameter defines the offset from the first result you want to fetch"
     }
   ];
+
+  SearchFlags flags = 8 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "flags to control the search behavior (e.g. column level search, disable fuzzy, etc)"
+  }];
+}
+
+message SearchFlags {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "SearchFlags"
+    }
+  };
+  bool is_column_search = 1 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "search column names instead of table urn or name."
+  }];
 }
 
 message SearchAssetsResponse {
