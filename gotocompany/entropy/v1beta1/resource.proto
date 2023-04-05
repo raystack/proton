@@ -102,6 +102,13 @@ message ResourceState {
   google.protobuf.Value output = 2;
   bytes module_data = 3;
   LogOptions log_options = 4;
+
+  // information about the ongoing sync process.
+  // if status is ERROR / PENDING, this value can be used to understand
+  // the issue.
+  int32 sync_retries = 5;
+  string sync_last_error = 6;
+  google.protobuf.Timestamp next_sync_at = 7;
 }
 
 message Resource {
@@ -120,6 +127,10 @@ message Resource {
 message ListResourcesRequest {
   string project = 1;
   string kind = 2;
+
+  // filter by labels. if specified, only resources with all the
+  // given labels will be returned.
+  map<string, string> labels = 3;
 }
 
 message ListResourcesResponse {
