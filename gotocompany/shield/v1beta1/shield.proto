@@ -1109,7 +1109,7 @@ message UpdateResourceResponse {
   Resource resource = 1;
 }
 
-message CheckResourcePermissionRequest {
+message ResourcePermission {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
   string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
@@ -1117,6 +1117,21 @@ message CheckResourcePermissionRequest {
   string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
+message CheckResourcePermissionRequest {
+  string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",deprecated = true];
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",deprecated = true];
+  string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",deprecated = true];
+
+  repeated ResourcePermission resource_permissions = 4;
+}
+
 message CheckResourcePermissionResponse {
-  bool status = 1;
+  message ResourcePermissionResponse {
+    string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    bool allowed = 4;
+  }
+  bool status = 1 [deprecated = true];
+  repeated ResourcePermissionResponse resource_permissions = 2;
 }
