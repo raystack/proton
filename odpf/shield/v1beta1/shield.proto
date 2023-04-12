@@ -265,6 +265,15 @@ service ShieldService {
     };
   }
 
+  rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}/users",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "List Organization users";
+    };
+  }
 
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
@@ -316,6 +325,16 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "Get all Admins of a Project";
+    };
+  }
+
+  rpc ListProjectUsers(ListProjectUsersRequest) returns (ListProjectUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/projects/{id}/users",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all users of a Project";
     };
   }
 
@@ -881,6 +900,15 @@ message ListOrganizationAdminsResponse {
   repeated User users = 1;
 }
 
+message ListOrganizationUsersRequest {
+  string id = 1;
+  string permission_filter = 2;
+}
+
+message ListOrganizationUsersResponse {
+  repeated User users = 1;
+}
+
 message ProjectRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string slug = 2;
@@ -934,6 +962,15 @@ message ListProjectAdminsRequest {
 }
 
 message ListProjectAdminsResponse {
+  repeated User users = 1;
+}
+
+message ListProjectUsersRequest {
+  string id = 1;
+  string permission_filter = 2;
+}
+
+message ListProjectUsersResponse {
   repeated User users = 1;
 }
 
