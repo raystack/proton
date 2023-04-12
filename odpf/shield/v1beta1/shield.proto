@@ -31,6 +31,7 @@ service ShieldService {
       summary: "Get All Users";
     };
   }
+
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http) = {
       post: "/v1beta1/users",
@@ -91,6 +92,16 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Update current User";
+    };
+  }
+
+  rpc GetOrganizationsByUser(GetOrganizationsByUserRequest) returns (GetOrganizationsByUserResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{id}/organizations",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get all organizations a user belongs to";
     };
   }
 
@@ -533,6 +544,84 @@ service ShieldService {
       summary: "check permission for action on a resource by an user";
     };
   }
+
+  // Authn
+  rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/auth"
+    };
+  }
+
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/auth/register/{strategy_name}"
+      additional_bindings {
+        post: "/v1beta1/auth/register/{strategy_name}"
+      }
+    };
+  }
+
+  rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/auth/callback"
+      additional_bindings {
+        post: "/v1beta1/auth/callback"
+      }
+    };
+  }
+
+  rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/auth/logout"
+      additional_bindings {
+        delete: "/v1beta1/auth/logout"
+      }
+    };
+  }
+}
+
+message AuthLogoutRequest {}
+
+message AuthLogoutResponse {}
+
+message AuthCallbackRequest{
+  // strategy_name will not be set for oidc but can be utilized for methods like email magic links
+  string strategy_name = 1;
+  
+  // for oidc
+  string state = 2;
+  string code = 3;
+}
+
+message AuthCallbackResponse{
+}
+
+message AuthenticateRequest {
+  string strategy_name = 1;
+
+  // by default, location header for redirect if applicable
+  // will be skipped unless this is set to true, useful in browser
+  bool redirect = 2;
+
+  // be default, after successful authentication no operation will be performed
+  // to apply redirection in case of browsers, provide a url that will be used
+  // for redirection after authentication
+  string return_to = 3;
+}
+
+message AuthenticateResponse {
+  string endpoint = 1;
+}
+
+message AuthStrategy {
+  string name = 1;
+  google.protobuf.Struct params = 2;
+}
+
+message ListAuthStrategiesRequest {}
+
+message ListAuthStrategiesResponse {
+  repeated AuthStrategy strategies = 1;
 }
 
 message UserRequestBody {
@@ -576,6 +665,14 @@ message MetadataKey {
 
 message CreateMetadataKeyResponse {
   MetadataKey metadatakey = 1;
+}
+
+message GetOrganizationsByUserRequest {
+  string id = 1;
+}
+
+message GetOrganizationsByUserResponse {
+  repeated Organization organizations = 1;
 }
 
 message GetUserResponse {
