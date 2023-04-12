@@ -30,6 +30,50 @@ service ReplayService {
       body: "*"
     };
   }
+  rpc ListReplay(ListReplayRequest) returns (ListReplayResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/replay"
+    };
+  }
+  rpc GetReplay(GetReplayRequest) returns (GetReplayResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/replay/{replay_id}"
+    };
+  }
+}
+
+message ListReplayRequest {
+  string project_name = 1;
+}
+
+message ListReplayResponse {
+  repeated GetReplayResponse replays = 1;
+}
+
+message GetReplayRequest {
+  string replay_id = 1;
+  string project_name = 2;
+}
+
+message GetReplayResponse {
+  string id = 1;
+  string job_name = 2;
+  string status = 3;
+  ReplayConfig replay_config = 4;
+  repeated ReplayRun replay_runs = 5;
+}
+
+message ReplayConfig {
+  google.protobuf.Timestamp start_time = 1;
+  google.protobuf.Timestamp end_time = 2;
+  bool parallel = 3;
+  map<string, string> job_config = 4;
+  string description = 5;
+}
+
+message ReplayRun {
+  google.protobuf.Timestamp scheduled_at = 1;
+  string status = 2;
 }
 
 message ReplayRequest {
