@@ -275,6 +275,16 @@ service ShieldService {
     };
   }
 
+  rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}/projects",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all projects that belong to an organization";
+    };
+  }
+
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {
@@ -907,6 +917,14 @@ message ListOrganizationUsersRequest {
 
 message ListOrganizationUsersResponse {
   repeated User users = 1;
+}
+
+message ListOrganizationProjectsRequest {
+  string id = 1;
+}
+
+message ListOrganizationProjectsResponse {
+  repeated Project projects = 1;
 }
 
 message ProjectRequestBody {
