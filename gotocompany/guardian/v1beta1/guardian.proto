@@ -299,14 +299,14 @@ message DeleteProviderRequest {
 message DeleteProviderResponse {}
 
 message ImportGrantsFromProviderRequest {
-    string provider_id = 1;
-    repeated string resource_ids = 2;
-    repeated string resource_types = 3;
-    repeated string resource_urns = 4;
+  string provider_id = 1;
+  repeated string resource_ids = 2;
+  repeated string resource_types = 3;
+  repeated string resource_urns = 4;
 }
 
 message ImportGrantsFromProviderResponse {
-    repeated Grant grants = 1;
+  repeated Grant grants = 1;
 }
 
 message ListRolesRequest {
@@ -533,6 +533,7 @@ message ListUserApprovalsRequest {
     gte: 0,
     ignore_empty: true
   }];
+  repeated string appeal_statuses = 7;
 }
 
 message ListUserApprovalsResponse {
@@ -552,6 +553,7 @@ message ListApprovalsRequest {
     gte: 0,
     ignore_empty: true
   }];
+  repeated string appeal_statuses = 7;
 }
 
 message ListApprovalsResponse {
@@ -741,7 +743,7 @@ message PolicyAppealConfig {
     string value = 2;
   }
   repeated DurationOptions duration_options = 1;
-  bool allow_on_behalf = 2;  
+  bool allow_on_behalf = 2;
   bool allow_permanent_access = 3;
   string allow_active_access_extension_in = 4;
   message Question {
