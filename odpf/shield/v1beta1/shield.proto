@@ -4,22 +4,22 @@ package odpf.shield.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
-import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
+import "odpf/shield/v1beta1/models.proto";
 
-option go_package = "github.com/odpf/proton/shield/v1;shieldv1beta1";
+option go_package = "github.com/odpf/proton/shield/v1beta1;shieldv1beta1";
 option java_outer_classname = "Shield";
 option java_package = "io.odpf.proton.shield.v1beta1";
+
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Shield",
-    version: "0.1.0";
+    title: "Shield General APIs",
+    version: "0.2.0";
   };
   schemes: HTTP;
 };
-
 service ShieldService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
@@ -28,7 +28,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get All Users";
+      summary: "Get all public users";
     };
   }
 
@@ -39,7 +39,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Create User";
+      summary: "Create user";
     };
   }
 
@@ -49,7 +49,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get a User by id";
+      summary: "Get a user by id";
     };
   }
 
@@ -149,19 +149,20 @@ service ShieldService {
   }
 
   // Group
-  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
+  rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/groups",
+      post: "/v1beta1/organizations/{org_id}/groups",
+      body: "*";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Get all Groups";
+      summary: "Create Group";
     };
   }
 
   rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/groups",
+      post: "/v1beta1/organizations/{body.org_id}/groups",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -172,7 +173,7 @@ service ShieldService {
 
   rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/groups/{id}",
+      get: "/v1beta1/organizations/{org_id}/groups/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -182,7 +183,7 @@ service ShieldService {
 
   rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/groups/{id}",
+      put: "/v1beta1/organizations/{body.org_id}/groups/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -193,7 +194,7 @@ service ShieldService {
 
   rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/groups/{id}/relations"
+      get: "/v1beta1/organizations/{org_id}/groups/{id}/relations"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -203,7 +204,7 @@ service ShieldService {
 
   rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/enable",
+      post: "/v1beta1/organizations/{org_id}/groups/{id}/enable",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -214,7 +215,7 @@ service ShieldService {
 
   rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/disable",
+      post: "/v1beta1/organizations/{org_id}/groups/{id}/disable",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -225,7 +226,7 @@ service ShieldService {
 
   rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/groups/{id}",
+      delete: "/v1beta1/organizations/{org_id}/groups/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
@@ -283,7 +284,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all Organization";
+      summary: "Get all organization";
     };
   }
 
@@ -294,7 +295,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Create Organization";
+      summary: "Create organization";
     };
   }
 
@@ -382,16 +383,6 @@ service ShieldService {
   }
 
   // Projects
-  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Get all Project";
-    };
-  }
-
   rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
     option (google.api.http) = {
       post: "/v1beta1/projects",
@@ -605,17 +596,7 @@ service ShieldService {
     };
   }
 
-  // Relations--------------------------------------------------------------------
-  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/relations"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Relation";
-      summary: "Get all Relations";
-    };
-  }
-
+  // Relations
   rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
     option (google.api.http) = {
       post: "/v1beta1/relations",
@@ -648,19 +629,19 @@ service ShieldService {
   }
 
   // Resources
-  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+  rpc ListProjectResources(ListProjectResourcesRequest) returns (ListProjectResourcesResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/resources"
+      get: "/v1beta1/projects/{project_id}/resources"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
-      summary: "Get all Resources";
+      summary: "Get all resources";
     };
   }
 
   rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/resources",
+      post: "/v1beta1/projects/{body.project_id}/resources",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -671,7 +652,7 @@ service ShieldService {
 
   rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/resources/{id}",
+      get: "/v1beta1/projects/{project_id}/resources/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
@@ -681,12 +662,22 @@ service ShieldService {
 
   rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/resources/{id}",
+      put: "/v1beta1/projects/{body.project_id}/resources/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "Update Resource by ID";
+    };
+  }
+
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/projects/{project_id}/resources/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Delete a resource permanently forever";
     };
   }
 
@@ -788,18 +779,23 @@ message UserRequestBody {
   string slug = 4 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9_]{3,64})?$"];
 }
 
-message CreateUserRequest {
-  UserRequestBody body = 1 [(validate.rules).message.required = true];
+message ListUsersRequest {
+  int32 page_size = 1;
+  int32 page_num = 2;
+
+  string keyword = 3;
+  string org_id = 4;
+  string group_id = 5;
+  string state = 6;
 }
 
-message User {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 3 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9_]{3,64})?$"]; // can either be empty or must start with a character
-  string email = 4 [(validate.rules).string.email = true];
-  google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+message ListUsersResponse {
+  int32 count = 1;
+  repeated User users = 2;
+}
+
+message CreateUserRequest {
+  UserRequestBody body = 1 [(validate.rules).message.required = true];
 }
 
 message CreateUserResponse {
@@ -882,21 +878,6 @@ message ListUserGroupsRequest {
   string role = 2;
 }
 
-message ListUsersRequest {
-  int32 page_size = 1;
-  int32 page_num = 2;
-
-  string keyword = 3;
-  string org_id = 4;
-  string group_id = 5;
-  string state = 6;
-}
-
-message ListUsersResponse {
-  int32 count = 1;
-  repeated User users = 2;
-}
-
 message GroupRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
   string slug = 2;
@@ -910,16 +891,6 @@ message CreateGroupRequest {
 
 message ListUserGroupsResponse {
   repeated Group groups = 1;
-}
-
-message Group {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 3;
-  string org_id = 4;
-  google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
 }
 
 message CreateGroupResponse {
@@ -945,27 +916,17 @@ message UpdateCurrentUserRequest {
 
 message GetGroupRequest {
   string id = 1;
+  string org_id = 2;
 }
 
-message ListGroupsRequest {
+message ListOrganizationGroupsRequest {
   string user_id = 1 [deprecated = true];
   string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   string state = 3;
 }
 
-message ListGroupsResponse {
+message ListOrganizationGroupsResponse {
   repeated Group groups = 1;
-}
-
-message Role {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  repeated string types = 3;
-  Namespace namespace = 4 [deprecated=true];
-  google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-  string namespace_id = 8;
 }
 
 message RoleRequestBody {
@@ -1013,17 +974,17 @@ message OrganizationRequestBody {
   google.protobuf.Struct metadata = 3;
 }
 
-message CreateOrganizationRequest {
-  OrganizationRequestBody body = 1;
+message ListOrganizationsRequest {
+  string user_id = 1;
+  string state = 2;
 }
 
-message Organization {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 3;
-  google.protobuf.Struct metadata = 4;
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
+message ListOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message CreateOrganizationRequest {
+  OrganizationRequestBody body = 1;
 }
 
 message CreateOrganizationResponse {
@@ -1036,15 +997,6 @@ message GetOrganizationResponse {
 
 message UpdateOrganizationResponse {
   Organization organization = 1;
-}
-
-message ListOrganizationsRequest {
-  string user_id = 1;
-  string state = 2;
-}
-
-message ListOrganizationsResponse {
-  repeated Organization organizations = 1;
 }
 
 message GetOrganizationRequest {
@@ -1073,14 +1025,6 @@ message ListOrganizationUsersResponse {
   repeated User users = 1;
 }
 
-message ListOrganizationProjectsRequest {
-  string id = 1;
-}
-
-message ListOrganizationProjectsResponse {
-  repeated Project projects = 1;
-}
-
 message EnableOrganizationRequest {
   string id = 1;
 }
@@ -1092,6 +1036,7 @@ message DisableOrganizationRequest {
 }
 
 message DisableOrganizationResponse {}
+
 
 message DeleteOrganizationRequest {
   string id = 1;
@@ -1110,16 +1055,6 @@ message CreateProjectRequest {
   ProjectRequestBody body = 1;
 }
 
-message Project {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 3;
-  string org_id = 4;
-  google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-}
-
 message CreateProjectResponse {
   Project project = 1;
 }
@@ -1132,17 +1067,18 @@ message UpdateProjectResponse {
   Project project = 1;
 }
 
-message ListProjectsRequest {
-  string org_id = 1;
+message ListOrganizationProjectsRequest {
+  string id = 1;
   string state = 2;
 }
 
-message ListProjectsResponse {
+message ListOrganizationProjectsResponse {
   repeated Project projects = 1;
 }
 
 message GetProjectRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message UpdateProjectRequest {
@@ -1152,6 +1088,7 @@ message UpdateProjectRequest {
 
 message ListProjectAdminsRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message ListProjectAdminsResponse {
@@ -1161,6 +1098,7 @@ message ListProjectAdminsResponse {
 message ListProjectUsersRequest {
   string id = 1;
   string permission_filter = 2;
+  string org_id = 3;
 }
 
 message ListProjectUsersResponse {
@@ -1169,49 +1107,24 @@ message ListProjectUsersResponse {
 
 message EnableProjectRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message EnableProjectResponse {}
 
 message DisableProjectRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message DisableProjectResponse {}
 
 message DeleteProjectRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message DeleteProjectResponse {}
-
-message Action {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  Namespace namespace = 3 [deprecated=true];
-  google.protobuf.Timestamp created_at = 4;
-  google.protobuf.Timestamp updated_at = 5;
-  string namespace_id = 6;
-}
-
-message Namespace {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-}
-
-message Policy {
-  string id = 1;
-  Role role = 2 [deprecated=true];
-  Action action = 3 [deprecated=true];
-  Namespace namespace = 4 [deprecated=true];
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
-  string namespace_id = 7;
-  string role_id = 8;
-  string action_id = 9;
-}
 
 message ActionRequestBody {
   string id = 1;
@@ -1323,28 +1236,6 @@ message UpdatePolicyResponse {
   repeated Policy policies = 1;
 }
 
-message Relation {
-  string id = 1;
-  string object_id = 2;
-  string object_namespace = 3;
-  string subject = 4;
-  string role_name = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-}
-
-message Resource {
-  string id = 1;
-  string name = 2;
-  Project project = 3;
-  Organization organization = 4;
-  Namespace namespace = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
-  User user = 8;
-  string urn = 9;
-}
-
 message GroupRelation {
   string subject_type = 1;
   string role = 2;
@@ -1352,12 +1243,6 @@ message GroupRelation {
     User user = 3;
     Group group = 4;
   }
-}
-
-message ListRelationsRequest {}
-
-message ListRelationsResponse {
-  repeated Relation relations = 1;
 }
 
 message RelationRequestBody {
@@ -1396,6 +1281,7 @@ message ListGroupRelationsRequest {
   string id = 1;
   string subject_type = 2;
   string role = 3;
+  string org_id = 4;
 }
 
 message ListGroupRelationsResponse {
@@ -1404,18 +1290,21 @@ message ListGroupRelationsResponse {
 
 message EnableGroupRequest{
   string id = 1;
+  string org_id = 2;
 }
 
 message EnableGroupResponse{}
 
 message DisableGroupRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message DisableGroupResponse {}
 
 message DeleteGroupRequest {
   string id = 1;
+  string org_id = 2;
 }
 
 message DeleteGroupResponse {}
@@ -1430,14 +1319,15 @@ message DeleteRelationResponse {
   string message = 1;
 }
 
-message ListResourcesRequest {
-  string group_id = 1;
+message ListProjectResourcesRequest {
+  string group_id = 1 [deprecated = true];
   string project_id = 2;
   string organization_id = 3;
   string namespace_id = 4;
+  string org_id = 5;
 }
 
-message ListResourcesResponse {
+message ListProjectResourcesResponse {
   repeated Resource resources = 1;
 }
 
@@ -1446,6 +1336,7 @@ message ResourceRequestBody {
   string project_id = 2;
   string namespace_id = 3;
   repeated Relation relations = 4;
+  string org_id = 5;
 }
 
 message CreateResourceRequest {
@@ -1458,6 +1349,8 @@ message CreateResourceResponse {
 
 message GetResourceRequest {
   string id = 1;
+  string org_id = 2;
+  string project_id = 3;
 }
 
 message GetResourceResponse {
@@ -1472,6 +1365,14 @@ message UpdateResourceRequest {
 message UpdateResourceResponse {
   Resource resource = 1;
 }
+
+message DeleteResourceRequest {
+  string id = 1;
+  string org_id = 2;
+  string project_id = 3;
+}
+
+message DeleteResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
