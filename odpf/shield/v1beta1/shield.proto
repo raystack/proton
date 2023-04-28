@@ -95,6 +95,38 @@ service ShieldService {
     };
   }
 
+  rpc EnableUser(EnableUserRequest) returns (EnableUserResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/{id}/enable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Enable a user";
+    };
+  }
+
+  rpc DisableUser(DisableUserRequest) returns (DisableUserResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/{id}/disable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Disable a user";
+    };
+  }
+
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/users/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Delete an user permanently forever and all of its relations";
+    };
+  }
+
   rpc GetOrganizationsByUser(GetOrganizationsByUserRequest) returns (GetOrganizationsByUserResponse) {
     option (google.api.http) = {
       get: "/v1beta1/users/{id}/organizations",
@@ -166,6 +198,38 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "Get all relations for a group";
+    };
+  }
+
+  rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/groups/{id}/enable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Enable a Group";
+    };
+  }
+
+  rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/groups/{id}/disable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Disable a Group";
+    };
+  }
+
+  rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/groups/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Delete a Group permanently forever and all of its relations";
     };
   }
 
@@ -285,6 +349,38 @@ service ShieldService {
     };
   }
 
+  rpc EnableOrganization(EnableOrganizationRequest) returns (EnableOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{id}/enable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Enable an Organization";
+    };
+  }
+
+  rpc DisableOrganization(DisableOrganizationRequest) returns (DisableOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{id}/disable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Disable an Organization";
+    };
+  }
+
+  rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/organizations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Delete an Organization permanently forever and all of its relations";
+    };
+  }
+
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {
@@ -345,6 +441,38 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "Get all users of a Project";
+    };
+  }
+
+  rpc EnableProject(EnableProjectRequest) returns (EnableProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects/{id}/enable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Enable a Project";
+    };
+  }
+
+  rpc DisableProject(DisableProjectRequest) returns (DisableProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects/{id}/disable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Disable a Project";
+    };
+  }
+
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/projects/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Delete a Project permanently forever and all of its relations";
     };
   }
 
@@ -704,6 +832,24 @@ message GetOrganizationsByUserResponse {
   repeated Organization organizations = 1;
 }
 
+message EnableUserRequest {
+  string id = 1;
+}
+
+message EnableUserResponse {}
+
+message DisableUserRequest {
+  string id = 1;
+}
+
+message DisableUserResponse {}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message DeleteUserResponse {}
+
 message GetUserResponse {
   User user = 1;
 }
@@ -739,7 +885,11 @@ message ListUserGroupsRequest {
 message ListUsersRequest {
   int32 page_size = 1;
   int32 page_num = 2;
+
   string keyword = 3;
+  string org_id = 4;
+  string group_id = 5;
+  string state = 6;
 }
 
 message ListUsersResponse {
@@ -800,6 +950,7 @@ message GetGroupRequest {
 message ListGroupsRequest {
   string user_id = 1 [deprecated = true];
   string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string state = 3;
 }
 
 message ListGroupsResponse {
@@ -887,7 +1038,10 @@ message UpdateOrganizationResponse {
   Organization organization = 1;
 }
 
-message ListOrganizationsRequest {}
+message ListOrganizationsRequest {
+  string user_id = 1;
+  string state = 2;
+}
 
 message ListOrganizationsResponse {
   repeated Organization organizations = 1;
@@ -927,6 +1081,24 @@ message ListOrganizationProjectsResponse {
   repeated Project projects = 1;
 }
 
+message EnableOrganizationRequest {
+  string id = 1;
+}
+
+message EnableOrganizationResponse {}
+
+message DisableOrganizationRequest {
+  string id = 1;
+}
+
+message DisableOrganizationResponse {}
+
+message DeleteOrganizationRequest {
+  string id = 1;
+}
+
+message DeleteOrganizationResponse {}
+
 message ProjectRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
   string slug = 2;
@@ -960,7 +1132,10 @@ message UpdateProjectResponse {
   Project project = 1;
 }
 
-message ListProjectsRequest {}
+message ListProjectsRequest {
+  string org_id = 1;
+  string state = 2;
+}
 
 message ListProjectsResponse {
   repeated Project projects = 1;
@@ -991,6 +1166,24 @@ message ListProjectUsersRequest {
 message ListProjectUsersResponse {
   repeated User users = 1;
 }
+
+message EnableProjectRequest {
+  string id = 1;
+}
+
+message EnableProjectResponse {}
+
+message DisableProjectRequest {
+  string id = 1;
+}
+
+message DisableProjectResponse {}
+
+message DeleteProjectRequest {
+  string id = 1;
+}
+
+message DeleteProjectResponse {}
 
 message Action {
   string id = 1;
@@ -1208,6 +1401,24 @@ message ListGroupRelationsRequest {
 message ListGroupRelationsResponse {
   repeated GroupRelation relations = 1;
 }
+
+message EnableGroupRequest{
+  string id = 1;
+}
+
+message EnableGroupResponse{}
+
+message DisableGroupRequest {
+  string id = 1;
+}
+
+message DisableGroupResponse {}
+
+message DeleteGroupRequest {
+  string id = 1;
+}
+
+message DeleteGroupResponse {}
 
 message DeleteRelationRequest {
   string object_id = 1;
