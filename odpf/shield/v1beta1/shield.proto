@@ -1476,7 +1476,7 @@ message UpdateResourceResponse {
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
-  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9/_-]+$"];
 
   string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
