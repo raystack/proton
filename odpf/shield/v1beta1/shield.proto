@@ -724,6 +724,58 @@ service ShieldService {
       }
     };
   }
+
+  // MetaSchema
+  rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/metaschemas",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Schema";
+      summary: "Create Metadata Schema";
+    };
+  }
+
+  rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/metaschemas/{name}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Schema";
+      summary: "Get Metadata Schema";
+    };
+  }
+
+  rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/metaschemas/{name}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Schema";
+      summary: "Update Metadata Schema";
+    };
+  };
+
+  rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/metaschemas/{name}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Schema";
+      summary: "Delete Metadata Schema";
+    };
+  };
+
+  rpc ListMetaSchema(ListMetaSchemaRequest) returns (ListMetaSchemaResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/metaschemas"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Metadata Schema";
+      summary: "List all Metadata Schemas";
+    };
+  };
 }
 
 message AuthLogoutRequest {}
@@ -1455,4 +1507,51 @@ message CheckResourcePermissionRequest {
 
 message CheckResourcePermissionResponse {
   bool status = 1;
+}
+
+message MetaSchema {
+  string name = 1;
+  string schema = 2;
+}
+
+message MetaSchemaRequestBody {
+  string name = 1;
+  string schema = 2;
+}
+
+message CreateMetaSchemaRequest {
+  MetaSchemaRequestBody body = 1;
+}
+
+message CreateMetaSchemaResponse {
+  MetaSchema metaschema = 1;
+}
+
+message ListMetaSchemaRequest {}
+
+message ListMetaSchemaResponse {
+  repeated MetaSchema metaschema = 1;
+}
+
+message GetMetaSchemaRequest {
+  string name = 1;
+}
+
+message GetMetaSchemaResponse {
+  MetaSchema metaschema = 1;
+}
+
+message DeleteMetaSchemaRequest {
+  string name =1;
+}
+
+message DeleteMetaSchemaResponse {}
+
+message UpdateMetaSchemaRequest {
+  string name = 1;
+  MetaSchemaRequestBody metaschema = 2;
+}
+
+message UpdateMetaSchemaResponse {
+  MetaSchema metaschema =1;
 }
