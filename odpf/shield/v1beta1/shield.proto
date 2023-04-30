@@ -137,17 +137,6 @@ service ShieldService {
     };
   }
 
-  rpc CreateMetadataKey(CreateMetadataKeyRequest) returns (CreateMetadataKeyResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/metadatakey",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Metadata Key";
-      summary: "Create Metadata Key";
-    };
-  }
-
   // Group
   rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (google.api.http) = {
@@ -806,23 +795,6 @@ message CreateUserResponse {
   User user = 1;
 }
 
-message MetadataKeyRequestBody {
-  string key = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string description = 2;
-}
-
-message CreateMetadataKeyRequest {
-  MetadataKeyRequestBody body = 1;
-}
-
-message MetadataKey {
-  string key = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string description = 2;
-}
-
-message CreateMetadataKeyResponse {
-  MetadataKey metadatakey = 1;
-}
 
 message GetOrganizationsByUserRequest {
   string id = 1;
