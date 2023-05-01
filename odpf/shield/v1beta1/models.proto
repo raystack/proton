@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package odpf.shield.v1beta1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/odpf/proton/shield/v1beta1;shieldv1beta1";
+option java_outer_classname = "Shield";
+option java_package = "io.odpf.proton.shield.v1beta1";
+
+message User {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string slug = 3 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9_]{3,64})?$"]; // can either be empty or must start with a character
+  string email = 4 [(validate.rules).string.email = true];
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Group {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string slug = 3;
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Role {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  repeated string types = 3;
+  Namespace namespace = 4 [deprecated = true];
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string namespace_id = 8;
+}
+
+message Organization {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string slug = 3;
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message Project {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string slug = 3;
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  }
+
+
+message Action {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  Namespace namespace = 3 [deprecated = true];
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  string namespace_id = 6;
+}
+
+
+message Namespace {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Policy {
+  string id = 1;
+  Role role = 2 [deprecated = true];
+  Action action = 3 [deprecated = true];
+  Namespace namespace = 4 [deprecated = true];
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  string namespace_id = 7;
+  string role_id = 8;
+  string action_id = 9;
+}
+
+message Relation {
+  string id = 1;
+  string object_id = 2;
+  string object_namespace = 3;
+  string subject = 4;
+  string role_name = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Resource {
+  string id = 1;
+  string name = 2;
+  Project project = 3;
+  Organization organization = 4;
+  Namespace namespace = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  User user = 8;
+  string urn = 9;
+}

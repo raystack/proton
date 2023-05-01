@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package odpf.shield.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+import "odpf/shield/v1beta1/models.proto";
+
+option go_package = "github.com/odpf/proton/shield/v1beta1;shieldv1beta1";
+option java_outer_classname = "Shield";
+option java_package = "io.odpf.proton.shield.v1beta1";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Shield Administration API",
+    version: "0.2.0";
+  };
+  schemes: HTTP;
+};
+service AdminService {
+  // Users
+  rpc ListAllUsers(ListAllUsersRequest) returns (ListAllUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/users"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get all users";
+    };
+  }
+
+  // Group
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get all groups";
+    };
+  }
+
+  // Organizations
+  rpc ListAllOrganizations(ListAllOrganizationsRequest) returns (ListAllOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all organization";
+    };
+  }
+
+  // Projects
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/projects"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all project";
+    };
+  }
+
+  // Relations
+  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/relations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Get all relations";
+    };
+  }
+
+  // Resources
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/resources"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Get all resources";
+    };
+  }
+}
+
+message ListAllUsersRequest {
+  int32 page_size = 1;
+  int32 page_num = 2;
+
+  string keyword = 3;
+  string org_id = 4;
+  string group_id = 5;
+  string state = 6;
+}
+
+message ListAllUsersResponse {
+  int32 count = 1;
+  repeated User users = 2;
+}
+
+message ListGroupsRequest {
+  string user_id = 1 [deprecated = true];
+  string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string state = 3;
+}
+
+message ListGroupsResponse {
+  repeated Group groups = 1;
+}
+
+message ListAllOrganizationsRequest {
+  string user_id = 1;
+  string state = 2;
+}
+
+message ListAllOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message ListProjectsRequest {
+  string org_id = 1;
+  string state = 2;
+}
+
+message ListProjectsResponse {
+  repeated Project projects = 1;
+}
+
+message ListRelationsRequest {}
+
+message ListRelationsResponse {
+  repeated Relation relations = 1;
+}
+
+message ListResourcesRequest {
+  string group_id = 1;
+  string project_id = 2;
+  string organization_id = 3;
+  string namespace_id = 4;
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
