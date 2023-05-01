@@ -749,7 +749,8 @@ service ShieldService {
 
   rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/metaschemas/{name}"
+      put: "/v1beta1/metaschemas/{name}",
+      body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Metadata Schema";
@@ -1549,7 +1550,7 @@ message DeleteMetaSchemaResponse {}
 
 message UpdateMetaSchemaRequest {
   string name = 1;
-  MetaSchemaRequestBody metaschema = 2;
+  MetaSchemaRequestBody body = 2;
 }
 
 message UpdateMetaSchemaResponse {
