@@ -765,7 +765,7 @@ message UserRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
   string email = 2 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 3;
-  string slug = 4 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9_]{3,64})?$"];
+  string slug = 4 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
 }
 
 message ListUsersRequest {
@@ -893,7 +893,7 @@ message GetGroupRequest {
 
 message ListOrganizationGroupsRequest {
   string user_id = 1 [deprecated = true];
-  string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string org_id = 2 [(validate.rules).string = {pattern: "^[A-Za-z0-9_-]+$", min_len: 3}];
   string state = 3;
 }
 
@@ -981,7 +981,7 @@ message UpdateOrganizationRequest {
 }
 
 message ListOrganizationAdminsRequest {
-  string id = 1;
+  string id = 1 [(validate.rules).string.min_len = 3]; 
 }
 
 message ListOrganizationAdminsResponse {
@@ -989,7 +989,7 @@ message ListOrganizationAdminsResponse {
 }
 
 message ListOrganizationUsersRequest {
-  string id = 1;
+  string id = 1 [(validate.rules).string.min_len = 3];
   string permission_filter = 2;
 }
 
@@ -1020,7 +1020,7 @@ message ProjectRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
   string slug = 2;
   google.protobuf.Struct metadata = 3;
-  string org_id = 4;
+  string org_id = 4 [(validate.rules).string.min_len = 3];
 }
 
 message CreateProjectRequest {
@@ -1040,7 +1040,7 @@ message UpdateProjectResponse {
 }
 
 message ListOrganizationProjectsRequest {
-  string id = 1;
+  string id = 1 [(validate.rules).string.min_len = 3];
   string state = 2;
 }
 
@@ -1050,7 +1050,6 @@ message ListOrganizationProjectsResponse {
 
 message GetProjectRequest {
   string id = 1;
-  string org_id = 2;
 }
 
 message UpdateProjectRequest {
@@ -1059,8 +1058,7 @@ message UpdateProjectRequest {
 }
 
 message ListProjectAdminsRequest {
-  string id = 1;
-  string org_id = 2;
+  string id = 1 [(validate.rules).string.min_len = 3];
 }
 
 message ListProjectAdminsResponse {
@@ -1068,9 +1066,8 @@ message ListProjectAdminsResponse {
 }
 
 message ListProjectUsersRequest {
-  string id = 1;
+  string id = 1 [(validate.rules).string.min_len = 3];
   string permission_filter = 2;
-  string org_id = 3;
 }
 
 message ListProjectUsersResponse {
@@ -1079,21 +1076,18 @@ message ListProjectUsersResponse {
 
 message EnableProjectRequest {
   string id = 1;
-  string org_id = 2;
 }
 
 message EnableProjectResponse {}
 
 message DisableProjectRequest {
   string id = 1;
-  string org_id = 2;
 }
 
 message DisableProjectResponse {}
 
 message DeleteProjectRequest {
   string id = 1;
-  string org_id = 2;
 }
 
 message DeleteProjectResponse {}
@@ -1262,21 +1256,21 @@ message ListGroupRelationsResponse {
 
 message EnableGroupRequest{
   string id = 1;
-  string org_id = 2;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
 message EnableGroupResponse{}
 
 message DisableGroupRequest {
   string id = 1;
-  string org_id = 2;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
 message DisableGroupResponse {}
 
 message DeleteGroupRequest {
   string id = 1;
-  string org_id = 2;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
 message DeleteGroupResponse {}
@@ -1292,11 +1286,9 @@ message DeleteRelationResponse {
 }
 
 message ListProjectResourcesRequest {
-  string group_id = 1 [deprecated = true];
-  string project_id = 2;
-  string organization_id = 3;
+  reserved 1;
+  string project_id = 2 [(validate.rules).string.min_len = 3];
   string namespace_id = 4;
-  string org_id = 5;
 }
 
 message ListProjectResourcesResponse {
@@ -1320,9 +1312,9 @@ message CreateResourceResponse {
 }
 
 message GetResourceRequest {
+  reserved 2;
   string id = 1;
-  string org_id = 2;
-  string project_id = 3;
+  string project_id = 3 [(validate.rules).string.min_len = 3];
 }
 
 message GetResourceResponse {
@@ -1340,8 +1332,7 @@ message UpdateResourceResponse {
 
 message DeleteResourceRequest {
   string id = 1;
-  string org_id = 2;
-  string project_id = 3;
+  string project_id = 3 [(validate.rules).string.min_len = 3];
 }
 
 message DeleteResourceResponse {}
@@ -1349,7 +1340,7 @@ message DeleteResourceResponse {}
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
-  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"];
 
   string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
