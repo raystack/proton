@@ -728,7 +728,7 @@ service ShieldService {
   // MetaSchema
   rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/metaschemas",
+      post: "/v1beta1/meta/schemas",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -739,7 +739,7 @@ service ShieldService {
 
   rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/metaschemas/{name}"
+      get: "/v1beta1/meta/schemas/{name}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Metadata Schema";
@@ -749,7 +749,7 @@ service ShieldService {
 
   rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/metaschemas/{name}",
+      put: "/v1beta1/meta/schemas/{name}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -760,7 +760,7 @@ service ShieldService {
 
   rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/metaschemas/{name}"
+      delete: "/v1beta1/meta/schemas/{name}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Metadata Schema";
@@ -770,7 +770,7 @@ service ShieldService {
 
   rpc ListMetaSchema(ListMetaSchemaRequest) returns (ListMetaSchemaResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/metaschemas"
+      get: "/v1beta1/meta/schemas"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Metadata Schema";
@@ -1501,7 +1501,7 @@ message UpdateResourceResponse {
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 
-  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"];
 
   string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
