@@ -140,8 +140,7 @@ service ShieldService {
   // Group
   rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/groups",
-      body: "*";
+      get: "/v1beta1/organizations/{org_id}/groups",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";

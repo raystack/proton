@@ -4,7 +4,6 @@ package odpf.shield.v1beta1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "validate/validate.proto";
 import "odpf/shield/v1beta1/models.proto";
 
 option go_package = "github.com/odpf/proton/shield/v1beta1;shieldv1beta1";
@@ -104,7 +103,7 @@ message ListAllUsersResponse {
 
 message ListGroupsRequest {
   string user_id = 1 [deprecated = true];
-  string org_id = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string org_id = 2;
   string state = 3;
 }
 
