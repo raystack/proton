@@ -1408,7 +1408,7 @@ message MetaSchemaRequestBody {
 }
 
 message CreateMetaSchemaRequest{
-  MetaSchemaRequestBody metaschema = 1;
+  MetaSchemaRequestBody body = 1;
 }
 
 message CreateMetaSchemaResponse{
@@ -1425,7 +1425,7 @@ message GetMetaSchemaResponse{
 
 message UpdateMetaSchemaRequest{
   string id = 1;
-  MetaSchemaRequestBody metaschema = 2 [(validate.rules).message.required = true];
+  MetaSchemaRequestBody body = 2 [(validate.rules).message.required = true];
 }
 
 message UpdateMetaSchemaResponse{
