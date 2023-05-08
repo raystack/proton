@@ -206,9 +206,25 @@ service CompassService {
 
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Search for an asset";
-      description: "API for querying documents. 'text' is fuzzy matched against all the available datasets, and matched results are returned. You can specify additional match criteria using 'filter[.*]' query parameters. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/search/?text=<text>&filter[environment]=integration&filter[landscape]=vn&filter[landscape]=th`. As an alternative, this API also supports fuzzy filter match with 'query' query params. For instance, searching assets that has 'bigqu' term in its description `/search/?text=<text>&query[description]=bigqu`";
+      description: "API for querying documents. 'text' is fuzzy matched against all the available datasets, and matched results are returned. You can specify additional match criteria using 'filter[.*]' query parameters. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/search/?text=<text>&filter[environment]=integration&filter[landscape]=vn,th`. As an alternative, this API also supports fuzzy filter match with 'query' query params. For instance, searching assets that has 'bigqu' term in its description `/search/?text=<text>&query[description]=bigqu`";
       tags: [
         "Search",
+        "Asset"
+      ];
+    };
+  }
+
+  // Domain: Asset
+  rpc GroupAssets(GroupAssetsRequest) returns (GroupAssetsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groupassets"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Group api for assets";
+      description: "API for grouping documents. 'groupby' the field provided here is used for grouping. You can provide multiple fields as well. If it is a nested fields, you can provide the path to the field. You can specify additional criteria using 'filter[.*]' to only group those documents. You can specify each filter multiple times to specify a set of values for those filters. For instance, to specify two landscape 'vn' and 'th', the query could be `/groupassets/?groupby=<groupby>&filter[environment]=integration&filter[landscape]=vn,th`. 'include_fields' is used to send only these fields in response. this helps in restricting the response. Eg:/groupassets/?groupby=field1&groupby=field2&filter[environment]=production&include_fields=data.attributes.dataset&include_fields=data.attributes.project Fields in group by will always be part of response, no need to add them in include_fields.";
+      tags: [
+        "Group",
         "Asset"
       ];
     };
@@ -814,6 +830,54 @@ message SearchAssetsRequest {
   SearchFlags flags = 8 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "flags to control the search behavior (e.g. column level search, disable fuzzy, etc)"
   }];
+}
+
+
+message GroupAssetsRequest {
+
+  repeated string groupby = 1 [
+    (validate.rules).repeated = {
+      unique: true,
+      ignore_empty: false,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "fields used to group assets. multiple fields can also be provided here"
+    }
+  ];
+
+  map<string, string> filter = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "filter result based on a (nested) field of the asset. the nested field is written with period separated field name. eg, \"filter[data.landscape]\""
+  }];
+
+  repeated string include_fields = 3 [(validate.rules).repeated = {
+    unique: true,
+    ignore_empty: true
+  }];
+
+  uint32 size = 4 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "maximum size to fetch"
+    }
+  ];
+
+}
+
+message GroupAssetsResponse {
+  repeated AssetGroup asset_groups = 1;
+}
+
+message AssetGroup {
+  repeated GroupField group_fields = 1;
+  repeated Asset assets = 2;
+}
+
+message GroupField {
+  string group_key = 1;
+  string group_value = 2;
 }
 
 message SearchFlags {
