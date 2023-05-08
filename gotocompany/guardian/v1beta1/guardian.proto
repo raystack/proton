@@ -785,6 +785,7 @@ message Policy {
       string resource_urn = 4;
       string role = 5;
       repeated Condition conditions = 6;
+      string expression = 7;
     }
     RequirementTrigger on = 1;
 
