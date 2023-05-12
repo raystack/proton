@@ -889,6 +889,10 @@ message SearchFlags {
   bool is_column_search = 1 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "search column names instead of table urn or name."
   }];
+
+  bool disable_fuzzy = 2 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "disable fuzzy search."
+  }];
 }
 
 message SearchAssetsResponse {
