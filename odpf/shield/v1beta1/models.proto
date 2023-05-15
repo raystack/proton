@@ -111,3 +111,11 @@ message Resource {
   User user = 8;
   string urn = 9;
 }
+
+message MetaSchema {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string schema = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}

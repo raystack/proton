@@ -714,6 +714,60 @@ service ShieldService {
       }
     };
   }
+  
+  // MetaSchemas
+  rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/meta/schemas"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "MetaSchema";
+      summary: "Get all Metadata Schemas";
+    };
+  }
+
+  rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/meta/schemas",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "MetaSchema";
+      summary: "Create Metadata Schema";
+    };
+  }
+
+  rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/meta/schemas/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "MetaSchema";
+      summary: "Get MetaSchema by ID";
+    };
+  }
+
+  rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/meta/schemas/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "MetaSchema";
+      summary: "Update MetaSchema by ID";
+    };
+  }
+
+  rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/meta/schemas/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "MetaSchema";
+      summary: "Delete a MetaSchema permanently";
+    };
+  }
+
 }
 
 message AuthLogoutRequest {}
@@ -1346,4 +1400,46 @@ message CheckResourcePermissionRequest {
 
 message CheckResourcePermissionResponse {
   bool status = 1;
+}
+
+message MetaSchemaRequestBody {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string schema = 2 [(validate.rules).string.min_len = 2];;
+}
+
+message CreateMetaSchemaRequest{
+  MetaSchemaRequestBody body = 1;
+}
+
+message CreateMetaSchemaResponse{
+  MetaSchema metaschema = 1;
+}
+
+message GetMetaSchemaRequest{
+  string id = 1;
+}
+
+message GetMetaSchemaResponse{
+  MetaSchema metaschema = 1;
+}
+
+message UpdateMetaSchemaRequest{
+  string id = 1;
+  MetaSchemaRequestBody body = 2 [(validate.rules).message.required = true];
+}
+
+message UpdateMetaSchemaResponse{
+  MetaSchema metaschema = 1;
+}
+
+message DeleteMetaSchemaRequest{
+  string id = 1;
+}
+
+message DeleteMetaSchemaResponse{}
+
+message ListMetaSchemasRequest{}
+
+message ListMetaSchemasResponse{
+  repeated MetaSchema metaschemas = 1;
 }
