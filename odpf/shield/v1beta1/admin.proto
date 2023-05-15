@@ -84,6 +84,38 @@ service AdminService {
       summary: "Get all resources";
     };
   }
+
+  // Policies
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get all policies";
+    };
+  }
+
+  // Roles
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/roles",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Create platform wide role";
+    };
+  }
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/roles/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Delete a role permanently forever and all of its relations";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -145,3 +177,28 @@ message ListResourcesRequest {
 message ListResourcesResponse {
   repeated Resource resources = 1;
 }
+
+message ListPoliciesRequest {
+  string org_id = 1;
+  string project_id = 2;
+  string user_id = 3;
+  string role_id = 4;
+}
+
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}
+
+message CreateRoleRequest {
+  RoleRequestBody body = 1;
+}
+
+message CreateRoleResponse {
+  Role role = 1;
+}
+
+message DeleteRoleRequest {
+  string id = 1;
+}
+
+message DeleteRoleResponse{}

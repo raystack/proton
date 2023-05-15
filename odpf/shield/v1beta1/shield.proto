@@ -63,6 +63,16 @@ service ShieldService {
     };
   }
 
+  rpc ListCurrentUserGroups(ListCurrentUserGroupsRequest) returns (ListCurrentUserGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/self/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List groups of a User";
+    };
+  }
+
   rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
     option (google.api.http) = {
       get: "/v1beta1/users/self",
@@ -137,6 +147,16 @@ service ShieldService {
     };
   }
 
+  rpc GetOrganizationsByCurrentUser(GetOrganizationsByCurrentUserRequest) returns (GetOrganizationsByCurrentUserResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/self/organizations",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get all organizations a user belongs to";
+    };
+  }
+
   // Group
   rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
     option (google.api.http) = {
@@ -180,13 +200,13 @@ service ShieldService {
     };
   }
 
-  rpc ListGroupRelations(ListGroupRelationsRequest) returns (ListGroupRelationsResponse) {
+  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/groups/{id}/relations"
+      get: "/v1beta1/organizations/{org_id}/groups/{id}/users"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Get all relations for a group";
+      summary: "Get all users for a group";
     };
   }
 
@@ -229,13 +249,23 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Get all Roles";
+      summary: "List all pre-defined roles";
     };
   }
 
-  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+  rpc ListOrganizationRoles(ListOrganizationRolesRequest) returns (ListOrganizationRolesResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/roles",
+      get: "/v1beta1/organizations/{org_id}/roles",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Get custom roles under an org";
+    };
+  }
+
+  rpc CreateOrganizationRole(CreateOrganizationRoleRequest) returns (CreateOrganizationRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{body.org_id}/roles",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -244,9 +274,9 @@ service ShieldService {
     };
   }
 
-  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
+  rpc GetOrganizationRole(GetOrganizationRoleRequest) returns (GetOrganizationRoleResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/roles/{id}",
+      get: "/v1beta1/organizations/{org_id}/roles/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
@@ -254,14 +284,24 @@ service ShieldService {
     };
   }
 
-  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+  rpc UpdateOrganizationRole(UpdateOrganizationRoleRequest) returns (UpdateOrganizationRoleResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/roles/{id}",
+      put: "/v1beta1/organizations/{body.org_id}/roles/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "Update Role by ID";
+    };
+  }
+
+  rpc DeleteOrganizationRole(DeleteOrganizationRoleRequest) returns (DeleteOrganizationRoleResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/organizations/{org_id}/roles/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Delete a role permanently forever and all of its relations";
     };
   }
 
@@ -356,7 +396,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Disable an Organization";
+      summary: "Disable an organization";
     };
   }
 
@@ -366,7 +406,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Delete an Organization permanently forever and all of its relations";
+      summary: "Delete an organization permanently forever and all of its relations";
     };
   }
 
@@ -455,46 +495,56 @@ service ShieldService {
     };
   }
 
-  // Actions
-  rpc ListActions(ListActionsRequest) returns (ListActionsResponse) {
+  // Permissions
+  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/actions"
+      get: "/v1beta1/permissions"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Get all Actions";
+      tags: "Permission";
+      summary: "Get all Permissions";
     };
   }
 
-  rpc CreateAction(CreateActionRequest) returns (CreateActionResponse) {
+  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/actions",
+      post: "/v1beta1/permissions",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Create Action";
+      tags: "Permission";
+      summary: "Create Permission";
     };
   }
 
-  rpc GetAction(GetActionRequest) returns (GetActionResponse) {
+  rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/actions/{id}",
+      get: "/v1beta1/permissions/{id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Get Action by ID";
+      tags: "Permission";
+      summary: "Get Permission by ID";
     };
   }
 
-  rpc UpdateAction(UpdateActionRequest) returns (UpdateActionResponse) {
+  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/actions/{id}",
+      put: "/v1beta1/permissions/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Update Action by ID";
+      tags: "Permission";
+      summary: "Update Permission by ID";
+    };
+  }
+
+  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/permissions/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Delete Permission by ID";
     };
   }
 
@@ -542,16 +592,6 @@ service ShieldService {
   }
 
   // Policies
-  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Get all Policy";
-    };
-  }
-
   rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
     option (google.api.http) = {
       post: "/v1beta1/policies",
@@ -584,6 +624,16 @@ service ShieldService {
     };
   }
 
+  rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/policies/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Delete a policy permanently forever and all of its relations";
+    };
+  }
+
   // Relations
   rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
     option (google.api.http) = {
@@ -608,11 +658,11 @@ service ShieldService {
 
   rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/object/{object_id}/subject/{subject_id}/role/{role}",
+      delete: "/v1beta1/object/{object_namespace}/{object_id}/subject/{subject_namespace}/{subject_id}/relation/{relation}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
-      summary: "Remove a subject having a role from an object";
+      summary: "Remove a subject having a relation from an object";
     };
   }
 
@@ -677,7 +727,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authz";
-      summary: "check permission for action on a resource by an user";
+      summary: "check permission on a resource of an user";
     };
   }
 
@@ -853,6 +903,12 @@ message GetOrganizationsByUserResponse {
   repeated Organization organizations = 1;
 }
 
+message GetOrganizationsByCurrentUserRequest {}
+
+message GetOrganizationsByCurrentUserResponse {
+  repeated Organization organizations = 1;
+}
+
 message EnableUserRequest {
   string id = 1;
 }
@@ -896,6 +952,12 @@ message UpdateUserRequest {
 
 message GetUserRequest {
   string id = 1;
+}
+
+message ListCurrentUserGroupsRequest {}
+
+message ListCurrentUserGroupsResponse {
+  repeated Group groups = 1;
 }
 
 message ListUserGroupsRequest {
@@ -954,37 +1016,30 @@ message ListOrganizationGroupsResponse {
   repeated Group groups = 1;
 }
 
-message RoleRequestBody {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  repeated string types = 3;
-  string namespace_id = 4;
-  google.protobuf.Struct metadata = 5;
-}
-
-message CreateRoleRequest {
+message CreateOrganizationRoleRequest {
   RoleRequestBody body = 1;
 }
 
-message CreateRoleResponse {
+message CreateOrganizationRoleResponse {
   Role role = 1;
 }
 
-message GetRoleResponse {
-  Role role = 1;
-}
-
-message UpdateRoleResponse {
-  Role role = 1;
-}
-
-message GetRoleRequest {
+message GetOrganizationRoleRequest {
   string id = 1;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
-message UpdateRoleRequest {
+message GetOrganizationRoleResponse {
+  Role role = 1;
+}
+
+message UpdateOrganizationRoleRequest {
   string id = 1;
   RoleRequestBody body = 2;
+}
+
+message UpdateOrganizationRoleResponse {
+  Role role = 1;
 }
 
 message ListRolesRequest {}
@@ -992,6 +1047,21 @@ message ListRolesRequest {}
 message ListRolesResponse {
   repeated Role roles = 1;
 }
+
+message ListOrganizationRolesRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListOrganizationRolesResponse {
+  repeated Role roles = 1;
+}
+
+message DeleteOrganizationRoleRequest {
+  string id = 1;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
+}
+
+message DeleteOrganizationRoleResponse{}
 
 message OrganizationRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
@@ -1145,10 +1215,14 @@ message DeleteProjectRequest {
 
 message DeleteProjectResponse {}
 
-message ActionRequestBody {
+message PermissionRequestBody {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string namespace_id = 3;
+  string namespace_id = 3 [(validate.rules).string.min_len = 3];
+  google.protobuf.Struct metadata = 4;
+
+  // slug is optional and will be autogenerated with name and namespace_id
+  string slug = 5;
 }
 
 message NamespaceRequestBody {
@@ -1158,40 +1232,48 @@ message NamespaceRequestBody {
 
 message PolicyRequestBody {
   string role_id = 1;
-  string action_id = 2;
+  string resource_id = 2;
   string namespace_id = 3;
+  string user_id = 4;
+  google.protobuf.Struct metadata = 5;
 }
 
-message ListActionsRequest {}
+message ListPermissionsRequest {}
 
-message ListActionsResponse {
-  repeated Action actions = 1;
+message ListPermissionsResponse {
+  repeated Permission permissions = 1;
 }
 
-message CreateActionRequest {
-  ActionRequestBody body = 1;
+message CreatePermissionRequest {
+  PermissionRequestBody body = 1;
 }
 
-message CreateActionResponse {
-  Action action = 1;
+message CreatePermissionResponse {
+  Permission permission = 1;
 }
 
-message GetActionRequest {
+message GetPermissionRequest {
   string id = 1;
 }
 
-message GetActionResponse {
-  Action action = 1;
+message GetPermissionResponse {
+  Permission permission = 1;
 }
 
-message UpdateActionRequest {
+message UpdatePermissionRequest {
   string id = 1;
-  ActionRequestBody body = 2;
+  PermissionRequestBody body = 2;
 }
 
-message UpdateActionResponse {
-  Action action = 1;
+message UpdatePermissionResponse {
+  Permission permission = 1;
 }
+
+message DeletePermissionRequest{
+  string id = 1;
+}
+
+message DeletePermissionResponse{}
 
 message ListNamespacesRequest {}
 
@@ -1224,18 +1306,13 @@ message UpdateNamespaceResponse {
   Namespace namespace = 1;
 }
 
-message ListPoliciesRequest {}
-
-message ListPoliciesResponse {
-  repeated Policy policies = 1;
-}
-
 message CreatePolicyRequest {
   PolicyRequestBody body = 1;
 }
 
 message CreatePolicyResponse {
-  repeated Policy policies = 1;
+  reserved 1;
+  Policy policy = 2;
 }
 
 message GetPolicyRequest {
@@ -1255,20 +1332,19 @@ message UpdatePolicyResponse {
   repeated Policy policies = 1;
 }
 
-message GroupRelation {
-  string subject_type = 1;
-  string role = 2;
-  oneof subject {
-    User user = 3;
-    Group group = 4;
-  }
+message DeletePolicyRequest {
+  string id = 1;
 }
+
+message DeletePolicyResponse {}
 
 message RelationRequestBody {
   string object_id = 1;
   string object_namespace = 2;
-  string subject = 3;
-  string role_name = 4;
+  string subject_id = 3;
+  string relation_name = 4;
+  string subject_namespace = 5;
+  string subject_sub_relation = 6;
 }
 
 message CreateRelationRequest {
@@ -1296,15 +1372,13 @@ message UpdateRelationResponse {
   Relation relation = 1;
 }
 
-message ListGroupRelationsRequest {
+message ListGroupUsersRequest {
   string id = 1;
-  string subject_type = 2;
-  string role = 3;
-  string org_id = 4;
+  string org_id = 2;
 }
 
-message ListGroupRelationsResponse {
-  repeated GroupRelation relations = 1;
+message ListGroupUsersResponse {
+  repeated User users = 1;
 }
 
 message EnableGroupRequest{
@@ -1329,9 +1403,12 @@ message DeleteGroupRequest {
 message DeleteGroupResponse {}
 
 message DeleteRelationRequest {
+  reserved 3;
   string object_id = 1;
   string subject_id = 2;
-  string role = 3;
+  string relation = 4;
+  string object_namespace = 5;
+  string subject_namespace = 6;
 }
 
 message DeleteRelationResponse {
@@ -1349,11 +1426,13 @@ message ListProjectResourcesResponse {
 }
 
 message ResourceRequestBody {
+  reserved 5;
   string name = 1;
   string project_id = 2;
   string namespace_id = 3;
-  repeated Relation relations = 4;
-  string org_id = 5;
+  repeated Relation relations = 4 [deprecated = true];
+  string user_id = 6;
+  google.protobuf.Struct metadata = 7;
 }
 
 message CreateResourceRequest {
@@ -1392,9 +1471,7 @@ message DeleteResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-
   string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"];
-
   string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
@@ -1403,8 +1480,8 @@ message CheckResourcePermissionResponse {
 }
 
 message MetaSchemaRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string schema = 2 [(validate.rules).string.min_len = 2];;
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
+  string schema = 2 [(validate.rules).string.min_len = 2];
 }
 
 message CreateMetaSchemaRequest{

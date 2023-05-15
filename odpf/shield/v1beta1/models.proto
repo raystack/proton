@@ -31,14 +31,15 @@ message Group {
 }
 
 message Role {
+  reserved 4, 8;
   string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  repeated string types = 3;
-  Namespace namespace = 4 [deprecated = true];
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
+  repeated string permissions = 3;
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
-  string namespace_id = 8;
+  string org_id = 9;
+  string state = 10;
 }
 
 message Organization {
@@ -61,61 +62,78 @@ message Project {
   }
 
 
-message Action {
+message Permission {
+  reserved 3;
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  Namespace namespace = 3 [deprecated = true];
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
   string namespace_id = 6;
+  google.protobuf.Struct metadata = 7;
+  string slug = 8;
 }
 
 
 message Namespace {
   string id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  google.protobuf.Struct metadata = 3;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
 }
 
 message Policy {
+  reserved 2, 3, 4, 9;
   string id = 1;
-  Role role = 2 [deprecated = true];
-  Action action = 3 [deprecated = true];
-  Namespace namespace = 4 [deprecated = true];
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
   string namespace_id = 7;
   string role_id = 8;
-  string action_id = 9;
+  string resource_id = 10;
+  string user_id = 11;
+  google.protobuf.Struct metadata = 12;
 }
 
 message Relation {
+  reserved 5;
   string id = 1;
   string object_id = 2;
   string object_namespace = 3;
-  string subject = 4;
-  string role_name = 5;
+  string subject_id = 4;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
+  string subject_namespace = 8;
+  string subject_sub_relation_name = 9;
+  string relation_name = 10;
 }
 
 message Resource {
+  reserved 3, 4, 5, 8;
   string id = 1;
   string name = 2;
-  Project project = 3;
-  Organization organization = 4;
-  Namespace namespace = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
-  User user = 8;
   string urn = 9;
+  string project_id = 10;
+  string namespace_id = 11;
+  string user_id = 12;
+  google.protobuf.Struct metadata = 13;
 }
 
 message MetaSchema {
   string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
   string schema = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
+}
+
+// model crud body
+
+message RoleRequestBody {
+  string id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
+  repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
+  string org_id = 4;
+  google.protobuf.Struct metadata = 5;
 }
