@@ -333,7 +333,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get Organization by ID or slug";
+      summary: "Get organization by ID or slug";
     };
   }
 
@@ -344,7 +344,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Update Organization by ID";
+      summary: "Update organization by ID";
     };
   }
 
@@ -354,7 +354,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all Admins of an Organization";
+      summary: "Get all admins of an organization";
     };
   }
 
@@ -364,7 +364,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "List Organization users";
+      summary: "List organization users";
     };
   }
 
@@ -418,7 +418,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Create Project";
+      summary: "Create oroject";
     };
   }
 
@@ -428,7 +428,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get Project by ID";
+      summary: "Get oroject by ID";
     };
   }
 
@@ -439,7 +439,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Update Project by ID";
+      summary: "Update oroject by ID";
     };
   }
 
@@ -449,7 +449,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all Admins of a Project";
+      summary: "Get all Admins of a oroject";
     };
   }
 
@@ -459,7 +459,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all users of a Project";
+      summary: "Get all users of a oroject";
     };
   }
 
@@ -470,7 +470,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Enable a Project";
+      summary: "Enable a oroject";
     };
   }
 
@@ -481,7 +481,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Disable a Project";
+      summary: "Disable a oroject";
     };
   }
 
@@ -491,103 +491,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Delete a Project permanently forever and all of its relations";
-    };
-  }
-
-  // Permissions
-  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/permissions"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Get all Permissions";
-    };
-  }
-
-  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/permissions",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Create Permission";
-    };
-  }
-
-  rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/permissions/{id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Get Permission by ID";
-    };
-  }
-
-  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/permissions/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Update Permission by ID";
-    };
-  }
-
-  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/permissions/{id}"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Delete Permission by ID";
-    };
-  }
-
-  // Namespaces
-  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Get all Namespaces";
-    };
-  }
-
-  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/namespaces",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Create Namespace";
-    };
-  }
-
-  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces/{id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Get Namespace by ID";
-    };
-  }
-
-  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/namespaces/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Update Namespace by ID";
+      summary: "Delete a oroject permanently forever and all of its relations";
     };
   }
 
@@ -599,7 +503,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
-      summary: "Create Policy";
+      summary: "Create policy";
     };
   }
 
@@ -609,7 +513,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
-      summary: "Get Policy by ID";
+      summary: "Get policy by ID";
     };
   }
 
@@ -620,7 +524,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
-      summary: "Update Policy by ID";
+      summary: "Update policy by ID";
     };
   }
 
@@ -658,11 +562,53 @@ service ShieldService {
 
   rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
     option (google.api.http) = {
-      delete: "/v1beta1/object/{object_namespace}/{object_id}/subject/{subject_namespace}/{subject_id}/relation/{relation}",
+      delete: "/v1beta1/relations/{relation}/object/{object}/subject/{subject}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
       summary: "Remove a subject having a relation from an object";
+    };
+  }
+
+  // Permissions
+  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/permissions"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Get all Permissions";
+    };
+  }
+
+  rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/permissions/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Get permission by ID";
+    };
+  }
+
+  // Namespaces
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get all Namespaces";
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Namespace";
+      summary: "Get a Namespaces";
     };
   }
 
@@ -677,7 +623,7 @@ service ShieldService {
     };
   }
 
-  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+  rpc CreateProjectResource(CreateProjectResourceRequest) returns (CreateProjectResourceResponse) {
     option (google.api.http) = {
       post: "/v1beta1/projects/{body.project_id}/resources",
       body: "body"
@@ -688,7 +634,7 @@ service ShieldService {
     };
   }
 
-  rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
+  rpc GetProjectResource(GetProjectResourceRequest) returns (GetProjectResourceResponse) {
     option (google.api.http) = {
       get: "/v1beta1/projects/{project_id}/resources/{id}",
     };
@@ -698,7 +644,7 @@ service ShieldService {
     };
   }
 
-  rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
+  rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {
     option (google.api.http) = {
       put: "/v1beta1/projects/{body.project_id}/resources/{id}",
       body: "body"
@@ -709,7 +655,7 @@ service ShieldService {
     };
   }
 
-  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+  rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {
     option (google.api.http) = {
       delete: "/v1beta1/projects/{project_id}/resources/{id}",
     };
@@ -865,10 +811,10 @@ message ListAuthStrategiesResponse {
 }
 
 message UserRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string name = 1 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
   string email = 2 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 3;
-  string slug = 4 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
+  string title = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
 }
 
 message ListUsersRequest {
@@ -966,8 +912,8 @@ message ListUserGroupsRequest {
 }
 
 message GroupRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 2;
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
+  string title = 2;
   google.protobuf.Struct metadata = 3;
   string org_id = 4;
 }
@@ -1042,7 +988,9 @@ message UpdateOrganizationRoleResponse {
   Role role = 1;
 }
 
-message ListRolesRequest {}
+message ListRolesRequest {
+  string state = 1;
+}
 
 message ListRolesResponse {
   repeated Role roles = 1;
@@ -1050,6 +998,7 @@ message ListRolesResponse {
 
 message ListOrganizationRolesRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  string state = 2;
 }
 
 message ListOrganizationRolesResponse {
@@ -1065,7 +1014,7 @@ message DeleteOrganizationRoleResponse{}
 
 message OrganizationRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 2;
+  string title = 2;
   google.protobuf.Struct metadata = 3;
 }
 
@@ -1140,8 +1089,8 @@ message DeleteOrganizationRequest {
 message DeleteOrganizationResponse {}
 
 message ProjectRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string slug = 2;
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
+  string title = 2;
   google.protobuf.Struct metadata = 3;
   string org_id = 4 [(validate.rules).string.min_len = 3];
 }
@@ -1215,41 +1164,15 @@ message DeleteProjectRequest {
 
 message DeleteProjectResponse {}
 
-message PermissionRequestBody {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string namespace_id = 3 [(validate.rules).string.min_len = 3];
-  google.protobuf.Struct metadata = 4;
-
-  // slug is optional and will be autogenerated with name and namespace_id
-  string slug = 5;
-}
-
-message NamespaceRequestBody {
-  string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-}
-
 message PolicyRequestBody {
   string role_id = 1;
-  string resource_id = 2;
-  string namespace_id = 3;
-  string user_id = 4;
+  string title = 3;
+  
+  // namespace:uuid
+  string resource = 2;
+  // namespace:uuid
+  string principal = 4;
   google.protobuf.Struct metadata = 5;
-}
-
-message ListPermissionsRequest {}
-
-message ListPermissionsResponse {
-  repeated Permission permissions = 1;
-}
-
-message CreatePermissionRequest {
-  PermissionRequestBody body = 1;
-}
-
-message CreatePermissionResponse {
-  Permission permission = 1;
 }
 
 message GetPermissionRequest {
@@ -1260,20 +1183,11 @@ message GetPermissionResponse {
   Permission permission = 1;
 }
 
-message UpdatePermissionRequest {
-  string id = 1;
-  PermissionRequestBody body = 2;
-}
+message ListPermissionsRequest {}
 
-message UpdatePermissionResponse {
-  Permission permission = 1;
+message ListPermissionsResponse {
+  repeated Permission permissions = 1;
 }
-
-message DeletePermissionRequest{
-  string id = 1;
-}
-
-message DeletePermissionResponse{}
 
 message ListNamespacesRequest {}
 
@@ -1281,28 +1195,11 @@ message ListNamespacesResponse {
   repeated Namespace namespaces = 1;
 }
 
-message CreateNamespaceRequest {
-  NamespaceRequestBody body = 1;
-}
-
-message CreateNamespaceResponse {
-  Namespace namespace = 1;
-}
-
 message GetNamespaceRequest {
   string id = 1;
 }
 
 message GetNamespaceResponse {
-  Namespace namespace = 1;
-}
-
-message UpdateNamespaceRequest {
-  string id = 1;
-  NamespaceRequestBody body = 2;
-}
-
-message UpdateNamespaceResponse {
   Namespace namespace = 1;
 }
 
@@ -1339,11 +1236,13 @@ message DeletePolicyRequest {
 message DeletePolicyResponse {}
 
 message RelationRequestBody {
-  string object_id = 1;
-  string object_namespace = 2;
-  string subject_id = 3;
-  string relation_name = 4;
-  string subject_namespace = 5;
+  reserved 2, 5;
+
+  // objectnamespace:uuid
+  string object = 1;
+  // subjectnamespace:uuid
+  string subject = 3;
+  string relation = 4;
   string subject_sub_relation = 6;
 }
 
@@ -1404,21 +1303,20 @@ message DeleteGroupResponse {}
 
 message DeleteRelationRequest {
   reserved 3;
-  string object_id = 1;
-  string subject_id = 2;
+
+  // objectnamespace:uuid
+  string object = 1;
+  // subjectnamespace:uuid
+  string subject = 2;
   string relation = 4;
-  string object_namespace = 5;
-  string subject_namespace = 6;
 }
 
-message DeleteRelationResponse {
-  string message = 1;
-}
+message DeleteRelationResponse {}
 
 message ListProjectResourcesRequest {
   reserved 1;
   string project_id = 2 [(validate.rules).string.min_len = 3];
-  string namespace_id = 4;
+  string namespace = 4;
 }
 
 message ListProjectResourcesResponse {
@@ -1426,48 +1324,47 @@ message ListProjectResourcesResponse {
 }
 
 message ResourceRequestBody {
-  reserved 5;
+  reserved 4, 5;
   string name = 1;
   string project_id = 2;
-  string namespace_id = 3;
-  repeated Relation relations = 4 [deprecated = true];
+  string namespace = 3;
   string user_id = 6;
   google.protobuf.Struct metadata = 7;
 }
 
-message CreateResourceRequest {
+message CreateProjectResourceRequest {
   ResourceRequestBody body = 1;
 }
 
-message CreateResourceResponse {
+message CreateProjectResourceResponse {
   Resource resource = 1;
 }
 
-message GetResourceRequest {
+message GetProjectResourceRequest {
   reserved 2;
   string id = 1;
   string project_id = 3 [(validate.rules).string.min_len = 3];
 }
 
-message GetResourceResponse {
+message GetProjectResourceResponse {
   Resource resource = 1;
 }
 
-message UpdateResourceRequest {
+message UpdateProjectResourceRequest {
   string id = 1;
   ResourceRequestBody body = 2;
 }
 
-message UpdateResourceResponse {
+message UpdateProjectResourceResponse {
   Resource resource = 1;
 }
 
-message DeleteResourceRequest {
+message DeleteProjectResourceRequest {
   string id = 1;
   string project_id = 3 [(validate.rules).string.min_len = 3];
 }
 
-message DeleteResourceResponse {}
+message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];

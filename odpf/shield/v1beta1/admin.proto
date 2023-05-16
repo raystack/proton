@@ -5,6 +5,8 @@ package odpf.shield.v1beta1;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "odpf/shield/v1beta1/models.proto";
+import "validate/validate.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/odpf/proton/shield/v1beta1;shieldv1beta1";
 option java_outer_classname = "Shield";
@@ -107,6 +109,7 @@ service AdminService {
       summary: "Create platform wide role";
     };
   }
+
   rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
     option (google.api.http) = {
       delete: "/v1beta1/roles/{id}",
@@ -114,6 +117,39 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "Delete a role permanently forever and all of its relations";
+    };
+  }
+
+  // Permissions
+  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/permissions",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Create permission";
+    };
+  }
+
+  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/permissions/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Update permission by ID";
+    };
+  }
+
+  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/permissions/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Delete permission by ID";
     };
   }
 }
@@ -168,10 +204,10 @@ message ListRelationsResponse {
 }
 
 message ListResourcesRequest {
-  string group_id = 1;
+  string user_id = 1;
   string project_id = 2;
   string organization_id = 3;
-  string namespace_id = 4;
+  string namespace = 4;
 }
 
 message ListResourcesResponse {
@@ -183,6 +219,7 @@ message ListPoliciesRequest {
   string project_id = 2;
   string user_id = 3;
   string role_id = 4;
+  string group_id = 5;
 }
 
 message ListPoliciesResponse {
@@ -202,3 +239,34 @@ message DeleteRoleRequest {
 }
 
 message DeleteRoleResponse{}
+
+message PermissionRequestBody {
+  string name = 1 [(validate.rules).string = {min_len: 3, pattern: "^[A-Za-z0-9]+$"}];
+  // namespace should be in service/resource format
+  string namespace = 2 [(validate.rules).string.min_len = 3];
+  google.protobuf.Struct metadata = 3;
+  string title = 4;
+}
+
+message CreatePermissionRequest {
+  repeated PermissionRequestBody bodies = 1;
+}
+
+message CreatePermissionResponse {
+  repeated Permission permissions = 1;
+}
+
+message UpdatePermissionRequest {
+  string id = 1;
+  PermissionRequestBody body = 2;
+}
+
+message UpdatePermissionResponse {
+  Permission permission = 1;
+}
+
+message DeletePermissionRequest{
+  string id = 1;
+}
+
+message DeletePermissionResponse{}
