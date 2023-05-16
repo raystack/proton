@@ -893,6 +893,10 @@ message SearchFlags {
   bool disable_fuzzy = 2 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "disable fuzzy search."
   }];
+
+  bool enable_highlight = 3 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "enable highlight in search response."
+  }];
 }
 
 message SearchAssetsResponse {
