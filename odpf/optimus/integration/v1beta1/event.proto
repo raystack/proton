@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package odpf.optimus.integration.v1beta1;
+
+import "google/protobuf/timestamp.proto";
+import "odpf/optimus/core/v1beta1/resource.proto";
+import "odpf/optimus/core/v1beta1/job_spec.proto";
+
+option go_package = "github.com/odpf/proton/optimus";
+option java_multiple_files = true;
+option java_outer_classname = "Event";
+option java_package = "io.odpf.proton.optimus";
+
+message ResourceChangePayload {
+  string datastore_name = 1;
+  odpf.optimus.core.v1beta1.ResourceSpecification resource = 2;
+}
+
+message JobChangePayload {
+  string job_name = 1;
+  odpf.optimus.core.v1beta1.JobSpecification job_spec = 2;
+}
+
+message JobRunPayload {
+  string job_name = 1;
+  google.protobuf.Timestamp scheduled_at = 2;
+  string job_run_id = 3;
+  google.protobuf.Timestamp start_time = 4;
+}
+
+message OptimusChangeEvent {
+  enum EventType {
+    EVENT_TYPE_TYPE_UNSPECIFIED = 0;
+
+    EVENT_TYPE_RESOURCE_CREATE = 1;
+    EVENT_TYPE_RESOURCE_UPDATE = 2;
+
+    EVENT_TYPE_JOB_CREATE = 3;
+    EVENT_TYPE_JOB_UPDATE = 4;
+    EVENT_TYPE_JOB_DELETE = 5;
+    
+    EVENT_TYPE_JOB_WAIT_UPSTREAM = 6;
+    EVENT_TYPE_JOB_IN_PROGRESS = 7;
+    EVENT_TYPE_JOB_SUCCESS = 8;
+    EVENT_TYPE_JOB_FAILURE = 9;
+  }
+  
+  string event_id = 1;
+  google.protobuf.Timestamp occurred_at = 2;
+
+  string project_name = 3;
+  string namespace_name = 4;
+  EventType event_type = 5;
+
+  oneof payload {
+    JobChangePayload job_change = 6;
+    ResourceChangePayload resource_change = 7;
+    JobRunPayload job_run = 8;
+  }
+}
+   
