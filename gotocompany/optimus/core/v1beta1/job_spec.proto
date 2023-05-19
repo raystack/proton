@@ -290,7 +290,7 @@ message JobSpecification {
   string interval = 6;
 
   bool depends_on_past = 7; // should only execute today if yesterday was completed with success?
-  bool catch_up = 8; // should backfill till today?
+  bool catch_up = 8 [deprecated = true]; // should backfill till today?
 
   string task_name = 9;
   repeated JobConfigItem config = 10;
