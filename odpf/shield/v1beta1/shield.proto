@@ -19,6 +19,60 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "0.2.0";
   };
   schemes: HTTP;
+  tags: [
+    {
+    name: "User";
+    description: "User related APIs";
+    },
+    {
+    name: "Group";
+    description: "Group related APIs";
+    },
+    {
+    name: "Role";
+    description: "Role related APIs";
+    },
+    {
+    name: "Organization";
+    description: "Organization related APIs";
+    },
+    {
+    name: "Project";
+    description: "Project related APIs";
+    },
+    {
+    name: "Policy";
+    description: "Policy related APIs";
+    },
+    {
+    name: "Relation";
+    description: "Relation related APIs";
+    },
+    {
+    name: "Permission";
+    description: "Permission related APIs";
+    },
+    {
+    name: "Namespace";
+    description: "Namespace related APIs";
+    },
+    {
+    name: "Resource";
+    description: "Resource related APIs";
+    },
+    {
+    name: "Authz";
+    description: "Authorization related APIs";
+    },
+    {
+    name: "Authn";
+    description: "Authentication related APIs";
+    },
+    {
+    name: "MetaSchema";
+    description: "Metadata Schema related APIs";
+    }
+  ];
 };
 service ShieldService {
   // Users

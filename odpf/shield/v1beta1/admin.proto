@@ -19,6 +19,35 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "0.2.0";
   };
   schemes: HTTP;
+  tags: [
+        {
+            name: "User"
+        },
+        {
+            name: "Group"
+        },
+        {
+            name: "Organization"
+        },
+        {
+            name: "Project"
+        },
+        {
+            name: "Relation"
+        },
+        {
+            name: "Resource"
+        },
+        {
+            name: "Policy"
+        },
+        {
+            name: "Role"
+        },
+        {
+            name: "Permission"
+        }
+  ];
 };
 service AdminService {
   // Users
