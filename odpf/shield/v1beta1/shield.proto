@@ -164,7 +164,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Create Group";
+      summary: "Create group";
     };
   }
 
@@ -175,7 +175,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Create Group";
+      summary: "Create group";
     };
   }
 
@@ -185,7 +185,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Get Group by ID";
+      summary: "Get group by ID";
     };
   }
 
@@ -196,7 +196,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Update Group by ID";
+      summary: "Update group by ID";
     };
   }
 
@@ -210,6 +210,27 @@ service ShieldService {
     };
   }
 
+  rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/groups/{id}/users",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Add users to a group, existing users will be ignored";
+    };
+  }
+
+  rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/organizations/{org_id}/groups/{id}/users/{user_id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Remove user from a group";
+    };
+  }
+
   rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/groups/{id}/enable",
@@ -217,7 +238,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Enable a Group";
+      summary: "Enable a group";
     };
   }
 
@@ -228,7 +249,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Disable a Group";
+      summary: "Disable a group";
     };
   }
 
@@ -238,7 +259,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Delete a Group permanently forever and all of its relations";
+      summary: "Delete a group permanently forever and all of its relations";
     };
   }
 
@@ -348,6 +369,16 @@ service ShieldService {
     };
   }
 
+  rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}/projects",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all projects that belong to an organization";
+    };
+  }
+
   rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/organizations/{id}/admins",
@@ -368,13 +399,24 @@ service ShieldService {
     };
   }
 
-  rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
+  rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/organizations/{id}/projects",
+      post: "/v1beta1/organizations/{id}/users",
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all projects that belong to an organization";
+      summary: "Add a user to an organization";
+    };
+  }
+
+  rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/organizations/{id}/users/{user_id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Remove a user to an organization";
     };
   }
 
@@ -814,7 +856,7 @@ message UserRequestBody {
   string name = 1 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
   string email = 2 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 3;
-  string title = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
+  string title = 4;
 }
 
 message ListUsersRequest {
@@ -1069,6 +1111,20 @@ message ListOrganizationUsersResponse {
   repeated User users = 1;
 }
 
+message AddOrganizationUsersRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  repeated string user_ids = 2;
+}
+
+message AddOrganizationUsersResponse {}
+
+message RemoveOrganizationUserRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  string user_id = 2;
+}
+
+message RemoveOrganizationUserResponse {}
+
 message EnableOrganizationRequest {
   string id = 1;
 }
@@ -1300,6 +1356,22 @@ message DeleteGroupRequest {
 }
 
 message DeleteGroupResponse {}
+
+message AddGroupUsersRequest {
+  string id = 1;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
+  repeated string user_ids = 3;
+}
+
+message AddGroupUsersResponse {}
+
+message RemoveGroupUserRequest {
+  string id = 1;
+  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string user_id = 3;
+}
+
+message RemoveGroupUserResponse {}
 
 message DeleteRelationRequest {
   reserved 3;
