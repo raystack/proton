@@ -180,27 +180,6 @@ service ShieldService {
     };
   }
 
-  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/roles/{id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Get Role by ID";
-    };
-  }
-
-  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/roles/{id}",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Update Role by ID";
-    };
-  }
-
   // Organizations
   rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
     option (google.api.http) = {
@@ -330,27 +309,6 @@ service ShieldService {
     };
   }
 
-  rpc GetAction(GetActionRequest) returns (GetActionResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/actions/{id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Get Action by ID";
-    };
-  }
-
-  rpc UpdateAction(UpdateActionRequest) returns (UpdateActionResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/actions/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Action";
-      summary: "Update Action by ID";
-    };
-  }
-
   // Namespaces
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
     option (google.api.http) = {
@@ -413,27 +371,6 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
       summary: "Create Policy";
-    };
-  }
-
-  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies/{id}",
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Get Policy by ID";
-    };
-  }
-
-  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/policies/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Update Policy by ID";
     };
   }
 
