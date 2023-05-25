@@ -4,6 +4,7 @@ package odpf.shield.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
+import "google/api/field_behavior.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 import "odpf/shield/v1beta1/models.proto";
@@ -21,58 +22,117 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   schemes: HTTP;
   tags: [
     {
-    name: "User";
-    description: "User related APIs";
+      name: "User";
     },
     {
-    name: "Group";
-    description: "Group related APIs";
+      name: "Group";
+      description: "Groups in Shield are used to manage users and their access to resources. Each group has a unique name and id that can be used to grant access to resources. When a user is added to a group, they inherit the access permissions that have been granted to the group. This allows you to manage access to resources at scale, without having to grant permissions to individual users."
     },
     {
-    name: "Role";
-    description: "Role related APIs";
+      name: "Role";
     },
     {
-    name: "Organization";
-    description: "Organization related APIs";
+      name: "Organization";
     },
     {
-    name: "Project";
-    description: "Project related APIs";
+      name: "Project";
     },
     {
-    name: "Policy";
-    description: "Policy related APIs";
+      name: "Policy";
     },
     {
-    name: "Relation";
-    description: "Relation related APIs";
+      name: "Relation";
     },
     {
-    name: "Permission";
-    description: "Permission related APIs";
+      name: "Permission";
     },
     {
-    name: "Namespace";
-    description: "Namespace related APIs";
+      name: "Namespace";
     },
     {
-    name: "Resource";
-    description: "Resource related APIs";
+      name: "Resource";
     },
     {
-    name: "Authz";
-    description: "Authorization related APIs";
+      name: "Authz";
+      description: "Authorization APIs"
     },
     {
-    name: "Authn";
-    description: "Authentication related APIs";
+      name: "Authn";
+      description: "Authentication APIs"
     },
     {
-    name: "MetaSchema";
-    description: "Metadata Schema related APIs";
+      name: "MetaSchema";
+      description: "Manage Metadata Schemas which are used to validate metadata object while creating user/org/group/role. Shield automatically generates default metaschemas with `label` and `description` fields. You can also update these metaschemas to add/edit more fields."
     }
   ];
+  consumes: "application/json";
+  produces: "application/json";
+  responses: {
+    key: "200";
+    value: {
+      description: "OK - A successful response.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "400";
+    value: {
+      description: "Bad Request - The request was malformed or contained invalid parameters.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "401";
+    value: {
+      description: "Unauthorized - Authentication is required";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses:{
+    key: "403";
+    value: {
+      description: "Forbidden - User does not have permission to access the resource";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "404";
+    value: {
+      description: "Not Found - The requested resource was not found";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "500";
+    value: {
+      description: "Internal Server Error. Returned when theres is something wrong with Shield server.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
 };
 service ShieldService {
   // Users
@@ -83,6 +143,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get all public users";
+      description: "Returns the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination."
     };
   }
 
@@ -94,6 +155,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Create user";
+      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Shield instance. If a user name is not provided, Shield automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@odpf.io\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
     };
   }
 
@@ -104,6 +166,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get a user by id";
+      description: "Get a user by id searched over all organizations in Shield.";
     };
   }
 
@@ -114,6 +177,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List Groups of a User";
+      description: "Lists all the groups a user belongs to across all organization in Shield.";
     };
   }
 
@@ -166,7 +230,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Enable a user";
+      summary: "Enable user";
+      description: "Sets the state of the user as enabled. The user will be able to log in and access the Shield instance."
     };
   }
 
@@ -177,7 +242,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Disable a user";
+      summary: "Disable user";
+      description: "Sets the state of the user as diabled.The user's membership to groups and organizations will still exist along with all it's roles for access control, but the user will not be able to log in and access the Shield instance."
     };
   }
 
@@ -187,7 +253,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Delete an user permanently forever and all of its relations";
+      summary: "Delete user";
+      description: "Delete an user permanently forever and all of its relations (organizations, groups, etc)";
     };
   }
 
@@ -197,7 +264,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get all organizations a user belongs to";
+      summary: "Get Organizations by User"
+      description: "Get all the organizations a user belongs to.";
     };
   }
 
@@ -207,7 +275,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get all organizations a user belongs to";
+      summary: "Get My Organizations"
+      description: "Get all organizations the current user belongs to";
     };
   }
 
@@ -218,7 +287,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Create group";
+      summary: "List Organization Groups";
+      description: "Get all groups that belong to an organization. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination.";
     };
   }
 
@@ -229,7 +299,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Create group";
+      summary: "Create Group";
+      description: "Create a new group in an organization which serves as a container for users. The group can be assigned roles and permissions and can be used to manage access to resources. Also a group can also be assigned to other groups.";
     };
   }
 
@@ -292,7 +363,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Enable a group";
+      summary: "Enable a Group";
+      description: "Sets the state of the group as enabled. The `enabled` flag is used to determine if the group can be used for access control."
     };
   }
 
@@ -304,6 +376,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "Disable a group";
+      description: "Sets the state of the group as disabled. The group will not be available for access control and the existing users in the group will not be able to access any resources that are assigned to the group. No other users can be added to the group while it is disabled."
     };
   }
 
@@ -313,7 +386,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Delete a group permanently forever and all of its relations";
+      summary: "Delete a group permanently and all of its relations";
     };
   }
 
@@ -325,6 +398,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "List all pre-defined roles";
+      description: "Returns a collection of Shield predefined roles with their associated permissions";
     };
   }
 
@@ -778,6 +852,11 @@ service ShieldService {
     option (google.api.http) = {
       get: "/v1beta1/auth"
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Get all authentication strategies";
+      description: "Returns a list of identity providers configured on an instance level in Shield. e.g Google, AzureAD, Github etc";
+    };
   }
 
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
@@ -786,6 +865,11 @@ service ShieldService {
       additional_bindings {
         post: "/v1beta1/auth/register/{strategy_name}"
       }
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Authenticate with a strategy";
+      description: "Authenticate a user with a strategy. By default, after successful authentication no operation will be performed to apply redirection in case of browsers, provide a url in the authenticate request body that will be used for redirection after authentication. Also set redirect as true for redirecting the user request to the redirect_url after successful authentication.";
     };
   }
 
@@ -796,6 +880,11 @@ service ShieldService {
         post: "/v1beta1/auth/callback"
       }
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Callback from a strategy";
+      description: "Callback from a strategy. This is the endpoint where the strategy will redirect the user after successful authentication. This endpoint will be called with the code and state query parameters. The code will be used to get the access token from the strategy and the state will be used to get the return_to url from the session and redirect the user to that url.";
+    };
   }
 
   rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {
@@ -804,6 +893,11 @@ service ShieldService {
       additional_bindings {
         delete: "/v1beta1/auth/logout"
       }
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Logout from a strategy";
+      description: "";
     };
   }
   
@@ -815,6 +909,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Get all Metadata Schemas";
+      description: "Returns a list of all metaschemas configured on an instance level in Shield. e.g user, project, organization etc";
     };
   }
 
@@ -826,6 +921,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Create Metadata Schema";
+      description: "Create a new metadata schema. The metaschema **name** must be unique within the entire Shield instance and can contain only alphanumeric characters, dashes and underscores. The metaschema **schema** must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
     };
   }
 
@@ -836,6 +932,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Get MetaSchema by ID";
+      description: "Get a metadata schema by ID.";
     };
   }
 
@@ -847,6 +944,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Update MetaSchema by ID";
+      description: "Update a metadata schema. Only `schema` field of a metaschema can be updated. The metaschema `schema` must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
     };
   }
 
@@ -857,6 +955,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Delete a MetaSchema permanently";
+      description: "Delete a metadata schema permanently. Once deleted the metaschema won't be used to validate the metadata. For example, if a metaschema(with `label` and `description` fields) is used to validate the metadata of a user, then deleting the metaschema will not validate the metadata of the user and metadata field can contain any key-value pair(and say another field called `foo` can be inserted in a user's metadata).";
     };
   }
 
@@ -879,16 +978,28 @@ message AuthCallbackResponse{
 }
 
 message AuthenticateRequest {
-  string strategy_name = 1;
+  string strategy_name = 1 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Name of the strategy to use for authentication.<br/> *Example:* `google`",
+    }
+  ];
 
   // by default, location header for redirect if applicable
   // will be skipped unless this is set to true, useful in browser
-  bool redirect = 2;
+  bool redirect = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "If set to true, location header will be set for redirect",
+    }
+  ];
 
-  // be default, after successful authentication no operation will be performed
+  // by default, after successful authentication no operation will be performed
   // to apply redirection in case of browsers, provide a url that will be used
   // for redirection after authentication
-  string return_to = 3;
+  string return_to = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`",
+    }
+  ];
 }
 
 message AuthenticateResponse {
@@ -907,20 +1018,70 @@ message ListAuthStrategiesResponse {
 }
 
 message UserRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
-  string email = 2 [(validate.rules).string.email = true];
-  google.protobuf.Struct metadata = 3;
-  string title = 4;
+  string name = 1 [
+    (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the user. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Shield automatically generates a name from the user email. ";
+    }
+  ];
+  string email = 2 [
+    (validate.rules).string.email = true,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@odpf.io\"`";
+    }
+  ];
+  google.protobuf.Struct metadata = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"
+    }
+  ];
+  string title = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"
+    }
+  ];
 }
 
 message ListUsersRequest {
-  int32 page_size = 1;
-  int32 page_num = 2;
-
-  string keyword = 3;
-  string org_id = 4;
-  string group_id = 5;
-  string state = 6;
+  int32 page_size = 1 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The maximum number of users to return per page. The default is 50.";
+    }
+  ];
+  int32 page_num = 2 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The page number to return. The default is 1.";
+    }
+  ];
+  string keyword = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The keyword to search for in name or email.";
+    }
+  ];
+  string org_id = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to filter users by.";
+    }
+  ];
+  string group_id = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The group id to filter by.";
+    }
+  ];
+  string state = 6 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
 }
 
 message ListUsersResponse {
@@ -1008,10 +1169,30 @@ message ListUserGroupsRequest {
 }
 
 message GroupRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
-  string title = 2;
-  google.protobuf.Struct metadata = 3;
-  string org_id = 4;
+  string name = 1 [
+  (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+  (google.api.field_behavior) = REQUIRED,
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the group. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.";
+   }
+  ];
+  string title = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."
+    }
+  ];
+  google.protobuf.Struct metadata = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
+    }
+  ];
+  string org_id = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.min_len = 3,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to which the group belongs to.";
+    }
+  ];
 }
 
 message CreateGroupRequest {
@@ -1051,7 +1232,11 @@ message GetGroupRequest {
 message ListOrganizationGroupsRequest {
   string user_id = 1 [deprecated = true];
   string org_id = 2 [(validate.rules).string = {pattern: "^[A-Za-z0-9_-]+$", min_len: 3}];
-  string state = 3;
+  string state = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
 }
 
 message ListOrganizationGroupsResponse {
@@ -1109,9 +1294,23 @@ message DeleteOrganizationRoleRequest {
 message DeleteOrganizationRoleResponse{}
 
 message OrganizationRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_ ]+$"];
-  string title = 2;
-  google.protobuf.Struct metadata = 3;
+  string name = 1 [
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the organization. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"shield-org1-acme\"`";
+    }
+    ];
+  string title = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`";
+    }
+  ];
+  google.protobuf.Struct metadata = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`";
+    }
+  ];
 }
 
 message ListOrganizationsRequest {
@@ -1493,9 +1692,18 @@ message DeleteProjectResourceRequest {
 message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
-  string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"];
-  string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string object_id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"
+  ];
+  string object_namespace = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"
+  ];
+  string permission = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"
+  ];
 }
 
 message CheckResourcePermissionResponse {
@@ -1503,8 +1711,20 @@ message CheckResourcePermissionResponse {
 }
 
 message MetaSchemaRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
-  string schema = 2 [(validate.rules).string.min_len = 2];
+  string name = 1 [
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the metaschema. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.";
+    }
+  ];
+  string schema = 2 [
+    (validate.rules).string.min_len = 2,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The schema of the metaschema. The schema must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema."
+    }
+  ];
 }
 
 message CreateMetaSchemaRequest{
