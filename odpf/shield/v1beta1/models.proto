@@ -137,13 +137,23 @@ message MetaSchema {
   google.protobuf.Timestamp updated_at = 5;
 }
 
+message Invitation {
+  string id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  repeated string group_ids = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp expires_at = 7;
+}
+
 // model crud body
 
 message RoleRequestBody {
   string id = 1;
   string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
   repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
-  string org_id = 4;
+  string org_id = 4 [deprecated=true];
   google.protobuf.Struct metadata = 5;
   string title = 6;
 }
