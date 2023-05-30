@@ -1173,6 +1173,7 @@ message GetAssetByVersionResponse {
 
 message CreateAssetProbeRequest {
   message Probe {
+    string id = 5; // optional
     string status = 1 [
       (validate.rules).string = {
         min_len: 1,
