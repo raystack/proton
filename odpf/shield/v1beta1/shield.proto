@@ -294,7 +294,7 @@ service ShieldService {
 
   rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/organizations/{body.org_id}/groups",
+      post: "/v1beta1/organizations/{org_id}/groups",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -316,7 +316,7 @@ service ShieldService {
 
   rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/organizations/{body.org_id}/groups/{id}",
+      put: "/v1beta1/organizations/{org_id}/groups/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -414,7 +414,7 @@ service ShieldService {
 
   rpc CreateOrganizationRole(CreateOrganizationRoleRequest) returns (CreateOrganizationRoleResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/organizations/{body.org_id}/roles",
+      post: "/v1beta1/organizations/{org_id}/roles",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -435,7 +435,7 @@ service ShieldService {
 
   rpc UpdateOrganizationRole(UpdateOrganizationRoleRequest) returns (UpdateOrganizationRoleResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/organizations/{body.org_id}/roles/{id}",
+      put: "/v1beta1/organizations/{org_id}/roles/{id}",
       body: "body";
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -534,7 +534,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Add a user to an organization";
+      summary: "Add a user to an organization, request fails if the user doesn't exists";
     };
   }
 
@@ -545,6 +545,57 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Remove a user to an organization";
+    };
+  }
+
+  rpc ListOrganizationInvitations(ListOrganizationInvitationsRequest) returns (ListOrganizationInvitationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/invitations",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "List pending invitations queued for an organization";
+    };
+  }
+
+  rpc CreateOrganizationInvitation(CreateOrganizationInvitationRequest) returns (CreateOrganizationInvitationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/invitations",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Invite users to an organization, if the user doesn't exists, it will be created and notified. Invitations expire in 7 days";
+    };
+  }
+
+  rpc GetOrganizationInvitation(GetOrganizationInvitationRequest) returns (GetOrganizationInvitationResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/invitations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get pending invitation queued for an organization";
+    };
+  }
+
+  rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Accept pending invitation queued for an organization";
+    };
+  }
+
+  rpc DeleteOrganizationInvitation(DeleteOrganizationInvitationRequest) returns (DeleteOrganizationInvitationResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/organizations/{org_id}/invitations/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Delete pending invitation queued for an organization";
     };
   }
 
@@ -795,7 +846,7 @@ service ShieldService {
 
   rpc CreateProjectResource(CreateProjectResourceRequest) returns (CreateProjectResourceResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/projects/{body.project_id}/resources",
+      post: "/v1beta1/projects/{project_id}/resources",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -816,7 +867,7 @@ service ShieldService {
 
   rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/projects/{body.project_id}/resources/{id}",
+      put: "/v1beta1/projects/{project_id}/resources/{id}",
       body: "body"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -969,7 +1020,7 @@ message AuthCallbackRequest{
   // strategy_name will not be set for oidc but can be utilized for methods like email magic links
   string strategy_name = 1;
   
-  // for oidc
+  // for oidc & magic links
   string state = 2;
   string code = 3;
 }
@@ -1000,10 +1051,18 @@ message AuthenticateRequest {
       description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`",
     }
   ];
+
+  // email of the user for magic links
+  string email = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"
+    }
+  ];
 }
 
 message AuthenticateResponse {
   string endpoint = 1;
+  string state = 2;
 }
 
 message AuthStrategy {
@@ -1187,8 +1246,7 @@ message GroupRequestBody {
     }
   ];
   string org_id = 4 [
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.min_len = 3,
+    deprecated = true,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The organization ID to which the group belongs to.";
     }
@@ -1197,6 +1255,12 @@ message GroupRequestBody {
 
 message CreateGroupRequest {
   GroupRequestBody body = 1;
+  string org_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to which the group belongs to.";
+    }
+  ];
 }
 
 message ListUserGroupsResponse {
@@ -1218,6 +1282,12 @@ message UpdateGroupResponse {
 message UpdateGroupRequest {
   string id = 1;
   GroupRequestBody body = 2;
+  string org_id = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to which the group belongs to.";
+    }
+  ];
 }
 
 message UpdateCurrentUserRequest {
@@ -1245,6 +1315,12 @@ message ListOrganizationGroupsResponse {
 
 message CreateOrganizationRoleRequest {
   RoleRequestBody body = 1;
+  string org_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to which the role belongs to.";
+    }
+  ];
 }
 
 message CreateOrganizationRoleResponse {
@@ -1262,6 +1338,7 @@ message GetOrganizationRoleResponse {
 
 message UpdateOrganizationRoleRequest {
   string id = 1;
+  string org_id = 3;
   RoleRequestBody body = 2;
 }
 
@@ -1377,6 +1454,51 @@ message RemoveOrganizationUserRequest {
 }
 
 message RemoveOrganizationUserResponse {}
+
+message ListOrganizationInvitationsRequest {
+  string org_id = 1;
+  string user_id = 2;
+}
+
+message ListOrganizationInvitationsResponse {
+  repeated Invitation invitations = 1;
+}
+
+message CreateOrganizationInvitationRequest {
+  string org_id = 1;
+  // user_id is email id of user who are invited inside the organization
+  // if user is not registered on the platform, it will be notified
+  string user_id = 2;
+  // group_ids are optional, if present users will be assinged part of it
+  repeated string group_ids = 3;
+}
+
+message CreateOrganizationInvitationResponse {
+  Invitation invitation = 1;
+}
+
+message GetOrganizationInvitationRequest {
+  string id = 1;
+  string org_id = 2;
+}
+
+message GetOrganizationInvitationResponse {
+  Invitation invitation = 1;
+}
+
+message AcceptOrganizationInvitationRequest {
+  string id = 1;
+  string org_id = 2;
+}
+
+message AcceptOrganizationInvitationResponse {}
+
+message DeleteOrganizationInvitationRequest {
+  string id = 1;
+  string org_id = 2;
+}
+
+message DeleteOrganizationInvitationResponse {}
 
 message EnableOrganizationRequest {
   string id = 1;
@@ -1651,7 +1773,7 @@ message ListProjectResourcesResponse {
 message ResourceRequestBody {
   reserved 4, 5;
   string name = 1;
-  string project_id = 2;
+  string project_id = 2 [deprecated = true];
   string namespace = 3;
   string user_id = 6;
   google.protobuf.Struct metadata = 7;
@@ -1659,6 +1781,7 @@ message ResourceRequestBody {
 
 message CreateProjectResourceRequest {
   ResourceRequestBody body = 1;
+  string project_id = 2;
 }
 
 message CreateProjectResourceResponse {
@@ -1678,6 +1801,7 @@ message GetProjectResourceResponse {
 message UpdateProjectResourceRequest {
   string id = 1;
   ResourceRequestBody body = 2;
+  string project_id = 3;
 }
 
 message UpdateProjectResourceResponse {
