@@ -1262,6 +1262,7 @@ message ListUserGroupsRequest {
 }
 
 message GroupRequestBody {
+  reserved 4; 
   string name = 1 [
   (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
   (google.api.field_behavior) = REQUIRED,
@@ -1277,12 +1278,6 @@ message GroupRequestBody {
   google.protobuf.Struct metadata = 3 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
-    }
-  ];
-  string org_id = 4 [
-    deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the group belongs to.";
     }
   ];
 }
@@ -1334,7 +1329,7 @@ message GetGroupRequest {
 }
 
 message ListOrganizationGroupsRequest {
-  string user_id = 1 [deprecated = true];
+  reserved 1; 
   string org_id = 2 [(validate.rules).string = {pattern: "^[A-Za-z0-9_-]+$", min_len: 3}];
   string state = 3 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
@@ -1859,9 +1854,8 @@ message ListProjectResourcesResponse {
 }
 
 message ResourceRequestBody {
-  reserved 4, 5;
+  reserved 2, 4, 5;
   string name = 1;
-  string project_id = 2 [deprecated = true];
   string namespace = 3;
   string user_id = 6;
   google.protobuf.Struct metadata = 7;

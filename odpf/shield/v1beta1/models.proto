@@ -150,11 +150,10 @@ message Invitation {
 // model crud body
 
 message RoleRequestBody {
-  reserved 1;
+  reserved 1, 4;
 
   string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
   repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
-  string org_id = 4 [deprecated=true];
   google.protobuf.Struct metadata = 5;
   string title = 6;
 }
