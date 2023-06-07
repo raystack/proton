@@ -639,7 +639,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Create oroject";
+      summary: "Create project";
     };
   }
 
@@ -649,7 +649,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get oroject by ID";
+      summary: "Get project by ID";
     };
   }
 
@@ -660,7 +660,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Update oroject by ID";
+      summary: "Update project by ID";
     };
   }
 
@@ -670,7 +670,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all Admins of a oroject";
+      summary: "Get all Admins of a project";
     };
   }
 
@@ -680,7 +680,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all users of a oroject";
+      summary: "Get all users of a project";
     };
   }
 
@@ -691,7 +691,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Enable a oroject";
+      summary: "Enable a project";
     };
   }
 
@@ -702,7 +702,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Disable a oroject";
+      summary: "Disable a project";
     };
   }
 
@@ -712,7 +712,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Delete a oroject permanently forever and all of its relations";
+      summary: "Delete a project permanently forever and all of its relations";
     };
   }
 
