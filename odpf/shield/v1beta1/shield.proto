@@ -67,6 +67,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   ];
   consumes: "application/json";
   produces: "application/json";
+  host: "127.0.0.1:7400";
   responses: {
     key: "200";
     value: {
@@ -142,7 +143,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get all public users";
+      summary: "List public users";
       description: "Returns the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination."
     };
   }
@@ -331,7 +332,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Get all users for a group";
+      summary: "List group users";
+      description: "Returns a list of users that belong to a group.";
     };
   }
 
@@ -342,7 +344,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Add users to a group, existing users will be ignored";
+      summary: "Add group user"
+      description: "Adds a principle(user and service-users) to a group, existing users in the group will be ignored. A group can't have nested groups as members.";
     };
   }
 
@@ -352,7 +355,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Remove user from a group";
+      summary: "Remove group user";
+      description: "Removes a principle(user and service-users) from a group. If the user is not in the group, the request will succeed but no changes will be made.";
     };
   }
 
@@ -363,7 +367,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Enable a Group";
+      summary: "Enable group";
       description: "Sets the state of the group as enabled. The `enabled` flag is used to determine if the group can be used for access control."
     };
   }
@@ -375,7 +379,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Disable a group";
+      summary: "Disable group";
       description: "Sets the state of the group as disabled. The group will not be available for access control and the existing users in the group will not be able to access any resources that are assigned to the group. No other users can be added to the group while it is disabled."
     };
   }
@@ -386,7 +390,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Delete a group permanently and all of its relations";
+      summary: "Delete group";
+      description: "Delete an organization group permanently and all of its relations";
     };
   }
 
@@ -397,8 +402,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "List all pre-defined roles";
-      description: "Returns a collection of Shield predefined roles with their associated permissions";
+      summary: "List default roles";
+      description: "Returns a list of Shield predefined roles with their associated permissions";
     };
   }
 
@@ -408,7 +413,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Get custom roles under an org";
+      summary: "List organization roles"
+      description: "Returns a list of custom roles created under an organization with their associated permissions";
     };
   }
 
@@ -419,7 +425,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Create Role";
+      summary: "Create organization role";
+      description: "Create a custom role under an organization. This custom role will only be available for assignment to the principles within the organization.";
     };
   }
 
@@ -429,7 +436,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Get Role by ID";
+      summary: "Get Organization Role"
+      description: "Returns a custom role under an organization along with its associated permissions";
     };
   }
 
@@ -440,7 +448,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Update Role by ID";
+      summary: "Update organization role";
+      description: "Update a custom role under an organization. This custom role will only be available for assignment to the principles within the organization."
     };
   }
 
@@ -450,7 +459,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
-      summary: "Delete a role permanently forever and all of its relations";
+      summary: "Delete Organization Role";
+      description: "Delete a custom role and all of its relations under an organization permanently.";
     };
   }
 
@@ -461,7 +471,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all organization";
+      summary: "List organizations";
+      description: "Returns a list of organizations. It can be filtered by userID or organization state.";
     };
   }
 
@@ -482,7 +493,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get organization by ID or slug";
+      summary: "Get organization";
+      description: "Get organization by ID or name";
     };
   }
 
@@ -493,7 +505,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Update organization by ID";
+      summary: "Update organization";
+      description: "Update organization by ID";
     };
   }
 
@@ -503,7 +516,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all projects that belong to an organization";
+      summary: "Get organization projects"
+      description: "Get all projects that belong to an organization";
     };
   }
 
@@ -513,7 +527,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all admins of an organization";
+      summary: "List organization admins";
+      description: "Returns a list admins of an organization";
     };
   }
 
@@ -534,7 +549,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Add a user to an organization, request fails if the user doesn't exists";
+      summary: "Add organization user";
+      description: "Add a user to an organization. A user must exists in Shield before adding it to an org. This request will fail if the user doesn't exists";
     };
   }
 
@@ -544,7 +560,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Remove a user to an organization";
+      summary: "Remove organization user";
+      description: "Remove a user to an organization";
     };
   }
 
@@ -554,7 +571,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "List pending invitations queued for an organization";
+      summary: "List pending invitations";
+      description: "Returns all pending invitations queued for an organization";
     };
   }
 
@@ -565,7 +583,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Invite users to an organization, if the user doesn't exists, it will be created and notified. Invitations expire in 7 days";
+      summary: "Invite user"
+      description: "Invite users to an organization, if the user doesn't exists, it will be created and notified. Invitations expire in 7 days";
     };
   }
 
@@ -575,7 +594,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get pending invitation queued for an organization";
+      summary: "Get pending invitation";
+      description: "Returns a pending invitation queued for an organization";
     };
   }
 
@@ -585,7 +605,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Accept pending invitation queued for an organization";
+      summary: "Accept pending invitation";
+      description: "Accept pending invitation queued for an organization. The user will be added to the organization and groups defined in the invitation";
     };
   }
 
@@ -595,7 +616,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Delete pending invitation queued for an organization";
+      summary: "Delete pending invitation";
+      description: "Delete a pending invitation queued for an organization";
     };
   }
 
@@ -606,7 +628,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Enable an Organization";
+      summary: "Enable organization";
+      description: "Sets the state of the organization as enabled. The existing users in the org will be able to access any organization resources."
     };
   }
 
@@ -617,7 +640,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Disable an organization";
+      summary: "Disable organization";
+      description:"Sets the state of the organization as disabled. The existing users in the org will not be able to access any organization resources."
     };
   }
 
@@ -627,7 +651,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Delete an organization permanently forever and all of its relations";
+      summary: "Delete organization"
+      description: "Delete an organization and all of its relations permanently. The organization users will not be deleted from Shield.";
     };
   }
 
@@ -649,7 +674,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get project by ID";
+      summary: "Get project";
+      description: "Returns a project by ID";
     };
   }
 
@@ -660,7 +686,9 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Update project by ID";
+      summary: "Update project";
+      description: "Updates a project by ID";
+
     };
   }
 
@@ -670,7 +698,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all Admins of a project";
+      summary: "List project admins"
+      description: "Returns a collection of admins of a project";
     };
   }
 
@@ -680,7 +709,9 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all users of a project";
+      summary: "List project users"
+      description: "Returns a collection of users of a project. Filter by user permissions is supported.";
+
     };
   }
 
@@ -691,7 +722,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Enable a project";
+      summary: "Enable project";
     };
   }
 
@@ -702,7 +733,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Disable a project";
+      summary: "Disable project";
     };
   }
 
@@ -712,7 +743,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Delete a project permanently forever and all of its relations";
+      summary: "Delete Project"
+      description: "Delete a project all of its relations permanently.";
     };
   }
 
@@ -755,7 +787,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
-      summary: "Delete a policy permanently forever and all of its relations";
+      summary: "Delete Policy"
+      description: "Delete a policy all of its relations permanently.";
     };
   }
 
@@ -894,7 +927,8 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authz";
-      summary: "check permission on a resource of an user";
+      summary: "Check";
+      description: "Returns true if a principle has required permissions to access a resource and false otherwise";
     };
   }
 
@@ -905,7 +939,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
-      summary: "Get all authentication strategies";
+      summary: "List authentication strategies";
       description: "Returns a list of identity providers configured on an instance level in Shield. e.g Google, AzureAD, Github etc";
     };
   }
@@ -959,7 +993,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
-      summary: "Get all Metadata Schemas";
+      summary: "List metaschemas";
       description: "Returns a list of all metaschemas configured on an instance level in Shield. e.g user, project, organization etc";
     };
   }
@@ -971,7 +1005,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
-      summary: "Create Metadata Schema";
+      summary: "Create metaschema";
       description: "Create a new metadata schema. The metaschema **name** must be unique within the entire Shield instance and can contain only alphanumeric characters, dashes and underscores. The metaschema **schema** must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
     };
   }
@@ -982,7 +1016,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
-      summary: "Get MetaSchema by ID";
+      summary: "Get metaSchema";
       description: "Get a metadata schema by ID.";
     };
   }
@@ -994,7 +1028,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
-      summary: "Update MetaSchema by ID";
+      summary: "Update metaSchema";
       description: "Update a metadata schema. Only `schema` field of a metaschema can be updated. The metaschema `schema` must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
     };
   }
@@ -1005,7 +1039,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
-      summary: "Delete a MetaSchema permanently";
+      summary: "Delete metaSchema";
       description: "Delete a metadata schema permanently. Once deleted the metaschema won't be used to validate the metadata. For example, if a metaschema(with `label` and `description` fields) is used to validate the metadata of a user, then deleting the metaschema will not validate the metadata of the user and metadata field can contain any key-value pair(and say another field called `foo` can be inserted in a user's metadata).";
     };
   }
@@ -1465,12 +1499,24 @@ message ListOrganizationInvitationsResponse {
 }
 
 message CreateOrganizationInvitationRequest {
-  string org_id = 1;
-  // user_id is email id of user who are invited inside the organization
-  // if user is not registered on the platform, it will be notified
-  string user_id = 2;
-  // group_ids are optional, if present users will be assinged part of it
-  repeated string group_ids = 3;
+  string org_id = 1[
+  (google.api.field_behavior) = REQUIRED,
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "unique id of the organization to which user is invited";
+  }
+  ];
+  string user_id = 2 [
+  (google.api.field_behavior) = REQUIRED,
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified";
+  }
+  ];
+  repeated string group_ids = 3 [
+  (google.api.field_behavior) = OPTIONAL,
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "list of group ids to which user needs to be added as a member.";
+  }
+  ];
 }
 
 message CreateOrganizationInvitationResponse {
@@ -1520,10 +1566,30 @@ message DeleteOrganizationRequest {
 message DeleteOrganizationResponse {}
 
 message ProjectRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9-_]+$"];
-  string title = 2;
-  google.protobuf.Struct metadata = 3;
-  string org_id = 4 [(validate.rules).string.min_len = 3];
+  string name = 1 [
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the project. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `shield-playground`";
+    }
+  ];
+  string title = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`";
+    }
+  ];
+  google.protobuf.Struct metadata = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema.";
+    }
+  ];
+  string org_id = 4 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "unique id of the organization to which project belongs";
+    }
+  ];
 }
 
 message CreateProjectRequest {
@@ -1596,14 +1662,36 @@ message DeleteProjectRequest {
 message DeleteProjectResponse {}
 
 message PolicyRequestBody {
-  string role_id = 1;
-  string title = 3;
-  
-  // namespace:uuid
-  string resource = 2;
-  // namespace:uuid
-  string principal = 4;
-  google.protobuf.Struct metadata = 5;
+  string role_id = 1 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "unique id of the role to which policy is assigned";
+    }
+  ];
+  string title = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`";
+    }
+  ];
+  string resource = 2 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The resource to which policy is assigned in this format `namespace:uuid`. <br/> *Example:* `app/guardian:70f69c3a-334b-4f25-90b8-4d4f3be6b8e2`";
+    }
+  ];
+  string principal = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
+    }
+  ];
+  google.protobuf.Struct metadata = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`";
+    }
+  ];
 }
 
 message GetPermissionRequest {
