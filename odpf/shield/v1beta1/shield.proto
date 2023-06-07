@@ -688,6 +688,7 @@ service ShieldService {
       tags: "Project";
       summary: "Update project";
       description: "Updates a project by ID";
+
     };
   }
 
@@ -710,6 +711,7 @@ service ShieldService {
       tags: "Project";
       summary: "List project users"
       description: "Returns a collection of users of a project. Filter by user permissions is supported.";
+
     };
   }
 
