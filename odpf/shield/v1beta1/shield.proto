@@ -289,7 +289,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "List Organization Groups";
-      description: "Get all groups that belong to an organization. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination.";
+      description: "Get all groups that belong to an organization. The results can be filtered by state which can be either be enabled or disabled.";
     };
   }
 
@@ -1262,6 +1262,7 @@ message ListUserGroupsRequest {
 }
 
 message GroupRequestBody {
+  reserved 4; 
   string name = 1 [
   (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
   (google.api.field_behavior) = REQUIRED,
@@ -1277,12 +1278,6 @@ message GroupRequestBody {
   google.protobuf.Struct metadata = 3 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
-    }
-  ];
-  string org_id = 4 [
-    deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the group belongs to.";
     }
   ];
 }
@@ -1334,11 +1329,11 @@ message GetGroupRequest {
 }
 
 message ListOrganizationGroupsRequest {
-  string user_id = 1 [deprecated = true];
+  reserved 1; 
   string org_id = 2 [(validate.rules).string = {pattern: "^[A-Za-z0-9_-]+$", min_len: 3}];
   string state = 3 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The state to filter by. It can be enabled or disabled.";
+      description: "The state of the group to filter by. It can be enabled or disabled.";
     }
   ];
 }
@@ -1425,8 +1420,14 @@ message OrganizationRequestBody {
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1;
-  string state = 2;
+  string user_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed.";
+    }];
+  string state = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be `enabled` or `disabled`.";
+  }];
 }
 
 message ListOrganizationsResponse {
@@ -1468,7 +1469,7 @@ message ListOrganizationAdminsResponse {
 
 message ListOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string permission_filter = 2;
+  string permission_filter = 2 [deprecated = true];
 }
 
 message ListOrganizationUsersResponse {
@@ -1477,7 +1478,10 @@ message ListOrganizationUsersResponse {
 
 message AddOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  repeated string user_ids = 2;
+  repeated string user_ids = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "List of user IDs to be added to the organization.";
+    }];
 }
 
 message AddOrganizationUsersResponse {}
@@ -1512,7 +1516,6 @@ message CreateOrganizationInvitationRequest {
   }
   ];
   repeated string group_ids = 3 [
-  (google.api.field_behavior) = OPTIONAL,
   (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "list of group ids to which user needs to be added as a member.";
   }
@@ -1610,7 +1613,11 @@ message UpdateProjectResponse {
 
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string state = 2;
+  string state = 2[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`";
+    }
+  ];
 }
 
 message ListOrganizationProjectsResponse {
@@ -1859,11 +1866,24 @@ message ListProjectResourcesResponse {
 }
 
 message ResourceRequestBody {
-  reserved 4, 5;
-  string name = 1;
-  string project_id = 2 [deprecated = true];
-  string namespace = 3;
-  string user_id = 6;
+  reserved 2, 4, 5;
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the resource. <br/> *Example:* `my-resource`";
+    }
+  ];
+  string namespace = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Shield. If namespace doesn't exists the request will fail. <br/> *Example:* `potato/cart`";
+    }
+  ];
+  string user_id = 6 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user id of the user who will be made the resource owner. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
+    }
+  ];
   google.protobuf.Struct metadata = 7;
 }
 

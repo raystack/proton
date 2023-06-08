@@ -320,7 +320,7 @@ message ListAllUsersResponse {
 }
 
 message ListGroupsRequest {
-  string user_id = 1 [deprecated = true];
+  reserved 1;
   string org_id = 2 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The organization id to filter by.";
