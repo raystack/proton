@@ -56,6 +56,14 @@ service ResourceService {
       body: "*"
     };
   }
+
+  // ChangeJobNamespace move a job spec from one namespace to another
+  rpc ChangeResourceNamespace(ChangeResourceNamespaceRequest) returns (ChangeResourceNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/change-resource-namespace"
+      body: "*"
+    };
+  }
 }
 
 message DeployResourceSpecificationRequest {
@@ -130,3 +138,14 @@ message ResourceSpecification {
   map<string, string> assets = 6;
   map<string, string> labels = 7;
 }
+
+
+message ChangeResourceNamespaceRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string datastore_name = 3;
+  string resource_name = 4;
+  string new_namespace_name = 5;
+}
+
+message ChangeResourceNamespaceResponse {}
