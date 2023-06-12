@@ -1,0 +1,507 @@
+syntax = "proto3";
+
+package raystack.shield.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/field_behavior.proto";
+import "raystack/shield/v1beta1/models.proto";
+import "validate/validate.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
+option java_outer_classname = "Shield";
+option java_package = "io.raystack.proton.shield.v1beta1";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Shield Administration API",
+    version: "0.2.0";
+    description: "The Shield APIs adhere to the OpenAPI specification, also known as Swagger, which provides a standardized approach for designing, documenting, and consuming RESTful APIs. With OpenAPI, you gain a clear understanding of the API endpoints, request/response structures, and authentication mechanisms supported by the Shield APIs. By leveraging the OpenAPI specification, developers can easily explore and interact with the Shield APIs using a variety of tools and libraries. The OpenAPI specification enables automatic code generation, interactive API documentation, and seamless integration with API testing frameworks, making it easier than ever to integrate Shield into your existing applications and workflows."
+    contact:{
+      name: "Open DataOps Foundation"
+      url: "https://www.raystack.io/"
+      email: "hello@raystack.io"
+    }
+    license: {
+      name: "Apache 2.0",
+      url: "https://github.com/raystack/shield/blob/main/LICENSE";
+    };
+  };
+  schemes: HTTP;
+  tags: [
+    {
+      name: "User";
+    },
+    {
+      name: "Group";
+    },
+    {
+      name: "Organization";
+    },
+    {
+      name: "Project";
+    },
+    {
+      name: "Relation";
+    },
+    {
+      name: "Resource";
+    },
+    {
+      name: "Policy";
+    },
+    {
+      name: "Role";
+    },
+    {
+      name: "Permission";
+    }
+  ];
+  consumes: "application/json";
+  produces: "application/json";
+  host: "127.0.0.1:7400";
+  responses: {
+    key: "200";
+    value: {
+      description: "OK - A successful response.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "400";
+    value: {
+      description: "Bad Request - The request was malformed or contained invalid parameters.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "401";
+    value: {
+      description: "Unauthorized - Authentication is required";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses:{
+    key: "403";
+    value: {
+      description: "Forbidden - User does not have permission to access the resource";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "404";
+    value: {
+      description: "Not Found - The requested resource was not found";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+  responses: {
+    key: "500";
+    value: {
+      description: "Internal Server Error. Returned when theres is something wrong with Shield server.";
+      schema: {
+        json_schema: {
+          ref: ".google.rpc.Status";
+        }
+      }
+    }
+  }
+};
+service AdminService {
+  // Users
+  rpc ListAllUsers(ListAllUsersRequest) returns (ListAllUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/users"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get all users";
+      description: "Lists all the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state.";
+    };
+  }
+
+  // Group
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/groups",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "Get all groups";
+      description: "Lists all the groups from all the organizations in a Shield instance. It can be filtered by organization and state.";
+    };
+  }
+
+  // Organizations
+  rpc ListAllOrganizations(ListAllOrganizationsRequest) returns (ListAllOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Get all organization";
+      description: "Lists all the organizations in a Shield instance. It can be filtered by user and state.";
+    };
+  }
+
+  // Projects
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/projects"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Get all project";
+      description: "Lists all the projects from all the organizations in a Shield instance. It can be filtered by organization and state.";
+    };
+  }
+
+  // Relations
+  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/relations"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Relation";
+      summary: "Get all relations";
+    };
+  }
+
+  // Resources
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/resources"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Get all resources";
+      description: "Lists all the resources from all the organizations in a Shield instance. It can be filtered by user, project, organization and namespace.";
+    };
+  }
+
+  // Policies
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/policies"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Get all policies";
+      description: "Lists all the policies from all the organizations in a Shield instance. It can be filtered by organization, project, user, role and group.";
+    };
+  }
+
+  // Roles
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/roles",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Create platform role";
+      description: "Creates a platform wide role. It can be used to grant permissions to all the resources in a Shield instance.";
+    };
+  }
+
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/roles/{id}",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Delete platform role";
+      description: "Delete a platform wide role and all of its relations.";
+    };
+  }
+
+  // Permissions
+  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/permissions",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Create permission";
+      description: "Creates a permission. It can be used to grant permissions to all the resources in a Shield instance.";
+    };
+  }
+
+  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/permissions/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Update permission by ID";
+      description: "Updates a permission by ID. It can be used to grant permissions to all the resources in a Shield instance.";
+    };
+  }
+
+  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/permissions/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Permission";
+      summary: "Delete permission by ID";
+    };
+  }
+}
+
+message ListAllUsersRequest {
+  int32 page_size = 1 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The maximum number of users to return per page. The default is 50.";
+    }
+  ];
+  int32 page_num = 2 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The page number to return. The default is 1.";
+    }
+  ];
+  string keyword = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The keyword to search for. It can be a user's name, email,metadata or id.";
+    }
+  ];
+  string org_id = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id to filter by.";
+    }
+  ];
+  string group_id = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The group id to filter by.";
+    }
+  ];
+  string state = 6 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
+}
+
+message ListAllUsersResponse {
+  int32 count = 1;
+  repeated User users = 2;
+}
+
+message ListGroupsRequest {
+  reserved 1;
+  string org_id = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id to filter by.";
+    }
+  ];
+  string state = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
+}
+
+message ListGroupsResponse {
+  repeated Group groups = 1;
+}
+
+message ListAllOrganizationsRequest {
+  string user_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user id to filter by.";
+    }
+  ];
+  string state = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
+}
+
+message ListAllOrganizationsResponse {
+  repeated Organization organizations = 1;
+}
+
+message ListProjectsRequest {
+  string org_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id to filter by.";
+    }
+  ];
+  string state = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state to filter by. It can be enabled or disabled.";
+    }
+  ];
+}
+
+message ListProjectsResponse {
+  repeated Project projects = 1;
+}
+
+message ListRelationsRequest {}
+
+message ListRelationsResponse {
+  repeated Relation relations = 1;
+}
+
+message ListResourcesRequest {
+  string user_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user id to filter by.";
+    }
+  ];
+  string project_id = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The project id to filter by.";
+    }
+  ];
+  string organization_id = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id to filter by.";
+    }
+  ];
+  string namespace = 4 [
+    (validate.rules).string.min_len = 3,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The namespace to filter by.";
+    }
+  ];
+}
+
+message ListResourcesResponse {
+  repeated Resource resources = 1;
+}
+
+message ListPoliciesRequest {
+  string org_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id to filter by.";
+    }
+  ];
+  string project_id = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The project id to filter by.";
+    }
+  ];
+  string user_id = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user id to filter by.";
+    }
+  ];
+  string role_id = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The role id to filter by.";
+    }
+  ];
+  string group_id = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The group id to filter by.";
+    }
+  ];
+}
+
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}
+
+message CreateRoleRequest {
+  RoleRequestBody body = 1;
+}
+
+message CreateRoleResponse {
+  Role role = 1;
+}
+
+message DeleteRoleRequest {
+  string id = 1 [
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The role id to delete.";
+    }
+  ];
+}
+
+message DeleteRoleResponse{}
+
+message PermissionRequestBody {
+  string name = 1 [
+    (validate.rules).string = {min_len: 3, pattern: "^[A-Za-z0-9]+$"},
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The name of the permission. It should be unique across a Shield instance and can contain only alphanumeric characters.";
+    }
+  ];
+  // namespace should be in service/resource format
+  string namespace = 2 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The namespace of the permission.The namespace should be in service/resource format.<br/>*Example:*`app/guardian`";
+    }
+  ];
+  google.protobuf.Struct metadata = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The metadata object for permissions that can hold key value pairs.";
+    }
+  ];
+  string title = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the permissions. Can also be left empty.";
+    }
+  ];
+}
+
+message CreatePermissionRequest {
+  repeated PermissionRequestBody bodies = 1;
+}
+
+message CreatePermissionResponse {
+  repeated Permission permissions = 1;
+}
+
+message UpdatePermissionRequest {
+  string id = 1;
+  PermissionRequestBody body = 2;
+}
+
+message UpdatePermissionResponse {
+  Permission permission = 1;
+}
+
+message DeletePermissionRequest{
+  string id = 1;
+}
+
+message DeletePermissionResponse{}

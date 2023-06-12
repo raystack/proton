@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package raystack.assets.v1beta1;
+
+import "google/protobuf/timestamp.proto";
+import "raystack/assets/v1beta1/event.proto";
+import "raystack/assets/v1beta1/resource.proto";
+import "raystack/assets/v1beta1/timestamp.proto";
+import "raystack/assets/v1beta1/ownership.proto";
+import "raystack/assets/v1beta1/properties.proto";
+
+option go_package = "github.com/raystack/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "BucketProto";
+option java_package = "io.raystack.assets";
+
+message Bucket {
+  // Representation of the resource
+  raystack.assets.v1beta1.Resource resource = 1;
+
+  // The description of the bucket.
+  // Example: `This bucket was created by the product team.`
+  string description = 4;
+
+  // The location of the bucket. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `ASIA`
+  string location = 5;
+
+  // The type of the storage. Can differ based on cloud storage used. (e.g. GCS, S3, etc)
+  // Example: `STANDARD`
+  string storage_type = 6;
+
+  // List of blobs in the bucket.
+  repeated Blob blobs = 7;
+
+  // The ownership of the bucket.
+  // For an example check out ownership.
+  raystack.assets.v1beta1.Ownership ownership = 31;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  raystack.assets.v1beta1.Properties properties = 32;
+
+  // The timestamp of the bucket's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a bucket.
+  raystack.assets.v1beta1.Timestamp timestamps = 33;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  raystack.assets.v1beta1.Event event = 100;
+}
+
+message Blob {
+  // The URN of the blob.
+  // Example: `location/bucket-name/file-name`.
+  string urn = 1;
+
+  // The name of the blob.
+  // Example: `file-name`.
+  string name = 2;
+
+  // The source of the blob.
+  // Example: `gcs`.
+  string source = 3;
+
+  // The length of the object content.
+  // Example: `300`
+  int64 size = 4;
+
+  // Delete time of the blob object.
+  google.protobuf.Timestamp delete_time = 5;
+
+  // Expire time of the blob object.
+  google.protobuf.Timestamp expire_time = 6;
+
+  // The ownership of the blob.
+  // For an example check out ownership.
+  raystack.assets.v1beta1.Ownership ownership = 31;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  raystack.assets.v1beta1.Properties properties = 32;
+
+  // The timestamp of the blob's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a blob.
+  raystack.assets.v1beta1.Timestamp timestamps = 33;
+}

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package raystack.assets.v1beta1;
+
+import "raystack/assets/v1beta1/event.proto";
+import "raystack/assets/v1beta1/resource.proto";
+import "raystack/assets/v1beta1/timestamp.proto";
+import "raystack/assets/v1beta1/lineage.proto";
+import "raystack/assets/v1beta1/ownership.proto";
+import "raystack/assets/v1beta1/properties.proto";
+
+option go_package = "github.com/raystack/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "JobProto";
+option java_package = "io.raystack.assets";
+
+// Job is a resource that represents a job.
+message Job {
+  // Representation of the resource
+  raystack.assets.v1beta1.Resource resource = 1;
+
+  // The ownership of the job.
+  // For an example check out ownership.
+  raystack.assets.v1beta1.Ownership ownership = 31;
+
+  // The lineage of the job.
+  // For an example check out lineage schema.
+  raystack.assets.v1beta1.Lineage lineage = 32;
+
+  // List of the user's custom properties.
+  // Properties facet can be used to set custom properties, tags and labels for a user.
+  raystack.assets.v1beta1.Properties properties = 33;
+
+  // The timestamp of the user's creation.
+  // Timstamp facet can be used to set the creation and updation timestamp of a user.
+  raystack.assets.v1beta1.Timestamp timestamps = 34;
+
+  // The timestamp of the generated event.
+  // Event schemas is defined in the common event schema.
+  raystack.assets.v1beta1.Event event = 100;
+}

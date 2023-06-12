@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package raystack.assets.v1beta1;
+
+import "raystack/assets/v1beta1/properties.proto";
+
+option go_package = "github.com/raystack/proton/assets/v1beta1;assetsv1beta1";
+option java_outer_classname = "SchemaProto";
+option java_package = "io.raystack.assets";
+
+// Columns represents a list of columns.
+// It is facet used to specify the schema of a table or a file.
+message Columns {
+  // The list of columns.
+  repeated Column columns = 1;
+}
+
+// Column represents a column in a table or a file.
+message Column {
+  // The name of the column.
+  // Example: `customer_id`.
+  string name = 1;
+
+  // The description of the column.
+  // Example: `The unique id of the customer`
+  string description = 2;
+
+  // The data type of the column.
+  // Example: `INT64`.
+
+  string data_type = 3;
+  // The format of the column.
+  // Example: `true`.
+  bool is_nullable = 4;
+
+  // The length of the column.
+  // Example: `10`.
+  int64 length = 5;
+
+  // The profile of the column.
+  ColumnProfile profile = 6;
+
+  // Representation of the column properties.
+  // Properties facet can be used to set custom properties, tags and labels for a column.
+  raystack.assets.v1beta1.Properties properties = 31;
+}
+
+message ColumnProfile {
+  string min = 1;
+  string max = 2;
+  double avg = 3;
+  double med = 4;
+  int64 unique = 5;
+  int64 count = 6;
+  string top = 7;
+}
+
+// TopicSchema represents a schema for message bus.
+// It is facet used to specify the schema of a message bus.
+message TopicSchema {
+  string schema_url = 1;
+  string format = 2;
+}

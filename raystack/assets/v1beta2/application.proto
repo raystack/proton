@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package raystack.assets.v1beta2;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/raystack/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "ApplicationProto";
+option java_package = "io.raystack.assets";
+
+message Application {
+  // The service/application's ID
+  string id = 1;
+
+  // Optional: The version of the service.
+  string version = 2;
+
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 3;
+
+  // The timestamp of the service's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the service was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}
