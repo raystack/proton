@@ -1,0 +1,348 @@
+syntax = "proto3";
+
+package raystack.stencil.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/raystack/proton/stencil/v1beta1;stencilv1beta1";
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "0.1.4";
+  };
+  schemes: HTTP;
+};
+
+service StencilService {
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "List names of namespaces";
+    };
+  }
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Get namespace by id";
+    };
+  }
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/namespaces",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Create namespace entry";
+    };
+  }
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/namespaces/{id}",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Update namespace entity by id";
+    };
+  }
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/namespaces/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "namespace";
+      summary: "Delete namespace by id";
+      description: "Ensure all schemas under this namespace is deleted, otherwise it will throw error";
+    };
+  }
+  rpc ListSchemas(ListSchemasRequest) returns (ListSchemasResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{id}/schemas"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "List schemas under the namespace";
+    };
+  }
+  rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {}
+  rpc CheckCompatibility(CheckCompatibilityRequest) returns (CheckCompatibilityResponse) {}
+  rpc GetSchemaMetadata(GetSchemaMetadataRequest) returns (GetSchemaMetadataResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/meta"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Create schema under the namespace. Returns version number, unique ID and location";
+    };
+  }
+  rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Update only schema metadata";
+    };
+  }
+  rpc GetLatestSchema(GetLatestSchemaRequest) returns (GetLatestSchemaResponse) {}
+  rpc DeleteSchema(DeleteSchemaRequest) returns (DeleteSchemaResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Delete specified schema";
+    };
+  }
+  rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {}
+  rpc ListVersions(ListVersionsRequest) returns (ListVersionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      tags: "version";
+      summary: "List all version numbers for schema";
+    };
+  }
+  rpc DeleteVersion(DeleteVersionRequest) returns (DeleteVersionResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      tags: "version";
+      summary: "Delete specified version of the schema";
+    };
+  }
+
+  rpc Search(SearchRequest) returns (SearchResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/search"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "schema";
+      summary: "Global Search API";
+    };
+  }
+}
+
+message Namespace {
+  string id = 1;
+  Schema.Format format = 2;
+  Schema.Compatibility compatibility = 3;
+  string description = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message Schema {
+  enum Format {
+    FORMAT_UNSPECIFIED = 0;
+    FORMAT_PROTOBUF = 1;
+    FORMAT_AVRO = 2;
+    FORMAT_JSON = 3;
+  }
+  enum Compatibility {
+    COMPATIBILITY_UNSPECIFIED = 0;
+    COMPATIBILITY_BACKWARD = 1;
+    COMPATIBILITY_BACKWARD_TRANSITIVE = 2;
+    COMPATIBILITY_FORWARD = 3;
+    COMPATIBILITY_FORWARD_TRANSITIVE = 4;
+    COMPATIBILITY_FULL = 5;
+    COMPATIBILITY_FULL_TRANSITIVE = 6;
+  }
+  string name = 1;
+  Format format = 2;
+  string authority = 3;
+  Compatibility compatibility = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message GetNamespaceRequest {
+  string id = 1;
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message CreateNamespaceRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
+  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
+}
+
+message CreateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+  string id = 1;
+  Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
+  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
+}
+
+message UpdateNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message DeleteNamespaceRequest {
+  string id = 1;
+}
+message DeleteNamespaceResponse {
+  string message = 1;
+}
+
+message ListSchemasRequest {
+  string id = 1;
+}
+message ListSchemasResponse {
+  repeated Schema schemas = 1;
+}
+
+message GetLatestSchemaRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+}
+
+message GetLatestSchemaResponse {
+  bytes data = 3;
+}
+
+message CreateSchemaRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  bytes data = 3 [(google.api.field_behavior) = REQUIRED];
+  Schema.Format format = 4;
+  Schema.Compatibility compatibility = 5;
+}
+
+message CreateSchemaResponse {
+  int32 version = 1;
+  string id = 2;
+  string location = 3;
+}
+
+message CheckCompatibilityRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  bytes data = 3 [(google.api.field_behavior) = REQUIRED];
+  Schema.Compatibility compatibility = 4;
+}
+
+message CheckCompatibilityResponse {}
+
+message GetSchemaMetadataRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+}
+
+message GetSchemaMetadataResponse {
+  Schema.Format format = 1;
+  Schema.Compatibility compatibility = 2;
+  string authority = 3;
+  string name = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message UpdateSchemaMetadataRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  Schema.Compatibility compatibility = 3;
+}
+
+message UpdateSchemaMetadataResponse {
+  Schema.Format format = 1;
+  Schema.Compatibility compatibility = 2;
+  string authority = 3;
+}
+
+message DeleteSchemaRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+}
+
+message DeleteSchemaResponse {
+  string message = 1;
+}
+
+message ListVersionsRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+}
+
+message ListVersionsResponse {
+  repeated int32 versions = 1;
+}
+
+message GetSchemaRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
+}
+
+message GetSchemaResponse {
+  bytes data = 1;
+}
+
+message DeleteVersionRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
+}
+
+message DeleteVersionResponse {
+  string message = 1;
+}
+
+message SearchRequest {
+  string namespace_id = 1;
+  string schema_id = 2;
+  string query = 3 [(google.api.field_behavior) = REQUIRED];
+
+  oneof version {
+    bool history = 4;
+    int32 version_id = 5;
+  }
+}
+
+message SearchResponse {
+  repeated SearchHits hits = 1;
+  SearchMeta meta = 2;
+}
+
+message SearchHits {
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
+  repeated string fields = 4;
+  repeated string types = 5;
+  string path = 6;
+}
+
+message SearchMeta {
+  uint32 total = 1;
+}

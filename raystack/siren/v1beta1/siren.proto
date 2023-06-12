@@ -1,0 +1,889 @@
+syntax = "proto3";
+
+package raystack.siren.v1beta1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/raystack/proton/siren/v1beta1;sirenv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "ServiceManager";
+option java_package = "io.raystack.proton.siren";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Siren APIs";
+    description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
+    version: "0.5";
+  };
+  schemes: HTTP;
+};
+
+service SirenService {
+  rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list providers";
+      tags: "Provider";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/providers"
+    };
+  }
+
+  rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create a provider";
+      tags: "Provider";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/providers"
+      body: "*"
+    };
+  }
+
+  rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a provider";
+      tags: "Provider";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/providers/{id}"
+    };
+  }
+
+  rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "update a provider";
+      tags: "Provider";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/providers/{id}",
+      body: "*"
+    };
+  }
+
+  rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "delete a provider";
+      tags: "Provider";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/providers/{id}"
+    };
+  }
+
+  rpc NotifyReceiver(NotifyReceiverRequest) returns (NotifyReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "send notification to receiver";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/receivers/{id}/send"
+      body: "*"
+    };
+  }
+
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list namespaces";
+      tags: "Namespace";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces"
+    };
+  }
+
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create a namespace";
+      tags: "Namespace";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/namespaces"
+      body: "*"
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a namespace";
+      tags: "Namespace";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/namespaces/{id}"
+    };
+  }
+
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "update a namespace";
+      tags: "Namespace";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/namespaces/{id}",
+      body: "*"
+    };
+  }
+
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "delete a namespace";
+      tags: "Namespace";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/namespaces/{id}"
+    };
+  }
+
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List subscriptions";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/subscriptions"
+    };
+  }
+
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/subscriptions"
+      body: "*"
+    };
+  }
+
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/subscriptions/{id}"
+    };
+  }
+
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update a subscription";
+      tags: "Subscription";
+    };
+    option (google.api.http) = {
+      put: "/v1beta1/subscriptions/{id}",
+      body: "*"
+    };
+  }
+
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/subscriptions/{id}"
+    };
+  }
+
+  rpc ListReceivers(ListReceiversRequest) returns (ListReceiversResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list receivers";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/receivers"
+    };
+  }
+
+  rpc CreateReceiver(CreateReceiverRequest) returns (CreateReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create a receiver";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/receivers"
+      body: "*"
+    };
+  }
+
+  rpc GetReceiver(GetReceiverRequest) returns (GetReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a receiver";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/receivers/{id}"
+    };
+  }
+
+  rpc UpdateReceiver(UpdateReceiverRequest) returns (UpdateReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "update a receiver";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/receivers/{id}",
+      body: "*"
+    };
+  }
+
+  rpc DeleteReceiver(DeleteReceiverRequest) returns (DeleteReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "delete a receiver";
+      tags: "Receiver";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/receivers/{id}"
+    };
+  }
+
+  rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list alerts";
+      tags: "Alert";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/alerts/{provider_type}/{provider_id}"
+    };
+  }
+
+  rpc CreateAlerts(CreateAlertsRequest) returns (CreateAlertsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create alerts";
+      tags: "Alert";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/alerts/{provider_type}/{provider_id}"
+      body: "body"
+    };
+  }
+
+  rpc CreateAlertsWithNamespace(CreateAlertsWithNamespaceRequest) returns (CreateAlertsWithNamespaceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create alerts with namespace";
+      tags: "Alert";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/alerts/{provider_type}/{provider_id}/{namespace_id}"
+      body: "body"
+    };
+  }
+
+
+  rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list rules";
+      tags: "Rule";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/rules"
+    };
+  }
+
+  rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "add/update a rule";
+      tags: "Rule";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/rules"
+      body: "*"
+    };
+  }
+
+  rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "list templates";
+      tags: "Template";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/templates"
+    };
+  }
+
+  rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a template";
+      tags: "Template";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/templates/{name}"
+    };
+  }
+
+  rpc UpsertTemplate(UpsertTemplateRequest) returns (UpsertTemplateResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "add/update a template";
+      tags: "Template";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/templates",
+      body: "*"
+    };
+  }
+
+  rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "delete a template";
+      tags: "Template";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/templates/{name}",
+    };
+  }
+
+  rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "render a template";
+      tags: "Template";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/templates/{name}/render",
+      body: "*"
+    };
+  }
+
+
+  rpc CreateSilence(CreateSilenceRequest) returns (CreateSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "create a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/silences",
+      body: "*"
+    };
+  }
+
+  rpc ListSilences(ListSilencesRequest) returns (ListSilencesResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get all silences";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/silences"
+    };
+  }
+
+  rpc GetSilence(GetSilenceRequest) returns (GetSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "get a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/silences/{id}"
+    };
+  }
+
+  rpc ExpireSilence(ExpireSilenceRequest) returns (ExpireSilenceResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "expire a silence";
+      tags: "Silence";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/silences/{id}"
+    };
+  }
+}
+
+message Provider {
+  uint64 id = 1;
+  string host = 2;
+  string urn = 3;
+  string name = 4;
+  string type = 5;
+  google.protobuf.Struct credentials = 6;
+  map<string, string> labels = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message ListProvidersRequest {
+  string urn = 1;
+  string type = 2;
+}
+
+message ListProvidersResponse {
+  repeated Provider providers = 1;
+}
+
+message CreateProviderRequest {
+  string host = 1 [(validate.rules).string.uri = true];
+  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string type = 4;
+  google.protobuf.Struct credentials = 5;
+  map<string, string> labels = 6;
+}
+
+message CreateProviderResponse {
+  uint64 id = 1;
+}
+
+message GetProviderRequest {
+  uint64 id = 1;
+}
+
+message GetProviderResponse {
+  Provider provider = 1;
+}
+
+message UpdateProviderRequest {
+  uint64 id = 1;
+  string host = 2 [(validate.rules).string.uri = true];
+  string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string type = 4;
+  google.protobuf.Struct credentials = 5;
+  map<string, string> labels = 6;
+}
+
+message UpdateProviderResponse {
+  uint64 id = 1;
+}
+
+message DeleteProviderRequest {
+  uint64 id = 1;
+}
+
+message DeleteProviderResponse {}
+
+message Namespace {
+  uint64 id = 1;
+  string urn = 2;
+  string name = 3;
+  uint64 provider = 4;
+  google.protobuf.Struct credentials = 5;
+  map<string, string> labels = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message CreateNamespaceRequest {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 provider = 3;
+  google.protobuf.Struct credentials = 4;
+  map<string, string> labels = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message CreateNamespaceResponse {
+  uint64 id = 1;
+}
+
+message GetNamespaceRequest {
+  uint64 id = 1;
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message UpdateNamespaceRequest {
+  uint64 id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 provider = 3;
+  google.protobuf.Struct credentials = 4;
+  map<string, string> labels = 5;
+}
+
+message UpdateNamespaceResponse {
+  uint64 id = 1;
+}
+
+message DeleteNamespaceRequest {
+  uint64 id = 1;
+}
+
+message DeleteNamespaceResponse {}
+
+message ReceiverMetadata {
+  uint64 id = 1;
+  google.protobuf.Struct configuration = 4;
+}
+
+message Subscription {
+  uint64 id = 1;
+  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 namespace = 3;
+  repeated ReceiverMetadata receivers = 4;
+  map<string, string> match = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message ListSubscriptionsRequest {
+  uint64 namespace_id = 1;
+  map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""
+  }];
+  map<string, string> notification_match = 3  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""
+  }];
+  string silence_id = 4;
+}
+
+message ListSubscriptionsResponse {
+  repeated Subscription subscriptions = 1;
+}
+
+message CreateSubscriptionRequest {
+  string urn = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 namespace = 2;
+  repeated ReceiverMetadata receivers = 3;
+  map<string, string> match = 4;
+}
+
+message CreateSubscriptionResponse {
+  uint64 id = 1;
+}
+
+message GetSubscriptionRequest {
+  uint64 id = 1;
+}
+
+message GetSubscriptionResponse {
+  Subscription subscription = 1;
+}
+
+message UpdateSubscriptionRequest {
+  uint64 id = 1;
+  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 namespace = 3;
+  repeated ReceiverMetadata receivers = 4;
+  map<string, string> match = 5;
+}
+
+message UpdateSubscriptionResponse {
+  uint64 id = 1;
+}
+
+message DeleteSubscriptionRequest {
+  uint64 id = 1;
+}
+
+message DeleteSubscriptionResponse {}
+
+message Receiver {
+  uint64 id = 1;
+  string name = 2;
+  string type = 3;
+  map<string, string> labels = 4;
+  google.protobuf.Struct configurations = 5;
+  google.protobuf.Struct data = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message ListReceiversRequest {}
+
+message ListReceiversResponse {
+  repeated Receiver receivers = 1;
+}
+
+message CreateReceiverRequest {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+  string type = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Struct configurations = 4;
+}
+
+message CreateReceiverResponse {
+  uint64 id = 1;
+}
+
+message GetReceiverRequest {
+  uint64 id = 1;
+}
+
+message GetReceiverResponse {
+  Receiver receiver = 1;
+}
+
+message UpdateReceiverRequest {
+  uint64 id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+  map<string, string> labels = 3;
+  google.protobuf.Struct configurations = 4;
+}
+
+message UpdateReceiverResponse {
+  uint64 id = 1;
+}
+
+message DeleteReceiverRequest {
+  uint64 id = 1;
+}
+
+message DeleteReceiverResponse {}
+
+message NotifyReceiverRequest {
+  uint64 id = 1;
+  google.protobuf.Struct payload = 2;
+}
+
+message NotifyReceiverResponse {}
+
+message Alert {
+  uint64 id = 1;
+  uint64 provider_id = 2;
+  string resource_name = 3;
+  string metric_name = 4;
+  string metric_value = 5;
+  string severity = 6;
+  string rule = 7;
+  google.protobuf.Timestamp triggered_at = 8;
+  uint64 namespace_id = 9;
+  string silence_status = 10;
+}
+
+message ListAlertsRequest {
+  string provider_type = 1;
+  uint64 provider_id = 2;
+  string resource_name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 start_time = 4;
+  uint64 end_time = 5;
+  uint64 namespace_id = 6;
+  string silence_id = 7;
+}
+
+message ListAlertsResponse {
+  repeated Alert alerts = 1;
+}
+
+message CreateAlertsRequest {
+  string provider_type= 1;
+  uint64 provider_id = 2;
+  google.protobuf.Struct body = 3;
+}
+
+message CreateAlertsResponse {
+  repeated Alert alerts = 1;
+}
+
+message CreateAlertsWithNamespaceRequest {
+  string provider_type= 1;
+  uint64 provider_id = 2;
+  google.protobuf.Struct body = 3;
+  uint64 namespace_id = 4;
+}
+
+message CreateAlertsWithNamespaceResponse {
+  repeated Alert alerts = 1;
+}
+
+message Annotations {
+  string metric_name = 1;
+  string metric_value = 2;
+  string resource = 3;
+  string template = 4;
+}
+
+message Labels {
+  string severity = 1;
+}
+
+message Rule {
+  uint64 id = 1;
+  string name = 2;
+  bool enabled = 3;
+  string group_name = 4;
+  string namespace = 5;
+  string template = 6;
+  repeated Variables variables = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  uint64 provider_namespace = 10 [(validate.rules).uint64.gte = 0];
+}
+
+message Variables {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string value = 2;
+  string type = 3;
+  string description = 4;
+}
+
+message ListRulesRequest {
+  string name = 1;
+  string namespace = 2;
+  string group_name = 3;
+  string template = 4;
+  uint64 provider_namespace = 5;
+}
+
+message ListRulesResponse {
+  repeated Rule rules = 1;
+}
+
+message UpdateRuleRequest {
+  bool enabled = 1;
+  string group_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string namespace = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string template = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated Variables variables = 5;
+  uint64 provider_namespace = 6;
+}
+
+message UpdateRuleResponse {
+  Rule rule = 1;
+}
+
+message TemplateVariables {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string type = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string default = 3;
+  string description = 4;
+}
+
+message Template {
+  uint64 id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  repeated TemplateVariables variables = 7 [(validate.rules).repeated.min_items = 1];
+}
+
+message ListTemplatesRequest {
+  string tag = 1;
+}
+
+message ListTemplatesResponse {
+  repeated Template templates = 1;
+}
+
+message UpsertTemplateRequest {
+  uint64 id = 1;
+  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string body = 3;
+  repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
+  repeated TemplateVariables variables = 5 [(validate.rules).repeated.min_items = 1];
+}
+
+message UpsertTemplateResponse {
+  uint64 id = 1;
+}
+
+message GetTemplateRequest {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+}
+
+message GetTemplateResponse {
+  Template template = 1;
+}
+
+message DeleteTemplateRequest {
+  string name = 1;
+}
+
+message DeleteTemplateResponse {}
+
+message RenderTemplateRequest {
+  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  map<string, string> variables = 2;
+}
+
+message RenderTemplateResponse {
+  string body = 1;
+}
+
+message Silence {
+  string id = 1;
+  uint64 namespace_id = 2;
+  string type = 3;
+  uint64 target_id = 4;
+  google.protobuf.Struct target_expression = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp deleted_at = 8;
+}
+
+message CreateSilenceRequest {
+  uint64 namespace_id = 1;
+  string type = 2;
+  uint64 target_id = 3;
+  google.protobuf.Struct target_expression = 4;
+}
+
+message CreateSilenceResponse {
+  string id = 1;
+}
+
+message ListSilencesRequest {
+  uint64 subscription_id = 1;
+  uint64 namespace_id = 2;
+  map<string, string> match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on silences label matchers. the match key is written as map. eg, \"match[key1]\""
+  }];
+  map<string, string> subscription_match = 4  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on applied subscription label matchers. the subscription_match key is written as map. eg, \"subscription_match[key1]\""
+  }];
+}
+
+message ListSilencesResponse {
+  repeated Silence silences = 1;
+}
+
+message GetSilenceRequest {
+  string id = 1;
+}
+
+message GetSilenceResponse {
+  Silence silence = 1;
+}
+
+message ExpireSilenceRequest {
+  string id = 1;
+}
+
+message ExpireSilenceResponse {
+}

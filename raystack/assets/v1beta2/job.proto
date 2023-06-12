@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package raystack.assets.v1beta2;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/raystack/proton/assets/v1beta2;assetsv1beta2";
+option java_outer_classname = "JobProto";
+option java_package = "io.raystack.assets";
+
+// Job is a resource that represents a job.
+message Job {
+  // List of attributes the model has.
+  google.protobuf.Struct attributes = 10;
+
+  // The timestamp of the job's creation.
+  google.protobuf.Timestamp create_time = 101;
+
+  // The timestamp when the job was last modified.
+  google.protobuf.Timestamp update_time = 102;
+}
