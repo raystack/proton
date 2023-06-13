@@ -86,7 +86,7 @@ message ListString {
 }
 
 message LogOptions {
-  map <string, ListString> filters = 1;
+  map<string, ListString> filters = 1;
 }
 
 message ResourceState {

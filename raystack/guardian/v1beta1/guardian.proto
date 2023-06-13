@@ -698,7 +698,7 @@ message ProviderConfig {
     string type = 1;
     PolicyConfig policy = 2;
     repeated Role roles = 4;
-    string  filter = 5;
+    string filter = 5;
   }
   repeated ResourceConfig resources = 6;
   repeated string allowed_account_types = 7;
@@ -743,7 +743,7 @@ message PolicyAppealConfig {
     string value = 2;
   }
   repeated DurationOptions duration_options = 1;
-  bool allow_on_behalf = 2;  
+  bool allow_on_behalf = 2;
   bool allow_permanent_access = 3;
   string allow_active_access_extension_in = 4;
   message Question {

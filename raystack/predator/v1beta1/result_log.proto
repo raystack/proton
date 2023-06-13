@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package raystack.predator.v1beta1;
 
-option go_package = "github.com/raystack/proton/predator";
-option java_multiple_files = true;
-option java_package = "io.raystack.proton.predator";
-option java_outer_classname = "ResultLogProto";
-
 import "google/protobuf/timestamp.proto";
 import "raystack/predator/v1beta1/metrics_log.proto";
+
+option go_package = "github.com/raystack/proton/predator";
+option java_multiple_files = true;
+option java_outer_classname = "ResultLogProto";
+option java_package = "io.raystack.proton.predator";
 
 message ResultLogKey {
   string id = 1;

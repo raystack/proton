@@ -13,7 +13,6 @@ option go_package = "github.com/raystack/proton/siren/v1beta1;sirenv1beta1";
 option java_multiple_files = true;
 option java_outer_classname = "ServiceManager";
 option java_package = "io.raystack.proton.siren";
-
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
@@ -299,7 +298,6 @@ service SirenService {
     };
   }
 
-
   rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "list rules";
@@ -379,7 +377,6 @@ service SirenService {
       body: "*"
     };
   }
-
 
   rpc CreateSilence(CreateSilenceRequest) returns (CreateSilenceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -565,7 +562,7 @@ message ListSubscriptionsRequest {
   map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""
   }];
-  map<string, string> notification_match = 3  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  map<string, string> notification_match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""
   }];
   string silence_id = 4;
@@ -700,7 +697,7 @@ message ListAlertsResponse {
 }
 
 message CreateAlertsRequest {
-  string provider_type= 1;
+  string provider_type = 1;
   uint64 provider_id = 2;
   google.protobuf.Struct body = 3;
 }
@@ -710,7 +707,7 @@ message CreateAlertsResponse {
 }
 
 message CreateAlertsWithNamespaceRequest {
-  string provider_type= 1;
+  string provider_type = 1;
   uint64 provider_id = 2;
   google.protobuf.Struct body = 3;
   uint64 namespace_id = 4;
@@ -864,7 +861,7 @@ message ListSilencesRequest {
   map<string, string> match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on silences label matchers. the match key is written as map. eg, \"match[key1]\""
   }];
-  map<string, string> subscription_match = 4  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  map<string, string> subscription_match = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on applied subscription label matchers. the subscription_match key is written as map. eg, \"subscription_match[key1]\""
   }];
 }
@@ -885,5 +882,4 @@ message ExpireSilenceRequest {
   string id = 1;
 }
 
-message ExpireSilenceResponse {
-}
+message ExpireSilenceResponse {}

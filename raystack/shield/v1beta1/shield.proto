@@ -3,16 +3,15 @@ syntax = "proto3";
 package raystack.shield.v1beta1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/struct.proto";
 import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "validate/validate.proto";
 import "raystack/shield/v1beta1/models.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
 option java_outer_classname = "Shield";
 option java_package = "io.raystack.proton.shield.v1beta1";
-
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
@@ -101,7 +100,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       }
     }
   }
-  responses:{
+  responses: {
     key: "403";
     value: {
       description: "Forbidden - User does not have permission to access the resource";
@@ -641,7 +640,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Disable organization";
-      description:"Sets the state of the organization as disabled. The existing users in the org will not be able to access any organization resources."
+      description: "Sets the state of the organization as disabled. The existing users in the org will not be able to access any organization resources."
     };
   }
 
@@ -688,7 +687,6 @@ service ShieldService {
       tags: "Project";
       summary: "Update project";
       description: "Updates a project by ID";
-
     };
   }
 
@@ -711,7 +709,6 @@ service ShieldService {
       tags: "Project";
       summary: "List project users"
       description: "Returns a collection of users of a project. Filter by user permissions is supported.";
-
     };
   }
 
@@ -985,7 +982,7 @@ service ShieldService {
       description: "";
     };
   }
-  
+
   // MetaSchemas
   rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {
     option (google.api.http) = {
@@ -1043,55 +1040,45 @@ service ShieldService {
       description: "Delete a metadata schema permanently. Once deleted the metaschema won't be used to validate the metadata. For example, if a metaschema(with `label` and `description` fields) is used to validate the metadata of a user, then deleting the metaschema will not validate the metadata of the user and metadata field can contain any key-value pair(and say another field called `foo` can be inserted in a user's metadata).";
     };
   }
-
 }
 
 message AuthLogoutRequest {}
 
 message AuthLogoutResponse {}
 
-message AuthCallbackRequest{
+message AuthCallbackRequest {
   // strategy_name will not be set for oidc but can be utilized for methods like email magic links
   string strategy_name = 1;
-  
+
   // for oidc & magic links
   string state = 2;
   string code = 3;
 }
 
-message AuthCallbackResponse{
-}
+message AuthCallbackResponse {}
 
 message AuthenticateRequest {
-  string strategy_name = 1 [
-      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Name of the strategy to use for authentication.<br/> *Example:* `google`",
-    }
-  ];
+  string strategy_name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Name of the strategy to use for authentication.<br/> *Example:* `google`",
+  }];
 
   // by default, location header for redirect if applicable
   // will be skipped unless this is set to true, useful in browser
-  bool redirect = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "If set to true, location header will be set for redirect",
-    }
-  ];
+  bool redirect = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "If set to true, location header will be set for redirect",
+  }];
 
   // by default, after successful authentication no operation will be performed
   // to apply redirection in case of browsers, provide a url that will be used
   // for redirection after authentication
-  string return_to = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`",
-    }
-  ];
+  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`",
+  }];
 
   // email of the user for magic links
-  string email = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"
-    }
-  ];
+  string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"
+  }];
 }
 
 message AuthenticateResponse {
@@ -1124,16 +1111,12 @@ message UserRequestBody {
       description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.io\"`";
     }
   ];
-  google.protobuf.Struct metadata = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"
-    }
-  ];
-  string title = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"
-    }
-  ];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"
+  }];
+  string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"
+  }];
 }
 
 message ListUsersRequest {
@@ -1155,26 +1138,18 @@ message ListUsersRequest {
       description: "The page number to return. The default is 1.";
     }
   ];
-  string keyword = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The keyword to search for in name or email.";
-    }
-  ];
-  string org_id = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to filter users by.";
-    }
-  ];
-  string group_id = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The group id to filter by.";
-    }
-  ];
-  string state = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The state to filter by. It can be enabled or disabled.";
-    }
-  ];
+  string keyword = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The keyword to search for in name or email.";
+  }];
+  string org_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The organization ID to filter users by.";
+  }];
+  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The group id to filter by.";
+  }];
+  string state = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The state to filter by. It can be enabled or disabled.";
+  }];
 }
 
 message ListUsersResponse {
@@ -1189,7 +1164,6 @@ message CreateUserRequest {
 message CreateUserResponse {
   User user = 1;
 }
-
 
 message GetOrganizationsByUserRequest {
   string id = 1;
@@ -1262,24 +1236,20 @@ message ListUserGroupsRequest {
 }
 
 message GroupRequestBody {
-  reserved 4; 
+  reserved 4;
   string name = 1 [
-  (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-  (google.api.field_behavior) = REQUIRED,
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The name of the group. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.";
-   }
-  ];
-  string title = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."
     }
   ];
-  google.protobuf.Struct metadata = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
-    }
-  ];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."
+  }];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
+  }];
 }
 
 message CreateGroupRequest {
@@ -1329,13 +1299,14 @@ message GetGroupRequest {
 }
 
 message ListOrganizationGroupsRequest {
-  reserved 1; 
-  string org_id = 2 [(validate.rules).string = {pattern: "^[A-Za-z0-9_-]+$", min_len: 3}];
-  string state = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The state of the group to filter by. It can be enabled or disabled.";
-    }
-  ];
+  reserved 1;
+  string org_id = 2 [(validate.rules).string = {
+    pattern: "^[A-Za-z0-9_-]+$",
+    min_len: 3
+  }];
+  string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The state of the group to filter by. It can be enabled or disabled.";
+  }];
 }
 
 message ListOrganizationGroupsResponse {
@@ -1397,7 +1368,7 @@ message DeleteOrganizationRoleRequest {
   string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
-message DeleteOrganizationRoleResponse{}
+message DeleteOrganizationRoleResponse {}
 
 message OrganizationRequestBody {
   string name = 1 [
@@ -1406,27 +1377,21 @@ message OrganizationRequestBody {
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The name of the organization. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"shield-org1-acme\"`";
     }
-    ];
-  string title = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`";
-    }
   ];
-  google.protobuf.Struct metadata = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`";
-    }
-  ];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`";
+  }];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`";
+  }];
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed.";
-    }];
-  string state = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The state to filter by. It can be `enabled` or `disabled`.";
+  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed.";
+  }];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The state to filter by. It can be `enabled` or `disabled`.";
   }];
 }
 
@@ -1460,7 +1425,7 @@ message UpdateOrganizationRequest {
 }
 
 message ListOrganizationAdminsRequest {
-  string id = 1 [(validate.rules).string.min_len = 3]; 
+  string id = 1 [(validate.rules).string.min_len = 3];
 }
 
 message ListOrganizationAdminsResponse {
@@ -1478,10 +1443,9 @@ message ListOrganizationUsersResponse {
 
 message AddOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  repeated string user_ids = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "List of user IDs to be added to the organization.";
-    }];
+  repeated string user_ids = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "List of user IDs to be added to the organization.";
+  }];
 }
 
 message AddOrganizationUsersResponse {}
@@ -1503,23 +1467,21 @@ message ListOrganizationInvitationsResponse {
 }
 
 message CreateOrganizationInvitationRequest {
-  string org_id = 1[
-  (google.api.field_behavior) = REQUIRED,
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "unique id of the organization to which user is invited";
-  }
+  string org_id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "unique id of the organization to which user is invited";
+    }
   ];
   string user_id = 2 [
-  (google.api.field_behavior) = REQUIRED,
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified";
-  }
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified";
+    }
   ];
-  repeated string group_ids = 3 [
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "list of group ids to which user needs to be added as a member.";
-  }
-  ];
+  }];
 }
 
 message CreateOrganizationInvitationResponse {
@@ -1561,7 +1523,6 @@ message DisableOrganizationRequest {
 
 message DisableOrganizationResponse {}
 
-
 message DeleteOrganizationRequest {
   string id = 1;
 }
@@ -1576,16 +1537,12 @@ message ProjectRequestBody {
       description: "The name of the project. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `shield-playground`";
     }
   ];
-  string title = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`";
-    }
-  ];
-  google.protobuf.Struct metadata = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema.";
-    }
-  ];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`";
+  }];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema.";
+  }];
   string org_id = 4 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -1613,11 +1570,9 @@ message UpdateProjectResponse {
 
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string state = 2[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`";
-    }
-  ];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`";
+  }];
 }
 
 message ListOrganizationProjectsResponse {
@@ -1676,11 +1631,9 @@ message PolicyRequestBody {
       description: "unique id of the role to which policy is assigned";
     }
   ];
-  string title = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`";
-    }
-  ];
+  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`";
+  }];
   string resource = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -1694,11 +1647,9 @@ message PolicyRequestBody {
       description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
     }
   ];
-  google.protobuf.Struct metadata = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`";
-    }
-  ];
+  google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`";
+  }];
 }
 
 message GetPermissionRequest {
@@ -1806,12 +1757,12 @@ message ListGroupUsersResponse {
   repeated User users = 1;
 }
 
-message EnableGroupRequest{
+message EnableGroupRequest {
   string id = 1;
   string org_id = 2 [(validate.rules).string.min_len = 3];
 }
 
-message EnableGroupResponse{}
+message EnableGroupResponse {}
 
 message DisableGroupRequest {
   string id = 1;
@@ -1879,22 +1830,18 @@ message ResourceRequestBody {
       description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Shield. If namespace doesn't exists the request will fail. <br/> *Example:* `potato/cart`";
     }
   ];
-  string user_id = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The user id of the user who will be made the resource owner. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
-    }
-  ];
+  string user_id = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The user id of the user who will be made the resource owner. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
+  }];
   google.protobuf.Struct metadata = 7;
 }
 
 message CreateProjectResourceRequest {
   ResourceRequestBody body = 1;
   string project_id = 2;
-  string id = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Autogenerated if skipped.";
-    }
-  ];
+  string id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Autogenerated if skipped.";
+  }];
 }
 
 message CreateProjectResourceResponse {
@@ -1964,39 +1911,39 @@ message MetaSchemaRequestBody {
   ];
 }
 
-message CreateMetaSchemaRequest{
+message CreateMetaSchemaRequest {
   MetaSchemaRequestBody body = 1;
 }
 
-message CreateMetaSchemaResponse{
+message CreateMetaSchemaResponse {
   MetaSchema metaschema = 1;
 }
 
-message GetMetaSchemaRequest{
+message GetMetaSchemaRequest {
   string id = 1;
 }
 
-message GetMetaSchemaResponse{
+message GetMetaSchemaResponse {
   MetaSchema metaschema = 1;
 }
 
-message UpdateMetaSchemaRequest{
+message UpdateMetaSchemaRequest {
   string id = 1;
   MetaSchemaRequestBody body = 2 [(validate.rules).message.required = true];
 }
 
-message UpdateMetaSchemaResponse{
+message UpdateMetaSchemaResponse {
   MetaSchema metaschema = 1;
 }
 
-message DeleteMetaSchemaRequest{
+message DeleteMetaSchemaRequest {
   string id = 1;
 }
 
-message DeleteMetaSchemaResponse{}
+message DeleteMetaSchemaResponse {}
 
-message ListMetaSchemasRequest{}
+message ListMetaSchemasRequest {}
 
-message ListMetaSchemasResponse{
+message ListMetaSchemasResponse {
   repeated MetaSchema metaschemas = 1;
 }

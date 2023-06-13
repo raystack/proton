@@ -3,11 +3,11 @@ syntax = "proto3";
 package raystack.assets.v1beta1;
 
 import "raystack/assets/v1beta1/event.proto";
-import "raystack/assets/v1beta1/resource.proto";
-import "raystack/assets/v1beta1/timestamp.proto";
 import "raystack/assets/v1beta1/lineage.proto";
 import "raystack/assets/v1beta1/ownership.proto";
 import "raystack/assets/v1beta1/properties.proto";
+import "raystack/assets/v1beta1/resource.proto";
+import "raystack/assets/v1beta1/timestamp.proto";
 
 option go_package = "github.com/raystack/proton/assets/v1beta1;assetsv1beta1";
 option java_outer_classname = "DashboardProto";

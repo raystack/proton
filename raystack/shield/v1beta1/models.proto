@@ -22,7 +22,10 @@ message User {
 
 message Group {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   string title = 3;
   string org_id = 4;
   google.protobuf.Struct metadata = 5;
@@ -32,9 +35,12 @@ message Group {
 
 message Role {
   reserved 8;
-  
+
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   repeated string permissions = 3;
   string title = 4;
   google.protobuf.Struct metadata = 5;
@@ -46,7 +52,10 @@ message Role {
 
 message Organization {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   string title = 3;
   google.protobuf.Struct metadata = 4;
   google.protobuf.Timestamp created_at = 5;
@@ -55,7 +64,10 @@ message Organization {
 
 message Project {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   string title = 3;
   string org_id = 4;
   google.protobuf.Struct metadata = 5;
@@ -70,7 +82,7 @@ message Policy {
   string title = 2;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
-  
+
   string role_id = 8;
   // namespace:uuid
   string resource = 10;
@@ -87,7 +99,7 @@ message Relation {
   google.protobuf.Timestamp updated_at = 7;
   string subject_sub_relation = 9;
   string relation = 10;
-  
+
   // objectnamespace:id
   string object = 11;
   // subjectnamespace:id
@@ -96,7 +108,10 @@ message Relation {
 
 message Permission {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9]+$"
+  }];
   string title = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
@@ -131,7 +146,10 @@ message Resource {
 
 message MetaSchema {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   string schema = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
@@ -152,8 +170,13 @@ message Invitation {
 message RoleRequestBody {
   reserved 1, 4;
 
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
-  repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
+  repeated string permissions = 3 [(validate.rules).repeated = {
+    min_items: 1
+  }];
   google.protobuf.Struct metadata = 5;
   string title = 6;
 }
