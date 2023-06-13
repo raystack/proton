@@ -534,6 +534,9 @@ message ListUserApprovalsRequest {
     ignore_empty: true
   }];
   repeated string appeal_statuses = 7;
+  string q = 8;
+  repeated string account_types = 9;
+  repeated string resource_types = 10;
 }
 
 message ListUserApprovalsResponse {
@@ -554,6 +557,9 @@ message ListApprovalsRequest {
     ignore_empty: true
   }];
   repeated string appeal_statuses = 7;
+  string q = 8;
+  repeated string account_types = 9;
+  repeated string resource_types = 10;
 }
 
 message ListApprovalsResponse {
