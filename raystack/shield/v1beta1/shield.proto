@@ -155,7 +155,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Create user";
-      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Shield instance. If a user name is not provided, Shield automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@raystack.io\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
+      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Shield instance. If a user name is not provided, Shield automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@raystack.org\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
     };
   }
 
@@ -177,7 +177,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List Groups of a User";
-      description: "Lists all the groups a user belongs to across all organization in Shield.";
+      description: "Lists all the groups a user belongs to across all organization in Shield. To get the groups of a user in a specific organization, use the org_id filter in the query parameter.";
     };
   }
 
@@ -187,7 +187,7 @@ service ShieldService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "List groups of a User";
+      summary: "List My Groups";
     };
   }
 
@@ -277,6 +277,17 @@ service ShieldService {
       tags: "User";
       summary: "Get My Organizations"
       description: "Get all organizations the current user belongs to";
+    };
+  }
+
+  rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{id}/invitations",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List User Invitations";
+      description: "List all the invitations sent to a user.";
     };
   }
 
@@ -1108,7 +1119,7 @@ message UserRequestBody {
     (validate.rules).string.email = true,
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.io\"`";
+      description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.org\"`";
     }
   ];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
@@ -1231,8 +1242,18 @@ message ListCurrentUserGroupsResponse {
 }
 
 message ListUserGroupsRequest {
-  string id = 1;
-  string role = 2;
+  reserved 2;
+
+  string id = 1[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The unique ID of the user to get groups for.";
+    }
+  ];
+  string org_id =3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization ID to filter groups by. If not provided, groups from all organizations are returned.";
+    }
+  ];
 }
 
 message GroupRequestBody {
@@ -1296,6 +1317,18 @@ message UpdateCurrentUserRequest {
 message GetGroupRequest {
   string id = 1;
   string org_id = 2;
+}
+
+message ListUserInvitationsRequest {
+  string id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The user email to list the invitations for.";
+    }
+  ];
+}
+
+message ListUserInvitationsResponse {
+  repeated Invitation invitations = 1;
 }
 
 message ListOrganizationGroupsRequest {
@@ -1458,8 +1491,17 @@ message RemoveOrganizationUserRequest {
 message RemoveOrganizationUserResponse {}
 
 message ListOrganizationInvitationsRequest {
-  string org_id = 1;
-  string user_id = 2;
+  string org_id = 1 [
+  (google.api.field_behavior) = REQUIRED,
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "unique id of the organization to which user is invited";
+  }
+  ];
+  string user_id = 2 [
+  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "user_id filter is the email id of user who are invited inside the organization.";
+  }
+  ];
 }
 
 message ListOrganizationInvitationsResponse {
