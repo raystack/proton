@@ -753,6 +753,7 @@ message PolicyAppealConfig {
     string description = 4;
   }
   repeated Question questions = 5;
+  bool allow_creator_details_failure = 6;
 }
 
 // Policy is a configurable steps for appeal's approval
