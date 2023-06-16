@@ -13,8 +13,20 @@ option java_package = "io.raystack.proton.shield.v1beta1";
 
 message User {
   string id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"]; // can either be empty or must start with a character
-  string title = 3;
+  // can either be empty or must start with a character
+  string name = 2 [    
+    (validate.rules).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique name of the user.",
+      example: "\"johndoe\""
+    }
+  ]; 
+  string title = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Name of the user.",
+      example: "\"John Doe\""
+    }
+  ];
   string email = 4 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6 [
@@ -29,6 +41,32 @@ message User {
       example: "\"2023-06-07T05:39:56.961Z\""
     }
   ];
+  string state = 8;
+}
+
+message ServiceUser {
+  reserved 2; // 2: for name if needed
+  string id = 1;
+  string title = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "User friendly name of the service user.",
+      example: "\"Order Service\""
+    }
+  ];
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp created_at = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time the user was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 6 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time the user was last updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  string state = 7;
 }
 
 message Group {
@@ -241,7 +279,7 @@ message Resource {
   string urn = 9;
   string project_id = 10;
   string namespace = 11;
-  string user_id = 12;
+  string principal = 12;
   google.protobuf.Struct metadata = 13;
 }
 
@@ -310,12 +348,81 @@ message Invitation {
       example: "\"2023-06-07T05:39:56.961Z\""
     }
   ];
-  google.protobuf.Timestamp expires_at = 7[
+  google.protobuf.Timestamp expires_at = 7 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The time when the invitation expires.",
       example: "\"2023-06-07T05:39:56.961Z\""
     }
   ];
+}
+
+message ServiceUserKey {
+  string id = 1;
+  string title = 2;
+  string principal_id = 3;
+  string public_key = 4;
+
+  google.protobuf.Timestamp created_at = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the secret was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+}
+
+message KeyCredential {
+  string type = 1;
+  string kid = 2;
+  string principal_id = 3;
+
+  // RSA private key as string
+  string private_key = 4;
+}
+
+message SecretCredential {
+  string id = 1;
+  string title = 2;
+
+  // secret will only be returned once as part of the create process
+  // this value is never persisted in the system so if lost, can't be recovered
+  string secret = 3;
+
+  google.protobuf.Timestamp created_at = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the secret was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+}
+
+// JSON Web Key as specified in RFC 7517
+message JSONWebKey {
+  // Key Type.
+  string kty = 1;
+
+  // Algorithm.
+  string alg = 2;
+
+  // Permitted uses for the public keys.
+  string use = 3;
+
+  // Key ID.
+  string kid = 4;
+
+  // Used for RSA keys.
+  string n = 5;
+
+  // Used for RSA keys.
+  string e = 6;
+
+  // Used for ECDSA keys.
+  string x = 7;
+
+  // Used for ECDSA keys.
+  string y = 8;
+
+  // Used for ECDSA keys.
+  string crv = 9;
 }
 
 // model crud body
