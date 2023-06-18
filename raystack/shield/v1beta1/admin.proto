@@ -409,28 +409,31 @@ message CreateRoleResponse {
 }
 
 message DeleteRoleRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The role id to delete.";
-  }];
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The role id to delete.";
+    }
+  ];
 }
 
 message DeleteRoleResponse {}
 
 message PermissionRequestBody {
   string name = 1 [
+    deprecated = true,
     (validate.rules).string = {
       min_len: 3,
       pattern: "^[A-Za-z0-9]+$"
     },
-    (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The name of the permission. It should be unique across a Shield instance and can contain only alphanumeric characters.";
     }
   ];
   // namespace should be in service/resource format
   string namespace = 2 [
+    deprecated = true,
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The namespace of the permission.The namespace should be in service/resource format.<br/>*Example:*`app/guardian`";
     }
@@ -441,6 +444,12 @@ message PermissionRequestBody {
   string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The title can contain any UTF-8 character, used to provide a human-readable name for the permissions. Can also be left empty.";
   }];
+  string key = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.",
+      example: "\"compute.instance.get\""
+    }
+  ];
 }
 
 message CreatePermissionRequest {
@@ -452,7 +461,9 @@ message CreatePermissionResponse {
 }
 
 message UpdatePermissionRequest {
-  string id = 1;
+  string id = 1[
+    (google.api.field_behavior) = REQUIRED
+  ];
   PermissionRequestBody body = 2;
 }
 

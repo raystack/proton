@@ -133,6 +133,22 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       }
     }
   }
+  security_definitions: {
+    security: {
+      key: "Basic";
+      value: {
+        type: TYPE_BASIC;
+        in: IN_HEADER;
+        name: "Basic Authentication";
+        description: "Client ID/Secret authentication";
+      }
+    }
+  }
+  security: {
+    security_requirement: {
+      key: "Basic";
+    }
+  }
 };
 service ShieldService {
   // Users
@@ -362,8 +378,7 @@ service ShieldService {
   
   rpc GetServiceUserKey(GetServiceUserKeyRequest) returns (GetServiceUserKeyResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/serviceusers/{id}/keys/{key_id}",
-      body: "*"
+      get: "/v1beta1/serviceusers/{id}/keys/{key_id}",
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
@@ -2251,22 +2266,16 @@ message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [
-    deprecated = true,
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"
+    deprecated = true
   ];
   string object_namespace = 2 [
-    deprecated = true,
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$"
+    deprecated = true
   ];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"
   ];
   string resource = 4 [
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9_/-]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "namespace:uuid of the resource. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
     }
