@@ -19,7 +19,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Siren APIs";
     description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
-    version: "0.5";
+    version: "0.6";
   };
   schemes: HTTP;
 };
@@ -558,17 +558,23 @@ message Subscription {
   map<string, string> match = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Struct metadata = 8;
+  string created_by = 9;
+  string updated_by = 10;
 }
 
 message ListSubscriptionsRequest {
   uint64 namespace_id = 1;
   map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""
+    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]=value1\""
   }];
   map<string, string> notification_match = 3  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""
+    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]=value1\""
   }];
   string silence_id = 4;
+  map<string, string> metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription metadata matchers. the match key is written as map. eg, \"metadata[key1]=value1\""
+  }];
 }
 
 message ListSubscriptionsResponse {
@@ -580,6 +586,8 @@ message CreateSubscriptionRequest {
   uint64 namespace = 2;
   repeated ReceiverMetadata receivers = 3;
   map<string, string> match = 4;
+  google.protobuf.Struct metadata = 5;
+  string created_by = 6;
 }
 
 message CreateSubscriptionResponse {
@@ -600,6 +608,8 @@ message UpdateSubscriptionRequest {
   uint64 namespace = 3;
   repeated ReceiverMetadata receivers = 4;
   map<string, string> match = 5;
+  google.protobuf.Struct metadata = 6;
+  string updated_by = 7;
 }
 
 message UpdateSubscriptionResponse {
