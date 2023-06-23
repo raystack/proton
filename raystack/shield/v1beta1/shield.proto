@@ -133,6 +133,22 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       }
     }
   }
+  security_definitions: {
+    security: {
+      key: "Basic";
+      value: {
+        type: TYPE_BASIC;
+        in: IN_HEADER;
+        name: "Basic Authentication";
+        description: "Client ID/Secret authentication";
+      }
+    }
+  }
+  security: {
+    security_requirement: {
+      key: "Basic";
+    }
+  }
 };
 service ShieldService {
   // Users

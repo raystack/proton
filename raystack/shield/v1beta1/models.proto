@@ -217,10 +217,13 @@ message Relation {
 
 message Permission {
   string id = 1;
-  string name = 2 [(validate.rules).string = {
-    min_len: 2,
-    pattern: "^[A-Za-z0-9]+$"
-  }];
+  string name = 2 [
+    (validate.rules).string = {
+      min_len: 2,
+      pattern: "^[A-Za-z0-9]+$"
+    },
+    deprecated = true
+  ];
   string title = 3;
   google.protobuf.Timestamp created_at = 4 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
@@ -234,8 +237,14 @@ message Permission {
       example: "\"2023-06-07T05:39:56.961Z\""
     }
   ];
-  string namespace = 6;
+  string namespace = 6 [deprecated = true];
   google.protobuf.Struct metadata = 7;
+  string key = 8 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.",
+      example: "\"compute.instance.get\""
+    }
+  ];
 }
 
 message Namespace {
