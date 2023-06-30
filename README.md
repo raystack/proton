@@ -15,7 +15,9 @@ There are several ways of accessing Raystack APIs:
 
 ## Structure
 
-This repository uses a directory hierarchy that reflects the Raystack API product structure. In general, every API has its own root directory, and each major version of the API has its own subdirectory. The proto package names exactly match the directory: this makes it easy to locate the proto definitions and ensures that the generated client libraries have idiomatic namespaces in most programming languages.
+This repository uses a directory hierarchy that reflects the Raystack API product structure. In general, every API has its own root directory, and each major version of the API has its own subdirectory.
+
+The proto package names exactly match the directory: this makes it easy to locate the proto definitions and ensures that the generated client libraries have idiomatic namespaces in most programming languages.
 
 ## Usage
 
