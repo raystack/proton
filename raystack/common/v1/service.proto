@@ -11,12 +11,8 @@ option java_multiple_files = true;
 option java_outer_classname = "CommonServiceProto";
 option java_package = "io.raystack.proton.common";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1.0";
-  };
-  external_docs: {
-    description: "Common endpoints for all services";
-  }
+  info: {version: "0.1.0"};
+  external_docs: {description: "Common endpoints for all services"}
   schemes: HTTP;
 };
 

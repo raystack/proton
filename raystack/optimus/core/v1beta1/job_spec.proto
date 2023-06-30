@@ -15,12 +15,8 @@ option java_outer_classname = "JobSpecificationServiceManager";
 option java_package = "io.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Job Specification Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Job Specification Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -68,37 +64,27 @@ service JobSpecificationService {
 
   // GetJobSpecification reads a provided job spec of a namespace
   rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"};
   }
 
   // GetJobSpecifications read a job spec for provided filters
   rpc GetJobSpecifications(GetJobSpecificationsRequest) returns (GetJobSpecificationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/jobs"
-    };
+    option (google.api.http) = {get: "/v1beta1/jobs"};
   }
 
   // DeleteJobSpecification deletes a job spec of a namespace
   rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"};
   }
 
   // ListJobSpecification returns list of jobs created in a project
   rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"};
   }
 
   // CheckJobSpecification checks if a job specification is valid
   rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/job/check"
-    };
+    option (google.api.http) = {post: "/v1beta1/project/{project_name}/job/check"};
   }
   // CheckJobSpecifications checks if the job specifications are valid
   rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
@@ -116,17 +102,13 @@ service JobSpecificationService {
 
   // GetJobTask provides task details specific to plugin used in a job
   rpc GetJobTask(GetJobTaskRequest) returns (GetJobTaskResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/task"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/task"};
   }
 
   // GetWindow provides the start and end dates provided a scheduled date
   // of the execution window
   rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/window"
-    };
+    option (google.api.http) = {get: "/v1beta1/window"};
   }
 }
 

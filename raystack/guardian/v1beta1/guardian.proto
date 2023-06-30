@@ -11,30 +11,22 @@ import "validate/validate.proto";
 option go_package = "github.com/raystack/proton/guardian/v1beta1;guardianv1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1.0";
-  };
+  info: {version: "0.1.0"};
   schemes: HTTP;
 };
 
 // WARNING: This is still in active development and can have breaking changes
 service GuardianService {
   rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/providers"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers"};
   }
 
   rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/providers/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers/{id}"};
   }
 
   rpc GetProviderTypes(GetProviderTypesRequest) returns (GetProviderTypesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/providers/types"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers/types"};
   }
 
   rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
@@ -56,15 +48,11 @@ service GuardianService {
   }
 
   rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/providers/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/providers/{id}"};
   }
 
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"};
   }
 
   rpc ImportActivities(ImportActivitiesRequest) returns (ImportActivitiesResponse) {
@@ -75,27 +63,19 @@ service GuardianService {
   }
 
   rpc GetActivity(GetActivityRequest) returns (GetActivityResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/activities/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/activities/{id}"};
   }
 
   rpc ListActivities(ListActivitiesRequest) returns (ListActivitiesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/activities"
-    };
+    option (google.api.http) = {get: "/v1beta1/activities"};
   }
 
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies"
-    };
+    option (google.api.http) = {get: "/v1beta1/policies"};
   }
 
   rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies/{id}/versions/{version}"
-    };
+    option (google.api.http) = {get: "/v1beta1/policies/{id}/versions/{version}"};
   }
 
   rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
@@ -113,21 +93,15 @@ service GuardianService {
   }
 
   rpc GetPolicyPreferences(GetPolicyPreferencesRequest) returns (GetPolicyPreferencesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies/{id}/versions/{version}/preferences"
-    };
+    option (google.api.http) = {get: "/v1beta1/policies/{id}/versions/{version}/preferences"};
   }
 
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources"};
   }
 
   rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources/{id}"};
   }
 
   rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
@@ -138,33 +112,23 @@ service GuardianService {
   }
 
   rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/resources/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/resources/{id}"};
   }
 
   rpc ListUserAppeals(ListUserAppealsRequest) returns (ListUserAppealsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/me/appeals"
-    };
+    option (google.api.http) = {get: "/v1beta1/me/appeals"};
   }
 
   rpc ListAppeals(ListAppealsRequest) returns (ListAppealsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/appeals"
-    };
+    option (google.api.http) = {get: "/v1beta1/appeals"};
   }
 
   rpc GetAppeal(GetAppealRequest) returns (GetAppealResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/appeals/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/appeals/{id}"};
   }
 
   rpc CancelAppeal(CancelAppealRequest) returns (CancelAppealResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/appeals/{id}/cancel"
-    };
+    option (google.api.http) = {put: "/v1beta1/appeals/{id}/cancel"};
   }
 
   rpc CreateAppeal(CreateAppealRequest) returns (CreateAppealResponse) {
@@ -175,15 +139,11 @@ service GuardianService {
   }
 
   rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/me/approvals"
-    };
+    option (google.api.http) = {get: "/v1beta1/me/approvals"};
   }
 
   rpc ListApprovals(ListApprovalsRequest) returns (ListApprovalsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/approvals"
-    };
+    option (google.api.http) = {get: "/v1beta1/approvals"};
   }
 
   rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
@@ -201,27 +161,19 @@ service GuardianService {
   }
 
   rpc DeleteApprover(DeleteApproverRequest) returns (DeleteApproverResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/appeals/{appeal_id}/approvals/{approval_id}/approvers/{email}"};
   }
 
   rpc ListGrants(ListGrantsRequest) returns (ListGrantsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/grants"
-    };
+    option (google.api.http) = {get: "/v1beta1/grants"};
   }
 
   rpc ListUserGrants(ListUserGrantsRequest) returns (ListUserGrantsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/me/grants"
-    };
+    option (google.api.http) = {get: "/v1beta1/me/grants"};
   }
 
   rpc GetGrant(GetGrantRequest) returns (GetGrantResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/grants/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/grants/{id}"};
   }
 
   rpc UpdateGrant(UpdateGrantRequest) returns (UpdateGrantResponse) {

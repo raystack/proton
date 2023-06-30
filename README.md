@@ -21,37 +21,33 @@ This repository uses a directory hierarchy that reflects the Raystack API produc
 
 Proton does not provide compiled language specific proto files or the descriptor sets for the respective protos. It is upto the users to pull these protos and use `protoc` or `buf` for language specific compiled files and have dependencies/imports in their code.
 
-<p align="center"><img src="./docs/assets/usage.svg" /></p>
+To generate gRPC source code for Protobuf APIs in this repository, you first need to install buf on your local machine.
 
-## Guide
+### Buf
 
-To generate gRPC source code for Google APIs in this repository, you first need to install buf on your local machine.
-
-### Generating go code using buf
-
-**_This guide is last tried on buf version `1.5.0`._**
-
-Add this `buf.gen.yaml` at the root folder.
+Add `buf.gen.yaml` at the root of your project.
 
 ```yaml
-version: v1beta1
+version: v1
 plugins:
   - name: go
-    out: dst
+    out: api
     opt: paths=source_relative
 ```
 
-Run below command to generate your proto to `/dst` folder.
+Run below command to generate your proto to `/api` folder.
 
 ```
-$ buf generate
+buf generate
 ```
 
 Use below command if you just want to target specific package/folder
 
 ```
-$ buf generate --path raystack/assets
+buf generate --path raystack/assets
 ```
+
+Check out Compass [implementation](https://github.com/raystack/compass) for reference.
 
 ## Contribute
 

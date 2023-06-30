@@ -14,12 +14,8 @@ option java_outer_classname = "JobRunManager";
 option java_package = "io.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Job Run Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Job Run Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -36,9 +32,7 @@ service JobRunService {
   }
   // JobRun returns the current and past run status of jobs on a given range
   rpc JobRun(JobRunRequest) returns (JobRunResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/job/{job_name}/run"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/job/{job_name}/run"};
   }
   // RegisterJobEvent notifies optimus service about an event related to job
   rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {

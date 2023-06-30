@@ -13,15 +13,11 @@ option java_package = "io.raystack.proton.entropy.v1beta1";
 
 service ResourceService {
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources"};
   }
 
   rpc GetResource(GetResourceRequest) returns (GetResourceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources/{urn}"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources/{urn}"};
   }
 
   rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
@@ -39,9 +35,7 @@ service ResourceService {
   }
 
   rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/resources/{urn}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/resources/{urn}"};
   }
 
   rpc ApplyAction(ApplyActionRequest) returns (ApplyActionResponse) {
@@ -52,15 +46,11 @@ service ResourceService {
   }
 
   rpc GetLog(GetLogRequest) returns (stream GetLogResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources/{urn}/logs"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources/{urn}/logs"};
   }
 
   rpc GetResourceRevisions(GetResourceRevisionsRequest) returns (GetResourceRevisionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/resources/{urn}/revisions"
-    };
+    option (google.api.http) = {get: "/v1beta1/resources/{urn}/revisions"};
   }
 }
 

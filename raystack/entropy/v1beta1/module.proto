@@ -13,15 +13,11 @@ option java_package = "io.raystack.proton.entropy.v1beta1";
 
 service ModuleService {
   rpc ListModules(ListModulesRequest) returns (ListModulesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/modules"
-    };
+    option (google.api.http) = {get: "/v1beta1/modules"};
   }
 
   rpc GetModule(GetModuleRequest) returns (GetModuleResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/modules/{urn}"
-    };
+    option (google.api.http) = {get: "/v1beta1/modules/{urn}"};
   }
 
   rpc CreateModule(CreateModuleRequest) returns (CreateModuleResponse) {
@@ -39,9 +35,7 @@ service ModuleService {
   }
 
   rpc DeleteModule(DeleteModuleRequest) returns (DeleteModuleResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/modules/{urn}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/modules/{urn}"};
   }
 }
 

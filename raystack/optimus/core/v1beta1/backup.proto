@@ -12,12 +12,8 @@ option java_outer_classname = "BackupServiceManager";
 option java_package = "io.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Backup Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Backup Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -31,14 +27,10 @@ service BackupService {
     };
   }
   rpc ListBackups(ListBackupsRequest) returns (ListBackupsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup"};
   }
   rpc GetBackup(GetBackupRequest) returns (GetBackupResponse) {
-    option (google.api.http) = {
-      get: "/v1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup/{id}"
-    };
+    option (google.api.http) = {get: "/v1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/backup/{id}"};
   }
 }
 

@@ -30,9 +30,7 @@ service SirenService {
       tags: "Provider";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/providers"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers"};
   }
 
   rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
@@ -53,9 +51,7 @@ service SirenService {
       tags: "Provider";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/providers/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/providers/{id}"};
   }
 
   rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
@@ -76,9 +72,7 @@ service SirenService {
       tags: "Provider";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/providers/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/providers/{id}"};
   }
 
   rpc NotifyReceiver(NotifyReceiverRequest) returns (NotifyReceiverResponse) {
@@ -99,9 +93,7 @@ service SirenService {
       tags: "Namespace";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces"
-    };
+    option (google.api.http) = {get: "/v1beta1/namespaces"};
   }
 
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
@@ -122,9 +114,7 @@ service SirenService {
       tags: "Namespace";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
   }
 
   rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
@@ -145,9 +135,7 @@ service SirenService {
       tags: "Namespace";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/namespaces/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/namespaces/{id}"};
   }
 
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
@@ -156,9 +144,7 @@ service SirenService {
       tags: "Subscription";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/subscriptions"
-    };
+    option (google.api.http) = {get: "/v1beta1/subscriptions"};
   }
 
   rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
@@ -179,9 +165,7 @@ service SirenService {
       tags: "Subscription";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/subscriptions/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/subscriptions/{id}"};
   }
 
   rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
@@ -201,9 +185,7 @@ service SirenService {
       tags: "Subscription";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/subscriptions/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/subscriptions/{id}"};
   }
 
   rpc ListReceivers(ListReceiversRequest) returns (ListReceiversResponse) {
@@ -212,9 +194,7 @@ service SirenService {
       tags: "Receiver";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/receivers"
-    };
+    option (google.api.http) = {get: "/v1beta1/receivers"};
   }
 
   rpc CreateReceiver(CreateReceiverRequest) returns (CreateReceiverResponse) {
@@ -235,9 +215,7 @@ service SirenService {
       tags: "Receiver";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/receivers/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/receivers/{id}"};
   }
 
   rpc UpdateReceiver(UpdateReceiverRequest) returns (UpdateReceiverResponse) {
@@ -258,9 +236,7 @@ service SirenService {
       tags: "Receiver";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/receivers/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/receivers/{id}"};
   }
 
   rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {
@@ -269,9 +245,7 @@ service SirenService {
       tags: "Alert";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/alerts/{provider_type}/{provider_id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/alerts/{provider_type}/{provider_id}"};
   }
 
   rpc CreateAlerts(CreateAlertsRequest) returns (CreateAlertsResponse) {
@@ -304,9 +278,7 @@ service SirenService {
       tags: "Rule";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/rules"
-    };
+    option (google.api.http) = {get: "/v1beta1/rules"};
   }
 
   rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse) {
@@ -327,9 +299,7 @@ service SirenService {
       tags: "Template";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/templates"
-    };
+    option (google.api.http) = {get: "/v1beta1/templates"};
   }
 
   rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse) {
@@ -338,9 +308,7 @@ service SirenService {
       tags: "Template";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/templates/{name}"
-    };
+    option (google.api.http) = {get: "/v1beta1/templates/{name}"};
   }
 
   rpc UpsertTemplate(UpsertTemplateRequest) returns (UpsertTemplateResponse) {
@@ -361,9 +329,7 @@ service SirenService {
       tags: "Template";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/templates/{name}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/templates/{name}"};
   }
 
   rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {
@@ -396,9 +362,7 @@ service SirenService {
       tags: "Silence";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/silences"
-    };
+    option (google.api.http) = {get: "/v1beta1/silences"};
   }
 
   rpc GetSilence(GetSilenceRequest) returns (GetSilenceResponse) {
@@ -407,9 +371,7 @@ service SirenService {
       tags: "Silence";
     };
 
-    option (google.api.http) = {
-      get: "/v1beta1/silences/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/silences/{id}"};
   }
 
   rpc ExpireSilence(ExpireSilenceRequest) returns (ExpireSilenceResponse) {
@@ -418,9 +380,7 @@ service SirenService {
       tags: "Silence";
     };
 
-    option (google.api.http) = {
-      delete: "/v1beta1/silences/{id}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/silences/{id}"};
   }
 }
 
@@ -559,12 +519,8 @@ message Subscription {
 
 message ListSubscriptionsRequest {
   uint64 namespace_id = 1;
-  map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""
-  }];
-  map<string, string> notification_match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""
-  }];
+  map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]\""}];
+  map<string, string> notification_match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]\""}];
   string silence_id = 4;
 }
 
@@ -858,12 +814,8 @@ message CreateSilenceResponse {
 message ListSilencesRequest {
   uint64 subscription_id = 1;
   uint64 namespace_id = 2;
-  map<string, string> match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on silences label matchers. the match key is written as map. eg, \"match[key1]\""
-  }];
-  map<string, string> subscription_match = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "query result based on applied subscription label matchers. the subscription_match key is written as map. eg, \"subscription_match[key1]\""
-  }];
+  map<string, string> match = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on silences label matchers. the match key is written as map. eg, \"match[key1]\""}];
+  map<string, string> subscription_match = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "query result based on applied subscription label matchers. the subscription_match key is written as map. eg, \"subscription_match[key1]\""}];
 }
 
 message ListSilencesResponse {

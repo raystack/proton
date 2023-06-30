@@ -4,8 +4,8 @@ package raystack.shield.v1beta1;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
 option java_outer_classname = "Shield";
@@ -14,58 +14,46 @@ option java_package = "io.raystack.proton.shield.v1beta1";
 message User {
   string id = 1;
   // can either be empty or must start with a character
-  string name = 2 [    
+  string name = 2 [
     (validate.rules).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"},
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "Unique name of the user.",
       example: "\"johndoe\""
     }
-  ]; 
-  string title = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Name of the user.",
-      example: "\"John Doe\""
-    }
   ];
+  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Name of the user.",
+    example: "\"John Doe\""
+  }];
   string email = 4 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the user was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the user was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the user was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the user was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string state = 8;
 }
 
 message ServiceUser {
   reserved 2; // 2: for name if needed
   string id = 1;
-  string title = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "User friendly name of the service user.",
-      example: "\"Order Service\""
-    }
-  ];
+  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "User friendly name of the service user.",
+    example: "\"Order Service\""
+  }];
   google.protobuf.Struct metadata = 4;
-  google.protobuf.Timestamp created_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the user was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the user was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the user was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the user was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string state = 7;
 }
 
@@ -78,18 +66,14 @@ message Group {
   string title = 3;
   string org_id = 4;
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the group was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the group was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the group was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the group was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message Role {
@@ -103,18 +87,14 @@ message Role {
   repeated string permissions = 3;
   string title = 4;
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the role was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the role was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the role was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the role was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string org_id = 9;
   string state = 10;
 }
@@ -127,18 +107,14 @@ message Organization {
   }];
   string title = 3;
   google.protobuf.Struct metadata = 4;
-  google.protobuf.Timestamp created_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the organization was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the organization was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the organization was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the organization was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message Project {
@@ -150,18 +126,14 @@ message Project {
   string title = 3;
   string org_id = 4;
   google.protobuf.Struct metadata = 5;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the project was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the project was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the project was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the project was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message Policy {
@@ -169,19 +141,15 @@ message Policy {
 
   string id = 1;
   string title = 2;
-  google.protobuf.Timestamp created_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the policy was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the policy was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  
+  google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the policy was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the policy was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+
   string role_id = 8;
   // namespace:uuid
   string resource = 10;
@@ -194,18 +162,14 @@ message Relation {
   reserved 2, 3, 4, 5, 8;
 
   string id = 1;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the relation was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the relation was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the relation was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the relation was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string subject_sub_relation = 9;
   string relation = 10;
 
@@ -225,26 +189,20 @@ message Permission {
     deprecated = true
   ];
   string title = 3;
-  google.protobuf.Timestamp created_at = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the permission was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the permission was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the permission was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the permission was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string namespace = 6 [deprecated = true];
   google.protobuf.Struct metadata = 7;
-  string key = 8 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.",
-      example: "\"compute.instance.get\""
-    }
-  ];
+  string key = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.",
+    example: "\"compute.instance.get\""
+  }];
 }
 
 message Namespace {
@@ -254,18 +212,14 @@ message Namespace {
   // name could be in a format like: app/organization
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9/]+$"];
   google.protobuf.Struct metadata = 3;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the namespace was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the namespace was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the namespace was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the namespace was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message Resource {
@@ -273,18 +227,14 @@ message Resource {
 
   string id = 1;
   string name = 2;
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the resource was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time the resource was last updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the resource was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the resource was last updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
   string urn = 9;
   string project_id = 10;
   string namespace = 11;
@@ -293,76 +243,57 @@ message Resource {
 }
 
 message MetaSchema {
-  string id = 1[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique metaschema uuid.",
-      example: "\"a9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
-    }
-  ];
-  string name = 2 [(validate.rules).string = {min_len: 2, pattern: "^[A-Za-z0-9-_]+$"}];
-  string schema = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The metaschema json schema.",
-      example: "{\"type\": \"object\"}"
-    }
-  ];
-  google.protobuf.Timestamp created_at = 4[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the metaschema was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp updated_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the metaschema was updated.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The unique metaschema uuid.",
+    example: "\"a9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
+  }];
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
+  string schema = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The metaschema json schema.",
+    example: "{\"type\": \"object\"}"
+  }];
+  google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the metaschema was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the metaschema was updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message Invitation {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique invitation identifier.",
-      example: "\"k9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
-    }
-  ];
-  string user_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The user email of the invited user.",
-      example: "\"john.doe@raystack.org\""
-    }
-  ];
-  string org_id = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization id to which the user is invited.",
-      example: "\"b9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
-    }
-  ];
-  repeated string group_ids = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The list of group ids to which the user is invited.",
-      example: "\"c9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
-    }
-  ];
-  google.protobuf.Struct metadata = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The metadata of the invitation.",
-      example: "{\"key\": \"value\"}"
-    }
-  ];
-  google.protobuf.Timestamp created_at = 6 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the invitation was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
-  google.protobuf.Timestamp expires_at = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the invitation expires.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The unique invitation identifier.",
+    example: "\"k9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
+  }];
+  string user_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The user email of the invited user.",
+    example: "\"john.doe@raystack.org\""
+  }];
+  string org_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The organization id to which the user is invited.",
+    example: "\"b9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
+  }];
+  repeated string group_ids = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The list of group ids to which the user is invited.",
+    example: "\"c9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
+  }];
+  google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The metadata of the invitation.",
+    example: "{\"key\": \"value\"}"
+  }];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the invitation was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp expires_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the invitation expires.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message ServiceUserKey {
@@ -371,12 +302,10 @@ message ServiceUserKey {
   string principal_id = 3;
   string public_key = 4;
 
-  google.protobuf.Timestamp created_at = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the secret was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the secret was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 message KeyCredential {
@@ -396,12 +325,10 @@ message SecretCredential {
   // this value is never persisted in the system so if lost, can't be recovered
   string secret = 3;
 
-  google.protobuf.Timestamp created_at = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The time when the secret was created.",
-      example: "\"2023-06-07T05:39:56.961Z\""
-    }
-  ];
+  google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the secret was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
 }
 
 // JSON Web Key as specified in RFC 7517
@@ -443,9 +370,7 @@ message RoleRequestBody {
     min_len: 2,
     pattern: "^[A-Za-z0-9-_]+$"
   }];
-  repeated string permissions = 3 [(validate.rules).repeated = {
-    min_items: 1
-  }];
+  repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
   google.protobuf.Struct metadata = 5;
   string title = 6;
 }

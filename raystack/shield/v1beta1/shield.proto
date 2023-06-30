@@ -20,37 +20,19 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   };
   schemes: HTTP;
   tags: [
-    {
-      name: "User";
-    },
+    {name: "User"},
     {
       name: "Group";
       description: "Groups in Shield are used to manage users and their access to resources. Each group has a unique name and id that can be used to grant access to resources. When a user is added to a group, they inherit the access permissions that have been granted to the group. This allows you to manage access to resources at scale, without having to grant permissions to individual users."
     },
-    {
-      name: "Role";
-    },
-    {
-      name: "Organization";
-    },
-    {
-      name: "Project";
-    },
-    {
-      name: "Policy";
-    },
-    {
-      name: "Relation";
-    },
-    {
-      name: "Permission";
-    },
-    {
-      name: "Namespace";
-    },
-    {
-      name: "Resource";
-    },
+    {name: "Role"},
+    {name: "Organization"},
+    {name: "Project"},
+    {name: "Policy"},
+    {name: "Relation"},
+    {name: "Permission"},
+    {name: "Namespace"},
+    {name: "Resource"},
     {
       name: "Authz";
       description: "Authorization APIs"
@@ -72,9 +54,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "OK - A successful response.";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -83,9 +63,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "Bad Request - The request was malformed or contained invalid parameters.";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -94,9 +72,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "Unauthorized - Authentication is required";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -105,9 +81,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "Forbidden - User does not have permission to access the resource";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -116,9 +90,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "Not Found - The requested resource was not found";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -127,9 +99,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     value: {
       description: "Internal Server Error. Returned when theres is something wrong with Shield server.";
       schema: {
-        json_schema: {
-          ref: ".google.rpc.Status";
-        }
+        json_schema: {ref: ".google.rpc.Status"}
       }
     }
   }
@@ -145,17 +115,13 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     }
   }
   security: {
-    security_requirement: {
-      key: "Basic";
-    }
+    security_requirement: {key: "Basic"}
   }
 };
 service ShieldService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users"
-    };
+    option (google.api.http) = {get: "/v1beta1/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List public users";
@@ -176,9 +142,7 @@ service ShieldService {
   }
 
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get a user by id";
@@ -187,9 +151,7 @@ service ShieldService {
   }
 
   rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/{id}/groups",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/{id}/groups"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List Groups of a User";
@@ -198,9 +160,7 @@ service ShieldService {
   }
 
   rpc ListCurrentUserGroups(ListCurrentUserGroupsRequest) returns (ListCurrentUserGroupsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/self/groups",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/self/groups"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List My Groups";
@@ -208,9 +168,7 @@ service ShieldService {
   }
 
   rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/self",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/self"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get current user";
@@ -264,9 +222,7 @@ service ShieldService {
   }
 
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/users/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/users/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Delete user";
@@ -275,9 +231,7 @@ service ShieldService {
   }
 
   rpc GetOrganizationsByUser(GetOrganizationsByUserRequest) returns (GetOrganizationsByUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/{id}/organizations",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/{id}/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get Organizations by User"
@@ -286,9 +240,7 @@ service ShieldService {
   }
 
   rpc GetOrganizationsByCurrentUser(GetOrganizationsByCurrentUserRequest) returns (GetOrganizationsByCurrentUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/self/organizations",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/self/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get My Organizations"
@@ -297,9 +249,7 @@ service ShieldService {
   }
 
   rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/{id}/invitations",
-    };
+    option (google.api.http) = {get: "/v1beta1/users/{id}/invitations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List User Invitations";
@@ -309,9 +259,7 @@ service ShieldService {
 
   // ServieUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/serviceusers"
-    };
+    option (google.api.http) = {get: "/v1beta1/serviceusers"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "List service users of an organization";
@@ -332,9 +280,7 @@ service ShieldService {
   }
 
   rpc GetServiceUser(GetServiceUserRequest) returns (GetServiceUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/serviceusers/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/serviceusers/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "Get service user by id";
@@ -343,9 +289,7 @@ service ShieldService {
   }
 
   rpc DeleteServiceUser(DeleteServiceUserRequest) returns (DeleteServiceUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/serviceusers/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "Delete a service user";
@@ -366,20 +310,16 @@ service ShieldService {
   }
 
   rpc ListServiceUserKeys(ListServiceUserKeysRequest) returns (ListServiceUserKeysResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/serviceusers/{id}/keys",
-    };
+    option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/keys"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "List service user keys";
       description: "List all the keys of a service user with its details except jwk.";
     };
   }
-  
+
   rpc GetServiceUserKey(GetServiceUserKeyRequest) returns (GetServiceUserKeyResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/serviceusers/{id}/keys/{key_id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/keys/{key_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "Get a service user key";
@@ -388,9 +328,7 @@ service ShieldService {
   }
 
   rpc DeleteServiceUserKey(DeleteServiceUserKeyRequest) returns (DeleteServiceUserKeyResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/serviceusers/{id}/keys/{key_id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}/keys/{key_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "Delete a service user key";
@@ -411,20 +349,16 @@ service ShieldService {
   }
 
   rpc ListServiceUserSecrets(ListServiceUserSecretsRequest) returns (ListServiceUserSecretsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/serviceusers/{id}/secrets",
-    };
+    option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/secrets"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "List service user secrets";
       description: "List all the secrets of a service user.";
     };
   }
-  
+
   rpc DeleteServiceUserSecret(DeleteServiceUserSecretRequest) returns (DeleteServiceUserSecretResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/serviceusers/{id}/secrets/{secret_id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}/secrets/{secret_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "Delete a service user secret";
@@ -434,9 +368,7 @@ service ShieldService {
 
   // Group
   rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/groups",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "List Organization Groups";
@@ -457,9 +389,7 @@ service ShieldService {
   }
 
   rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/groups/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "Get group by ID";
@@ -478,9 +408,7 @@ service ShieldService {
   }
 
   rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/groups/{id}/users"
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups/{id}/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "List group users";
@@ -501,9 +429,7 @@ service ShieldService {
   }
 
   rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{org_id}/groups/{id}/users/{user_id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/groups/{id}/users/{user_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "Remove group user";
@@ -536,9 +462,7 @@ service ShieldService {
   }
 
   rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{org_id}/groups/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/groups/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "Delete group";
@@ -548,9 +472,7 @@ service ShieldService {
 
   // Roles
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/roles",
-    };
+    option (google.api.http) = {get: "/v1beta1/roles"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "List default roles";
@@ -559,9 +481,7 @@ service ShieldService {
   }
 
   rpc ListOrganizationRoles(ListOrganizationRolesRequest) returns (ListOrganizationRolesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/roles",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/roles"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "List organization roles"
@@ -582,9 +502,7 @@ service ShieldService {
   }
 
   rpc GetOrganizationRole(GetOrganizationRoleRequest) returns (GetOrganizationRoleResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/roles/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/roles/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "Get Organization Role"
@@ -605,9 +523,7 @@ service ShieldService {
   }
 
   rpc DeleteOrganizationRole(DeleteOrganizationRoleRequest) returns (DeleteOrganizationRoleResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{org_id}/roles/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/roles/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "Delete Organization Role";
@@ -617,9 +533,7 @@ service ShieldService {
 
   // Organizations
   rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations"
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List organizations";
@@ -639,9 +553,7 @@ service ShieldService {
   }
 
   rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Get organization";
@@ -662,9 +574,7 @@ service ShieldService {
   }
 
   rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{id}/projects",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}/projects"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Get organization projects"
@@ -673,9 +583,7 @@ service ShieldService {
   }
 
   rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{id}/admins",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}/admins"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List organization admins";
@@ -684,9 +592,7 @@ service ShieldService {
   }
 
   rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{id}/users",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List organization users";
@@ -706,9 +612,7 @@ service ShieldService {
   }
 
   rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{id}/users/{user_id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{id}/users/{user_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Remove organization user";
@@ -717,9 +621,7 @@ service ShieldService {
   }
 
   rpc ListOrganizationInvitations(ListOrganizationInvitationsRequest) returns (ListOrganizationInvitationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/invitations",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/invitations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List pending invitations";
@@ -740,9 +642,7 @@ service ShieldService {
   }
 
   rpc GetOrganizationInvitation(GetOrganizationInvitationRequest) returns (GetOrganizationInvitationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/invitations/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/invitations/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Get pending invitation";
@@ -751,9 +651,7 @@ service ShieldService {
   }
 
   rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept",
-    };
+    option (google.api.http) = {post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Accept pending invitation";
@@ -762,9 +660,7 @@ service ShieldService {
   }
 
   rpc DeleteOrganizationInvitation(DeleteOrganizationInvitationRequest) returns (DeleteOrganizationInvitationResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{org_id}/invitations/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/invitations/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Delete pending invitation";
@@ -797,9 +693,7 @@ service ShieldService {
   }
 
   rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/organizations/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/organizations/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Delete organization"
@@ -820,9 +714,7 @@ service ShieldService {
   }
 
   rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/projects/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "Get project";
@@ -843,9 +735,7 @@ service ShieldService {
   }
 
   rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects/{id}/admins",
-    };
+    option (google.api.http) = {get: "/v1beta1/projects/{id}/admins"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "List project admins"
@@ -854,9 +744,7 @@ service ShieldService {
   }
 
   rpc ListProjectUsers(ListProjectUsersRequest) returns (ListProjectUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects/{id}/users",
-    };
+    option (google.api.http) = {get: "/v1beta1/projects/{id}/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "List project users"
@@ -887,9 +775,7 @@ service ShieldService {
   }
 
   rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/projects/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/projects/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "Delete Project"
@@ -910,9 +796,7 @@ service ShieldService {
   }
 
   rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/policies/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/policies/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
       summary: "Get policy by ID";
@@ -931,9 +815,7 @@ service ShieldService {
   }
 
   rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/policies/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/policies/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
       summary: "Delete Policy"
@@ -954,9 +836,7 @@ service ShieldService {
   }
 
   rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/relations/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/relations/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
       summary: "Get Relation by ID";
@@ -964,9 +844,7 @@ service ShieldService {
   }
 
   rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/relations/{relation}/object/{object}/subject/{subject}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/relations/{relation}/object/{object}/subject/{subject}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
       summary: "Remove a subject having a relation from an object";
@@ -975,9 +853,7 @@ service ShieldService {
 
   // Permissions
   rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/permissions"
-    };
+    option (google.api.http) = {get: "/v1beta1/permissions"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
       summary: "Get all Permissions";
@@ -985,9 +861,7 @@ service ShieldService {
   }
 
   rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/permissions/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/permissions/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
       summary: "Get permission by ID";
@@ -996,9 +870,7 @@ service ShieldService {
 
   // Namespaces
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces"
-    };
+    option (google.api.http) = {get: "/v1beta1/namespaces"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Namespace";
       summary: "Get all Namespaces";
@@ -1006,9 +878,7 @@ service ShieldService {
   }
 
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/namespaces/{id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Namespace";
       summary: "Get a Namespaces";
@@ -1017,9 +887,7 @@ service ShieldService {
 
   // Resources
   rpc ListProjectResources(ListProjectResourcesRequest) returns (ListProjectResourcesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects/{project_id}/resources"
-    };
+    option (google.api.http) = {get: "/v1beta1/projects/{project_id}/resources"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "Get all resources";
@@ -1038,9 +906,7 @@ service ShieldService {
   }
 
   rpc GetProjectResource(GetProjectResourceRequest) returns (GetProjectResourceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/projects/{project_id}/resources/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/projects/{project_id}/resources/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "Get Resource by ID";
@@ -1059,9 +925,7 @@ service ShieldService {
   }
 
   rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/projects/{project_id}/resources/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/projects/{project_id}/resources/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "Delete a resource permanently forever";
@@ -1085,9 +949,7 @@ service ShieldService {
   rpc GetJWKs(GetJWKsRequest) returns (GetJWKsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/auth/jwks"
-      additional_bindings {
-        get: "/.well-known/jwks.json"
-      }
+      additional_bindings {get: "/.well-known/jwks.json"}
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authz";
@@ -1096,9 +958,7 @@ service ShieldService {
   }
 
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/auth"
-    };
+    option (google.api.http) = {get: "/v1beta1/auth"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
       summary: "List authentication strategies";
@@ -1109,9 +969,7 @@ service ShieldService {
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
     option (google.api.http) = {
       get: "/v1beta1/auth/register/{strategy_name}"
-      additional_bindings {
-        post: "/v1beta1/auth/register/{strategy_name}"
-      }
+      additional_bindings {post: "/v1beta1/auth/register/{strategy_name}"}
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
@@ -1123,9 +981,7 @@ service ShieldService {
   rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {
     option (google.api.http) = {
       get: "/v1beta1/auth/callback"
-      additional_bindings {
-        post: "/v1beta1/auth/callback"
-      }
+      additional_bindings {post: "/v1beta1/auth/callback"}
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
@@ -1137,9 +993,7 @@ service ShieldService {
   rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {
     option (google.api.http) = {
       get: "/v1beta1/auth/logout"
-      additional_bindings {
-        delete: "/v1beta1/auth/logout"
-      }
+      additional_bindings {delete: "/v1beta1/auth/logout"}
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
@@ -1150,9 +1004,7 @@ service ShieldService {
 
   // MetaSchemas
   rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/meta/schemas"
-    };
+    option (google.api.http) = {get: "/v1beta1/meta/schemas"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "List metaschemas";
@@ -1173,9 +1025,7 @@ service ShieldService {
   }
 
   rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/meta/schemas/{id}",
-    };
+    option (google.api.http) = {get: "/v1beta1/meta/schemas/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Get metaSchema";
@@ -1196,9 +1046,7 @@ service ShieldService {
   }
 
   rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/meta/schemas/{id}",
-    };
+    option (google.api.http) = {delete: "/v1beta1/meta/schemas/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Delete metaSchema";
@@ -1232,27 +1080,19 @@ message AuthCallbackRequest {
 message AuthCallbackResponse {}
 
 message AuthenticateRequest {
-  string strategy_name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Name of the strategy to use for authentication.<br/> *Example:* `google`",
-  }];
+  string strategy_name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the strategy to use for authentication.<br/> *Example:* `google`"}];
 
   // by default, location header for redirect if applicable
   // will be skipped unless this is set to true, useful in browser
-  bool redirect = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "If set to true, location header will be set for redirect",
-  }];
+  bool redirect = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "If set to true, location header will be set for redirect"}];
 
   // by default, after successful authentication no operation will be performed
   // to apply redirection in case of browsers, provide a url that will be used
   // for redirection after authentication
-  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`",
-  }];
+  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`"}];
 
   // email of the user for magic links
-  string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"
-  }];
+  string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}];
 }
 
 message AuthenticateResponse {
@@ -1274,23 +1114,15 @@ message ListAuthStrategiesResponse {
 message UserRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the user. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Shield automatically generates a name from the user email. ";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the user. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Shield automatically generates a name from the user email. "}
   ];
   string email = 2 [
     (validate.rules).string.email = true,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.org\"`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.org\"`"}
   ];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"
-  }];
-  string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"
-  }];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"}];
+  string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"}];
 }
 
 message ListUsersRequest {
@@ -1299,31 +1131,19 @@ message ListUsersRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The maximum number of users to return per page. The default is 50.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
   ];
   int32 page_num = 2 [
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The page number to return. The default is 1.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
   ];
-  string keyword = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The keyword to search for in name or email.";
-  }];
-  string org_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The organization ID to filter users by.";
-  }];
-  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The group id to filter by.";
-  }];
-  string state = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The state to filter by. It can be enabled or disabled.";
-  }];
+  string keyword = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The keyword to search for in name or email."}];
+  string org_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter users by."}];
+  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The group id to filter by."}];
+  string state = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be enabled or disabled."}];
 }
 
 message ListUsersResponse {
@@ -1408,16 +1228,8 @@ message ListCurrentUserGroupsResponse {
 message ListUserGroupsRequest {
   reserved 2;
 
-  string id = 1[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the user to get groups for.";
-    }
-  ];
-  string org_id =3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to filter groups by. If not provided, groups from all organizations are returned.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the user to get groups for."}];
+  string org_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter groups by. If not provided, groups from all organizations are returned."}];
 }
 
 message ListUserGroupsResponse {
@@ -1429,11 +1241,7 @@ message UpdateCurrentUserRequest {
 }
 
 message ListUserInvitationsRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The user email to list the invitations for.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user email to list the invitations for."}];
 }
 
 message ListUserInvitationsResponse {
@@ -1444,13 +1252,10 @@ message ListUserInvitationsResponse {
 
 message ListServiceUsersRequest {
   string org_id = 1 [
-    (google.api.field_behavior) = REQUIRED,  
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to filter service users by.";
-  }];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The state to filter by. It can be enabled or disabled.";
-  }];
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter service users by."}
+  ];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be enabled or disabled."}];
 }
 
 message ListServiceUsersResponse {
@@ -1458,12 +1263,10 @@ message ListServiceUsersResponse {
 }
 
 message ServiceUserRequestBody {
-  string title = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "User friendly name of the service user.",
-      example: "\"Order Service\""
-    }
-  ];
+  string title = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "User friendly name of the service user.",
+    example: "\"Order Service\""
+  }];
   google.protobuf.Struct metadata = 2;
 }
 
@@ -1471,9 +1274,7 @@ message CreateServiceUserRequest {
   ServiceUserRequestBody body = 1;
   string org_id = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the service user belongs to.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
   ];
 }
 
@@ -1482,11 +1283,7 @@ message CreateServiceUserResponse {
 }
 
 message GetServiceUserRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to get.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to get."}];
 }
 
 message GetServiceUserResponse {
@@ -1494,11 +1291,7 @@ message GetServiceUserResponse {
 }
 
 message UpdateServiceUserRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to update.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to update."}];
   ServiceUserRequestBody body = 2;
 }
 
@@ -1507,21 +1300,13 @@ message UpdateServiceUserResponse {
 }
 
 message DeleteServiceUserRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to delete.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete."}];
 }
 
 message DeleteServiceUserResponse {}
 
 message CreateServiceUserKeyRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to create a key for.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
   string title = 2;
 }
 
@@ -1530,16 +1315,8 @@ message CreateServiceUserKeyResponse {
 }
 
 message GetServiceUserKeyRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to get a key for.";
-    }
-  ];
-  string key_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the key to get.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to get a key for."}];
+  string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to get."}];
 }
 
 message GetServiceUserKeyResponse {
@@ -1547,11 +1324,7 @@ message GetServiceUserKeyResponse {
 }
 
 message ListServiceUserKeysRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to list keys for.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list keys for."}];
 }
 
 message ListServiceUserKeysResponse {
@@ -1559,26 +1332,14 @@ message ListServiceUserKeysResponse {
 }
 
 message DeleteServiceUserKeyRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to delete a key for.";
-    }
-  ];
-  string key_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the key to delete.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a key for."}];
+  string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to delete."}];
 }
 
 message DeleteServiceUserKeyResponse {}
 
 message CreateServiceUserSecretRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to create a key for.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
   string title = 2;
 }
 
@@ -1587,11 +1348,7 @@ message CreateServiceUserSecretResponse {
 }
 
 message ListServiceUserSecretsRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to list secrets for.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list secrets for."}];
 }
 
 message ListServiceUserSecretsResponse {
@@ -1600,16 +1357,8 @@ message ListServiceUserSecretsResponse {
 }
 
 message DeleteServiceUserSecretRequest {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the service user to delete a secret for.";
-    }
-  ];
-  string secret_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The unique ID of the secret to delete.";
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a secret for."}];
+  string secret_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the secret to delete."}];
 }
 
 message DeleteServiceUserSecretResponse {}
@@ -1622,9 +1371,7 @@ message ListOrganizationGroupsRequest {
     pattern: "^[A-Za-z0-9_-]+$",
     min_len: 3
   }];
-  string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The state of the group to filter by. It can be enabled or disabled.";
-  }];
+  string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state of the group to filter by. It can be enabled or disabled."}];
 }
 
 message ListOrganizationGroupsResponse {
@@ -1635,9 +1382,7 @@ message CreateOrganizationRoleRequest {
   RoleRequestBody body = 1;
   string org_id = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the role belongs to.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the role belongs to."}
   ];
 }
 
@@ -1692,25 +1437,15 @@ message OrganizationRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the organization. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"shield-org1-acme\"`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the organization. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"shield-org1-acme\"`"}
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`";
-  }];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`";
-  }];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed.";
-  }];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The state to filter by. It can be `enabled` or `disabled`.";
-  }];
+  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed."}];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be `enabled` or `disabled`."}];
 }
 
 message ListOrganizationsResponse {
@@ -1761,9 +1496,7 @@ message ListOrganizationUsersResponse {
 
 message AddOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  repeated string user_ids = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "List of user IDs to be added to the organization.";
-  }];
+  repeated string user_ids = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "List of user IDs to be added to the organization."}];
 }
 
 message AddOrganizationUsersResponse {}
@@ -1777,16 +1510,10 @@ message RemoveOrganizationUserResponse {}
 
 message ListOrganizationInvitationsRequest {
   string org_id = 1 [
-  (google.api.field_behavior) = REQUIRED,
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "unique id of the organization to which user is invited";
-  }
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which user is invited"}
   ];
-  string user_id = 2 [
-  (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "user_id filter is the email id of user who are invited inside the organization.";
-  }
-  ];
+  string user_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id filter is the email id of user who are invited inside the organization."}];
 }
 
 message ListOrganizationInvitationsResponse {
@@ -1796,19 +1523,13 @@ message ListOrganizationInvitationsResponse {
 message CreateOrganizationInvitationRequest {
   string org_id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "unique id of the organization to which user is invited";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which user is invited"}
   ];
   string user_id = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified"}
   ];
-  repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "list of group ids to which user needs to be added as a member.";
-  }];
+  repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of group ids to which user needs to be added as a member."}];
 }
 
 message CreateOrganizationInvitationResponse {
@@ -1862,22 +1583,14 @@ message ProjectRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the project. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `shield-playground`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the project. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `shield-playground`"}
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`";
-  }];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema.";
-  }];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`"}];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema."}];
   string org_id = 4 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "unique id of the organization to which project belongs";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which project belongs"}
   ];
 }
 
@@ -1899,9 +1612,7 @@ message UpdateProjectResponse {
 
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`";
-  }];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`"}];
 }
 
 message ListOrganizationProjectsResponse {
@@ -1956,29 +1667,19 @@ message PolicyRequestBody {
   string role_id = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "unique id of the role to which policy is assigned";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role to which policy is assigned"}
   ];
-  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`";
-  }];
+  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
   string resource = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The resource to which policy is assigned in this format `namespace:uuid`. <br/> *Example:* `app/guardian:70f69c3a-334b-4f25-90b8-4d4f3be6b8e2`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The resource to which policy is assigned in this format `namespace:uuid`. <br/> *Example:* `app/guardian:70f69c3a-334b-4f25-90b8-4d4f3be6b8e2`"}
   ];
   string principal = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
   ];
-  google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`";
-  }];
+  google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`"}];
 }
 
 message GetPermissionRequest {
@@ -2084,25 +1785,17 @@ message GroupRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the group. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the group. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores."}
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."
-  }];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`";
-  }];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."}];
+  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`"}];
 }
 
 message CreateGroupRequest {
   GroupRequestBody body = 1;
   string org_id = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the group belongs to.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the group belongs to."}
   ];
 }
 
@@ -2128,9 +1821,7 @@ message UpdateGroupRequest {
   GroupRequestBody body = 2;
   string org_id = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization ID to which the group belongs to.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the group belongs to."}
   ];
 }
 
@@ -2208,29 +1899,21 @@ message ResourceRequestBody {
   reserved 2, 4, 5;
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the resource. <br/> *Example:* `my-resource`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the resource. <br/> *Example:* `my-resource`"}
   ];
   string namespace = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Shield. If namespace doesn't exists the request will fail. <br/> *Example:* `compute/instance`";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Shield. If namespace doesn't exists the request will fail. <br/> *Example:* `compute/instance`"}
   ];
   // format namespace:uuid or just uuid for user
-  string principal = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "UserID or ServiceUserID that should be marked as owner of the resource. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
-  }];
+  string principal = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "UserID or ServiceUserID that should be marked as owner of the resource. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
   google.protobuf.Struct metadata = 7;
 }
 
 message CreateProjectResourceRequest {
   ResourceRequestBody body = 1;
   string project_id = 2;
-  string id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Autogenerated if skipped.";
-  }];
+  string id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Autogenerated if skipped."}];
 }
 
 message CreateProjectResourceResponse {
@@ -2265,21 +1948,13 @@ message DeleteProjectResourceRequest {
 message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
-  string object_id = 1 [
-    deprecated = true
-  ];
-  string object_namespace = 2 [
-    deprecated = true
-  ];
+  string object_id = 1 [deprecated = true];
+  string object_namespace = 2 [deprecated = true];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"
   ];
-  string resource = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "namespace:uuid of the resource. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
-    }
-  ];
+  string resource = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "namespace:uuid of the resource. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
 }
 
 message CheckResourcePermissionResponse {
@@ -2292,16 +1967,12 @@ message MetaSchemaRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The name of the metaschema. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.";
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the metaschema. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores."}
   ];
   string schema = 2 [
     (validate.rules).string.min_len = 2,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The schema of the metaschema. The schema must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema."
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The schema of the metaschema. The schema must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema."}
   ];
 }
 
