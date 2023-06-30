@@ -21,11 +21,7 @@ This repository uses a directory hierarchy that reflects the Raystack API produc
 
 Proton does not provide compiled language specific proto files or the descriptor sets for the respective protos. It is upto the users to pull these protos and use `protoc` or `buf` for language specific compiled files and have dependencies/imports in their code.
 
-To generate gRPC source code for Protobuf APIs in this repository, you first need to install buf on your local machine.
-
-### Buf
-
-Add `buf.gen.yaml` at the root of your project.
+To generate gRPC source code for Protobuf APIs in this repository, you first need to install buf on your local machine. For next step, add `buf.gen.yaml` at the root of your project.
 
 ```yaml
 version: v1
@@ -62,13 +58,19 @@ Check out Compass [implementation](https://github.com/raystack/compass) for refe
 You can run following command for linting protobuf files
 
 ```sh
-$ buf lint
+buf lint
+```
+
+Run following command to format protobuf files
+
+```sh
+buf format -w
 ```
 
 You can add proto files when you need to introduce proto for Raystack projects. If you need to modify proto files, you need to ensure backward compatibility. To ensure the backward compatibility of your changes, you can run
 
-```
-$ buf breaking --against '.git#branch=master'
+```sh
+buf breaking --against '.git#branch=master'
 ```
 
 ## License
