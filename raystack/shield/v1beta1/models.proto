@@ -55,6 +55,7 @@ message ServiceUser {
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
   string state = 7;
+  string org_id = 8;
 }
 
 message Group {
@@ -226,7 +227,9 @@ message Resource {
   reserved 3, 4, 5, 8;
 
   string id = 1;
-  string name = 2;
+  string name = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the resource. Must be unique within the project."}
+  ];
   google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time the resource was created.",
     example: "\"2023-06-07T05:39:56.961Z\""
