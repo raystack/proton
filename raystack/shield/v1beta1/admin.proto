@@ -19,8 +19,8 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     version: "0.2.0";
     description: "The Shield APIs adhere to the OpenAPI specification, also known as Swagger, which provides a standardized approach for designing, documenting, and consuming RESTful APIs. With OpenAPI, you gain a clear understanding of the API endpoints, request/response structures, and authentication mechanisms supported by the Shield APIs. By leveraging the OpenAPI specification, developers can easily explore and interact with the Shield APIs using a variety of tools and libraries. The OpenAPI specification enables automatic code generation, interactive API documentation, and seamless integration with API testing frameworks, making it easier than ever to integrate Shield into your existing applications and workflows."
     contact: {
-      name: "Open DataOps Foundation"
-      url: "https://www.raystack.org/"
+      name: "Raystack Foundation"
+      url: "https://raystack.org/"
       email: "hello@raystack.org"
     }
     license: {
@@ -96,6 +96,36 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       }
     }
   }
+  security_definitions: {
+    security: {
+      key: "Basic";
+      value: {
+        type: TYPE_BASIC;
+        in: IN_HEADER;
+        name: "Basic ";
+        description: "use Client ID as username and Client Secret as password";
+      }
+    },
+    security: {
+      key: "Bearer";
+      value: {
+        type: TYPE_OAUTH2;
+        in: IN_HEADER;
+        name: "Bearer ";
+        description: "Access token or JWT token, prefixed by Bearer: Bearer <token>";
+      }
+    }
+  }
+  security: {
+    security_requirement: {
+      key: "Basic";
+    }
+  }
+  security: {
+    security_requirement: {
+      key: "Bearer";
+    }
+  }
 };
 service AdminService {
   // Users
@@ -103,7 +133,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
-      summary: "Get all users";
+      summary: "List all users";
       description: "Lists all the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state.";
     };
   }
@@ -113,7 +143,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/groups"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
-      summary: "Get all groups";
+      summary: "List all groups";
       description: "Lists all the groups from all the organizations in a Shield instance. It can be filtered by organization and state.";
     };
   }
@@ -123,7 +153,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      summary: "Get all organization";
+      summary: "List all organizations";
       description: "Lists all the organizations in a Shield instance. It can be filtered by user and state.";
     };
   }
@@ -133,7 +163,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/projects"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
-      summary: "Get all project";
+      summary: "List all projects";
       description: "Lists all the projects from all the organizations in a Shield instance. It can be filtered by organization and state.";
     };
   }
@@ -143,7 +173,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/relations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Relation";
-      summary: "Get all relations";
+      summary: "List all relations";
     };
   }
 
@@ -152,7 +182,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/admin/resources"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
-      summary: "Get all resources";
+      summary: "List all resources";
       description: "Lists all the resources from all the organizations in a Shield instance. It can be filtered by user, project, organization and namespace.";
     };
   }
@@ -162,7 +192,7 @@ service AdminService {
     option (google.api.http) = {get: "/v1beta1/policies"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
-      summary: "Get all policies";
+      summary: "List all policies";
       description: "Lists all the policies from all the organizations in a Shield instance. It can be filtered by organization, project, user, role and group.";
     };
   }
@@ -197,7 +227,7 @@ service AdminService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
-      summary: "Create permission";
+      summary: "Create platform permission";
       description: "Creates a permission. It can be used to grant permissions to all the resources in a Shield instance.";
     };
   }
@@ -209,7 +239,7 @@ service AdminService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
-      summary: "Update permission by ID";
+      summary: "Update platform permission";
       description: "Updates a permission by ID. It can be used to grant permissions to all the resources in a Shield instance.";
     };
   }
@@ -218,7 +248,7 @@ service AdminService {
     option (google.api.http) = {delete: "/v1beta1/permissions/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
-      summary: "Delete permission by ID";
+      summary: "Delete platform permission";
     };
   }
 }
