@@ -30,6 +30,12 @@ service ReplayService {
       body: "*"
     };
   }
+  rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/replay-dry-run"
+      body: "*"
+    };
+  }
   rpc ListReplay(ListReplayRequest) returns (ListReplayResponse) {
     option (google.api.http) = {
       get: "/v1beta1/project/{project_name}/replay"
@@ -76,7 +82,22 @@ message ReplayRun {
   string status = 2;
 }
 
+message ReplayDryRunResponse {
+  repeated ReplayRun replay_runs = 1;
+}
+
 message ReplayRequest {
+  string project_name = 1;
+  string job_name = 2;
+  string namespace_name = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  bool parallel = 6;
+  string description = 7;
+  string job_config = 8;
+}
+
+message ReplayDryRunRequest {
   string project_name = 1;
   string job_name = 2;
   string namespace_name = 3;
