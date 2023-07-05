@@ -64,6 +64,14 @@ service ResourceService {
       body: "*"
     };
   }
+
+  // apply a resource from optimus to datastore
+  rpc ApplyResources(ApplyResourcesRequest) returns (ApplyResourcesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resources-apply"
+      body: "*"
+    };
+  }
 }
 
 message DeployResourceSpecificationRequest {
@@ -149,3 +157,20 @@ message ChangeResourceNamespaceRequest {
 }
 
 message ChangeResourceNamespaceResponse {}
+
+message ApplyResourcesRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string datastore_name = 3;
+  repeated string resource_names = 4;
+}
+
+message ApplyResourcesResponse {
+  message ResourceStatus {
+    string resource_name = 1;
+    string status = 2;
+    string reason = 3;
+  }
+
+  repeated ResourceStatus statuses = 1;
+}
