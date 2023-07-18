@@ -136,6 +136,22 @@ service JobSpecificationService {
       get: "/v1beta1/window"
     };
   }
+
+  // UpdateJobState enable / disable job on scheuler
+  rpc UpdateJobsState(UpdateJobsStateRequest) returns (UpdateJobsStateResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/project/{project_name}/namespace/{namespace_name}/update-job-state"
+      body: "*"
+    };
+  }
+  
+  // SyncJobsState enable / disable job on scheuler
+  rpc SyncJobsState(SyncJobsStateRequest) returns (SyncJobsStateResponse) {
+    option (google.api.http) = {
+      patch: "/v1beta1/project/{project_name}/namespace/{namespace_name}/sync-job-state"
+      body: "*"
+    };
+  }
 }
 
 message DeployJobSpecificationRequest {
@@ -517,4 +533,34 @@ message GetWindowRequest {
 message GetWindowResponse {
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;
+}
+
+enum JobState {
+  JOB_STATE_UNSPECIFIED = 0;
+  JOB_STATE_ENABLED = 1;
+  JOB_STATE_DISABLED = 2;
+}
+
+message UpdateJobsStateRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string remark = 3;
+  JobState state = 4;
+  repeated string job_names = 5;
+}
+
+message UpdateJobsStateResponse {
+}
+
+message SyncJobsStateRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  message JobStatePair {
+    string job_name = 1;
+    JobState state = 2;
+  }
+  repeated JobStatePair job_states = 3;
+}
+
+message SyncJobsStateResponse {
 }
