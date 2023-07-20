@@ -4,17 +4,21 @@ package raystack.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/optimus/core/v1beta1/status.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
 option java_outer_classname = "ResourceServiceManager";
-option java_package = "io.raystack.proton.optimus";
+option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1"};
-  external_docs: {description: "Optimus Resource Management Service"}
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Resource Management Service";
+  }
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -26,7 +30,9 @@ service ResourceService {
   rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
   // ListResourceSpecification lists all resource specifications of a datastore in project
   rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
+    };
   }
 
   // Database CRUD
@@ -39,12 +45,30 @@ service ResourceService {
   }
   // ReadResource reads a provided resource spec of a namespace
   rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"
+    };
   }
   // UpdateResource updates a resource specification of a datastore in project
   rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
     option (google.api.http) = {
       put: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
+      body: "*"
+    };
+  }
+
+  // ChangeJobNamespace move a job spec from one namespace to another
+  rpc ChangeResourceNamespace(ChangeResourceNamespaceRequest) returns (ChangeResourceNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/change-resource-namespace"
+      body: "*"
+    };
+  }
+
+  // apply a resource from optimus to datastore
+  rpc ApplyResources(ApplyResourcesRequest) returns (ApplyResourcesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resources-apply"
       body: "*"
     };
   }
@@ -121,4 +145,32 @@ message ResourceSpecification {
   google.protobuf.Struct spec = 5;
   map<string, string> assets = 6;
   map<string, string> labels = 7;
+}
+
+
+message ChangeResourceNamespaceRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string datastore_name = 3;
+  string resource_name = 4;
+  string new_namespace_name = 5;
+}
+
+message ChangeResourceNamespaceResponse {}
+
+message ApplyResourcesRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string datastore_name = 3;
+  repeated string resource_names = 4;
+}
+
+message ApplyResourcesResponse {
+  message ResourceStatus {
+    string resource_name = 1;
+    string status = 2;
+    string reason = 3;
+  }
+
+  repeated ResourceStatus statuses = 1;
 }

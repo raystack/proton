@@ -8,11 +8,15 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
 option java_outer_classname = "NamespaceServiceManager";
-option java_package = "io.raystack.proton.optimus";
+option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1"};
-  external_docs: {description: "Optimus Namespace Service"}
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Namespace Service";
+  }
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -29,12 +33,16 @@ service NamespaceService {
 
   // ListProjectNamespaces returns list of namespaces of a project
   rpc ListProjectNamespaces(ListProjectNamespacesRequest) returns (ListProjectNamespacesResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace"
+    };
   }
 
   // GetNamespace returns namespace details based on project_name and namespace_name
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}"
+    };
   }
 }
 

@@ -69,6 +69,12 @@ Run following command to format protobuf files
 buf format -w
 ```
 
+You can run following command for formatting protobuf files
+
+```sh
+$ buf format -w
+```
+
 You can add proto files when you need to introduce proto for Raystack projects. If you need to modify proto files, you need to ensure backward compatibility. To ensure the backward compatibility of your changes, you can run
 
 ```sh
