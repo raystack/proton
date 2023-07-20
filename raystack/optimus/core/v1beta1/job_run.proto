@@ -5,17 +5,21 @@ package raystack.optimus.core.v1beta1;
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/optimus/core/v1beta1/job_spec.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
 option java_outer_classname = "JobRunManager";
-option java_package = "io.raystack.proton.optimus";
+option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1"};
-  external_docs: {description: "Optimus Job Run Service"}
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Job Run Service";
+  }
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -32,7 +36,9 @@ service JobRunService {
   }
   // JobRun returns the current and past run status of jobs on a given range
   rpc JobRun(JobRunRequest) returns (JobRunResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/job/{job_name}/run"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/job/{job_name}/run"
+    };
   }
   // RegisterJobEvent notifies optimus service about an event related to job
   rpc RegisterJobEvent(RegisterJobEventRequest) returns (RegisterJobEventResponse) {
@@ -41,8 +47,8 @@ service JobRunService {
       body: "*"
     };
   }
-  // UploadToScheduler comiles jobSpec from database into DAGs and uploads the generated DAGs to scheduler
-  rpc UploadToScheduler(UploadToSchedulerRequest) returns (UploadToSchedulerResponse) {
+   // UploadToScheduler comiles jobSpec from database into DAGs and uploads the generated DAGs to scheduler
+   rpc UploadToScheduler(UploadToSchedulerRequest) returns (UploadToSchedulerResponse) {
     option (google.api.http) = {
       put: "/v1beta1/project/{project_name}/upload"
       body: "*"
@@ -59,6 +65,7 @@ message UploadToSchedulerResponse {
   bool status = 1;
   string error_message = 2;
 }
+
 
 message RegisterJobEventRequest {
   string project_name = 1;

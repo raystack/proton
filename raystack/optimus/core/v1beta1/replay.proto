@@ -9,11 +9,15 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
 option java_outer_classname = "ReplayServiceManager";
-option java_package = "io.raystack.proton.optimus";
+option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1"};
-  external_docs: {description: "Optimus Replay Service"}
+  info: {
+    version: "0.1";
+  };
+  external_docs: {
+    description: "Optimus Replay Service";
+  }
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -26,11 +30,21 @@ service ReplayService {
       body: "*"
     };
   }
+  rpc ReplayDryRun(ReplayDryRunRequest) returns (ReplayDryRunResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/replay-dry-run"
+      body: "*"
+    };
+  }
   rpc ListReplay(ListReplayRequest) returns (ListReplayResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/replay"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/replay"
+    };
   }
   rpc GetReplay(GetReplayRequest) returns (GetReplayResponse) {
-    option (google.api.http) = {get: "/v1beta1/project/{project_name}/replay/{replay_id}"};
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/replay/{replay_id}"
+    };
   }
 }
 
@@ -68,7 +82,22 @@ message ReplayRun {
   string status = 2;
 }
 
+message ReplayDryRunResponse {
+  repeated ReplayRun replay_runs = 1;
+}
+
 message ReplayRequest {
+  string project_name = 1;
+  string job_name = 2;
+  string namespace_name = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  bool parallel = 6;
+  string description = 7;
+  string job_config = 8;
+}
+
+message ReplayDryRunRequest {
   string project_name = 1;
   string job_name = 2;
   string namespace_name = 3;

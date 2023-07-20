@@ -3,13 +3,11 @@ syntax = "proto3";
 package raystack.optimus.plugins.v1beta1;
 
 import "google/protobuf/timestamp.proto";
-import "raystack/optimus/core/v1beta1/job_run.proto";
-import "raystack/optimus/core/v1beta1/project.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
 option java_outer_classname = "DependencyResolverModProto";
-option java_package = "io.raystack.proton.optimus.plugins";
+option java_package = "org.raystack.proton.optimus.plugins";
 
 // DependencyResolverModService must be implemented by all plugins want to support automatic
 // dependency resolution
@@ -35,9 +33,9 @@ message GetNameResponse {
 }
 
 message GenerateDestinationRequest {
+  reserved 3;
   Configs config = 1;
   Assets assets = 2;
-  raystack.optimus.core.v1beta1.ProjectSpecification project = 3 [deprecated = true];
 
   PluginOptions options = 40;
 }
@@ -47,9 +45,9 @@ message GenerateDestinationResponse {
 }
 
 message GenerateDependenciesRequest {
+  reserved 3;
   Configs config = 1;
   Assets assets = 2;
-  raystack.optimus.core.v1beta1.ProjectSpecification project = 3 [deprecated = true];
 
   PluginOptions options = 40;
 }
@@ -73,12 +71,17 @@ message Assets {
   repeated Asset assets = 1;
 }
 
+message InstanceData {
+  string name = 1;
+  string value = 2;
+  string type = 3;
+}
+
 message CompileAssetsRequest {
+  reserved 3, 4, 5;
   Configs configs = 1;
   Assets assets = 2;
-  raystack.optimus.core.v1beta1.TaskWindow window = 3 [deprecated = true];
-  google.protobuf.Timestamp instance_schedule = 4 [deprecated = true];
-  repeated raystack.optimus.core.v1beta1.InstanceSpecData instance_data = 5;
+  repeated InstanceData instance_data = 8;
 
   google.protobuf.Timestamp start_time = 6;
   google.protobuf.Timestamp end_time = 7;
