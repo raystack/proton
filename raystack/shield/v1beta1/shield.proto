@@ -250,6 +250,24 @@ service ShieldService {
     };
   }
 
+  rpc GetProjectsByUser(GetProjectsByUserRequest) returns (GetProjectsByUserResponse) {
+    option (google.api.http) = {get: "/v1beta1/users/{id}/projects"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get user projects"
+      description: "Get all the projects a user belongs to.";
+    };
+  }
+
+  rpc GetProjectsByCurrentUser(GetProjectsByCurrentUserRequest) returns (GetProjectsByCurrentUserResponse) {
+    option (google.api.http) = {get: "/v1beta1/users/self/projects"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get my projects"
+      description: "Get all projects the current user belongs to";
+    };
+  }
+
   rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {
     option (google.api.http) = {get: "/v1beta1/users/{id}/invitations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1261,6 +1279,20 @@ message GetOrganizationsByCurrentUserRequest {}
 
 message GetOrganizationsByCurrentUserResponse {
   repeated Organization organizations = 1;
+}
+
+message GetProjectsByUserRequest {
+  string id = 1;
+}
+
+message GetProjectsByUserResponse {
+  repeated Project projects = 1;
+}
+
+message GetProjectsByCurrentUserRequest {}
+
+message GetProjectsByCurrentUserResponse {
+  repeated Project projects = 1;
 }
 
 message EnableUserRequest {
