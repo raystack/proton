@@ -202,6 +202,7 @@ message ResourceRevision {
 
   ResourceSpec spec = 5;
   string reason = 6;
+  string created_by = 7;
 }
 
 message GetResourceRevisionsRequest {
