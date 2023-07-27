@@ -1,23 +1,23 @@
 syntax = "proto3";
 
-package raystack.shield.v1beta1;
+package raystack.frontier.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "raystack/shield/v1beta1/models.proto";
+import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
-option java_outer_classname = "Shield";
-option java_package = "io.raystack.proton.shield.v1beta1";
+option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
+option java_outer_classname = "Frontier";
+option java_package = "io.raystack.proton.frontier.v1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Shield Administration API",
+    title: "Frontier Administration API",
     version: "0.2.0";
-    description: "The Shield APIs adhere to the OpenAPI specification, also known as Swagger, which provides a standardized approach for designing, documenting, and consuming RESTful APIs. With OpenAPI, you gain a clear understanding of the API endpoints, request/response structures, and authentication mechanisms supported by the Shield APIs. By leveraging the OpenAPI specification, developers can easily explore and interact with the Shield APIs using a variety of tools and libraries. The OpenAPI specification enables automatic code generation, interactive API documentation, and seamless integration with API testing frameworks, making it easier than ever to integrate Shield into your existing applications and workflows."
+    description: "The Frontier APIs adhere to the OpenAPI specification, also known as Swagger, which provides a standardized approach for designing, documenting, and consuming RESTful APIs. With OpenAPI, you gain a clear understanding of the API endpoints, request/response structures, and authentication mechanisms supported by the Frontier APIs. By leveraging the OpenAPI specification, developers can easily explore and interact with the Frontier APIs using a variety of tools and libraries. The OpenAPI specification enables automatic code generation, interactive API documentation, and seamless integration with API testing frameworks, making it easier than ever to integrate Frontier into your existing applications and workflows."
     contact: {
       name: "Raystack Foundation"
       url: "https://raystack.org/"
@@ -25,7 +25,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     }
     license: {
       name: "Apache 2.0",
-      url: "https://github.com/raystack/shield/blob/main/LICENSE";
+      url: "https://github.com/raystack/frontier/blob/main/LICENSE";
     };
   };
   schemes: HTTP;
@@ -90,7 +90,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   responses: {
     key: "500";
     value: {
-      description: "Internal Server Error. Returned when theres is something wrong with Shield server.";
+      description: "Internal Server Error. Returned when theres is something wrong with Frontier server.";
       schema: {
         json_schema: {ref: ".google.rpc.Status"}
       }
@@ -117,14 +117,10 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     }
   }
   security: {
-    security_requirement: {
-      key: "Basic";
-    }
+    security_requirement: {key: "Basic"}
   }
   security: {
-    security_requirement: {
-      key: "Bearer";
-    }
+    security_requirement: {key: "Bearer"}
   }
 };
 service AdminService {
@@ -134,7 +130,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List all users";
-      description: "Lists all the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state.";
+      description: "Lists all the users from all the organizations in a Frontier instance. It can be filtered by keyword, organization, group and state.";
     };
   }
 
@@ -144,7 +140,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Group";
       summary: "List all groups";
-      description: "Lists all the groups from all the organizations in a Shield instance. It can be filtered by organization and state.";
+      description: "Lists all the groups from all the organizations in a Frontier instance. It can be filtered by organization and state.";
     };
   }
 
@@ -154,7 +150,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List all organizations";
-      description: "Lists all the organizations in a Shield instance. It can be filtered by user and state.";
+      description: "Lists all the organizations in a Frontier instance. It can be filtered by user and state.";
     };
   }
 
@@ -164,7 +160,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "List all projects";
-      description: "Lists all the projects from all the organizations in a Shield instance. It can be filtered by organization and state.";
+      description: "Lists all the projects from all the organizations in a Frontier instance. It can be filtered by organization and state.";
     };
   }
 
@@ -183,7 +179,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "List all resources";
-      description: "Lists all the resources from all the organizations in a Shield instance. It can be filtered by user, project, organization and namespace.";
+      description: "Lists all the resources from all the organizations in a Frontier instance. It can be filtered by user, project, organization and namespace.";
     };
   }
 
@@ -193,7 +189,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
       summary: "List all policies";
-      description: "Lists all the policies from all the organizations in a Shield instance. It can be filtered by organization, project, user, role and group.";
+      description: "Lists all the policies from all the organizations in a Frontier instance. It can be filtered by organization, project, user, role and group.";
     };
   }
 
@@ -206,7 +202,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "Create platform role";
-      description: "Creates a platform wide role. It can be used to grant permissions to all the resources in a Shield instance.";
+      description: "Creates a platform wide role. It can be used to grant permissions to all the resources in a Frontier instance.";
     };
   }
 
@@ -228,7 +224,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
       summary: "Create platform permission";
-      description: "Creates a permission. It can be used to grant permissions to all the resources in a Shield instance.";
+      description: "Creates a permission. It can be used to grant permissions to all the resources in a Frontier instance.";
     };
   }
 
@@ -240,7 +236,7 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Permission";
       summary: "Update platform permission";
-      description: "Updates a permission by ID. It can be used to grant permissions to all the resources in a Shield instance.";
+      description: "Updates a permission by ID. It can be used to grant permissions to all the resources in a Frontier instance.";
     };
   }
 
@@ -363,7 +359,7 @@ message PermissionRequestBody {
       min_len: 3,
       pattern: "^[A-Za-z0-9]+$"
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the permission. It should be unique across a Shield instance and can contain only alphanumeric characters."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the permission. It should be unique across a Frontier instance and can contain only alphanumeric characters."}
   ];
   // namespace should be in service/resource format
   string namespace = 2 [

@@ -3,8 +3,8 @@ syntax = "proto3";
 package raystack.optimus.integration.v1beta1;
 
 import "google/protobuf/timestamp.proto";
-import "raystack/optimus/core/v1beta1/resource.proto";
 import "raystack/optimus/core/v1beta1/job_spec.proto";
+import "raystack/optimus/core/v1beta1/resource.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
@@ -43,7 +43,7 @@ message OptimusChangeEvent {
     EVENT_TYPE_JOB_CREATE = 3;
     EVENT_TYPE_JOB_UPDATE = 4;
     EVENT_TYPE_JOB_DELETE = 5;
-    
+
     EVENT_TYPE_JOB_WAIT_UPSTREAM = 6;
     EVENT_TYPE_JOB_IN_PROGRESS = 7;
     EVENT_TYPE_JOB_SUCCESS = 8;
@@ -51,7 +51,7 @@ message OptimusChangeEvent {
 
     EVENT_TYPE_JOB_STATE_CHANGE = 10;
   }
-  
+
   string event_id = 1;
   google.protobuf.Timestamp occurred_at = 2;
 
@@ -66,4 +66,3 @@ message OptimusChangeEvent {
     JobStateChangePayload job_state_change = 9;
   }
 }
-   

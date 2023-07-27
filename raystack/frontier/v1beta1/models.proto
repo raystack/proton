@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package raystack.shield.v1beta1;
+package raystack.frontier.v1beta1;
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
@@ -8,9 +8,9 @@ import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
-option java_outer_classname = "Shield";
-option java_package = "io.raystack.proton.shield.v1beta1";
+option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
+option java_outer_classname = "Frontier";
+option java_package = "io.raystack.proton.frontier.v1beta1";
 
 message User {
   string id = 1;
@@ -228,9 +228,7 @@ message Resource {
   reserved 3, 4, 5, 8;
 
   string id = 1;
-  string name = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the resource. Must be unique within the project."}
-  ];
+  string name = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the resource. Must be unique within the project."}];
   google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time the resource was created.",
     example: "\"2023-06-07T05:39:56.961Z\""
@@ -304,9 +302,7 @@ message ServiceUserKey {
   string id = 1;
   string title = 2;
   string principal_id = 3;
-  string public_key = 4 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  string public_key = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the secret was created.",
@@ -320,9 +316,7 @@ message KeyCredential {
   string principal_id = 3;
 
   // RSA private key as string
-  string private_key = 4 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  string private_key = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message SecretCredential {
@@ -331,9 +325,7 @@ message SecretCredential {
 
   // secret will only be returned once as part of the create process
   // this value is never persisted in the system so if lost, can't be recovered
-  string secret = 3 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  string secret = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the secret was created.",
@@ -391,9 +383,7 @@ message AuditLog {
 
   // Source service generating the event
   string source = 2 [
-    (validate.rules).string = {
-      min_len: 2
-    },
+    (validate.rules).string = {min_len: 2},
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The source service generating the event.",
@@ -403,9 +393,7 @@ message AuditLog {
 
   // Action performed, e.g. project.create, user.update, serviceuser.delete
   string action = 3 [
-    (validate.rules).string = {
-      min_len: 2
-    },
+    (validate.rules).string = {min_len: 2},
     (google.api.field_behavior) = REQUIRED
   ];
 

@@ -1,22 +1,22 @@
 syntax = "proto3";
 
-package raystack.shield.v1beta1;
+package raystack.frontier.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "raystack/shield/v1beta1/models.proto";
+import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/raystack/proton/shield/v1beta1;shieldv1beta1";
-option java_outer_classname = "Shield";
-option java_package = "io.raystack.proton.shield.v1beta1";
+option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
+option java_outer_classname = "Frontier";
+option java_package = "io.raystack.proton.frontier.v1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Shield General APIs",
+    title: "Frontier General APIs",
     version: "0.2.0";
   };
   schemes: HTTP;
@@ -24,7 +24,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     {name: "User"},
     {
       name: "Group";
-      description: "Groups in Shield are used to manage users and their access to resources. Each group has a unique name and id that can be used to grant access to resources. When a user is added to a group, they inherit the access permissions that have been granted to the group. This allows you to manage access to resources at scale, without having to grant permissions to individual users."
+      description: "Groups in Frontier are used to manage users and their access to resources. Each group has a unique name and id that can be used to grant access to resources. When a user is added to a group, they inherit the access permissions that have been granted to the group. This allows you to manage access to resources at scale, without having to grant permissions to individual users."
     },
     {name: "Role"},
     {name: "Organization"},
@@ -44,7 +44,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     },
     {
       name: "MetaSchema";
-      description: "Manage Metadata Schemas which are used to validate metadata object while creating user/org/group/role. Shield automatically generates default metaschemas with `label` and `description` fields. You can also update these metaschemas to add/edit more fields."
+      description: "Manage Metadata Schemas which are used to validate metadata object while creating user/org/group/role. Frontier automatically generates default metaschemas with `label` and `description` fields. You can also update these metaschemas to add/edit more fields."
     }
   ];
   consumes: "application/json";
@@ -98,7 +98,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   responses: {
     key: "500";
     value: {
-      description: "Internal Server Error. Returned when theres is something wrong with Shield server.";
+      description: "Internal Server Error. Returned when theres is something wrong with Frontier server.";
       schema: {
         json_schema: {ref: ".google.rpc.Status"}
       }
@@ -119,14 +119,14 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     security_requirement: {key: "Basic"}
   }
 };
-service ShieldService {
+service FrontierService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/users"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List public users";
-      description: "Returns the users from all the organizations in a Shield instance. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination."
+      description: "Returns the users from all the organizations in a Frontier instance. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination."
     };
   }
 
@@ -138,8 +138,8 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Create user";
-      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Shield instance. If a user name is not provided, Shield automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@raystack.org\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
-      security:{};
+      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Frontier instance. If a user name is not provided, Frontier automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@raystack.org\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
+      security: {};
     };
   }
 
@@ -148,7 +148,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Get user";
-      description: "Get a user by id searched over all organizations in Shield.";
+      description: "Get a user by id searched over all organizations in Frontier.";
     };
   }
 
@@ -157,7 +157,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "List user groups";
-      description: "Lists all the groups a user belongs to across all organization in Shield. To get the groups of a user in a specific organization, use the org_id filter in the query parameter.";
+      description: "Lists all the groups a user belongs to across all organization in Frontier. To get the groups of a user in a specific organization, use the org_id filter in the query parameter.";
     };
   }
 
@@ -207,7 +207,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Enable user";
-      description: "Sets the state of the user as enabled. The user will be able to log in and access the Shield instance."
+      description: "Sets the state of the user as enabled. The user will be able to log in and access the Frontier instance."
     };
   }
 
@@ -219,7 +219,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
       summary: "Disable user";
-      description: "Sets the state of the user as diabled.The user's membership to groups and organizations will still exist along with all it's roles for access control, but the user will not be able to log in and access the Shield instance."
+      description: "Sets the state of the user as diabled.The user's membership to groups and organizations will still exist along with all it's roles for access control, but the user will not be able to log in and access the Frontier instance."
     };
   }
 
@@ -283,7 +283,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
       summary: "List org service users";
-      description: "Returns the service user of an organization in a Shield instance. It can be filter by it's state"
+      description: "Returns the service user of an organization in a Frontier instance. It can be filter by it's state"
     };
   }
 
@@ -496,7 +496,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Role";
       summary: "List platform roles";
-      description: "Returns a list of platform wide roles available in enitre Shield instance along with their associated permissions";
+      description: "Returns a list of platform wide roles available in enitre Frontier instance along with their associated permissions";
     };
   }
 
@@ -627,7 +627,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Add organization user";
-      description: "Add a user to an organization. A user must exists in Shield before adding it to an org. This request will fail if the user doesn't exists";
+      description: "Add a user to an organization. A user must exists in Frontier before adding it to an org. This request will fail if the user doesn't exists";
     };
   }
 
@@ -725,7 +725,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Delete organization"
-      description: "Delete an organization and all of its relations permanently. The organization users will not be deleted from Shield.";
+      description: "Delete an organization and all of its relations permanently. The organization users will not be deleted from Frontier.";
     };
   }
 
@@ -908,7 +908,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Namespace";
       summary: "Get all namespaces";
-      description: "Returns the list of all namespaces in a Shield instance";
+      description: "Returns the list of all namespaces in a Frontier instance";
     };
   }
 
@@ -981,7 +981,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authz";
       summary: "Check";
-      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Shield will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
+      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Frontier will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
     };
   }
 
@@ -1002,7 +1002,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
       summary: "List authentication strategies";
-      description: "Returns a list of identity providers configured on an instance level in Shield. e.g Google, AzureAD, Github etc";
+      description: "Returns a list of identity providers configured on an instance level in Frontier. e.g Google, AzureAD, Github etc";
     };
   }
 
@@ -1044,7 +1044,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authn";
       summary: "Generate access token by given credentials";
-      description: "Access token can be generated by providing the credentials in the request body/header. The credentials can be client id and secret or service account generated key jwt. Use the generated access token in Authorization header to access the shield resources.";
+      description: "Access token can be generated by providing the credentials in the request body/header. The credentials can be client id and secret or service account generated key jwt. Use the generated access token in Authorization header to access the frontier resources.";
     };
   }
 
@@ -1066,7 +1066,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "List metaschemas";
-      description: "Returns a list of all metaschemas configured on an instance level in Shield. e.g user, project, organization etc";
+      description: "Returns a list of all metaschemas configured on an instance level in Frontier. e.g user, project, organization etc";
     };
   }
 
@@ -1078,7 +1078,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "MetaSchema";
       summary: "Create metaschema";
-      description: "Create a new metadata schema. The metaschema **name** must be unique within the entire Shield instance and can contain only alphanumeric characters, dashes and underscores. The metaschema **schema** must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
+      description: "Create a new metadata schema. The metaschema **name** must be unique within the entire Frontier instance and can contain only alphanumeric characters, dashes and underscores. The metaschema **schema** must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
     };
   }
 
@@ -1118,7 +1118,7 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "AuditLog";
       summary: "List audit logs";
-      description: "Returns a list of audit logs of an organization in Shield.";
+      description: "Returns a list of audit logs of an organization in Frontier.";
     };
   }
 
@@ -1178,7 +1178,7 @@ message AuthenticateRequest {
   // by default, after successful authentication no operation will be performed
   // to apply redirection in case of browsers, provide a url that will be used
   // for redirection after authentication
-  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://shield.example.com\"`"}];
+  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://frontier.example.com\"`"}];
 
   // email of the user for magic links
   string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}];
@@ -1222,12 +1222,12 @@ message AuthTokenResponse {
 message UserRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the user. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Shield automatically generates a name from the user email. "}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the user. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Frontier automatically generates a name from the user email. "}
   ];
   string email = 2 [
     (validate.rules).string.email = true,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The email of the user. The email must be unique within the entire Shield instance.<br/>*Example:*`\"john.doe@raystack.org\"`"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The email of the user. The email must be unique within the entire Frontier instance.<br/>*Example:*`\"john.doe@raystack.org\"`"}
   ];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"}];
   string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"}];
@@ -1560,14 +1560,14 @@ message OrganizationRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the organization. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"shield-org1-acme\"`"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the organization. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"frontier-org1-acme\"`"}
   ];
   string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Shield instance will be listed."}];
+  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Frontier instance will be listed."}];
   string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be `enabled` or `disabled`."}];
 }
 
@@ -1714,9 +1714,9 @@ message ProjectRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the project. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `shield-playground`"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the project. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `frontier-playground`"}
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Shield Playground`"}];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Frontier Playground`"}];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema."}];
   string org_id = 4 [
     (validate.rules).string.min_len = 3,
@@ -1916,7 +1916,7 @@ message GroupRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the group. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the group. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores."}
   ];
   string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."}];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`"}];
@@ -2032,12 +2032,10 @@ message ResourceRequestBody {
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the resource.  Must be unique within the project. <br/> *Example:* `my-resource`"}
   ];
-  string title = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the resource. Can also be left empty."}
-  ];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the resource. Can also be left empty."}];
   string namespace = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Shield. If namespace doesn't exists the request will fail. <br/> *Example:* `compute/instance`"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Frontier. If namespace doesn't exists the request will fail. <br/> *Example:* `compute/instance`"}
   ];
   // format namespace:uuid or just uuid for user
   string principal = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "UserID or ServiceUserID that should be marked as owner of the resource. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
@@ -2085,28 +2083,18 @@ message DeleteProjectResourceResponse {}
 message CheckResourcePermissionRequest {
   string object_id = 1 [
     deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Deprecated. Use `resource` field instead."
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Deprecated. Use `resource` field instead."}
   ];
   string object_namespace = 2 [
     deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "Deprecated. Use `resource` field instead."
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Deprecated. Use `resource` field instead."}
   ];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "the permission name to check. <br/> *Example:* `get` or `list`"
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get` or `list`"}
   ];
-  string resource = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Shield can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`";
-    }
-  ];
+  string resource = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
 }
 
 message CheckResourcePermissionResponse {
@@ -2119,7 +2107,7 @@ message MetaSchemaRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the metaschema. The name must be unique within the entire Shield instance. The name can contain only alphanumeric characters, dashes and underscores."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the metaschema. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores."}
   ];
   string schema = 2 [
     (validate.rules).string.min_len = 2,
@@ -2172,7 +2160,7 @@ message ListOrganizationAuditLogsRequest {
 
   string source = 5;
   string action = 6;
- 
+
   // start_time and end_time are inclusive
   google.protobuf.Timestamp start_time = 10;
   google.protobuf.Timestamp end_time = 11;
