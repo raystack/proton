@@ -11,12 +11,8 @@ option java_outer_classname = "RuntimeServiceManager";
 option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Runtime Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Runtime Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";

@@ -4,8 +4,8 @@ package raystack.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
-import "raystack/optimus/core/v1beta1/status.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "raystack/optimus/core/v1beta1/status.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
@@ -13,12 +13,8 @@ option java_outer_classname = "ResourceServiceManager";
 option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Resource Management Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Resource Management Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -30,9 +26,7 @@ service ResourceService {
   rpc DeployResourceSpecification(stream DeployResourceSpecificationRequest) returns (stream DeployResourceSpecificationResponse) {}
   // ListResourceSpecification lists all resource specifications of a datastore in project
   rpc ListResourceSpecification(ListResourceSpecificationRequest) returns (ListResourceSpecificationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource"};
   }
 
   // Database CRUD
@@ -45,9 +39,7 @@ service ResourceService {
   }
   // ReadResource reads a provided resource spec of a namespace
   rpc ReadResource(ReadResourceRequest) returns (ReadResourceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"};
   }
   // UpdateResource updates a resource specification of a datastore in project
   rpc UpdateResource(UpdateResourceRequest) returns (UpdateResourceResponse) {
@@ -146,7 +138,6 @@ message ResourceSpecification {
   map<string, string> assets = 6;
   map<string, string> labels = 7;
 }
-
 
 message ChangeResourceNamespaceRequest {
   string project_name = 1;

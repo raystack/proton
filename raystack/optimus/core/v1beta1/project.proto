@@ -11,12 +11,8 @@ option java_outer_classname = "ProjectServiceManager";
 option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Project Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Project Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -32,15 +28,11 @@ service ProjectService {
   }
   // ListProjects returns list of registered projects and configurations
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project"
-    };
+    option (google.api.http) = {get: "/v1beta1/project"};
   }
   // GetProject returns project details based on project_name
   rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}"};
   }
 }
 

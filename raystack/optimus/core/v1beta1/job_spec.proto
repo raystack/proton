@@ -6,8 +6,8 @@ import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "raystack/optimus/core/v1beta1/status.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "raystack/optimus/core/v1beta1/status.proto";
 
 option go_package = "github.com/raystack/proton/optimus";
 option java_multiple_files = true;
@@ -15,12 +15,8 @@ option java_outer_classname = "JobSpecificationServiceManager";
 option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Job Specification Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Job Specification Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -68,23 +64,17 @@ service JobSpecificationService {
 
   // GetJobSpecification reads a provided job spec of a namespace
   rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"};
   }
 
   // GetJobSpecifications read a job spec for provided filters
   rpc GetJobSpecifications(GetJobSpecificationsRequest) returns (GetJobSpecificationsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/jobs"
-    };
+    option (google.api.http) = {get: "/v1beta1/jobs"};
   }
 
   // DeleteJobSpecification deletes a job spec of a namespace
   rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
-    option (google.api.http) = {
-      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"
-    };
+    option (google.api.http) = {delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}"};
   }
 
   // ChangeJobNamespace move a job spec from one namespace to another
@@ -97,16 +87,12 @@ service JobSpecificationService {
 
   // ListJobSpecification returns list of jobs created in a project
   rpc ListJobSpecification(ListJobSpecificationRequest) returns (ListJobSpecificationResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job"};
   }
 
   // CheckJobSpecification checks if a job specification is valid
   rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/project/{project_name}/job/check"
-    };
+    option (google.api.http) = {post: "/v1beta1/project/{project_name}/job/check"};
   }
   // CheckJobSpecifications checks if the job specifications are valid
   rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
@@ -124,17 +110,13 @@ service JobSpecificationService {
 
   // GetJobTask provides task details specific to plugin used in a job
   rpc GetJobTask(GetJobTaskRequest) returns (GetJobTaskResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/task"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/{job_name}/task"};
   }
 
   // GetWindow provides the start and end dates provided a scheduled date
   // of the execution window
   rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/window"
-    };
+    option (google.api.http) = {get: "/v1beta1/window"};
   }
 
   // UpdateJobState enable / disable job on scheuler
@@ -144,7 +126,7 @@ service JobSpecificationService {
       body: "*"
     };
   }
-  
+
   // SyncJobsState enable / disable job on scheuler
   rpc SyncJobsState(SyncJobsStateRequest) returns (SyncJobsStateResponse) {
     option (google.api.http) = {
@@ -199,14 +181,12 @@ message JobRun {
   google.protobuf.Timestamp scheduled_at = 2;
 }
 
-
-
 message JobInspectResponse {
   message BasicInfoSection {
-    JobSpecification job =1;
-    repeated string source =2;
-    string destination =3;
-    repeated Log notice =4;
+    JobSpecification job = 1;
+    repeated string source = 2;
+    string destination = 3;
+    repeated Log notice = 4;
   }
   BasicInfoSection basic_info = 1;
 
@@ -222,7 +202,7 @@ message JobInspectResponse {
     repeated JobDependency external_dependency = 1;
     repeated JobDependency internal_dependency = 2;
     repeated HttpDependency http_dependency = 3;
-    
+
     message UnknownDependencies {
       string job_name = 1;
       string project_name = 2;
@@ -232,7 +212,7 @@ message JobInspectResponse {
     repeated Log notice = 5;
   }
   UpstreamSection upstreams = 2;
-  
+
   message DownstreamSection {
     repeated JobDependency downstream_jobs = 1;
     repeated Log notice = 2;
@@ -391,7 +371,7 @@ message JobConfigItem {
 message JobEvent {
   enum Type {
     TYPE_UNSPECIFIED = 0;
-    
+
     TYPE_SLA_MISS = 1;
     reserved 2 to 5;
     TYPE_JOB_SUCCESS = 6;
@@ -549,8 +529,7 @@ message UpdateJobsStateRequest {
   repeated string job_names = 5;
 }
 
-message UpdateJobsStateResponse {
-}
+message UpdateJobsStateResponse {}
 
 message SyncJobsStateRequest {
   string project_name = 1;
@@ -562,5 +541,4 @@ message SyncJobsStateRequest {
   repeated JobStatePair job_states = 3;
 }
 
-message SyncJobsStateResponse {
-}
+message SyncJobsStateResponse {}

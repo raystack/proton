@@ -12,12 +12,8 @@ option java_outer_classname = "ReplayServiceManager";
 option java_package = "org.raystack.proton.optimus";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    version: "0.1";
-  };
-  external_docs: {
-    description: "Optimus Replay Service";
-  }
+  info: {version: "0.1"};
+  external_docs: {description: "Optimus Replay Service"}
   schemes: HTTP;
   host: "127.0.0.1:9100";
   base_path: "/api";
@@ -37,14 +33,10 @@ service ReplayService {
     };
   }
   rpc ListReplay(ListReplayRequest) returns (ListReplayResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/replay"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/replay"};
   }
   rpc GetReplay(GetReplayRequest) returns (GetReplayResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/replay/{replay_id}"
-    };
+    option (google.api.http) = {get: "/v1beta1/project/{project_name}/replay/{replay_id}"};
   }
 }
 
