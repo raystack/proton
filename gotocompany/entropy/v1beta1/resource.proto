@@ -122,6 +122,9 @@ message Resource {
 
   ResourceSpec spec = 8;
   ResourceState state = 9;
+
+  string created_by = 10;
+  string updated_by = 11;
 }
 
 message ListResourcesRequest {
