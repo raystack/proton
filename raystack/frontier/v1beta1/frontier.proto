@@ -114,9 +114,19 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         description: "Client ID/Secret authentication";
       }
     }
+    security: {
+      key: "Bearer";
+      value: {
+        type: TYPE_API_KEY
+        in: IN_HEADER
+        description: "The Authorization header must be set to Bearer followed by a space and a token."
+        name: "Authorization"
+      }
+    }
   }
   security: {
     security_requirement: {key: "Basic"}
+    security_requirement: {key: "Bearer"}
   }
 };
 service FrontierService {
