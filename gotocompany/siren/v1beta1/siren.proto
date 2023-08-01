@@ -633,7 +633,11 @@ message Receiver {
   google.protobuf.Timestamp updated_at = 8;
 }
 
-message ListReceiversRequest {}
+message ListReceiversRequest {
+  map<string, string> labels = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on receivers labels. the label is written as map. eg, \"labels[key1]=value1\""
+  }];
+}
 
 message ListReceiversResponse {
   repeated Receiver receivers = 1;
@@ -644,6 +648,7 @@ message CreateReceiverRequest {
   string type = 2;
   map<string, string> labels = 3;
   google.protobuf.Struct configurations = 4;
+  uint64 parent_id = 5;
 }
 
 message CreateReceiverResponse {
@@ -663,6 +668,7 @@ message UpdateReceiverRequest {
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
   map<string, string> labels = 3;
   google.protobuf.Struct configurations = 4;
+  uint64 parent_id = 5;
 }
 
 message UpdateReceiverResponse {
