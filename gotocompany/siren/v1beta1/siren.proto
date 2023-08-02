@@ -631,6 +631,7 @@ message Receiver {
   google.protobuf.Struct data = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
+  uint64 parent_id = 9;
 }
 
 message ListReceiversRequest {
