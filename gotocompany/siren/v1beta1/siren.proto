@@ -582,7 +582,7 @@ message ListSubscriptionsResponse {
 }
 
 message CreateSubscriptionRequest {
-  string urn = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 1;
   uint64 namespace = 2;
   repeated ReceiverMetadata receivers = 3;
   map<string, string> match = 4;
@@ -604,7 +604,7 @@ message GetSubscriptionResponse {
 
 message UpdateSubscriptionRequest {
   uint64 id = 1;
-  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 2;
   uint64 namespace = 3;
   repeated ReceiverMetadata receivers = 4;
   map<string, string> match = 5;
