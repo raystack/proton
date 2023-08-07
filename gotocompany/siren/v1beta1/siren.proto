@@ -783,7 +783,7 @@ message ListRulesResponse {
 message UpdateRuleRequest {
   bool enabled = 1;
   string group_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string namespace = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string namespace = 3;
   string template = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated Variables variables = 5;
   uint64 provider_namespace = 6;
@@ -803,7 +803,7 @@ message TemplateVariables {
 message Template {
   uint64 id = 1;
   string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string body = 3;
   repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
