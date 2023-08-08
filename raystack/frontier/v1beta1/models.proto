@@ -166,18 +166,18 @@ message Domain {
       example: "\"_frontier-challenge:1234567890123456\""
     }
   ];
-  bool verified = 5 [
+  string state = 5 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "true if the domain is verified, false otherwise",
-      example: "true"
+      description: "The domain state either pending or verified",
+      example: "\"pending\""
     }
   ];
   google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time the domain whitelist request was created",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
-  google.protobuf.Timestamp verified_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The time the org domain was verified",
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the org domain was updated",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
 }
