@@ -355,22 +355,20 @@ message DeleteRoleResponse {}
 message PermissionRequestBody {
   string name = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      min_len: 3,
-      pattern: "^[A-Za-z0-9]+$"
-    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the permission. It should be unique across a Frontier instance and can contain only alphanumeric characters."}
   ];
   // namespace should be in service/resource format
   string namespace = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 3,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the permission.The namespace should be in service/resource format.<br/>*Example:*`app/guardian`"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the permission. The namespace should be in service/resource format.<br/>*Example:*`compute/guardian`"}
   ];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The metadata object for permissions that can hold key value pairs."}];
   string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the permissions. Can also be left empty."}];
+
+  // key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.
+  // Use this instead of using name and namespace fields
   string key = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.",
+    description: "Permission path key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'. Namespace name cannot be `app` as it's reserved for core permissions.",
     example: "\"compute.instance.get\""
   }];
 }
