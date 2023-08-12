@@ -163,7 +163,7 @@ message Domain {
   string token = 4 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The dns TXT record token to verify the domain",
-      example: "\"_frontier-challenge:1234567890123456\""
+      example: "\"_frontier-domain-verification=LB6U2lSQgGS55HOy6kpWFqkngRC8TMEjyrakfmYC2D0s+nfy/WkFSg==\""
     }
   ];
   string state = 5 [

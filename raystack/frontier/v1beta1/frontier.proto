@@ -711,7 +711,7 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List org domains";
-      description: "Returns all trusted domains for an organization, which are used to allow users to sign up with a specific email domain without invitation. The domain ownership must be verified before it can be used as a trusted domain. Use the verified filter to get only the verified domains.";
+      description: "Returns all domains whitelisted for an organization (both pending and verified if no filters are provided for the state). The verified domains allow users email with the org's whitelisted domain to join the organization without invitation.";
     };
   }
 
@@ -758,11 +758,11 @@ service FrontierService {
   }
 
   rpc ListOrganizationsByDomain(ListOrganizationsByDomainRequest) returns (ListOrganizationsByDomainResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/domains/{domain_id}"};
+    option (google.api.http) = {get: "/v1beta1/organizations/domains/{name}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "List orgs by domain";
-      description: "Returns all organizations that have a specific domain whitelisted. This API will return only those organizations in which the domain ownership have been verified.";
+      description: "Returns all organizations that have a specific domain whitelisted. This API will return only those organizations in which the domain ownership have been verified. Useful when you want to show a list of organizations that users can join based on their email domain (by default will also show the orgs of which user is already a part of).";
     };
   }
 
@@ -1783,10 +1783,10 @@ message ListOrganizationDomainsResponse{
 }
 
 message ListOrganizationsByDomainRequest{
-  string domain_id = 1 [
+  string name = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "domain id or domain name to be used to list all the organizations that have this domain whitelisted"}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "domain name to be used to list all the organizations that have this domain whitelisted"}
   ];
 }
 
