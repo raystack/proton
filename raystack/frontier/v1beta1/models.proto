@@ -138,6 +138,50 @@ message Project {
   }];
 }
 
+message Domain {
+  string id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The domain id",
+      example: "\"943e4567-e89b-12d3-a456-426655440000\""
+    }
+  ];
+  string name = 2 [
+    (validate.rules).string = {
+      min_len: 2,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The domain name",
+      example: "\"raystack.org\""
+  }
+  ];
+  string org_id = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The organization id",
+      example: "\"123e4567-e89b-12d3-a456-426655440000\""
+    }
+  ];
+  string token = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The dns TXT record token to verify the domain",
+      example: "\"_frontier-domain-verification=LB6U2lSQgGS55HOy6kpWFqkngRC8TMEjyrakfmYC2D0s+nfy/WkFSg==\""
+    }
+  ];
+  string state = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The domain state either pending or verified",
+      example: "\"pending\""
+    }
+  ];
+  google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the domain whitelist request was created",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the org domain was updated",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+}
+
 message Policy {
   reserved 3, 4, 7, 9;
 
