@@ -1182,20 +1182,34 @@ message AuthenticateRequest {
   string strategy_name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the strategy to use for authentication.<br/> *Example:* `google`"}];
 
   // by default, location redirect header for starting authentication flow if applicable
-  // will be skipped unless this is set to true, useful in browser
-  bool redirect = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "If set to true, location header will be set for redirect"}];
+  // will be skipped unless this is set to true, useful in browser, same value will
+  // also be returned as endpoint in response anyway
+  bool redirect_onstart = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "If set to true, location header will be set for redirect to start auth flow"}];
 
-  // by default, after successful authentication no operation will be performed
-  // to apply redirection in case of browsers, provide a url that will be used
-  // for redirection after authentication
+  // by default, after successful authentication(flow completes) no operation will be performed,
+  // to apply redirection in case of browsers, provide an url that will be used
+  // after authentication where users are sent from frontier.
+  // return_to should be one of the allowed urls configured at instance level
   string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://frontier.example.com\"`"}];
 
   // email of the user for magic links
   string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}];
+
+  // callback_url will be used by strategy as last step to finish authentication flow
+  // in OIDC this host will receive "state" and "code" query params, in case of magic links
+  // this will be the url where user is redirected after clicking on magic link.
+  // For most cases it could be host of frontier but in case of proxies, this will be proxy public endpoint.
+  // callback_url should be one of the allowed urls configured at instance level
+  string callback_url = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Host which should handle the call to finish authentication flow, for most cases it could be host of frontier but in case of proxies, this will be proxy public endpoint.<br/> *Example:*`https://frontier.example.com/v1beta1/auth/callback`"}];
+
+  // TODO(kushsharma): add support for passing state from client and returning it once auth is finished
 }
 
 message AuthenticateResponse {
+  // endpoint specifies the url to redirect user for starting authentication flow
   string endpoint = 1;
+
+  // state is used for resuming authentication flow in applicable strategies
   string state = 2;
 }
 
