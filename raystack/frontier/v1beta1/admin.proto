@@ -206,6 +206,18 @@ service AdminService {
     };
   }
 
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/roles/{id}",
+      body: "body";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Role";
+      summary: "Update role";
+      description: "Update a role title, description and permissions."
+    };
+  }
+
   rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
     option (google.api.http) = {delete: "/v1beta1/roles/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -340,6 +352,18 @@ message CreateRoleRequest {
 }
 
 message CreateRoleResponse {
+  Role role = 1;
+}
+
+message UpdateRoleRequest {
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The role id to update."}
+  ];
+  RoleRequestBody body = 2;
+}
+
+message UpdateRoleResponse {
   Role role = 1;
 }
 
