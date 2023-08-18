@@ -1742,15 +1742,16 @@ message CreateOrganizationInvitationRequest {
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which user is invited"}
   ];
-  string user_id = 2 [
+  repeated string user_ids = 2 [
     (google.api.field_behavior) = REQUIRED,
+    (validate.rules).repeated = {min_items: 1, max_items: 10},
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified"}
   ];
   repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of group ids to which user needs to be added as a member."}];
 }
 
 message CreateOrganizationInvitationResponse {
-  Invitation invitation = 1;
+  repeated Invitation invitations = 1;
 }
 
 message GetOrganizationInvitationRequest {
