@@ -259,6 +259,27 @@ service AdminService {
       summary: "Delete platform permission";
     };
   }
+
+  // Preferences
+  rpc ListPreferences(ListPreferencesRequest) returns (ListPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List platform preferences";
+      description: "Returns a list of all preferences configured on an instance in Frontier. e.g user, project, organization etc";
+    };
+  }
+  rpc CreatePreferences(CreatePreferencesRequest) returns (CreatePreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create platform preferences";
+      description: "Create new platform preferences. The platform preferences **name** must be unique within the platform and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -419,3 +440,17 @@ message DeletePermissionRequest {
 }
 
 message DeletePermissionResponse {}
+
+message ListPreferencesRequest {}
+
+message ListPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message CreatePreferencesRequest {
+  repeated PreferenceRequestBody preferences = 1;
+}
+
+message CreatePreferencesResponse {
+  repeated Preference preference = 1;
+}

@@ -340,6 +340,10 @@ message Invitation {
     description: "The time when the invitation expires.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
+  repeated string role_ids = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The list of role ids to which the user is invited in an organization.",
+    example: "\"d9c4f4e2-9b9a-4c1a-8f1a-2b9b9b9b9b9b\""
+  }];
 }
 
 message ServiceUserKey {
@@ -456,7 +460,48 @@ message AuditLog {
   }];
 }
 
-// model crud body
+// PreferenceTrait is a trait that can be used to add preferences to a resource
+// it explains what preferences are available for a resource
+message PreferenceTrait {
+  string resource_type = 1;
+  string name = 2;
+  string title = 3;
+  string description = 4;
+  string long_description = 5;
+  string heading = 6;
+  string sub_heading = 7;
+  string breadcrumb = 8;
+
+  string input_hints = 19;
+  oneof input {
+    string text = 20;
+    string textarea = 21;
+    string select = 22;
+    string combobox = 23;
+    string checkbox = 24;
+    string multiselect = 25;
+    string number = 26;
+  }
+}
+
+message Preference {
+  string id = 1;
+  string name = 2;
+  string value = 3;
+  string resource_id = 4;
+  string resource_type = 5;
+
+  google.protobuf.Timestamp created_at = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the preference was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+  google.protobuf.Timestamp updated_at = 11 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the preference was updated.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+}
+
+// Model crud body
 
 message RoleRequestBody {
   reserved 1, 4;
@@ -468,4 +513,12 @@ message RoleRequestBody {
   repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
   google.protobuf.Struct metadata = 5;
   string title = 6;
+}
+
+message PreferenceRequestBody {
+  string name = 2 [(validate.rules).string = {
+    min_len: 2,
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
+  string value = 3;
 }

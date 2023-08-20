@@ -1212,6 +1212,117 @@ service FrontierService {
       description: "Get an audit log by ID.";
     };
   }
+
+  // Preferences
+
+  // DescribePreferences list down all the supported preferences of entities
+  rpc DescribePreferences(DescribePreferencesRequest) returns (DescribePreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/preferences/_describe"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Describe preferences";
+      description: "Returns a list of all preferences supported by Frontier.";
+    };
+  }  
+
+  rpc CreateOrganizationPreferences(CreateOrganizationPreferencesRequest) returns (CreateOrganizationPreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{id}/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create organization preferences";
+      description: "Create a new organization preferences. The organization preferences **name** must be unique within the organization and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
+  rpc ListOrganizationPreferences(ListOrganizationPreferencesRequest) returns (ListOrganizationPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List organization preferences";
+      description: "List an organization preferences by ID.";
+    };
+  }
+
+  rpc CreateProjectPreferences(CreateProjectPreferencesRequest) returns (CreateProjectPreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects/{id}/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create project preferences";
+      description: "Create a new project preferences. The project preferences **name** must be unique within the project and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
+  rpc ListProjectPreferences(ListProjectPreferencesRequest) returns (ListProjectPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/projects/{id}/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List project preferences";
+      description: "List a project preferences by ID.";
+    };
+  }
+
+  rpc CreateGroupPreferences(CreateGroupPreferencesRequest) returns (CreateGroupPreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/groups/{id}/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create group preferences";
+      description: "Create a new group preferences. The group preferences **name** must be unique within the group and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
+  rpc ListGroupPreferences(ListGroupPreferencesRequest) returns (ListGroupPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/groups/{id}/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List group preferences";
+      description: "List a group preferences by ID.";
+    };
+  }
+
+  rpc CreateUserPreferences(CreateUserPreferencesRequest) returns (CreateUserPreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/{id}/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create user preferences";
+      description: "Create a new user preferences. The user preferences **name** must be unique within the user and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
+  rpc ListUserPreferences(ListUserPreferencesRequest) returns (ListUserPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/users/{id}/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List user preferences";
+      description: "List a user preferences by ID.";
+    };
+  }
+  rpc CreateCurrentUserPreferences(CreateCurrentUserPreferencesRequest) returns (CreateCurrentUserPreferencesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/self/preferences",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "Create current user preferences";
+      description: "Create a new user preferences. The user preferences **name** must be unique within the user and can contain only alphanumeric characters, dashes and underscores.";
+    };
+  }
+  rpc ListCurrentUserPreferences(ListCurrentUserPreferencesRequest) returns (ListCurrentUserPreferencesResponse) {
+    option (google.api.http) = {get: "/v1beta1/users/self/preferences"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Preference";
+      summary: "List current user preferences";
+      description: "List a user preferences by ID.";
+    };
+  }
 }
 
 // Authentication
@@ -1748,6 +1859,7 @@ message CreateOrganizationInvitationRequest {
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified"}
   ];
   repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of group ids to which user needs to be added as a member."}];
+  repeated string role_ids = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of role ids to which user needs to be added as a member. Roles are binded at organization level by default."}];
 }
 
 message CreateOrganizationInvitationResponse {
@@ -2370,4 +2482,94 @@ message GetOrganizationAuditLogRequest {
 
 message GetOrganizationAuditLogResponse {
   AuditLog log = 1;
+}
+
+// Preferences
+
+message DescribePreferencesRequest {}
+
+message DescribePreferencesResponse {
+  repeated PreferenceTrait traits = 1;
+}
+
+message CreateOrganizationPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message CreateOrganizationPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message ListOrganizationPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListOrganizationPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message CreateProjectPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message CreateProjectPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message ListProjectPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListProjectPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message CreateGroupPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message CreateGroupPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message ListGroupPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListGroupPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message CreateUserPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message CreateUserPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message ListUserPreferencesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListUserPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message CreateCurrentUserPreferencesRequest {
+  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message CreateCurrentUserPreferencesResponse {
+  repeated Preference preferences = 1;
+}
+
+message ListCurrentUserPreferencesRequest {}
+
+message ListCurrentUserPreferencesResponse {
+  repeated Preference preferences = 1;
 }
