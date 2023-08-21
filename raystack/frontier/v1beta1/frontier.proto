@@ -1217,7 +1217,7 @@ service FrontierService {
 
   // DescribePreferences list down all the supported preferences of entities
   rpc DescribePreferences(DescribePreferencesRequest) returns (DescribePreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/preferences/_describe"};
+    option (google.api.http) = {get: "/v1beta1/preferences/traits"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Preference";
       summary: "Describe preferences";
