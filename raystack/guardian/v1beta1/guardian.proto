@@ -203,6 +203,29 @@ service GuardianService {
       body: "*"
     };
   }
+
+  // Namespace contains information about a tenant
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/namespaces"
+      body: "*"
+    };
+  }
+
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
+    option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
+  }
+
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {get: "/v1beta1/namespaces"};
+  }
+
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/namespaces/{id}"
+      body: "*"
+    };
+  }
 }
 
 message ListProvidersRequest {}
@@ -877,3 +900,40 @@ message ProviderActivity {
   string provider_activity_id = 13;
   repeated string related_permissions = 14;
 }
+
+message Namespace {
+  string id = 1;
+  string name = 2;
+  string state = 3;
+  google.protobuf.Struct metadata = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message CreateNamespaceRequest {
+  Namespace namespace = 1;
+}
+
+message CreateNamespaceResponse {}
+
+message GetNamespaceRequest {
+  string id = 1;
+}
+
+message GetNamespaceResponse {
+  Namespace namespace = 1;
+}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message UpdateNamespaceRequest {
+  string id = 1;
+  Namespace namespace = 2;
+}
+
+message UpdateNamespaceResponse {}
+
