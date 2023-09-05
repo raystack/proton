@@ -1054,6 +1054,18 @@ service FrontierService {
       description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Frontier will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
     };
   }
+  
+  rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/batchcheck",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authz";
+      summary: "Batch check";
+      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Frontier will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
+    };
+  }
 
   // Authn
   rpc GetJWKs(GetJWKsRequest) returns (GetJWKsResponse) {
@@ -2397,6 +2409,30 @@ message CheckResourcePermissionRequest {
 
 message CheckResourcePermissionResponse {
   bool status = 1;
+}
+
+message BatchCheckPermissionRequest {
+  repeated BatchCheckPermissionBody bodies = 1 [
+    (validate.rules).repeated = {min_items: 1, max_items: 20}
+  ];
+}
+
+message BatchCheckPermissionBody {
+  string permission = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get` or `list`"}
+  ];
+  string resource = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
+}
+
+message BatchCheckPermissionResponse {
+  repeated BatchCheckPermissionResponsePair pairs = 1;
+}
+
+message BatchCheckPermissionResponsePair {
+  BatchCheckPermissionBody body = 1;
+  bool status = 2;
 }
 
 // Metascema
