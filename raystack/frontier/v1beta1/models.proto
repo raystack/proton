@@ -36,7 +36,15 @@ message User {
     description: "The time the user was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
-  string state = 8;
+  string state = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The state of the user (enabled or disabled).",
+    example: "\"enabled\""
+  }];
+  string avatar = 9 [(
+    grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The base64 encoded image string of the user avatar. Should be less than 2MB.",
+    }
+  ];
 }
 
 message ServiceUser {
@@ -117,6 +125,21 @@ message Organization {
     description: "The time the organization was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
+  string state = 7 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The state of the organization (enabled or disabled).",
+      example: "\"enabled\""
+    }
+  ];
+  string avatar = 8 [
+    (validate.rules).string = {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
+      max_len: 250000
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The base64 encoded image string of the organization avatar. Should be less than 2MB.",
+    }
+  ];
 }
 
 message Project {
