@@ -1438,6 +1438,16 @@ message UserRequestBody {
   ];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"}];
   string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"}];
+  string avatar = 5 [
+    (validate.rules).string = {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
+      max_len: 250000,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 2MB. <br/>*Example:*`\"data:image\\/png;base64,lJQAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAH\"*"
+    example:"\"data:image/png;base64,lJQAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAH\"*"
+  }];
 }
 
 message ListUsersRequest {
@@ -1773,6 +1783,16 @@ message OrganizationRequestBody {
   ];
   string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
   google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
+  string avatar = 4 [
+    (validate.rules).string = {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
+      max_len: 250000,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 2MB. <br/>*Example:*`\"data:image\\/png;base64,lJQAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAH\"*"
+    example:"\"data:image/png;base64,lJQAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAH\"*"
+  }];
 }
 
 message ListOrganizationsRequest {

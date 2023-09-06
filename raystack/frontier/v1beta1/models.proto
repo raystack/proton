@@ -40,8 +40,12 @@ message User {
     description: "The state of the user (enabled or disabled).",
     example: "\"enabled\""
   }];
-  string avatar = 9 [(
-    grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string avatar = 9 [
+    (validate.rules).string = {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
+      max_len: 250000
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The base64 encoded image string of the user avatar. Should be less than 2MB.",
     }
   ];
