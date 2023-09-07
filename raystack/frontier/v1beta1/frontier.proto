@@ -1445,7 +1445,8 @@ message UserRequestBody {
       ignore_empty: true,
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 2MB."
+    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`.",
+    example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
   }];
 }
 
@@ -1789,7 +1790,8 @@ message OrganizationRequestBody {
       ignore_empty: true,
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 2MB."
+    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
+    example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
   }];
 }
 
