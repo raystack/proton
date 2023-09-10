@@ -218,6 +218,12 @@ service GuardianService {
     };
   }
 
+  rpc ListUserRoles(ListUserRolesRequest) returns (ListUserRolesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/me/grants/roles"
+    };
+  }
+
   rpc GetGrant(GetGrantRequest) returns (GetGrantResponse) {
     option (google.api.http) = {
       get: "/v1beta1/grants/{id}"
@@ -679,6 +685,13 @@ message ListUserGrantsRequest {
 message ListUserGrantsResponse {
   repeated Grant grants = 1;
   int32 total = 2;
+}
+
+message ListUserRolesRequest {
+}
+
+message ListUserRolesResponse {
+  repeated string roles = 1;
 }
 
 message GetGrantRequest {
