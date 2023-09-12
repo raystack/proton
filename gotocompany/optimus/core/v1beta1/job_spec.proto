@@ -132,6 +132,7 @@ service JobSpecificationService {
   // GetWindow provides the start and end dates provided a scheduled date
   // of the execution window
   rpc GetWindow(GetWindowRequest) returns (GetWindowResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       get: "/v1beta1/window"
     };
@@ -331,6 +332,7 @@ message JobSpecification {
   string window_size = 11;
   string window_offset = 12;
   string window_truncate_to = 13;
+  string window_preset = 23;
 
   repeated JobDependency dependencies = 14; // static dependencies
   map<string, string> assets = 15;
@@ -523,6 +525,7 @@ message JobTask {
 }
 
 message GetWindowRequest {
+  option deprecated = true;
   google.protobuf.Timestamp scheduled_at = 1;
   string size = 2;
   string offset = 3;
@@ -531,6 +534,7 @@ message GetWindowRequest {
 }
 
 message GetWindowResponse {
+  option deprecated = true;
   google.protobuf.Timestamp start = 1;
   google.protobuf.Timestamp end = 2;
 }

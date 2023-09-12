@@ -50,8 +50,7 @@ message RegisterProjectRequest {
 }
 
 message RegisterProjectResponse {
-  bool success = 1;
-  string message = 2;
+  reserved 1, 2;
 }
 
 message ListProjectsRequest {}
@@ -69,12 +68,18 @@ message GetProjectResponse {
 }
 
 message ProjectSpecification {
+  reserved 3;
+
   string name = 1;
   map<string, string> config = 2;
 
-  message ProjectSecret {
+  message ProjectPreset {
     string name = 1;
-    string value = 2;
+    string description = 2;
+
+    string truncate_to = 3;
+    string offset = 4;
+    string size = 5;
   }
-  repeated ProjectSecret secrets = 3;
+  map<string, ProjectPreset> presets = 4;
 }
