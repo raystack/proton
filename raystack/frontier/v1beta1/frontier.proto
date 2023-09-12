@@ -2289,10 +2289,20 @@ message UpdateGroupRequest {
 message ListGroupUsersRequest {
   string id = 1;
   string org_id = 2;
+
+  // list of permissions needs to be checked against each member 
+  // of the group as principal and group as subject
+  repeated string with_member_permissions = 3;
 }
 
 message ListGroupUsersResponse {
   repeated User users = 1;
+
+  message AccessPair {
+    string user_id = 1;
+    repeated string permissions = 2;
+  }
+  repeated AccessPair access_pairs = 2;
 }
 
 message EnableGroupRequest {
