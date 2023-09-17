@@ -242,7 +242,7 @@ service FrontierService {
     };
   }
 
-  rpc GetOrganizationsByUser(GetOrganizationsByUserRequest) returns (GetOrganizationsByUserResponse) {
+  rpc ListOrganizationsByUser(ListOrganizationsByUserRequest) returns (ListOrganizationsByUserResponse) {
     option (google.api.http) = {get: "/v1beta1/users/{id}/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -251,7 +251,7 @@ service FrontierService {
     };
   }
 
-  rpc GetOrganizationsByCurrentUser(GetOrganizationsByCurrentUserRequest) returns (GetOrganizationsByCurrentUserResponse) {
+  rpc ListOrganizationsByCurrentUser(ListOrganizationsByCurrentUserRequest) returns (ListOrganizationsByCurrentUserResponse) {
     option (google.api.http) = {get: "/v1beta1/users/self/organizations"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -260,7 +260,7 @@ service FrontierService {
     };
   }
 
-  rpc GetProjectsByUser(GetProjectsByUserRequest) returns (GetProjectsByUserResponse) {
+  rpc ListProjectsByUser(ListProjectsByUserRequest) returns (ListProjectsByUserResponse) {
     option (google.api.http) = {get: "/v1beta1/users/{id}/projects"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -269,7 +269,7 @@ service FrontierService {
     };
   }
 
-  rpc GetProjectsByCurrentUser(GetProjectsByCurrentUserRequest) returns (GetProjectsByCurrentUserResponse) {
+  rpc ListProjectsByCurrentUser(ListProjectsByCurrentUserRequest) returns (ListProjectsByCurrentUserResponse) {
     option (google.api.http) = {get: "/v1beta1/users/self/projects"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "User";
@@ -846,6 +846,15 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "List project users"
+      description: "Returns a collection of users of a project. Filter by user permissions is supported.";
+    };
+  }
+
+  rpc ListProjectServiceUsers(ListProjectServiceUsersRequest) returns (ListProjectServiceUsersResponse) {
+    option (google.api.http) = {get: "/v1beta1/projects/{id}/serviceusers"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "List project serviceusers"
       description: "Returns a collection of users of a project. Filter by user permissions is supported.";
     };
   }
@@ -1484,34 +1493,48 @@ message CreateUserResponse {
   User user = 1;
 }
 
-message GetOrganizationsByUserRequest {
+message ListOrganizationsByUserRequest {
   string id = 1;
 }
 
-message GetOrganizationsByUserResponse {
+message ListOrganizationsByUserResponse {
   repeated Organization organizations = 1;
   repeated Organization joinable_via_domain = 2;
 }
 
-message GetOrganizationsByCurrentUserRequest {}
+message ListOrganizationsByCurrentUserRequest {}
 
-message GetOrganizationsByCurrentUserResponse {
+message ListOrganizationsByCurrentUserResponse {
   repeated Organization organizations = 1;
   repeated Organization joinable_via_domain = 2;
 }
 
-message GetProjectsByUserRequest {
+message ListProjectsByUserRequest {
   string id = 1;
 }
 
-message GetProjectsByUserResponse {
+message ListProjectsByUserResponse {
   repeated Project projects = 1;
 }
 
-message GetProjectsByCurrentUserRequest {}
+message ListProjectsByCurrentUserRequest {
+  // org_id is optional and filter projects by org
+  string org_id = 1;
 
-message GetProjectsByCurrentUserResponse {
+  // list of permissions needs to be checked against each project 
+  // query params are set as with_permissions=get&with_permissions=delete
+  // to be represented as array
+  repeated string with_permissions = 2;
+}
+
+message ListProjectsByCurrentUserResponse {
   repeated Project projects = 1;
+
+  message AccessPair {
+    string project_id = 1;
+    repeated string permissions = 2;
+  }
+  repeated AccessPair access_pairs = 2;
 }
 
 message EnableUserRequest {
@@ -1560,10 +1583,21 @@ message GetUserRequest {
   string id = 1;
 }
 
-message ListCurrentUserGroupsRequest {}
+message ListCurrentUserGroupsRequest {
+  // org_id is optional filter over an organization
+  string org_id = 1;
+
+  repeated string with_permissions = 2;
+}
 
 message ListCurrentUserGroupsResponse {
   repeated Group groups = 1;
+
+  message AccessPair {
+    string group_id = 1;
+    repeated string permissions = 2;
+  }
+  repeated AccessPair access_pairs = 2;
 }
 
 message ListUserGroupsRequest {
@@ -2100,10 +2134,33 @@ message ListProjectAdminsResponse {
 message ListProjectUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
   string permission_filter = 2;
+
+  bool with_roles = 3;
 }
 
 message ListProjectUsersResponse {
   repeated User users = 1;
+
+  message RolePair {
+    string user_id = 1;
+    repeated Role roles = 2;
+  }
+  repeated RolePair role_pairs = 2;
+}
+
+message ListProjectServiceUsersRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  bool with_roles = 3;
+}
+
+message ListProjectServiceUsersResponse {
+  repeated ServiceUser serviceusers = 1;
+
+  message RolePair {
+    string serviceuser_id = 1;
+    repeated Role roles = 2;
+  }
+  repeated RolePair role_pairs = 2;
 }
 
 message EnableProjectRequest {
@@ -2290,19 +2347,17 @@ message ListGroupUsersRequest {
   string id = 1;
   string org_id = 2;
 
-  // list of permissions needs to be checked against each member 
-  // of the group as principal and group as subject
-  repeated string with_member_permissions = 3;
+  bool with_roles = 3;
 }
 
 message ListGroupUsersResponse {
   repeated User users = 1;
 
-  message AccessPair {
+  message RolePair {
     string user_id = 1;
-    repeated string permissions = 2;
+    repeated Role roles = 2;
   }
-  repeated AccessPair access_pairs = 2;
+  repeated RolePair role_pairs = 2;
 }
 
 message EnableGroupRequest {
@@ -2431,8 +2486,8 @@ message CheckResourcePermissionRequest {
   ];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get` or `list`"}
+    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get`, `list`, `compute.instance.create`"}
   ];
   string resource = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
 }
@@ -2450,7 +2505,7 @@ message BatchCheckPermissionRequest {
 message BatchCheckPermissionBody {
   string permission = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9_-]+$",
+    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get` or `list`"}
   ];
   string resource = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
