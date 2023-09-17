@@ -498,6 +498,7 @@ message PreferenceTrait {
   string heading = 6;
   string sub_heading = 7;
   string breadcrumb = 8;
+  string default = 9;
 
   string input_hints = 19;
   oneof input {
