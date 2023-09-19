@@ -509,10 +509,14 @@ message ListUserApprovalsRequest {
     ignore_empty: true
   }];
   repeated string appeal_statuses = 7;
+  string q = 8;
+  repeated string account_types = 9;
+  repeated string resource_types = 10;
 }
 
 message ListUserApprovalsResponse {
   repeated Approval approvals = 1;
+  int32 total = 2;
 }
 
 message ListApprovalsRequest {
@@ -529,10 +533,14 @@ message ListApprovalsRequest {
     ignore_empty: true
   }];
   repeated string appeal_statuses = 7;
+  string q = 8;
+  repeated string account_types = 9;
+  repeated string resource_types = 10;
 }
 
 message ListApprovalsResponse {
   repeated Approval approvals = 1;
+  int32 total = 2;
 }
 
 message UpdateApprovalRequest {
