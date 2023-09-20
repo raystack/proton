@@ -287,6 +287,15 @@ service FrontierService {
     };
   }
 
+  rpc ListCurrentUserInvitations(ListCurrentUserInvitationsRequest) returns (ListCurrentUserInvitationsResponse) {
+    option (google.api.http) = {get: "/v1beta1/users/self/invitations"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List user invitations";
+      description: "List all the invitations sent to current user.";
+    };
+  }
+
   // ServieUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers"};
@@ -1616,10 +1625,17 @@ message UpdateCurrentUserRequest {
 }
 
 message ListUserInvitationsRequest {
+  // id is email id of the user
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user email to list the invitations for."}];
 }
 
 message ListUserInvitationsResponse {
+  repeated Invitation invitations = 1;
+}
+
+message ListCurrentUserInvitationsRequest {}
+
+message ListCurrentUserInvitationsResponse {
   repeated Invitation invitations = 1;
 }
 
