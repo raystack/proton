@@ -864,7 +864,16 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
       summary: "List project serviceusers"
-      description: "Returns a collection of users of a project. Filter by user permissions is supported.";
+      description: "Returns a collection of users of a project.";
+    };
+  }
+
+  rpc ListProjectGroups(ListProjectGroupsRequest) returns (ListProjectGroupsResponse) {
+    option (google.api.http) = {get: "/v1beta1/projects/{id}/groups"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "List project groups"
+      description: "Returns a collection of groups of a project.";
     };
   }
 
@@ -1637,6 +1646,7 @@ message ListCurrentUserInvitationsRequest {}
 
 message ListCurrentUserInvitationsResponse {
   repeated Invitation invitations = 1;
+  repeated Organization orgs = 2;
 }
 
 // Serviceuser
@@ -1803,6 +1813,7 @@ message UpdateOrganizationRoleResponse {
 
 message ListRolesRequest {
   string state = 1;
+  repeated string scopes = 2;
 }
 
 message ListRolesResponse {
@@ -1812,6 +1823,7 @@ message ListRolesResponse {
 message ListOrganizationRolesRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   string state = 2;
+  repeated string scopes = 3;
 }
 
 message ListOrganizationRolesResponse {
@@ -2177,6 +2189,14 @@ message ListProjectServiceUsersResponse {
     repeated Role roles = 2;
   }
   repeated RolePair role_pairs = 2;
+}
+
+message ListProjectGroupsRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message ListProjectGroupsResponse {
+  repeated Group groups = 1;
 }
 
 message EnableProjectRequest {
