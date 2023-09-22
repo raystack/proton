@@ -408,10 +408,19 @@ message ListResourcesRequest {
   string urn = 5;
   string name = 6;
   repeated string details = 7;
+  uint32 size = 8 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 9 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
 }
 
 message ListResourcesResponse {
   repeated Resource resources = 1;
+  uint32 total = 2;
 }
 
 message GetResourceRequest {
