@@ -111,6 +111,7 @@ message Role {
   }];
   string org_id = 9;
   string state = 10;
+  repeated string scopes = 11;
 }
 
 message Organization {
@@ -540,6 +541,7 @@ message RoleRequestBody {
   repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
   google.protobuf.Struct metadata = 5;
   string title = 6;
+  repeated string scopes = 7;
 }
 
 message PreferenceRequestBody {
