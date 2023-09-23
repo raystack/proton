@@ -1384,6 +1384,10 @@ message AuthCallbackRequest {
   // for oidc & magic links
   string state = 2;
   string code = 3;
+
+  // state_options has additional configurations for the authentication flow at hand
+  // for example, in case of passkey, it has challenge and public key
+  google.protobuf.Struct state_options = 4;
 }
 
 message AuthCallbackResponse {}
@@ -1421,6 +1425,9 @@ message AuthenticateResponse {
 
   // state is used for resuming authentication flow in applicable strategies
   string state = 2;
+
+  // state_options has additional configurations for the authentication flow at hand
+  google.protobuf.Struct state_options = 3;
 }
 
 message AuthStrategy {
