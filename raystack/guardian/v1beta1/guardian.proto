@@ -414,10 +414,21 @@ message ListUserAppealsRequest {
   repeated string resource_types = 5;
   repeated string resource_urns = 6;
   repeated string order_by = 7;
+  uint32 size = 8 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 9 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  string q = 10;
+  repeated string account_types = 11;
 }
 
 message ListUserAppealsResponse {
   repeated Appeal appeals = 1;
+  int32 total = 2;
 }
 
 message ListAppealsRequest {
@@ -430,10 +441,21 @@ message ListAppealsRequest {
   repeated string resource_urns = 7;
   repeated string order_by = 8;
   string created_by = 9;
+  uint32 size = 10 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 11 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  string q = 12;
+  repeated string account_types = 13;
 }
 
 message ListAppealsResponse {
   repeated Appeal appeals = 1;
+  int32 total = 2;
 }
 
 message GetAppealRequest {
@@ -591,10 +613,20 @@ message ListGrantsRequest {
   string created_by = 10;
   repeated string order_by = 11;
   string owner = 12;
+  uint32 size = 13 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 14 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  string q = 15;
 }
 
 message ListGrantsResponse {
   repeated Grant grants = 1;
+  int32 total = 2;
 }
 
 message ListUserGrantsRequest {
@@ -608,10 +640,20 @@ message ListUserGrantsRequest {
   repeated string resource_urns = 8;
   repeated string roles = 9;
   repeated string order_by = 10;
+  uint32 size = 11 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  uint32 offset = 12 [(validate.rules).uint32 = {
+    gte: 0,
+    ignore_empty: true
+  }];
+  string q = 13;
 }
 
 message ListUserGrantsResponse {
   repeated Grant grants = 1;
+  int32 total = 2;
 }
 
 message GetGrantRequest {
