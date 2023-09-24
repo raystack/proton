@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/goto/proton/siren/v1beta1;sirenv1beta1";
+option go_package = "github.com/goto/siren/proto/gotocompany/siren/v1beta1;sirenv1beta1";
 option java_multiple_files = true;
 option java_outer_classname = "ServiceManager";
 option java_package = "com.gotocompany.proton.siren";
@@ -700,6 +700,15 @@ message Alert {
   google.protobuf.Timestamp triggered_at = 8;
   uint64 namespace_id = 9;
   string silence_status = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  
+  string group_key = 13;
+  string status = 14;
+  map<string,string> annotations = 15;
+  map<string,string> labels = 16;
+  string generator_url = 17;
+  string fingerprint = 18;
 }
 
 message ListAlertsRequest {

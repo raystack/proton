@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package gotocompany.siren.provider.v1beta1;
+
+import "gotocompany/siren/v1beta1/siren.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/goto/siren/proto/gotocompany/siren/provider/v1beta1;sirenproviderv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "ServiceManager";
+option java_package = "com.gotocompany.proton.siren.provider";
+
+message SyncRuntimeConfigRequest {
+    string namespaceID = 1;
+    string namespaceURN = 2;
+    gotocompany.siren.v1beta1.Provider provider = 3;
+}
+
+message SyncRuntimeConfigResponse {}
+
+message UpsertRuleRequest {
+    string namespaceURN = 1;
+    gotocompany.siren.v1beta1.Provider provider = 3;
+    gotocompany.siren.v1beta1.Rule rule = 4;
+    gotocompany.siren.v1beta1.Template template = 5;
+}
+
+message UpsertRuleResponse {}
+
+message SetConfigRequest {
+    string config_raw = 1;
+}
+
+message SetConfigResponse {}
+
+message TransformToAlertsRequest {
+    string providerID = 1;
+    string namespaceID = 2;
+    google.protobuf.Struct body = 3;
+}
+
+message TransformToAlertsResponse {
+    repeated gotocompany.siren.v1beta1.Alert alerts = 1;
+    uint64 firing_num = 2; 
+}
+
+service ProviderService {
+    rpc SyncRuntimeConfig(SyncRuntimeConfigRequest) returns (SyncRuntimeConfigResponse);
+    rpc UpsertRule(UpsertRuleRequest) returns (UpsertRuleResponse);
+    rpc SetConfig(SetConfigRequest) returns (SetConfigResponse);
+    rpc TransformToAlerts(TransformToAlertsRequest) returns (TransformToAlertsResponse);
+}
