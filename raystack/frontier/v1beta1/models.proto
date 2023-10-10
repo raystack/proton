@@ -314,6 +314,7 @@ message Resource {
   string namespace = 11;
   string principal = 12;
   google.protobuf.Struct metadata = 13;
+  string title = 14;
 }
 
 message MetaSchema {
