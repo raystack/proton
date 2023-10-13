@@ -134,6 +134,10 @@ message ListResourcesRequest {
   // filter by labels. if specified, only resources with all the
   // given labels will be returned.
   map<string, string> labels = 3;
+
+  // this toggle if set, will return spec configs as well.
+  // it's default value is false.
+  bool with_spec_configs = 4;
 }
 
 message ListResourcesResponse {
