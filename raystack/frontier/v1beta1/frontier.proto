@@ -1527,7 +1527,9 @@ message ListOrganizationsByUserResponse {
   repeated Organization joinable_via_domain = 2;
 }
 
-message ListOrganizationsByCurrentUserRequest {}
+message ListOrganizationsByCurrentUserRequest {
+  string state = 1;
+}
 
 message ListOrganizationsByCurrentUserResponse {
   repeated Organization organizations = 1;
