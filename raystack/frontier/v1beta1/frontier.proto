@@ -1911,10 +1911,18 @@ message ListOrganizationAdminsResponse {
 message ListOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
   string permission_filter = 2 [deprecated = true];
+
+  bool with_roles = 3;
 }
 
 message ListOrganizationUsersResponse {
   repeated User users = 1;
+
+  message RolePair {
+    string user_id = 1;
+    repeated Role roles = 2;
+  }
+  repeated RolePair role_pairs = 2;
 }
 
 message AddOrganizationUsersRequest {
