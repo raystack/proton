@@ -535,6 +535,150 @@ message Preference {
   }];
 }
 
+message BillingAccount {
+  message Address {
+    string line1 = 1;
+    string line2 = 2;
+    string city = 3;
+    string state = 4;
+    string postal_code = 5;
+    string country = 6;
+  }
+
+  message Balance {
+    int64 amount = 1;
+    string currency = 2;
+
+    google.protobuf.Timestamp updated_at = 3;
+  }
+
+  string id = 1;
+  string org_id = 2;
+  
+  string name = 3;
+  string email = 4;
+  string phone = 5;
+  Address address = 6;
+  string provider_id = 7;
+  string provider = 8;
+  string currency = 9;
+  string state = 10;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message Subscription {
+  string id = 1;
+  string customer_id = 2;
+  string provider_id = 3;
+  string plan_id = 4;
+
+  string state = 5;
+  int32 trial_days = 9;
+
+  google.protobuf.Struct metadata = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp canceled_at = 13;
+  google.protobuf.Timestamp ended_at = 14;
+}
+
+message CheckoutSession {
+  string id = 1;
+
+  string checkout_url = 2;
+  string success_url = 3;
+  string cancel_url = 4;
+  string state = 5;
+
+  google.protobuf.Struct metadata = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp expire_at = 13;
+}
+
+message Plan {
+  string id = 1;
+  string name = 2;
+  string title = 3;
+  string description = 4;
+  repeated Feature features = 5;
+  string interval = 6; // known intervals are "day", "week", "month", and "year"
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message Feature {
+  string id = 1;
+  string name = 2;
+  string title = 3;
+  string description = 4;
+  repeated string plan_ids = 5;
+  string state = 6;
+
+  repeated Price prices = 7;
+  int64 credit_amount = 8;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message Price {
+  string id = 1;
+  string feature_id = 2;
+  string provider_id = 3;
+  string name = 4;
+  string interval = 6; // known intervals are "day", "week", "month", and "year"
+
+  // usage_type known types are "licensed" and "metered"
+  string usage_type = 7;
+  // billing_scheme known schemes are "tiered" and "flat"
+  string billing_scheme = 8;
+  string state = 9;
+  // currency like "usd", "eur", "gbp"
+  string currency = 10;
+  int64 amount = 11;
+   // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
+  string metered_aggregate = 13;
+  // tier_mode known modes are "graduated" and "volume"
+  string tier_mode = 14; 
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message BillingTransaction {
+  string id = 1;
+  string customer_id = 2;
+  string source = 3;
+  int64 amount = 4;
+  string type = 5;
+  string description = 6;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message Usage {
+  string id = 1;
+  string customer_id = 2;
+  string source = 3;
+  string description = 4;
+  string type = 5;
+  int64 amount = 6;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
 // Model crud body
 
 message RoleRequestBody {
