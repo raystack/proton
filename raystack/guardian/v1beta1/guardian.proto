@@ -3,6 +3,7 @@ syntax = "proto3";
 package raystack.guardian.v1beta1;
 
 import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
@@ -11,28 +12,136 @@ import "validate/validate.proto";
 option go_package = "github.com/raystack/proton/guardian/v1beta1;guardianv1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1.0"};
+  info: {
+    title: "Guardian APIs",
+    version: "0.1.0"
+  };
   schemes: HTTP;
+  tags: [
+    {
+      name: "Providers",
+      description: "Providers API"
+    },
+    {
+      name: "Resources",
+      description: "Resources API"
+    },
+    {
+      name: "Policies",
+      description: "Policies API"
+    }
+  ]
+  consumes: "application/json";
+  produces: "application/json";
+  host: "127.0.0.1:7400";
+  responses: {
+    key: "200";
+    value: {
+      description: "OK - A successful response.";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  responses: {
+    key: "400";
+    value: {
+      description: "Bad Request - The request was malformed or contained invalid parameters.";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  responses: {
+    key: "401";
+    value: {
+      description: "Unauthorized - Authentication is required";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  responses: {
+    key: "403";
+    value: {
+      description: "Forbidden - User does not have permission to access the resource";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  responses: {
+    key: "404";
+    value: {
+      description: "Not Found - The requested resource was not found";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  responses: {
+    key: "500";
+    value: {
+      description: "Internal Server Error. Returned when theres is something wrong with Frontier server.";
+      schema: {
+        json_schema: {ref: ".google.rpc.Status"}
+      }
+    }
+  }
+  security_definitions: {
+    security: {
+      key: "Basic";
+      value: {
+        type: TYPE_BASIC;
+        in: IN_HEADER;
+        name: "Basic Authentication";
+        description: "Client ID/Secret authentication";
+      }
+    }
+  }
+  security: {
+    security_requirement: {key: "Basic"}
+  }
 };
 
 // WARNING: This is still in active development and can have breaking changes
 service GuardianService {
   rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
     option (google.api.http) = {get: "/v1beta1/providers"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "List Providers";
+      description: "ListProviders returns a list of providers supported by Guardian";
+    };
   }
 
   rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
     option (google.api.http) = {get: "/v1beta1/providers/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Get Provider";
+      description: "GetProvider returns a provider by ID";
+    };
   }
 
   rpc GetProviderTypes(GetProviderTypesRequest) returns (GetProviderTypesResponse) {
     option (google.api.http) = {get: "/v1beta1/providers/types"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Get Provider Types";
+      description: "GetProviderTypes returns a list of provider types supported by Guardian";
+    };
   }
 
   rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
     option (google.api.http) = {
       post: "/v1beta1/providers"
       body: "config"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Create Provider";
+      description: "Create Provider registers a new provider in Guardian. Once a provider config is registered, Guardian will immediately fetch the resources and store it in the database.";
     };
   }
 
@@ -45,14 +154,29 @@ service GuardianService {
         body: "config"
       }
     };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Update Provider";
+      description: "UpdateProvider updates a provider config in Guardian";
+    };
   }
 
   rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
     option (google.api.http) = {delete: "/v1beta1/providers/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Delete Provider";
+      description: "DeleteProvider deletes a provider regsitered in Guardian database";
+    };
   }
 
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http) = {get: "/v1beta1/providers/{id}/resources/{resource_type}/roles"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Roles";
+      summary: "List Roles";
+      description: "ListRoles returns a list of roles supported by a provider. The roles are defined in the provider config.";
+    };
   }
 
   rpc ImportActivities(ImportActivitiesRequest) returns (ImportActivitiesResponse) {
@@ -722,56 +846,186 @@ message Condition {
 
 message PolicyAppealConfig {
   message DurationOptions {
-    string name = 1;
-    string value = 2;
+    string name = 1 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Name of the duration option"
+      }
+    ];
+    string value = 2 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Actual value of duration such as 24h, 72h. value will be 0h in case of permanent duration. Valid time units are ns, us (or µs). Reference: [ParseDuration](https://pkg.go.dev/time#ParseDuration)"
+      }
+    ];
   }
-  repeated DurationOptions duration_options = 1;
+  repeated DurationOptions duration_options = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "List of duration options"
+    }
+  ];
   bool allow_on_behalf = 2;
-  bool allow_permanent_access = 3;
-  string allow_active_access_extension_in = 4;
+  bool allow_permanent_access = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Set this to true if you want to allow users to have permanent access to the resources. Default is false"
+    }
+  ];
+  string allow_active_access_extension_in = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Duration before the access expiration date when the user allowed to create appeal to the same resource (extend their current access). Valid time units are ns, us (or µs), ms, s, m, h"
+    }
+  ];
   message Question {
-    string key = 1;
-    string question = 2;
-    bool required = 3;
-    string description = 4;
+    string key = 1 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Unique key of the question"
+      }
+    ];
+    string question = 2 [ 
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Question to be asked to the appeal creator"
+      }
+    ];
+    bool required = 3 [ 
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Whether the question is required or not"
+      }
+    ];
+    string description = 4 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "The description to be shown to the appeal creator"
+      }
+    ];
   }
-  repeated Question questions = 5;
+  repeated Question questions = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "List of questions to be asked to the appeal creator"
+    }
+  ];
   bool allow_creator_details_failure = 6;
 }
 
 // Policy is a configurable steps for appeal's approval
 message Policy {
-  string id = 1;
-  uint32 version = 2;
+  string id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Policy unique identifier"
+      example: "\"f4b7a3c0-9f9b-4b9b-9b0a-9e4b1a1b1b1b\""
+    }];
+  uint32 version = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Policy version. Auto-incremented when policy is updated"
+      example: "1"
+    }];
   string description = 3;
 
   message ApprovalStep {
-    string name = 1;
-    string description = 2;
-    bool allow_failed = 3;
-    string when = 4;
-    string strategy = 5;
-    string approve_if = 6;
-    repeated string approvers = 7;
-    string rejection_reason = 8;
+    string name = 1 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Approval step identifier"
+        example: "\"Step 1\""
+      }
+    ];
+    string description = 2 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Approval step description"
+        example: "\"Step 1 description\""
+      }
+    ];
+    bool allow_failed = 3 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "If set true, and current step is rejected, it will mark the appeal status as skipped instead of rejected"
+        example: "true"
+      }
+    ];
+    string when = 4 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Determines whether the step should be evaluated or it can be skipped. If it evaluates to be falsy, the step will automatically skipped. Otherwise, step become pending/blocked (normal)."
+      }
+    ];
+    string strategy = 5 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Execution behaviour of the step. Possible values are `auto` or `manual`"
+        example: "\"auto\""
+      }
+    ];
+    string approve_if = 6 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Determines the automatic resolution of current step when strategy is `auto`. Required when strategy is `auto`"
+      }
+    ];
+    repeated string approvers = 7 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "List of email or Expression string. The Expression is expected to return an email address or list of email addresses. Required when strategy is `manual`"
+      }
+    ];
+    string rejection_reason = 8 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "This fills `Approval.Reason` if current approval step gets rejected based on `ApproveIf` expression. If strategy is manual, this field ignored."
+      }
+    ];
   }
-  repeated ApprovalStep steps = 4;
+  // add description
+  repeated ApprovalStep steps = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Sequence of approval steps. Each step can have different approval strategy and approvers"
+    }];
 
   map<string, string> labels = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp created_at = 6 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Policy creation timestamp"
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 7 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Policy last update timestamp"
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 
   message Requirement {
     message RequirementTrigger {
-      string provider_type = 1;
-      string provider_urn = 2;
-      string resource_type = 3;
-      string resource_urn = 4;
-      string role = 5;
+      string provider_type = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+          description: "Criteria for the provider type of the current appeal's selected resource. Regex supported"
+        }
+      ];
+      string provider_urn = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+          description: "Criteria for the provider URN of the current appeal's selected resource. Regex supported"
+        }
+      ];
+      string resource_type = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+          description: "Criteria for the resource type of the current appeal's selected resource. Regex supported"
+        }
+      ];
+      string resource_urn = 4 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+          description: "Criteria for the resource URN of the current appeal's selected resource. Regex supported"
+        }
+      ];
+      string role = 5 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+          description: "Criteria for the role of the current appeal. Regex supported"
+        }
+      ];
       repeated Condition conditions = 6;
       string expression = 7;
     }
-    RequirementTrigger on = 1;
+    RequirementTrigger on = 1 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Requirement trigger. If the trigger is matched, the requirement will be evaluated"
+      }
+    ];
 
     message AdditionalAppeal {
       message ResourceIdentifier {
@@ -791,9 +1045,24 @@ message Policy {
   repeated Requirement requirements = 8;
 
   message IAM {
-    string provider = 1;
-    google.protobuf.Value config = 2;
-    map<string, string> schema = 3;
+    string provider = 1 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Identity manager type. Supported types are http and frontier"
+        example: "\"bigquery\""
+      }
+    ];
+    google.protobuf.Value config = 2 [
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Client configuration according to the provider type"
+      }
+    ];
+    map<string, string> schema = 3 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "User (appeal creator) profile details schema to be shown in the creator field in an appeal"
+      }
+    ];
   }
   IAM iam = 9;
 
@@ -852,19 +1121,69 @@ message Approval {
 
 // Resource contains information of resource from providers
 message Resource {
-  string id = 1;
-  string provider_type = 2;
-  string provider_urn = 3;
-  string type = 4;
-  string urn = 5;
+  string id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Resource unique identifier"
+      example: "\"f4b7a3c0-9f9b-4b9b-9b0a-9e4b1a1b1b1b\""
+    }
+  ];
+  string provider_type = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Type of the provider that manages this resource"
+      example: "\"bigquery\""
+    }
+  ];
+  string provider_urn = 3 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique resource urn"
+      example: "\"my-bq\""
+    }
+  ];
+  string type = 4 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Type of the resource. Depends on the provider type. For example, for BigQuery, it can be dataset, table, view, etc."
+      example: "\"table\""
+    }
+  ];
+  string urn = 5 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique resource urn"
+    }
+  ];
   string name = 6;
-  google.protobuf.Struct details = 7;
+  google.protobuf.Struct details = 7 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Additional information of the resource that can be updated from Guardian"
+    }
+  ];
   map<string, string> labels = 8;
-  google.protobuf.Timestamp created_at = 9;
-  google.protobuf.Timestamp updated_at = 10;
-  bool is_deleted = 11;
-  string parent_id = 12;
-  repeated Resource children = 13;
+  google.protobuf.Timestamp created_at = 9 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Resource creation timestamp"
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 10 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Resource last update timestamp"
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  bool is_deleted = 11 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Whether the resource is deleted or not"
+    }
+  ];
+  string parent_id = 12 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Parent resource id"
+    }
+  ];
+  repeated Resource children = 13 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "List of child resources"
+    }
+  ];
 }
 
 message Grant {
