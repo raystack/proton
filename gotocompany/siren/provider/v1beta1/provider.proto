@@ -16,7 +16,9 @@ message SyncRuntimeConfigRequest {
     gotocompany.siren.v1beta1.Provider provider = 3;
 }
 
-message SyncRuntimeConfigResponse {}
+message SyncRuntimeConfigResponse {
+    map<string, string> labels = 1;
+}
 
 message UpsertRuleRequest {
     gotocompany.siren.v1beta1.Namespace namespace = 1;
