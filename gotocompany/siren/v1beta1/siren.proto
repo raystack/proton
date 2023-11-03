@@ -791,7 +791,7 @@ message ListRulesResponse {
 
 message UpdateRuleRequest {
   bool enabled = 1;
-  string group_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string group_name = 2;
   string namespace = 3;
   string template = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated Variables variables = 5;
