@@ -14,6 +14,7 @@ message SyncRuntimeConfigRequest {
     string namespace_id = 1;
     string namespace_urn = 2;
     gotocompany.siren.v1beta1.Provider provider = 3;
+    map<string, string> labels = 4;
 }
 
 message SyncRuntimeConfigResponse {
