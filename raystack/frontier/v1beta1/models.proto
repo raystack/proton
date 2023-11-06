@@ -88,6 +88,10 @@ message Group {
     description: "The time the group was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
+
+  repeated User users = 10 [
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 }
 
 message Role {

@@ -1783,6 +1783,9 @@ message ListOrganizationGroupsRequest {
     min_len: 3
   }];
   string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state of the group to filter by. It can be enabled or disabled."}];
+  
+  repeated string group_ids = 4;
+  bool with_members = 5;
 }
 
 message ListOrganizationGroupsResponse {
@@ -2210,10 +2213,17 @@ message ListProjectServiceUsersResponse {
 
 message ListProjectGroupsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
+  bool with_roles = 2;
 }
 
 message ListProjectGroupsResponse {
   repeated Group groups = 1;
+
+  message RolePair {
+    string group_id = 1;
+    repeated Role roles = 2;
+  }
+  repeated RolePair role_pairs = 2;
 }
 
 message EnableProjectRequest {
@@ -2373,6 +2383,7 @@ message CreateGroupRequest {
 message GetGroupRequest {
   string id = 1;
   string org_id = 2;
+  bool with_members = 3;
 }
 
 message CreateGroupResponse {
