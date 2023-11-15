@@ -1354,6 +1354,8 @@ message Policy {
   IAM iam = 9;
 
   PolicyAppealConfig appeal = 10;
+  string title = 11;
+  string created_by = 12;
 }
 
 message AppealOptions {
