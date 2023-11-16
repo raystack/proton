@@ -954,6 +954,7 @@ message Resource {
   bool is_deleted = 11;
   string parent_id = 12;
   repeated Resource children = 13;
+  string global_urn = 14;
 }
 
 message Grant {
