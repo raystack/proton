@@ -280,6 +280,32 @@ service AdminService {
       description: "Create new platform preferences. The platform preferences **name** must be unique within the platform and can contain only alphanumeric characters, dashes and underscores.";
     };
   }
+
+  // Check
+  rpc CheckFederatedResourcePermission(CheckFederatedResourcePermissionRequest) returns (CheckFederatedResourcePermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/check",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authz";
+      summary: "Check";
+      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user, group or a service account.";
+    };
+  }
+
+  // Platform
+  rpc AddPlatformUser(AddPlatformUserRequest) returns (AddPlatformUserResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/platform/users",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Platform";
+      summary: "Add platform user";
+      description: "Adds a user to a platform.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -454,3 +480,39 @@ message CreatePreferencesRequest {
 message CreatePreferencesResponse {
   repeated Preference preference = 1;
 }
+
+message CheckFederatedResourcePermissionRequest {
+  string subject = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the subject to check. <br/> *Example:* `user:..uuidofuser..`"}
+  ];
+  string resource = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
+  ];
+  string permission = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get`, `list`, `compute.instance.create`"}
+  ];
+}
+
+message CheckFederatedResourcePermissionResponse {
+  bool status = 1;
+}
+
+message AddPlatformUserRequest {
+  string user_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to add to the platform."}
+  ];
+  string serviceuser_id = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The service user id to add to the platform."}
+  ];
+
+  string relation = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The relation to add as in the platform. It can be admin or member."}
+  ];
+}
+
+message AddPlatformUserResponse {}
