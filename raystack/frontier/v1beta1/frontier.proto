@@ -455,6 +455,15 @@ service FrontierService {
     };
   }
 
+  rpc ListGroupAdmins(ListGroupAdminsRequest) returns (ListGroupAdminsResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups/{id}/admins"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Group";
+      summary: "List group admins"
+      description: "Returns a collection of admins of a group";
+    };
+  }
+
   rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/groups/{id}/users",
@@ -2961,6 +2970,15 @@ message ListGroupUsersRequest {
   string org_id = 2;
 
   bool with_roles = 3;
+}
+
+message ListGroupAdminsRequest {
+  string id = 1;
+  string org_id = 2;
+}
+
+message ListGroupAdminsResponse {
+  repeated User users = 1;
 }
 
 message ListGroupUsersResponse {
