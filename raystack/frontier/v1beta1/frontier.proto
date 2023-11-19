@@ -1078,7 +1078,7 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Authz";
       summary: "Check";
-      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Frontier will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
+      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account. Frontier will extract principal from the current logged in session cookie (if any), or the client id and secret (in case of service users) or the access token.";
     };
   }
   
