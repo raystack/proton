@@ -549,7 +549,12 @@ message BillingAccount {
     int64 amount = 1;
     string currency = 2;
 
-    google.protobuf.Timestamp updated_at = 3;
+    google.protobuf.Timestamp updated_at = 3 [
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "The time when the balance was updated.",
+        example: "\"2023-06-07T05:39:56.961Z\""
+      }
+    ];
   }
 
   string id = 1;
@@ -565,8 +570,18 @@ message BillingAccount {
   string state = 10;
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the billing account was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the billing account was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message Subscription {
@@ -579,10 +594,30 @@ message Subscription {
   int32 trial_days = 9;
 
   google.protobuf.Struct metadata = 10;
-  google.protobuf.Timestamp created_at = 11;
-  google.protobuf.Timestamp updated_at = 12;
-  google.protobuf.Timestamp canceled_at = 13;
-  google.protobuf.Timestamp ended_at = 14;
+  google.protobuf.Timestamp created_at = 11 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the subscription was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 12 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the subscription was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp canceled_at = 13 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the subscription was canceled.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp ended_at = 14 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the subscription was ended.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message CheckoutSession {
@@ -594,9 +629,24 @@ message CheckoutSession {
   string state = 5;
 
   google.protobuf.Struct metadata = 10;
-  google.protobuf.Timestamp created_at = 11;
-  google.protobuf.Timestamp updated_at = 12;
-  google.protobuf.Timestamp expire_at = 13;
+  google.protobuf.Timestamp created_at = 11 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the checkout session was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 12 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the checkout session was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp expire_at = 13 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the checkout session will expire.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message Plan {
@@ -608,8 +658,18 @@ message Plan {
   string interval = 6; // known intervals are "day", "week", "month", and "year"
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the plan was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the plan was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message Feature {
@@ -624,8 +684,18 @@ message Feature {
   int64 credit_amount = 8;
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the feature was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the feature was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message Price {
@@ -649,8 +719,18 @@ message Price {
   string tier_mode = 14; 
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the price was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the price was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message BillingTransaction {
@@ -662,8 +742,18 @@ message BillingTransaction {
   string description = 6;
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the billing transaction was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the billing transaction was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 message Usage {
@@ -675,8 +765,18 @@ message Usage {
   int64 amount = 6;
 
   google.protobuf.Struct metadata = 20;
-  google.protobuf.Timestamp created_at = 21;
-  google.protobuf.Timestamp updated_at = 22;
+  google.protobuf.Timestamp created_at = 21 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the usage was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
+  google.protobuf.Timestamp updated_at = 22 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the usage was updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    }
+  ];
 }
 
 // Model crud body
