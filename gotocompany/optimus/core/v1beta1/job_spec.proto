@@ -473,6 +473,7 @@ message GetJobSpecificationsRequest {
   string resource_destination = 2;
   string job_name = 3;
   string namespace_name = 4;
+  bool ignore_assets = 5;
 }
 
 message GetJobSpecificationsResponse {
