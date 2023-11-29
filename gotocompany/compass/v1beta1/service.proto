@@ -403,6 +403,21 @@ service CompassService {
     };
   }
 
+  rpc SyncAssets(SyncAssetsRequest) returns (SyncAssetsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/assets/sync"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Syncs assets in elasticsearch";
+      description: "Synchronize all assets in DB to elasticsearch";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
   // Domain: User * Star
   rpc GetUserStarredAssets(GetUserStarredAssetsRequest) returns (GetUserStarredAssetsResponse) {
     option (google.api.http) = {
@@ -1197,6 +1212,14 @@ message CreateAssetProbeRequest {
 message CreateAssetProbeResponse {
   string id = 1;
 }
+
+message SyncAssetsRequest {
+  repeated string services = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "filter by multiple services"
+  }];
+}
+
+message SyncAssetsResponse {}
 
 message GetUserStarredAssetsRequest {
   string user_id = 1;
