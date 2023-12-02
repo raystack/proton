@@ -531,7 +531,10 @@ service GuardianService {
   }
 }
 
-message ListProvidersRequest {}
+message ListProvidersRequest {
+  string type = 1;
+  string urn = 2;
+}
 
 message ListProvidersResponse {
   repeated Provider providers = 1;
