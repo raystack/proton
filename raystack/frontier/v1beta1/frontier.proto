@@ -930,6 +930,15 @@ service FrontierService {
     };
   }
 
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http) = {get: "/v1beta1/policies"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "List all policies";
+      description: "Lists all the policies from all the organizations in a Frontier instance. It can be filtered by organization, project, user, role and group.";
+    };
+  }
+
   rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
     option (google.api.http) = {
       put: "/v1beta1/policies/{id}",
@@ -2855,6 +2864,18 @@ message GetPolicyRequest {
 
 message GetPolicyResponse {
   Policy policy = 1;
+}
+
+message ListPoliciesRequest {
+  string org_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization id to filter by."}];
+  string project_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The project id to filter by."}];
+  string user_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to filter by."}];
+  string role_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The role id to filter by."}];
+  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The group id to filter by."}];
+}
+
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
 }
 
 message UpdatePolicyRequest {
