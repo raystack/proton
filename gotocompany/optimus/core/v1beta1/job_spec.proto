@@ -330,10 +330,18 @@ message JobSpecification {
   string task_name = 9;
   repeated JobConfigItem config = 10;
 
-  string window_size = 11;
-  string window_offset = 12;
-  string window_truncate_to = 13;
-  string window_preset = 23;
+  string window_size = 11 [deprecated = true];
+  string window_offset = 12 [deprecated = true];
+  string window_truncate_to = 13 [deprecated = true];
+  string window_preset = 23 [deprecated = true];
+  message Window {
+    string preset = 1;
+    string size = 2;
+    string delay = 3;
+    string location = 4;
+    string truncate_to = 5;
+  }
+  Window window = 24;
 
   repeated JobDependency dependencies = 14; // static dependencies
   map<string, string> assets = 15;
