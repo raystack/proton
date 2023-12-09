@@ -1790,15 +1790,6 @@ message CheckFeatureEntitlementResponse {
   bool status = 1;
 }
 
-message CheckoutSubscriptionBody {
-  string plan = 1;
-  int32 trail_days = 2;
-}
-
-message CheckoutFeatureBody {
-  string feature = 1;
-}
-
 message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
@@ -2110,6 +2101,14 @@ message ListProjectsByCurrentUserRequest {
   // query params are set as with_permissions=get&with_permissions=delete
   // to be represented as array
   repeated string with_permissions = 2;
+
+  // Note: this is a bad design and would recommend against using this filter
+  // It is used to list only projects which are explicitly given permission
+  // to user. A user could get permission to access a project either via getting
+  // access from organization level role or a group. But for some reason we want
+  // only users who could have inherited these permissions from top but we only
+  // want explictly added ones.
+  bool non_inherited = 3;
 }
 
 message ListProjectsByCurrentUserResponse {

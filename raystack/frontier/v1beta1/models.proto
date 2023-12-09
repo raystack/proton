@@ -701,3 +701,12 @@ message PreferenceRequestBody {
   }];
   string value = 3;
 }
+
+message CheckoutSubscriptionBody {
+  string plan = 1;
+  int32 trail_days = 2;
+}
+
+message CheckoutFeatureBody {
+  string feature = 1;
+}
