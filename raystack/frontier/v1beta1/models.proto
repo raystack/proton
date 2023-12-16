@@ -92,6 +92,13 @@ message Group {
   repeated User users = 10 [
     (google.api.field_behavior) = OUTPUT_ONLY
   ];
+  int32 members_count = 8 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The number of members explicitly added in the project.",
+      example: "2"
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 }
 
 message Role {
@@ -168,6 +175,14 @@ message Project {
     description: "The time the project was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
+
+  int32 members_count = 8 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The number of members explicitly added in the project.",
+      example: "2"
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 }
 
 message Domain {
