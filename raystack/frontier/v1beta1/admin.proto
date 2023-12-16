@@ -293,7 +293,16 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Platform";
       summary: "Add platform user";
-      description: "Adds a user to a platform.";
+      description: "Adds a user to the platform.";
+    };
+  }
+
+  rpc ListPlatformUsers(ListPlatformUsersRequest) returns (ListPlatformUsersResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/platform/users"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Platform";
+      summary: "List platform users";
+      description: "Lists all the users added to the platform.";
     };
   }
 
@@ -365,7 +374,10 @@ message ListProjectsResponse {
   repeated Project projects = 1;
 }
 
-message ListRelationsRequest {}
+message ListRelationsRequest {
+  string subject = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The subject to filter by."}];
+  string object = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The object to filter by."}];
+}
 
 message ListRelationsResponse {
   repeated Relation relations = 1;
@@ -507,6 +519,13 @@ message AddPlatformUserRequest {
 }
 
 message AddPlatformUserResponse {}
+
+message ListPlatformUsersRequest {}
+
+message ListPlatformUsersResponse {
+  repeated User users = 1;
+  repeated ServiceUser serviceusers = 2;
+}
 
 message DelegatedCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];

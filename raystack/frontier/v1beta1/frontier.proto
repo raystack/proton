@@ -2109,6 +2109,8 @@ message ListProjectsByCurrentUserRequest {
   // only users who could have inherited these permissions from top but we only
   // want explictly added ones.
   bool non_inherited = 3;
+
+  bool with_member_count = 4;
 }
 
 message ListProjectsByCurrentUserResponse {
@@ -2172,6 +2174,7 @@ message ListCurrentUserGroupsRequest {
   string org_id = 1;
 
   repeated string with_permissions = 2;
+  bool with_member_count = 3;
 }
 
 message ListCurrentUserGroupsResponse {
@@ -2343,6 +2346,7 @@ message ListOrganizationGroupsRequest {
   
   repeated string group_ids = 4;
   bool with_members = 5;
+  bool with_member_count = 6;
 }
 
 message ListOrganizationGroupsResponse {
@@ -2702,17 +2706,11 @@ message CreateProjectResponse {
   Project project = 1;
 }
 
-message GetProjectResponse {
-  Project project = 1;
-}
-
-message UpdateProjectResponse {
-  Project project = 1;
-}
-
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
   string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`"}];
+  
+  bool with_member_count = 3;
 }
 
 message ListOrganizationProjectsResponse {
@@ -2723,9 +2721,17 @@ message GetProjectRequest {
   string id = 1;
 }
 
+message GetProjectResponse {
+  Project project = 1;
+}
+
 message UpdateProjectRequest {
   string id = 1;
   ProjectRequestBody body = 2;
+}
+
+message UpdateProjectResponse {
+  Project project = 1;
 }
 
 message ListProjectAdminsRequest {
