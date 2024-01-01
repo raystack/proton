@@ -1608,7 +1608,7 @@ service FrontierService {
   }
 
   rpc ListBillingTransactions(ListBillingTransactionsRequest) returns (ListBillingTransactionsResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/{billing_id}/transactions"};
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/transactions"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Transaction";
       summary: "List billing transactions";
@@ -1616,6 +1616,15 @@ service FrontierService {
     };
   }
 
+  // Invoice
+  rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Invoice";
+      summary: "List invoices";
+      description: "List all invoices of a billing account.";
+    };
+  }
 }
 
 // Billing
@@ -1647,11 +1656,16 @@ message GetBillingAccountRequest {
   string id = 1 [(validate.rules).string.min_len = 1];
 
   string org_id = 2 [(validate.rules).string.min_len = 1];
+
+  bool with_payment_methods = 3;
 }
 
 message GetBillingAccountResponse {
   // Billing account
   BillingAccount billing_account = 1;
+
+  // List of payment methods
+  repeated PaymentMethod payment_methods = 2;
 }
 
 message UpdateBillingAccountRequest {
@@ -1827,6 +1841,7 @@ message FeatureRequestBody {
   string plan_id = 4;
   repeated Price prices = 5;
   int64 credit_amount = 7;
+  string behavior = 8;
 
   google.protobuf.Struct metadata = 20;
 }
@@ -1911,6 +1926,17 @@ message UpdatePlanRequest {
 message UpdatePlanResponse {
   // Updated plan
   Plan plan = 1;
+}
+
+message ListInvoicesRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  // ID of the billing account to list invoices for
+  string billing_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message ListInvoicesResponse {
+  // List of invoices
+  repeated Invoice invoices = 1;
 }
 
 // Authentication
