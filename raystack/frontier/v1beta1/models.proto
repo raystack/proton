@@ -637,6 +637,7 @@ message Feature {
 
   repeated Price prices = 7;
   int64 credit_amount = 8;
+  string behavior = 9;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -692,6 +693,38 @@ message Usage {
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
   google.protobuf.Timestamp updated_at = 22;
+}
+
+message Invoice {
+  string id = 1;
+  string customer_id = 2;
+  string provider_id = 3;
+  string state = 4;
+  string currency = 5;
+  int64 amount = 6;
+  string hosted_url = 7;
+
+  // The date on which payment for this invoice is due
+  google.protobuf.Timestamp due_date = 8;
+  // The date when this invoice is in effect.
+  google.protobuf.Timestamp effective_at = 9;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+}
+
+message PaymentMethod {
+  string id = 1;
+  string customer_id = 2;
+  string provider_id = 3;
+  string type = 4;
+  string card_brand = 15;
+  string card_last4 = 16;
+  int64 card_expiry_month = 17;
+  int64 card_expiry_year = 18;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
 }
 
 // Model crud body
