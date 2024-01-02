@@ -1625,6 +1625,15 @@ service FrontierService {
       description: "List all invoices of a billing account.";
     };
   }
+
+  rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices/upcoming"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Invoice";
+      summary: "Get upcoming invoice";
+      description: "Get the upcoming invoice of a billing account.";
+    };
+  }
 }
 
 // Billing
@@ -1937,6 +1946,17 @@ message ListInvoicesRequest {
 message ListInvoicesResponse {
   // List of invoices
   repeated Invoice invoices = 1;
+}
+
+message GetUpcomingInvoiceRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  // ID of the billing account to get the upcoming invoice for
+  string billing_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message GetUpcomingInvoiceResponse {
+  // Upcoming invoice
+  Invoice invoice = 1;
 }
 
 // Authentication
