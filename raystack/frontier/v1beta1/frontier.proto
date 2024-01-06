@@ -1473,46 +1473,46 @@ service FrontierService {
     };
   }
 
-  // Billing Feature
-  rpc CreateFeature(CreateFeatureRequest) returns (CreateFeatureResponse) {
+  // Billing Product
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/billing/features",
+      post: "/v1beta1/billing/products",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Create feature";
-      description: "Create a new feature for platform.";
+      tags: "Product";
+      summary: "Create product";
+      description: "Create a new product for platform.";
     };
   }
 
-  rpc GetFeature(GetFeatureRequest) returns (GetFeatureResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/features/{id}"};
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/products/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Get feature";
-      description: "Get a feature by ID.";
+      tags: "Product";
+      summary: "Get product";
+      description: "Get a product by ID.";
     };
   }
 
-  rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/features"};
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/products"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "List features";
-      description: "List all features of a platform.";
+      tags: "Product";
+      summary: "List products";
+      description: "List all products of a platform.";
     };
   }
 
-  rpc UpdateFeature(UpdateFeatureRequest) returns (UpdateFeatureResponse) {
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/billing/features/{id}",
+      put: "/v1beta1/billing/products/{id}",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Update feature";
-      description: "Update a feature by ID.";
+      tags: "Product";
+      summary: "Update product";
+      description: "Update a product by ID.";
     };
   }
 
@@ -1567,8 +1567,8 @@ service FrontierService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Checkout";
-      summary: "Checkout a feature or subscription";
-      description: "Checkout a feature to buy it one time or start a subscription plan on a billing account.";
+      summary: "Checkout a product or subscription";
+      description: "Checkout a product to buy it one time or start a subscription plan on a billing account.";
     };
   }
 
@@ -1806,6 +1806,8 @@ message CheckFeatureEntitlementRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
   string billing_id = 2 [(validate.rules).string.min_len = 1];
+
+  // feature or product name
   string feature = 3 [(validate.rules).string.min_len = 1];
 }
 
@@ -1823,8 +1825,8 @@ message CreateCheckoutRequest {
   
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
-  // Feature to buy
-  CheckoutFeatureBody feature_body = 11;
+  // Product to buy
+  CheckoutProductBody product_body = 11;
 }
 
 message CreateCheckoutResponse {
@@ -1843,7 +1845,7 @@ message ListCheckoutsResponse {
   repeated CheckoutSession checkout_sessions = 1;
 }
 
-message FeatureRequestBody {
+message ProductRequestBody {
   string name = 1;
   string title = 2;
   string description = 3;
@@ -1851,47 +1853,48 @@ message FeatureRequestBody {
   repeated Price prices = 5;
   int64 credit_amount = 7;
   string behavior = 8;
+  repeated Feature features = 9;
 
   google.protobuf.Struct metadata = 20;
 }
 
-message CreateFeatureRequest {
-  // Feature to create
-  FeatureRequestBody body = 1;
+message CreateProductRequest {
+  // Product to create
+  ProductRequestBody body = 1;
 }
 
-message CreateFeatureResponse {
-  // Created feature
-  Feature feature = 1;
+message CreateProductResponse {
+  // Created product
+  Product product = 1;
 }
 
-message GetFeatureRequest {
-  // ID of the feature to get
+message GetProductRequest {
+  // ID of the product to get
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
-message GetFeatureResponse {
-  // Feature
-  Feature feature = 1;
+message GetProductResponse {
+  // Product
+  Product product = 1;
 }
 
-message ListFeaturesRequest {}
+message ListProductsRequest {}
 
-message ListFeaturesResponse {
-  // List of features
-  repeated Feature features = 1;
+message ListProductsResponse {
+  // List of products
+  repeated Product products = 1;
 }
 
-message UpdateFeatureRequest {
-  // ID of the feature to update
+message UpdateProductRequest {
+  // ID of the product to update
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Feature to update
-  FeatureRequestBody body = 2;
+  // Product to update
+  ProductRequestBody body = 2;
 }
 
-message UpdateFeatureResponse {
-  // Updated feature
-  Feature feature = 1;
+message UpdateProductResponse {
+  // Updated product
+  Product product = 1;
 }
 
 message PlanRequestBody {
@@ -1899,7 +1902,7 @@ message PlanRequestBody {
   string title = 2;
   string description = 3;
 
-  repeated Feature features = 4;
+  repeated Product products = 4;
   string interval = 5; // known intervals are "day", "week", "month", and "year"
 
   google.protobuf.Struct metadata = 20;

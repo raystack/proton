@@ -314,8 +314,8 @@ service AdminService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Checkout";
-      summary: "Checkout a feature or subscription";
-      description: "Checkout a feature to buy it one time or start a subscription plan on a billing account manually. It bypasses billing engine.";
+      summary: "Checkout a product or subscription";
+      description: "Checkout a product to buy it one time or start a subscription plan on a billing account manually. It bypasses billing engine.";
     };
   }
 }
@@ -534,8 +534,8 @@ message DelegatedCheckoutRequest {
   
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
-  // Feature to buy
-  CheckoutFeatureBody feature_body = 11;
+  // Product to buy
+  CheckoutProductBody product_body = 11;
 }
 
 message DelegatedCheckoutResponse {
