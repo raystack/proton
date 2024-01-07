@@ -619,7 +619,7 @@ message Plan {
   string name = 2;
   string title = 3;
   string description = 4;
-  repeated Feature features = 5;
+  repeated Product products = 5;
   string interval = 6; // known intervals are "day", "week", "month", and "year"
 
   google.protobuf.Struct metadata = 20;
@@ -627,7 +627,7 @@ message Plan {
   google.protobuf.Timestamp updated_at = 22;
 }
 
-message Feature {
+message Product {
   string id = 1;
   string name = 2;
   string title = 3;
@@ -638,6 +638,17 @@ message Feature {
   repeated Price prices = 7;
   int64 credit_amount = 8;
   string behavior = 9;
+  repeated Feature features = 10;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message Feature {
+  string id = 1;
+  string name = 2;
+  repeated string product_ids = 3;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -646,7 +657,7 @@ message Feature {
 
 message Price {
   string id = 1;
-  string feature_id = 2;
+  string product_id = 2;
   string provider_id = 3;
   string name = 4;
   string interval = 6; // known intervals are "day", "week", "month", and "year"
@@ -755,6 +766,6 @@ message CheckoutSubscriptionBody {
   int32 trail_days = 2;
 }
 
-message CheckoutFeatureBody {
-  string feature = 1;
+message CheckoutProductBody {
+  string product = 1;
 }
