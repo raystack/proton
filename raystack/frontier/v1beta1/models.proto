@@ -769,3 +769,7 @@ message CheckoutSubscriptionBody {
 message CheckoutProductBody {
   string product = 1;
 }
+
+message CheckoutSetupBody {
+  bool payment_method = 1;
+}

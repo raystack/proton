@@ -539,6 +539,8 @@ message DelegatedCheckoutRequest {
 }
 
 message DelegatedCheckoutResponse {
-  // Checkout session
-  CheckoutSession checkout_session = 1;
+  // subscription if created
+  Subscription subscription = 1;
+  // product if bought
+  Product product = 2;
 }

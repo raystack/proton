@@ -1827,6 +1827,8 @@ message CreateCheckoutRequest {
   CheckoutSubscriptionBody subscription_body = 10;
   // Product to buy
   CheckoutProductBody product_body = 11;
+  // Payment method setup
+  CheckoutSetupBody setup_body = 12;
 }
 
 message CreateCheckoutResponse {
