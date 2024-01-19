@@ -1763,6 +1763,9 @@ message ListSubscriptionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to list subscriptions for
   string billing_id = 2 [(validate.rules).string.min_len = 1];
+  
+  // Filter subscriptions by state
+  string state = 3;
 }
 
 message ListSubscriptionsResponse {
@@ -1848,14 +1851,16 @@ message ListCheckoutsResponse {
 }
 
 message ProductRequestBody {
+  reserved 7;
+
   string name = 1;
   string title = 2;
   string description = 3;
   string plan_id = 4;
   repeated Price prices = 5;
-  int64 credit_amount = 7;
   string behavior = 8;
   repeated Feature features = 9;
+  Product.BehaviorConfig behavior_config = 10;
 
   google.protobuf.Struct metadata = 20;
 }
@@ -1906,6 +1911,7 @@ message PlanRequestBody {
 
   repeated Product products = 4;
   string interval = 5; // known intervals are "day", "week", "month", and "year"
+  int64 on_start_credits = 6;
 
   google.protobuf.Struct metadata = 20;
 }
