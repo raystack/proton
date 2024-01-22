@@ -83,6 +83,17 @@ service ShieldService {
     };
   }
 
+  rpc CheckResourceUserPermission(CheckResourceUserPermissionRequest) returns (CheckResourceUserPermissionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/{id}/check",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authz";
+      summary: "check permission for action on a resource by an user";
+    };
+  }
+
   rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {
     option (google.api.http) = {
       put: "/v1beta1/users/self",
@@ -1071,4 +1082,19 @@ message CheckResourcePermissionResponse {
   }
   bool status = 1 [deprecated = true];
   repeated ResourcePermissionResponse resource_permissions = 2;
+}
+
+message CheckResourceUserPermissionRequest {
+  string id = 1;
+  repeated ResourcePermission resource_permissions = 2;
+}
+
+message CheckResourceUserPermissionResponse {
+  message ResourcePermissionResponse {
+    string object_id = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string object_namespace = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    string permission = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+    bool allowed = 4;
+  }
+  repeated ResourcePermissionResponse resource_permissions = 1;
 }
