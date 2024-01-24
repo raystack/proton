@@ -1461,6 +1461,18 @@ service FrontierService {
     };
   }
 
+  rpc ChangeSubscription(ChangeSubscriptionRequest) returns (ChangeSubscriptionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/change",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Subscription";
+      summary: "Change subscription plan";
+      description: "Change a subscription plan by ID.";
+    };
+  }
+
   rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
     option (google.api.http) = {
       put: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}",
@@ -1766,6 +1778,7 @@ message ListSubscriptionsRequest {
   
   // Filter subscriptions by state
   string state = 3;
+  string plan = 4;
 }
 
 message ListSubscriptionsResponse {
@@ -1788,12 +1801,30 @@ message UpdateSubscriptionResponse {
   Subscription subscription = 1;
 }
 
+message ChangeSubscriptionRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  // ID of the billing account to update the subscription for
+  string billing_id = 2 [(validate.rules).string.min_len = 1];
+  // ID of the subscription to update
+  string id = 3 [(validate.rules).string.min_len = 1];
+
+  // plan to change to
+  string plan = 4;
+  bool immediate = 5;
+}
+
+message ChangeSubscriptionResponse {
+  Subscription.Phase phase = 1;
+}
+
 message CancelSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
   string billing_id = 2 [(validate.rules).string.min_len = 1];
   // ID of the subscription to cancel
   string id = 3 [(validate.rules).string.min_len = 1];
+
+  bool immediate = 4;
 }
 
 message CancelSubscriptionResponse {}

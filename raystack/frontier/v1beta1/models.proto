@@ -598,6 +598,12 @@ message Subscription {
   google.protobuf.Timestamp updated_at = 12;
   google.protobuf.Timestamp canceled_at = 13;
   google.protobuf.Timestamp ended_at = 14;
+
+  message Phase {
+    google.protobuf.Timestamp effective_at = 1;
+    string plan_id = 2;
+  }
+  repeated Phase phases = 20;
 }
 
 message CheckoutSession {
@@ -607,6 +613,9 @@ message CheckoutSession {
   string success_url = 3;
   string cancel_url = 4;
   string state = 5;
+
+  string plan = 6;
+  string product = 7;
 
   google.protobuf.Struct metadata = 10;
   google.protobuf.Timestamp created_at = 11;
