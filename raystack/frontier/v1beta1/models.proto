@@ -585,19 +585,21 @@ message BillingAccount {
 }
 
 message Subscription {
+  reserved 9;
+  
   string id = 1;
   string customer_id = 2;
   string provider_id = 3;
   string plan_id = 4;
 
   string state = 5;
-  int32 trial_days = 9;
 
   google.protobuf.Struct metadata = 10;
   google.protobuf.Timestamp created_at = 11;
   google.protobuf.Timestamp updated_at = 12;
   google.protobuf.Timestamp canceled_at = 13;
   google.protobuf.Timestamp ended_at = 14;
+  google.protobuf.Timestamp trial_ends_at = 15;
 
   message Phase {
     google.protobuf.Timestamp effective_at = 1;
@@ -631,6 +633,7 @@ message Plan {
   repeated Product products = 5;
   string interval = 6; // known intervals are "day", "week", "month", and "year"
   int64 on_start_credits = 7;
+  int64 trial_days = 8;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;

@@ -1943,6 +1943,7 @@ message PlanRequestBody {
   repeated Product products = 4;
   string interval = 5; // known intervals are "day", "week", "month", and "year"
   int64 on_start_credits = 6;
+  int64 trial_days = 7;
 
   google.protobuf.Struct metadata = 20;
 }
