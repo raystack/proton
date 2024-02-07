@@ -1646,6 +1646,67 @@ service FrontierService {
       description: "Get the upcoming invoice of a billing account.";
     };
   }
+
+  // Coupon
+  rpc CreateCoupon(CreateCouponRequest) returns (CreateCouponResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/billing/coupons",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "Create coupon";
+      description: "Create a new coupon.";
+    };
+  }
+
+  rpc ListCoupons(ListCouponsRequest) returns (ListCouponsResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/coupons"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "List coupons";
+      description: "List all coupons.";
+    };
+  }
+
+  rpc GetCoupon(GetCouponRequest) returns (GetCouponResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/coupons/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "Get coupon";
+      description: "Get a coupon by ID.";
+    };
+  }
+
+  rpc DeleteCoupon(DeleteCouponRequest) returns (DeleteCouponResponse) {
+    option (google.api.http) = {delete: "/v1beta1/billing/coupons/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "Delete coupon";
+      description: "Delete a coupon by ID.";
+    };
+  }
+
+  rpc CreateCouponCode(CreateCouponCodeRequest) returns (CreateCouponCodeResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/billing/coupons/{coupon_id}/codes",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "Create coupon code";
+      description: "Create a new coupon code for a coupon.";
+    };
+  }
+
+  rpc ListCouponCodes(ListCouponCodesRequest) returns (ListCouponCodesResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/coupons/{coupon_id}/codes"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Coupon";
+      summary: "List coupon codes";
+      description: "List all coupon codes of a coupon.";
+    };
+  }
 }
 
 // Billing
@@ -2000,6 +2061,63 @@ message GetUpcomingInvoiceRequest {
 message GetUpcomingInvoiceResponse {
   // Upcoming invoice
   Invoice invoice = 1;
+}
+
+message CreateCouponRequest {
+  // Coupon to create
+  Coupon coupon = 1;
+}
+
+message CreateCouponResponse {
+  // Created coupon
+  Coupon coupon = 1;
+}
+
+message ListCouponsRequest {}
+
+message ListCouponsResponse {
+  // List of coupons
+  repeated Coupon coupons = 1;
+}
+
+message GetCouponRequest {
+  // ID of the coupon to get
+  string id = 1 [(validate.rules).string.min_len = 1];
+}
+
+message GetCouponResponse {
+  // Coupon
+  Coupon coupon = 1;
+}
+
+message DeleteCouponRequest {
+  // ID of the coupon to delete
+  string id = 1 [(validate.rules).string.min_len = 1];
+}
+
+message DeleteCouponResponse {}
+
+message CreateCouponCodeRequest {
+  string coupon_id = 1 [(validate.rules).string.min_len = 1];
+  string code = 2 [(validate.rules).string.min_len = 3];
+
+  // ID of the billing account to create the coupon code for, if not provided
+  // it will be applicable to all billing accounts
+  string billing_id = 3;
+}
+
+message CreateCouponCodeResponse {
+  // Created coupon code
+  CouponCode coupon_code = 1;
+}
+
+message ListCouponCodesRequest {
+  string coupon_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+message ListCouponCodesResponse {
+  // List of coupon codes
+  repeated CouponCode coupon_codes = 1;
 }
 
 // Authentication

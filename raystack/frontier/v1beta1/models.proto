@@ -658,6 +658,7 @@ message Product {
   string behavior = 9;
   repeated Feature features = 10;
   BehaviorConfig behavior_config = 11;
+  string provider_id = 12;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -755,6 +756,29 @@ message PaymentMethod {
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
+}
+
+message Coupon {
+  string id = 1;
+  string provider_id = 2;
+  string name = 3;
+  string duration = 4;
+  // percent_off is a number between 1 and 100
+  int64 percent_off = 5;
+  int64 max_redemptions = 6;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp expire_at = 22;
+}
+
+message CouponCode {
+  string code = 1;
+  string coupon_id = 2;
+
+  // ID of the billing account to create the coupon code for, if not provided
+  // it will be applicable to all billing accounts
+  string billing_id = 3;
 }
 
 // Model crud body
