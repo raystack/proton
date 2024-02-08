@@ -416,6 +416,7 @@ message ListResourcesRequest {
     gte: 0,
     ignore_empty: true
   }];
+  repeated string order_by = 10;
 }
 
 message ListResourcesResponse {
