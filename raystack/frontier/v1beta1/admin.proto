@@ -318,6 +318,15 @@ service AdminService {
       description: "Checkout a product to buy it one time or start a subscription plan on a billing account manually. It bypasses billing engine.";
     };
   }
+
+  rpc ListAllInvoices(ListAllInvoicesRequest) returns (ListAllInvoicesResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/billing/invoices"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Invoice";
+      summary: "List all invoices";
+      description: "Lists all the invoices from all the organizations in a Frontier instance. It can be filtered by organization.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -543,4 +552,12 @@ message DelegatedCheckoutResponse {
   Subscription subscription = 1;
   // product if bought
   Product product = 2;
+}
+
+message ListAllInvoicesRequest {
+  string org_id = 1;
+}
+
+message ListAllInvoicesResponse {
+  repeated Invoice invoices = 1;
 }

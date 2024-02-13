@@ -1528,6 +1528,15 @@ service FrontierService {
     };
   }
 
+  rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/features"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Feature";
+      summary: "List features";
+      description: "List all features";
+    };
+  }
+
   // Plans
   rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {
     option (google.api.http) = {
@@ -1933,6 +1942,13 @@ message UpdateProductRequest {
 message UpdateProductResponse {
   // Updated product
   Product product = 1;
+}
+
+message ListFeaturesRequest {
+}
+
+message ListFeaturesResponse {
+  repeated Feature features = 1;
 }
 
 message PlanRequestBody {
