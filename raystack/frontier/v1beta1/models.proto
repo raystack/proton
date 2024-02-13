@@ -600,6 +600,9 @@ message Subscription {
   google.protobuf.Timestamp canceled_at = 13;
   google.protobuf.Timestamp ended_at = 14;
   google.protobuf.Timestamp trial_ends_at = 15;
+  google.protobuf.Timestamp current_period_start_at = 16;
+  google.protobuf.Timestamp current_period_end_at = 17;
+  google.protobuf.Timestamp billing_cycle_anchor_at = 18;
 
   message Phase {
     google.protobuf.Timestamp effective_at = 1;
@@ -738,6 +741,8 @@ message Invoice {
   google.protobuf.Timestamp due_date = 8;
   // The date when this invoice is in effect.
   google.protobuf.Timestamp effective_at = 9;
+  google.protobuf.Timestamp period_start_at = 10;
+  google.protobuf.Timestamp period_end_at = 11;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
