@@ -46,6 +46,11 @@ service ReplayService {
       get: "/v1beta1/project/{project_name}/replay/{replay_id}"
     };
   }
+  rpc CancelReplay(CancelReplayRequest) returns (CancelReplayResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/project/{project_name}/replay/{replay_id}/cancel"
+    };
+  }
 }
 
 message ListReplayRequest {
@@ -67,6 +72,7 @@ message GetReplayResponse {
   string status = 3;
   ReplayConfig replay_config = 4;
   repeated ReplayRun replay_runs = 5;
+  string message = 6;
 }
 
 message ReplayConfig {
@@ -110,4 +116,14 @@ message ReplayDryRunRequest {
 
 message ReplayResponse {
   string id = 1;
+}
+
+message CancelReplayRequest {
+  string project_name = 1;
+  string replay_id = 2;
+}
+
+message CancelReplayResponse {
+  string job_name = 1;
+  repeated ReplayRun replay_runs = 2;
 }
