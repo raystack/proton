@@ -634,7 +634,8 @@ message Plan {
   string title = 3;
   string description = 4;
   repeated Product products = 5;
-  string interval = 6; // known intervals are "day", "week", "month", and "year"
+   // known intervals are "day", "week", "month", and "year"
+  string interval = 6 [(validate.rules).string = {in: ["day", "week", "month", "year"]}];
   int64 on_start_credits = 7;
   int64 trial_days = 8;
 
@@ -658,7 +659,7 @@ message Product {
   string state = 6;
 
   repeated Price prices = 7;
-  string behavior = 9;
+  string behavior = 9 [(validate.rules).string = {ignore_empty: true, in: ["basic", "credits", "per_seat"]}];
   repeated Feature features = 10;
   BehaviorConfig behavior_config = 11;
 
@@ -682,20 +683,22 @@ message Price {
   string product_id = 2;
   string provider_id = 3;
   string name = 4;
-  string interval = 6; // known intervals are "day", "week", "month", and "year"
+
+   // known intervals are "day", "week", "month", and "year"
+  string interval = 6 [(validate.rules).string = {in: ["day", "week", "month", "year"]}];
 
   // usage_type known types are "licensed" and "metered"
-  string usage_type = 7;
+  string usage_type = 7 [(validate.rules).string = {ignore_empty: true, in: ["licensed", "metered"]}];
   // billing_scheme known schemes are "tiered" and "flat"
-  string billing_scheme = 8;
+  string billing_scheme = 8 [(validate.rules).string = {ignore_empty: true, in: ["tiered", "flat"]}];
   string state = 9;
   // currency like "usd", "eur", "gbp"
   string currency = 10;
   int64 amount = 11;
    // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
-  string metered_aggregate = 13;
+  string metered_aggregate = 13 [(validate.rules).string = {ignore_empty: true, in: ["sum", "max", "last_during_period"]}];
   // tier_mode known modes are "graduated" and "volume"
-  string tier_mode = 14; 
+  string tier_mode = 14 [(validate.rules).string = {ignore_empty: true, in: ["graduated", "volume"]}];
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
