@@ -791,6 +791,7 @@ message PreferenceRequestBody {
 message CheckoutSubscriptionBody {
   string plan = 1;
   bool skip_trial = 2;
+  bool cancel_after_trial = 3;
 }
 
 message CheckoutProductBody {
