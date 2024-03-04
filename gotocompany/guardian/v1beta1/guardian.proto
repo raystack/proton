@@ -417,6 +417,7 @@ message ListResourcesRequest {
     ignore_empty: true
   }];
   repeated string order_by = 10;
+  string q = 11;
 }
 
 message ListResourcesResponse {
