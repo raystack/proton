@@ -698,7 +698,10 @@ service FrontierService {
   }
 
   rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {
-    option (google.api.http) = {post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept"};
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept",
+      body: "*"
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Accept pending invitation";
@@ -767,7 +770,10 @@ service FrontierService {
   }
 
   rpc JoinOrganization(JoinOrganizationRequest) returns (JoinOrganizationResponse) {
-    option (google.api.http) = {post: "/v1beta1/organizations/{org_id}/join"};
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/join",
+      body: "*"
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Join organization";
@@ -1444,7 +1450,10 @@ service FrontierService {
   }
 
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
-    option (google.api.http) = {post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/cancel"};
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/cancel",
+      body: "*"
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
       summary: "Cancel subscription";
