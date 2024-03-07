@@ -670,8 +670,13 @@ message Product {
 
 message Feature {
   string id = 1;
+  // machine friendly name
   string name = 2;
+
   repeated string product_ids = 3;
+
+  // human friendly name
+  string title = 4;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
