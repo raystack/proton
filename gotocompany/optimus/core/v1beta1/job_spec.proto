@@ -367,6 +367,16 @@ message JobSpecification {
       map<string, string> config = 3;
     }
     repeated Notifiers notify = 2;
+
+    message Webhook {
+      JobEvent.Type on = 1;
+      message WebhookEndpoint {
+        string url = 1;
+        map<string, string> headers = 2;
+      }
+      repeated WebhookEndpoint endpoints = 2;
+    }
+    repeated Webhook webhook = 3;
   }
   Behavior behavior = 19;
 
@@ -407,6 +417,7 @@ message JobEvent {
     reserved 2 to 5;
     TYPE_JOB_SUCCESS = 6;
     TYPE_FAILURE = 7;
+    TYPE_SUCCESS = 20;
 
     TYPE_TASK_RETRY = 8;
     TYPE_TASK_SUCCESS = 9;
