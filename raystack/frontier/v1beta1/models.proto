@@ -711,12 +711,16 @@ message Price {
 }
 
 message BillingTransaction {
-  string id = 1;
+  string id = 1 [(validate.rules).string.uuid = true];
   string customer_id = 2;
+  // additional metadata for storing event/service that triggered this usage
   string source = 3;
   int64 amount = 4;
-  string type = 5;
+  string type = 5 [(validate.rules).string = {ignore_empty: true, in: ["credit", "debit"]}];
   string description = 6;
+
+  // user_id is the user that triggered this usage
+  string user_id = 7;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -724,12 +728,21 @@ message BillingTransaction {
 }
 
 message Usage {
-  string id = 1;
+  // uuid used as an idempotent key
+  string id = 1 [(validate.rules).string.uuid = true];
   string customer_id = 2;
+  // additional metadata for storing event/service that triggered this usage
   string source = 3;
   string description = 4;
-  string type = 5;
+
+  // Type is the type of usage, it can be credit or feature
+  // if credit, the amount is the amount of credits that were consumed
+  // if feature, the amount is the amount of features that were used
+  string type = 5 [(validate.rules).string = {ignore_empty: true, in: ["credit", "feature"]}];
   int64 amount = 6;
+
+  // user_id is the user that triggered this usage
+  string user_id = 7;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
