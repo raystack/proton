@@ -83,6 +83,7 @@ service SirenService {
   }
 
   rpc NotifyReceiver(NotifyReceiverRequest) returns (NotifyReceiverResponse) {
+    option deprecated = true;
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "send notification to receiver";
       tags: "Receiver";
@@ -425,6 +426,18 @@ service SirenService {
       delete: "/v1beta1/silences/{id}"
     };
   }
+
+  rpc PostNotification(PostNotificationRequest) returns (PostNotificationResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Post an event notification";
+      tags: "Notification";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/notifications"
+      body: "*"
+    };
+  }
 }
 
 message Provider {
@@ -683,11 +696,14 @@ message DeleteReceiverRequest {
 message DeleteReceiverResponse {}
 
 message NotifyReceiverRequest {
+  option deprecated = true;
   uint64 id = 1;
   google.protobuf.Struct payload = 2;
 }
 
-message NotifyReceiverResponse {}
+message NotifyReceiverResponse {
+  option deprecated = true;
+}
 
 message Alert {
   uint64 id = 1;
@@ -912,4 +928,17 @@ message ExpireSilenceRequest {
 }
 
 message ExpireSilenceResponse {
+}
+
+message PostNotificationRequest {
+  repeated google.protobuf.Struct receivers = 1;
+  uint64 namespace_id = 2;
+  google.protobuf.Struct data = 3;
+  string template = 4;
+  map<string, string> labels = 5;
+  string unique_key = 6;
+}
+
+message PostNotificationResponse {
+  string notification_id = 1;
 }
