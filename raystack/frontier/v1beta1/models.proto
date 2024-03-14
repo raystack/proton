@@ -45,9 +45,7 @@ message User {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
       max_len: 250000
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The base64 encoded image string of the user avatar. Should be less than 2MB.",
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The base64 encoded image string of the user avatar. Should be less than 2MB."}
   ];
 }
 
@@ -89,9 +87,7 @@ message Group {
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
 
-  repeated User users = 10 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  repeated User users = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
   int32 members_count = 8 [
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The number of members explicitly added in the project.",
@@ -141,20 +137,16 @@ message Organization {
     description: "The time the organization was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
-  string state = 7 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The state of the organization (enabled or disabled).",
-      example: "\"enabled\""
-    }
-  ];
+  string state = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The state of the organization (enabled or disabled).",
+    example: "\"enabled\""
+  }];
   string avatar = 8 [
     (validate.rules).string = {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
       max_len: 250000
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The base64 encoded image string of the organization avatar. Should be less than 2MB.",
-    }
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The base64 encoded image string of the organization avatar. Should be less than 2MB."}
   ];
 }
 
@@ -186,39 +178,29 @@ message Project {
 }
 
 message Domain {
-  string id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The domain id",
-      example: "\"943e4567-e89b-12d3-a456-426655440000\""
-    }
-  ];
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The domain id",
+    example: "\"943e4567-e89b-12d3-a456-426655440000\""
+  }];
   string name = 2 [
-    (validate.rules).string = {
-      min_len: 2,
-    },
+    (validate.rules).string = {min_len: 2},
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       description: "The domain name",
       example: "\"raystack.org\""
-  }
-  ];
-  string org_id = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The organization id",
-      example: "\"123e4567-e89b-12d3-a456-426655440000\""
     }
   ];
-  string token = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The dns TXT record token to verify the domain",
-      example: "\"_frontier-domain-verification=LB6U2lSQgGS55HOy6kpWFqkngRC8TMEjyrakfmYC2D0s+nfy/WkFSg==\""
-    }
-  ];
-  string state = 5 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The domain state either pending or verified",
-      example: "\"pending\""
-    }
-  ];
+  string org_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The organization id",
+    example: "\"123e4567-e89b-12d3-a456-426655440000\""
+  }];
+  string token = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The dns TXT record token to verify the domain",
+    example: "\"_frontier-domain-verification=LB6U2lSQgGS55HOy6kpWFqkngRC8TMEjyrakfmYC2D0s+nfy/WkFSg==\""
+  }];
+  string state = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The domain state either pending or verified",
+    example: "\"pending\""
+  }];
   google.protobuf.Timestamp created_at = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time the domain whitelist request was created",
     example: "\"2023-06-07T05:39:56.961Z\""
@@ -569,7 +551,7 @@ message BillingAccount {
 
   string id = 1;
   string org_id = 2;
-  
+
   string name = 3;
   string email = 4;
   string phone = 5;
@@ -586,7 +568,7 @@ message BillingAccount {
 
 message Subscription {
   reserved 9;
-  
+
   string id = 1;
   string customer_id = 2;
   string provider_id = 3;
@@ -634,8 +616,15 @@ message Plan {
   string title = 3;
   string description = 4;
   repeated Product products = 5;
-   // known intervals are "day", "week", "month", and "year"
-  string interval = 6 [(validate.rules).string = {in: ["day", "week", "month", "year"]}];
+  // known intervals are "day", "week", "month", and "year"
+  string interval = 6 [(validate.rules).string = {
+    in: [
+      "day",
+      "week",
+      "month",
+      "year"
+    ]
+  }];
   int64 on_start_credits = 7;
   int64 trial_days = 8;
 
@@ -659,7 +648,14 @@ message Product {
   string state = 6;
 
   repeated Price prices = 7;
-  string behavior = 9 [(validate.rules).string = {ignore_empty: true, in: ["basic", "credits", "per_seat"]}];
+  string behavior = 9 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "basic",
+      "credits",
+      "per_seat"
+    ]
+  }];
   repeated Feature features = 10;
   BehaviorConfig behavior_config = 11;
 
@@ -689,21 +685,53 @@ message Price {
   string provider_id = 3;
   string name = 4;
 
-   // known intervals are "day", "week", "month", and "year"
-  string interval = 6 [(validate.rules).string = {in: ["day", "week", "month", "year"]}];
+  // known intervals are "day", "week", "month", and "year"
+  string interval = 6 [(validate.rules).string = {
+    in: [
+      "day",
+      "week",
+      "month",
+      "year"
+    ]
+  }];
 
   // usage_type known types are "licensed" and "metered"
-  string usage_type = 7 [(validate.rules).string = {ignore_empty: true, in: ["licensed", "metered"]}];
+  string usage_type = 7 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "licensed",
+      "metered"
+    ]
+  }];
   // billing_scheme known schemes are "tiered" and "flat"
-  string billing_scheme = 8 [(validate.rules).string = {ignore_empty: true, in: ["tiered", "flat"]}];
+  string billing_scheme = 8 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "tiered",
+      "flat"
+    ]
+  }];
   string state = 9;
   // currency like "usd", "eur", "gbp"
   string currency = 10;
   int64 amount = 11;
-   // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
-  string metered_aggregate = 13 [(validate.rules).string = {ignore_empty: true, in: ["sum", "max", "last_during_period"]}];
+  // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
+  string metered_aggregate = 13 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "sum",
+      "max",
+      "last_during_period"
+    ]
+  }];
   // tier_mode known modes are "graduated" and "volume"
-  string tier_mode = 14 [(validate.rules).string = {ignore_empty: true, in: ["graduated", "volume"]}];
+  string tier_mode = 14 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "graduated",
+      "volume"
+    ]
+  }];
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -711,12 +739,22 @@ message Price {
 }
 
 message BillingTransaction {
-  string id = 1;
+  string id = 1 [(validate.rules).string.uuid = true];
   string customer_id = 2;
+  // additional metadata for storing event/service that triggered this usage
   string source = 3;
   int64 amount = 4;
-  string type = 5;
+  string type = 5 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "credit",
+      "debit"
+    ]
+  }];
   string description = 6;
+
+  // user_id is the user that triggered this usage
+  string user_id = 7;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -724,12 +762,27 @@ message BillingTransaction {
 }
 
 message Usage {
-  string id = 1;
+  // uuid used as an idempotent key
+  string id = 1 [(validate.rules).string.uuid = true];
   string customer_id = 2;
+  // additional metadata for storing event/service that triggered this usage
   string source = 3;
   string description = 4;
-  string type = 5;
+
+  // Type is the type of usage, it can be credit or feature
+  // if credit, the amount is the amount of credits that were consumed
+  // if feature, the amount is the amount of features that were used
+  string type = 5 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "credit",
+      "feature"
+    ]
+  }];
   int64 amount = 6;
+
+  // user_id is the user that triggered this usage
+  string user_id = 7;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;

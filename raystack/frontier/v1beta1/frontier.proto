@@ -759,7 +759,7 @@ service FrontierService {
 
   rpc VerifyOrganizationDomain(VerifyOrganizationDomainRequest) returns (VerifyOrganizationDomainResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/domains/{id}/verify", 
+      post: "/v1beta1/organizations/{org_id}/domains/{id}/verify",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1096,7 +1096,7 @@ service FrontierService {
       description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account. Frontier will extract principal from the current logged in session cookie (if any), or the client id and secret (in case of service users) or the access token.";
     };
   }
-  
+
   rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse) {
     option (google.api.http) = {
       post: "/v1beta1/batchcheck",
@@ -1277,7 +1277,7 @@ service FrontierService {
       summary: "Describe preferences";
       description: "Returns a list of all preferences supported by Frontier.";
     };
-  }  
+  }
 
   rpc CreateOrganizationPreferences(CreateOrganizationPreferencesRequest) returns (CreateOrganizationPreferencesResponse) {
     option (google.api.http) = {
@@ -1793,7 +1793,7 @@ message ListSubscriptionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to list subscriptions for
   string billing_id = 2 [(validate.rules).string.uuid = true];
-  
+
   // Filter subscriptions by state
   string state = 3;
   string plan = 4;
@@ -1810,7 +1810,7 @@ message UpdateSubscriptionRequest {
   string billing_id = 2 [(validate.rules).string.uuid = true];
   // ID of the subscription to update
   string id = 3 [(validate.rules).string.min_len = 1];
-  
+
   google.protobuf.Struct metadata = 20;
 }
 
@@ -1892,10 +1892,10 @@ message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
   string billing_id = 2 [(validate.rules).string.uuid = true];
-  
+
   string success_url = 3;
   string cancel_url = 4;
-  
+
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
   // Product to buy
@@ -1928,7 +1928,14 @@ message ProductRequestBody {
   string description = 3;
   string plan_id = 4;
   repeated Price prices = 5;
-  string behavior = 8 [(validate.rules).string = {ignore_empty: true, in: ["basic", "credits", "per_seat"]}];
+  string behavior = 8 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "basic",
+      "credits",
+      "per_seat"
+    ]
+  }];
   repeated Feature features = 9;
   Product.BehaviorConfig behavior_config = 10;
 
@@ -1974,8 +1981,7 @@ message UpdateProductResponse {
   Product product = 1;
 }
 
-message ListFeaturesRequest {
-}
+message ListFeaturesRequest {}
 
 message ListFeaturesResponse {
   repeated Feature features = 1;
@@ -1987,8 +1993,15 @@ message PlanRequestBody {
   string description = 3;
 
   repeated Product products = 4;
-   // known intervals are "day", "week", "month", and "year"
-  string interval = 5 [(validate.rules).string = {in: ["day", "week", "month", "year"]}];
+  // known intervals are "day", "week", "month", and "year"
+  string interval = 5 [(validate.rules).string = {
+    in: [
+      "day",
+      "week",
+      "month",
+      "year"
+    ]
+  }];
   int64 on_start_credits = 6;
   int64 trial_days = 7;
 
@@ -2164,9 +2177,10 @@ message UserRequestBody {
       ignore_empty: true,
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`.",
-    example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
-  }];
+      description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`.",
+      example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
+    }
+  ];
 }
 
 message ListUsersRequest {
@@ -2233,7 +2247,7 @@ message ListProjectsByCurrentUserRequest {
   // org_id is optional and filter projects by org
   string org_id = 1;
 
-  // list of permissions needs to be checked against each project 
+  // list of permissions needs to be checked against each project
   // query params are set as with_permissions=get&with_permissions=delete
   // to be represented as array
   repeated string with_permissions = 2;
@@ -2479,7 +2493,7 @@ message ListOrganizationGroupsRequest {
     min_len: 3
   }];
   string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state of the group to filter by. It can be enabled or disabled."}];
-  
+
   repeated string group_ids = 4;
   bool with_members = 5;
   bool with_member_count = 6;
@@ -2561,9 +2575,10 @@ message OrganizationRequestBody {
       ignore_empty: true,
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
-    example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
-  }];
+      description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
+      example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
+    }
+  ];
 }
 
 message ListOrganizationsRequest {
@@ -2666,7 +2681,10 @@ message CreateOrganizationInvitationRequest {
   ];
   repeated string user_ids = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1, max_items: 10},
+    (validate.rules).repeated = {
+      min_items: 1,
+      max_items: 10
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified"}
   ];
   repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of group ids to which user needs to be added as a member."}];
@@ -2698,22 +2716,20 @@ message DeleteOrganizationInvitationRequest {
   string org_id = 2;
 }
 
-message ListOrganizationDomainsRequest{
+message ListOrganizationDomainsRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domains are to be listed"}
   ];
-  string state  = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter to list domains by their state (pending/verified). If not provided, all domains for an org will be listed"}
-  ];
+  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter to list domains by their state (pending/verified). If not provided, all domains for an org will be listed"}];
 }
 
-message ListOrganizationDomainsResponse{
+message ListOrganizationDomainsResponse {
   repeated Domain domains = 1;
 }
 
-message ListOrganizationsByDomainRequest{
+message ListOrganizationsByDomainRequest {
   string name = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -2721,7 +2737,7 @@ message ListOrganizationsByDomainRequest{
   ];
 }
 
-message ListOrganizationsByDomainResponse{
+message ListOrganizationsByDomainResponse {
   repeated Organization organizations = 1;
 }
 
@@ -2731,7 +2747,7 @@ message JoinOrganizationRequest {
 
 message JoinOrganizationResponse {}
 
-message GetOrganizationDomainRequest{
+message GetOrganizationDomainRequest {
   string id = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -2744,11 +2760,11 @@ message GetOrganizationDomainRequest{
   ];
 }
 
-message GetOrganizationDomainResponse{
+message GetOrganizationDomainResponse {
   Domain domain = 1;
 }
 
-message CreateOrganizationDomainRequest{
+message CreateOrganizationDomainRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -2761,11 +2777,11 @@ message CreateOrganizationDomainRequest{
   ];
 }
 
-message CreateOrganizationDomainResponse{
+message CreateOrganizationDomainResponse {
   Domain domain = 1;
 }
 
-message DeleteOrganizationDomainRequest{
+message DeleteOrganizationDomainRequest {
   string id = 1 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED,
@@ -2778,7 +2794,7 @@ message DeleteOrganizationDomainRequest{
   ];
 }
 
-message DeleteOrganizationDomainResponse{}
+message DeleteOrganizationDomainResponse {}
 
 message VerifyOrganizationDomainRequest {
   string org_id = 1 [
@@ -2845,7 +2861,7 @@ message CreateProjectResponse {
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
   string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`"}];
-  
+
   bool with_member_count = 3;
 }
 
@@ -3272,9 +3288,10 @@ message CheckResourcePermissionResponse {
 }
 
 message BatchCheckPermissionRequest {
-  repeated BatchCheckPermissionBody bodies = 1 [
-    (validate.rules).repeated = {min_items: 1, max_items: 20}
-  ];
+  repeated BatchCheckPermissionBody bodies = 1 [(validate.rules).repeated = {
+    min_items: 1,
+    max_items: 20
+  }];
 }
 
 message BatchCheckPermissionBody {

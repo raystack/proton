@@ -523,12 +523,8 @@ message CheckFederatedResourcePermissionResponse {
 }
 
 message AddPlatformUserRequest {
-  string user_id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to add to the platform."}
-  ];
-  string serviceuser_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The service user id to add to the platform."}
-  ];
+  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to add to the platform."}];
+  string serviceuser_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The service user id to add to the platform."}];
 
   string relation = 3 [
     (google.api.field_behavior) = REQUIRED,
@@ -549,7 +545,7 @@ message DelegatedCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
   string billing_id = 2 [(validate.rules).string.min_len = 1];
-  
+
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
   // Product to buy
