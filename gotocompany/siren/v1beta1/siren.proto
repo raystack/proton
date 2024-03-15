@@ -932,11 +932,8 @@ message ExpireSilenceResponse {
 
 message PostNotificationRequest {
   repeated google.protobuf.Struct receivers = 1;
-  uint64 namespace_id = 2;
-  google.protobuf.Struct data = 3;
-  string template = 4;
-  map<string, string> labels = 5;
-  string unique_key = 6;
+  google.protobuf.Struct data = 2;
+  map<string, string> labels = 3;
 }
 
 message PostNotificationResponse {
