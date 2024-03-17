@@ -1537,6 +1537,39 @@ service FrontierService {
     };
   }
 
+  rpc CreateFeature(CreateFeatureRequest) returns (CreateFeatureResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/billing/features",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Feature";
+      summary: "Create feature";
+      description: "Create a new feature for platform.";
+    };
+  }
+
+  rpc GetFeature(GetFeatureRequest) returns (GetFeatureResponse) {
+    option (google.api.http) = {get: "/v1beta1/billing/features/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Feature";
+      summary: "Get feature";
+      description: "Get a feature by ID.";
+    };
+  }
+
+  rpc UpdateFeature(UpdateFeatureRequest) returns (UpdateFeatureResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/billing/features/{id}",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Feature";
+      summary: "Update feature";
+      description: "Update a feature by ID.";
+    };
+  }
+
   rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {
     option (google.api.http) = {get: "/v1beta1/billing/features"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1979,6 +2012,49 @@ message UpdateProductRequest {
 message UpdateProductResponse {
   // Updated product
   Product product = 1;
+}
+
+message FeatureRequestBody {
+  // machine friendly name
+  string name = 1 [(validate.rules).string.min_len = 3];
+  // human friendly title
+  string title = 2;
+
+  repeated string product_ids = 3;
+
+  google.protobuf.Struct metadata = 20;
+}
+
+message CreateFeatureRequest {
+  // Feature to create
+  FeatureRequestBody body = 1 [(validate.rules).message.required = true];
+}
+
+message CreateFeatureResponse {
+  // Created feature
+  Feature feature = 1;
+}
+
+message GetFeatureRequest {
+  // ID of the feature to get
+  string id = 1 [(validate.rules).string.min_len = 1];
+}
+
+message GetFeatureResponse {
+  // Feature
+  Feature feature = 1;
+}
+
+message UpdateFeatureRequest {
+  // ID of the feature to update
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Feature to update
+  FeatureRequestBody body = 2;
+}
+
+message UpdateFeatureResponse {
+  // Updated feature
+  Feature feature = 1;
 }
 
 message ListFeaturesRequest {}
