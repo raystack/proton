@@ -1439,6 +1439,15 @@ service FrontierService {
     };
   }
 
+  rpc HasTrialed(HasTrialedRequest) returns (HasTrialedResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}/plans/{plan_id}/trialed"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Has trialed";
+      description: "Check if a billing account has trialed.";
+    };
+  }
+
   // Subscriptions
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}"};
@@ -1649,6 +1658,10 @@ service FrontierService {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/check",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/billing/check",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Entitlement";
@@ -1662,6 +1675,10 @@ service FrontierService {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/usages",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/billing/usages",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Usage";
@@ -1681,7 +1698,10 @@ service FrontierService {
 
   // Invoice
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/invoices"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Invoice";
       summary: "List invoices";
@@ -1690,7 +1710,10 @@ service FrontierService {
   }
 
   rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices/upcoming"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices/upcoming"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/invoices/upcoming"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Invoice";
       summary: "Get upcoming invoice";
@@ -1786,10 +1809,32 @@ message GetBillingBalanceResponse {
   BillingAccount.Balance balance = 1;
 }
 
+message HasTrialedRequest {
+  // ID of the billing account to check
+  string id = 1 [(validate.rules).string.uuid = true];
+
+  string org_id = 2 [(validate.rules).string.min_len = 1];
+
+  // ID of the plan to check
+  string plan_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+message HasTrialedResponse {
+  // Has the billing account trialed the plan
+  bool trialed = 1;
+}
+
 message CreateBillingUsageRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1;
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+
+  // either provide billing_id of the org or API can infer the default
+  // billing ID from either org_id or project_id, not both
+  string project_id = 4;
 
   // Usage to create
   repeated Usage usages = 3;
@@ -1909,9 +1954,13 @@ message ListPlansResponse {
 }
 
 message CheckFeatureEntitlementRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1;
   // ID of the billing account to update the subscription for
   string billing_id = 2 [(validate.rules).string.uuid = true];
+
+  // either provide billing_id of the org or API can infer the default
+  // billing ID from either org_id or project_id, not both
+  string project_id = 4;
 
   // feature or product name
   string feature = 3 [(validate.rules).string.min_len = 1];
@@ -1944,7 +1993,7 @@ message CreateCheckoutResponse {
 
 message ListCheckoutsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account to update the subscription for
+  // ID of the billing account to get the subscriptions for
   string billing_id = 2 [(validate.rules).string.uuid = true];
 }
 
@@ -2119,7 +2168,10 @@ message UpdatePlanResponse {
 message ListInvoicesRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to list invoices for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 }
 
 message ListInvoicesResponse {
@@ -2130,7 +2182,10 @@ message ListInvoicesResponse {
 message GetUpcomingInvoiceRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to get the upcoming invoice for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 }
 
 message GetUpcomingInvoiceResponse {
