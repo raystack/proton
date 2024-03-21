@@ -934,6 +934,7 @@ message PostNotificationRequest {
   repeated google.protobuf.Struct receivers = 1;
   google.protobuf.Struct data = 2;
   map<string, string> labels = 3;
+  string template = 4;
 }
 
 message PostNotificationResponse {
