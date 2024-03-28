@@ -1019,10 +1019,13 @@ message ListResourcesRequest {
   string project_id = 2;
   string organization_id = 3;
   string namespace_id = 4;
+  int32 page_size = 5;
+  int32 page_num = 6;
 }
 
 message ListResourcesResponse {
   repeated Resource resources = 1;
+  int32 count = 2;
 }
 
 message ResourceRequestBody {
