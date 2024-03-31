@@ -336,6 +336,23 @@ service AdminService {
       description: "Lists all the billing accounts from all the organizations in a Frontier instance. It can be filtered by organization.";
     };
   }
+
+  // Usage
+  rpc RevertBillingUsage(RevertBillingUsageRequest) returns (RevertBillingUsageResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations/{org_id}/billing/{billing_id}/usage/{usage_id}/revert",
+      body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/billing/usages/revert",
+        body: "*"
+      }
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Revert billing usage";
+      description: "Revert billing usage for a billing account.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -574,3 +591,24 @@ message ListAllBillingAccountsRequest {
 message ListAllBillingAccountsResponse {
   repeated BillingAccount billing_accounts = 1;
 }
+
+message RevertBillingUsageRequest {
+  // either provide org_id or infer org from project_id
+  string org_id = 1;
+  string project_id = 2;
+
+  // either provide billing_id of the org or API can infer the default
+  // billing ID from either org_id or project_id, not both
+  string billing_id = 3 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+
+  // usage id to revert, a usage can only be allowed to revert once
+  string usage_id = 4 [(validate.rules).string = {uuid: true}];
+
+  // amount should be equal or less than the usage amount
+  int64 amount = 5 [(validate.rules).int64 = {gte: 0}];
+}
+
+message RevertBillingUsageResponse {}

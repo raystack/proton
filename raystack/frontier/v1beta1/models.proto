@@ -625,8 +625,8 @@ message Plan {
       "year"
     ]
   }];
-  int64 on_start_credits = 7;
-  int64 trial_days = 8;
+  int64 on_start_credits = 7 [(validate.rules).int64 = {gte: 0}];
+  int64 trial_days = 8 [(validate.rules).int64 = {gte: 0}];
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -714,7 +714,7 @@ message Price {
   string state = 9;
   // currency like "usd", "eur", "gbp"
   string currency = 10;
-  int64 amount = 11;
+  int64 amount = 11 [(validate.rules).int64 = {gte: 0}];
   // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
   string metered_aggregate = 13 [(validate.rules).string = {
     ignore_empty: true,
@@ -743,7 +743,7 @@ message BillingTransaction {
   string customer_id = 2;
   // additional metadata for storing event/service that triggered this usage
   string source = 3;
-  int64 amount = 4;
+  int64 amount = 4 [(validate.rules).int64 = {gte: 0}];
   string type = 5 [(validate.rules).string = {
     ignore_empty: true,
     in: [
@@ -779,7 +779,7 @@ message Usage {
       "feature"
     ]
   }];
-  int64 amount = 6;
+  int64 amount = 6 [(validate.rules).int64 = {gte: 0}];
 
   // user_id is the user that triggered this usage
   string user_id = 7;
