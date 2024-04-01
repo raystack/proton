@@ -343,7 +343,7 @@ service FrontierService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
-      summary: "Create service user key";
+      summary: "Create service user public/private key pair";
       description: "Generate a service user key and return it, the private key part of the response will not be persisted and should be kept securely by client.";
     };
   }
@@ -382,7 +382,7 @@ service FrontierService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
-      summary: "Create service user secret";
+      summary: "Create service user client/secret";
       description: "Generate a service user secret and return it. The secret value will not be persisted and should be securely stored by client.";
     };
   }
@@ -2172,6 +2172,8 @@ message ListInvoicesRequest {
     ignore_empty: true,
     uuid: true
   }];
+
+  bool nonzero_amount_only = 3;
 }
 
 message ListInvoicesResponse {
