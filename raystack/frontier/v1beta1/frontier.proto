@@ -1956,7 +1956,10 @@ message ListPlansResponse {
 message CheckFeatureEntitlementRequest {
   string org_id = 1;
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 
   // either provide billing_id of the org or API can infer the default
   // billing ID from either org_id or project_id, not both
