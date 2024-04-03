@@ -969,6 +969,7 @@ message NotificationMessage {
   google.protobuf.Timestamp expired_at = 10;
   google.protobuf.Timestamp created_at = 11;
   google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Struct configs = 13;
 }
 
 message ListNotificationMessagesResponse {
