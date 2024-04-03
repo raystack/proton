@@ -8,6 +8,7 @@ import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
+import "google/protobuf/duration.proto";
 
 option go_package = "github.com/goto/siren/proto/gotocompany/siren/v1beta1;sirenv1beta1";
 option java_multiple_files = true;
@@ -447,6 +448,17 @@ service SirenService {
 
     option (google.api.http) = {
       get: "/v1beta1/notifications/{notification_id}/messages"
+    };
+  }
+
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List notifications";
+      tags: "Notifications";
+    };
+    
+    option (google.api.http) = {
+      get: "/v1beta1/notifications"
     };
   }
 }
@@ -975,3 +987,35 @@ message NotificationMessage {
 message ListNotificationMessagesResponse {
   repeated NotificationMessage messages = 1;
 }
+
+message ListNotificationsRequest{
+  string type = 1;
+  string template = 2;
+  map<string, string> labels = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on notification labels. the label is written as map. eg, \"labels[key1]=value1\""
+  }];
+  map<string, string> receiver_selectors = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on receiver  selector. the receiver selector is written as map. eg, \"receiver_selector[key1]=value1\""
+  }];
+}
+
+message ReceiverSelector {
+  map<string, string> receiver_selector  = 1;
+}
+
+message Notification {
+  string id = 1;
+  uint64 namespace_id = 2;
+  string type = 3;
+  google.protobuf.Struct data = 4;
+  map<string, string> labels = 5;
+  google.protobuf.Duration valid_duration = 6;
+  string template = 7;
+  google.protobuf.Timestamp create_at = 8;
+  string unique_key = 9;
+  repeated ReceiverSelector receiver_selectors = 10;
+}
+
+message ListNotificationsResponse {
+  repeated Notification notifications = 1;
+} 
