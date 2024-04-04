@@ -1753,6 +1753,8 @@ message GetBillingAccountRequest {
   string org_id = 2 [(validate.rules).string.min_len = 1];
 
   bool with_payment_methods = 3;
+
+  repeated string expand = 101;
 }
 
 message GetBillingAccountResponse {
@@ -1781,6 +1783,8 @@ message UpdateBillingAccountResponse {
 message ListBillingAccountsRequest {
   // ID of the organization to list billing accounts for
   string org_id = 1 [(validate.rules).string.min_len = 1];
+
+  repeated string expand = 101;
 }
 
 message ListBillingAccountsResponse {
@@ -1848,6 +1852,8 @@ message ListBillingTransactionsRequest {
   string billing_id = 2 [(validate.rules).string.min_len = 1];
 
   google.protobuf.Timestamp since = 3;
+
+  repeated string expand = 101;
 }
 
 message ListBillingTransactionsResponse {
@@ -1861,6 +1867,8 @@ message GetSubscriptionRequest {
   string billing_id = 2 [(validate.rules).string.uuid = true];
   // ID of the subscription to get
   string id = 3 [(validate.rules).string.min_len = 1];
+
+  repeated string expand = 101;
 }
 
 message GetSubscriptionResponse {
@@ -1875,6 +1883,8 @@ message ListSubscriptionsRequest {
   // Filter subscriptions by state
   string state = 3;
   string plan = 4;
+
+  repeated string expand = 101;
 }
 
 message ListSubscriptionsResponse {
@@ -2177,6 +2187,8 @@ message ListInvoicesRequest {
   }];
 
   bool nonzero_amount_only = 3;
+
+  repeated string expand = 101;
 }
 
 message ListInvoicesResponse {
