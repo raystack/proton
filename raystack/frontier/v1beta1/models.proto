@@ -564,6 +564,8 @@ message BillingAccount {
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
   google.protobuf.Timestamp updated_at = 22;
+
+  Organization organization = 101 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message Subscription {
@@ -591,6 +593,9 @@ message Subscription {
     string plan_id = 2;
   }
   repeated Phase phases = 20;
+
+  BillingAccount customer = 101 [(google.api.field_behavior) = OUTPUT_ONLY];
+  Plan plan = 102 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message CheckoutSession {
@@ -759,6 +764,9 @@ message BillingTransaction {
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
   google.protobuf.Timestamp updated_at = 22;
+
+  User user = 101 [(google.api.field_behavior) = OUTPUT_ONLY];
+  BillingAccount customer = 102 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message Usage {
@@ -807,6 +815,8 @@ message Invoice {
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
+
+  BillingAccount customer = 101 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message PaymentMethod {
