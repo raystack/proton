@@ -454,7 +454,7 @@ service SirenService {
   rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "List notifications";
-      tags: "Notifications";
+      tags: "Notification";
     };
     
     option (google.api.http) = {
