@@ -542,6 +542,14 @@ message BillingAccount {
     string country = 6;
   }
 
+  message Tax {
+    // tax type like "vat", "gst", "sales_tax" or if it's
+    // provider specific us_ein, uk_vat, in_gst, etc
+    string type = 1;
+    // unique identifier provided by the tax agency
+    string id = 2;
+  }
+
   message Balance {
     int64 amount = 1;
     string currency = 2;
@@ -560,6 +568,7 @@ message BillingAccount {
   string provider = 8;
   string currency = 9;
   string state = 10;
+  repeated Tax tax_data = 11;
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;

@@ -1730,6 +1730,7 @@ message BillingAccountRequestBody {
   string phone = 3;
   BillingAccount.Address address = 4;
   string currency = 5;
+  repeated BillingAccount.Tax tax_data = 6;
 
   google.protobuf.Struct metadata = 10;
 }
