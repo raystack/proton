@@ -336,7 +336,7 @@ service FrontierService {
     };
   }
 
-  rpc CreateServiceUserKey(CreateServiceUserKeyRequest) returns (CreateServiceUserKeyResponse) {
+  rpc CreateServiceUserJWK(CreateServiceUserJWKRequest) returns (CreateServiceUserJWKResponse) {
     option (google.api.http) = {
       post: "/v1beta1/serviceusers/{id}/keys",
       body: "*"
@@ -348,7 +348,7 @@ service FrontierService {
     };
   }
 
-  rpc ListServiceUserKeys(ListServiceUserKeysRequest) returns (ListServiceUserKeysResponse) {
+  rpc ListServiceUserJWKs(ListServiceUserJWKsRequest) returns (ListServiceUserJWKsResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/keys"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
@@ -357,7 +357,7 @@ service FrontierService {
     };
   }
 
-  rpc GetServiceUserKey(GetServiceUserKeyRequest) returns (GetServiceUserKeyResponse) {
+  rpc GetServiceUserJWK(GetServiceUserJWKRequest) returns (GetServiceUserJWKResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/keys/{key_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
@@ -366,7 +366,7 @@ service FrontierService {
     };
   }
 
-  rpc DeleteServiceUserKey(DeleteServiceUserKeyRequest) returns (DeleteServiceUserKeyResponse) {
+  rpc DeleteServiceUserJWK(DeleteServiceUserJWKRequest) returns (DeleteServiceUserJWKResponse) {
     option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}/keys/{key_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
@@ -375,33 +375,63 @@ service FrontierService {
     };
   }
 
-  rpc CreateServiceUserSecret(CreateServiceUserSecretRequest) returns (CreateServiceUserSecretResponse) {
+  rpc CreateServiceUserCredential(CreateServiceUserCredentialRequest) returns (CreateServiceUserCredentialResponse) {
     option (google.api.http) = {
       post: "/v1beta1/serviceusers/{id}/secrets",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
-      summary: "Create service user client/secret";
-      description: "Generate a service user secret and return it. The secret value will not be persisted and should be securely stored by client.";
+      summary: "Create service user client credentials";
+      description: "Generate a service user credential and return it. The credential value will not be persisted and should be securely stored by client.";
     };
   }
 
-  rpc ListServiceUserSecrets(ListServiceUserSecretsRequest) returns (ListServiceUserSecretsResponse) {
+  rpc ListServiceUserCredentials(ListServiceUserCredentialsRequest) returns (ListServiceUserCredentialsResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/secrets"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
-      summary: "List service user secrets";
-      description: "List all the secrets of a service user.";
+      summary: "List service user credentials";
+      description: "List all the credentials of a service user.";
     };
   }
 
-  rpc DeleteServiceUserSecret(DeleteServiceUserSecretRequest) returns (DeleteServiceUserSecretResponse) {
+  rpc DeleteServiceUserCredential(DeleteServiceUserCredentialRequest) returns (DeleteServiceUserCredentialResponse) {
     option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}/secrets/{secret_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "ServiceUser";
-      summary: "Delete service user secret";
-      description: "Delete a service user secret credential.";
+      summary: "Delete service user credentials";
+      description: "Delete a service user credential.";
+    };
+  }
+
+  rpc CreateServiceUserToken(CreateServiceUserTokenRequest) returns (CreateServiceUserTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/serviceusers/{id}/tokens",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "ServiceUser";
+      summary: "Create service user token";
+      description: "Generate a service user token and return it. The token value will not be persisted and should be securely stored by client.";
+    };
+  }
+
+  rpc ListServiceUserTokens(ListServiceUserTokensRequest) returns (ListServiceUserTokensResponse) {
+    option (google.api.http) = {get: "/v1beta1/serviceusers/{id}/tokens"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "ServiceUser";
+      summary: "List service user tokens";
+      description: "List all the tokens of a service user.";
+    };
+  }
+
+  rpc DeleteServiceUserToken(DeleteServiceUserTokenRequest) returns (DeleteServiceUserTokenResponse) {
+    option (google.api.http) = {delete: "/v1beta1/serviceusers/{id}/tokens/{token_id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "ServiceUser";
+      summary: "Delete service user token";
+      description: "Delete a service user token.";
     };
   }
 
@@ -2575,63 +2605,87 @@ message DeleteServiceUserRequest {
 
 message DeleteServiceUserResponse {}
 
-message CreateServiceUserKeyRequest {
+message CreateServiceUserJWKRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
   string title = 2;
 }
 
-message CreateServiceUserKeyResponse {
+message CreateServiceUserJWKResponse {
   KeyCredential key = 1;
 }
 
-message GetServiceUserKeyRequest {
+message GetServiceUserJWKRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to get a key for."}];
   string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to get."}];
 }
 
-message GetServiceUserKeyResponse {
+message GetServiceUserJWKResponse {
   repeated JSONWebKey keys = 1;
 }
 
-message ListServiceUserKeysRequest {
+message ListServiceUserJWKsRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list keys for."}];
 }
 
-message ListServiceUserKeysResponse {
-  repeated ServiceUserKey keys = 1;
+message ListServiceUserJWKsResponse {
+  repeated ServiceUserJWK keys = 1;
 }
 
-message DeleteServiceUserKeyRequest {
+message DeleteServiceUserJWKRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a key for."}];
   string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to delete."}];
 }
 
-message DeleteServiceUserKeyResponse {}
+message DeleteServiceUserJWKResponse {}
 
-message CreateServiceUserSecretRequest {
+message CreateServiceUserCredentialRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
   string title = 2;
 }
 
-message CreateServiceUserSecretResponse {
+message CreateServiceUserCredentialResponse {
   SecretCredential secret = 1;
 }
 
-message ListServiceUserSecretsRequest {
+message ListServiceUserCredentialsRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list secrets for."}];
 }
 
-message ListServiceUserSecretsResponse {
+message ListServiceUserCredentialsResponse {
   // secrets will be listed without the secret value
   repeated SecretCredential secrets = 1;
 }
 
-message DeleteServiceUserSecretRequest {
+message DeleteServiceUserCredentialRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a secret for."}];
   string secret_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the secret to delete."}];
 }
 
-message DeleteServiceUserSecretResponse {}
+message DeleteServiceUserCredentialResponse {}
+
+message CreateServiceUserTokenRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a token for."}];
+  string title = 2;
+}
+
+message CreateServiceUserTokenResponse {
+  ServiceUserToken token = 1;
+}
+
+message ListServiceUserTokensRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list tokens for."}];
+}
+
+message ListServiceUserTokensResponse {
+  repeated ServiceUserToken tokens = 1;
+}
+
+message DeleteServiceUserTokenRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a token for."}];
+  string token_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the token to delete."}];
+}
+
+message DeleteServiceUserTokenResponse {}
 
 // Organization
 
