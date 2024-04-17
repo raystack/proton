@@ -376,7 +376,7 @@ message Invitation {
   }];
 }
 
-message ServiceUserKey {
+message ServiceUserJWK {
   string id = 1;
   string title = 2;
   string principal_id = 3;
@@ -407,6 +407,20 @@ message SecretCredential {
 
   google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the secret was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+}
+
+message ServiceUserToken {
+  string id = 1;
+  string title = 2;
+
+  // token will only be returned once as part of the create process
+  // this value is never persisted in the system so if lost, can't be recovered
+  string token = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  google.protobuf.Timestamp created_at = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the token was created.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
 }
