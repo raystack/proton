@@ -39,11 +39,12 @@ message OptimusChangeEvent {
 
     EVENT_TYPE_RESOURCE_CREATE = 1;
     EVENT_TYPE_RESOURCE_UPDATE = 2;
+    EVENT_TYPE_RESOURCE_DELETE = 11;
 
     EVENT_TYPE_JOB_CREATE = 3;
     EVENT_TYPE_JOB_UPDATE = 4;
     EVENT_TYPE_JOB_DELETE = 5;
-    
+
     EVENT_TYPE_JOB_WAIT_UPSTREAM = 6;
     EVENT_TYPE_JOB_IN_PROGRESS = 7;
     EVENT_TYPE_JOB_SUCCESS = 8;
@@ -51,7 +52,7 @@ message OptimusChangeEvent {
 
     EVENT_TYPE_JOB_STATE_CHANGE = 10;
   }
-  
+
   string event_id = 1;
   google.protobuf.Timestamp occurred_at = 2;
 

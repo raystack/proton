@@ -56,6 +56,12 @@ service ResourceService {
       body: "*"
     };
   }
+  // DeleteResource soft delete a specific resource
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/project/{project_name}/namespace/{namespace_name}/datastore/{datastore_name}/resource/{resource_name}"
+    };
+  }
 
   // ChangeJobNamespace move a job spec from one namespace to another
   rpc ChangeResourceNamespace(ChangeResourceNamespaceRequest) returns (ChangeResourceNamespaceResponse) {
@@ -173,4 +179,16 @@ message ApplyResourcesResponse {
   }
 
   repeated ResourceStatus statuses = 1;
+}
+
+message DeleteResourceRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string datastore_name = 3;
+  string resource_name = 4;
+  bool force = 5;
+}
+
+message DeleteResourceResponse {
+  repeated string downstream_jobs = 1;
 }
