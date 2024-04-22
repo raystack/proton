@@ -666,6 +666,8 @@ message Product {
   message BehaviorConfig {
     int64 credit_amount = 1;
     int64 seat_limit = 2;
+    int64 min_quantity = 3 [(validate.rules).int64 = {gte: 0}];
+    int64 max_quantity = 4 [(validate.rules).int64 = {gte: 0}];
   }
 
   string id = 1;
@@ -892,6 +894,7 @@ message CheckoutSubscriptionBody {
 
 message CheckoutProductBody {
   string product = 1;
+  int64 quantity = 2 [(validate.rules).int64 = {gte: 0}];
 }
 
 message CheckoutSetupBody {
