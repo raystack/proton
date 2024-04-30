@@ -80,7 +80,8 @@ message ProjectSpecification {
     string truncate_to = 3;
     string offset = 4 [deprecated = true];
     string size = 5;
-    string delay = 6;
+    string delay = 6 [deprecated = true];
+    string shift_by = 8;
     string location = 7;
   }
   map<string, ProjectPreset> presets = 4;

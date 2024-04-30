@@ -337,7 +337,8 @@ message JobSpecification {
   message Window {
     string preset = 1;
     string size = 2;
-    string delay = 3;
+    string delay = 3 [deprecated = true];
+    string shift_by = 6;
     string location = 4;
     string truncate_to = 5;
   }
