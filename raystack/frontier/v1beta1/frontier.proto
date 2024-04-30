@@ -1460,15 +1460,6 @@ service FrontierService {
     };
   }
 
-  rpc GetBillingAccountPortalURL(GetBillingAccountPortalURLRequest) returns (GetBillingAccountPortalURLResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}/portal"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Get billing account portal URL";
-      description: "Get a billing account portal url by ID.";
-    };
-  }
-
   rpc GetBillingBalance(GetBillingBalanceRequest) returns (GetBillingBalanceResponse) {
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}/balance"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1840,19 +1831,6 @@ message DeleteBillingAccountRequest {
 }
 
 message DeleteBillingAccountResponse {}
-
-message GetBillingAccountPortalURLRequest {
-  // ID of the billing account to get
-  string id = 1 [(validate.rules).string.min_len = 1];
-
-  string org_id = 2 [(validate.rules).string.min_len = 1];
-
-  string return_url = 3;
-}
-
-message GetBillingAccountPortalURLResponse {
-  string url = 1;
-}
 
 message GetBillingBalanceRequest {
   // ID of the billing account to get the balance for
