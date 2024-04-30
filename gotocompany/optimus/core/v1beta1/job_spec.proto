@@ -104,12 +104,24 @@ service JobSpecificationService {
 
   // CheckJobSpecification checks if a job specification is valid
   rpc CheckJobSpecification(CheckJobSpecificationRequest) returns (CheckJobSpecificationResponse) {
+    option deprecated = true;
+
     option (google.api.http) = {
       post: "/v1beta1/project/{project_name}/job/check"
     };
   }
   // CheckJobSpecifications checks if the job specifications are valid
-  rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {}
+  rpc CheckJobSpecifications(CheckJobSpecificationsRequest) returns (stream CheckJobSpecificationsResponse) {
+    option deprecated = true;
+  }
+
+  // Validate validates whether the job specifications are valid
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/job/validate"
+      body: "*"
+    };
+  }
 
   // RefreshJobs do redeployment using the current persisted state.
   // It will returns a stream of messages which can be used to track the progress.
@@ -295,24 +307,61 @@ message ListJobSpecificationResponse {
 }
 
 message CheckJobSpecificationRequest {
+  option deprecated = true;
   string project_name = 1;
   JobSpecification job = 2;
   string namespace_name = 3;
 }
 
 message CheckJobSpecificationResponse {
+  option deprecated = true;
   bool success = 1;
 }
 
 message CheckJobSpecificationsRequest {
+  option deprecated = true;
   string project_name = 1;
   repeated JobSpecification jobs = 2;
   string namespace_name = 3;
 }
 
 message CheckJobSpecificationsResponse {
+  option deprecated = true;
   reserved 1 to 4;
   Log log_status = 5;
+}
+
+message ValidateRequest {
+  message FromServer {
+    repeated string job_names = 1;
+    bool deletion_mode = 2;
+  }
+  
+  message FromOutside {
+    repeated JobSpecification jobs = 1;
+  }
+
+  string project_name = 1;
+  string namespace_name = 2;
+  
+  oneof payload {
+    FromServer from_server = 3;
+    FromOutside from_outside = 4;
+  }
+}
+
+message ValidateResponse {
+  message Result {
+    string name = 1;
+    repeated string messages = 2;
+    bool success = 3;
+  }
+
+  message ResultList {
+    repeated Result results = 1;
+  }
+
+  map<string, ResultList> results_by_job_name = 1;
 }
 
 message JobSpecification {
