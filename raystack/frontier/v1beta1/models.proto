@@ -858,6 +858,41 @@ message PaymentMethod {
   google.protobuf.Timestamp created_at = 21;
 }
 
+message Webhook {
+  message Secret {
+    string id = 1;
+    string value = 2;
+  }
+
+  string id = 1;
+  string description = 2;
+  string url = 3;
+  repeated string subscribed_events = 4;
+  // headers to be sent with the webhook
+  map<string, string> headers = 5;
+
+  // secret to sign the payload, there could be multiple enabled secrets for a webhook
+  // but only one will be used to sign the payload, this is useful for rotating secrets
+  repeated Secret secrets = 6;
+  string state = 7;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21;
+  google.protobuf.Timestamp updated_at = 22;
+}
+
+message WebhookEvent {
+  string id = 1;
+  string action = 2;
+  google.protobuf.Struct data = 3;
+
+  google.protobuf.Struct metadata = 20;
+  google.protobuf.Timestamp created_at = 21 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time the log was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+}
+
 // Model crud body
 
 message RoleRequestBody {
