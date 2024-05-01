@@ -899,4 +899,5 @@ message CheckoutProductBody {
 
 message CheckoutSetupBody {
   bool payment_method = 1;
+  bool customer_portal = 2;
 }
