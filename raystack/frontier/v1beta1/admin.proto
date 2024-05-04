@@ -353,6 +353,49 @@ service AdminService {
       description: "Revert billing usage for a billing account.";
     };
   }
+
+  // Webhooks
+  rpc CreateWebhook(CreateWebhookRequest) returns (CreateWebhookResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/webhooks",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Webhook";
+      summary: "Create webhook";
+      description: "Create a new webhook.";
+    };
+  }
+
+  rpc UpdateWebhook(UpdateWebhookRequest) returns (UpdateWebhookResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/admin/webhooks/{id}",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Webhook";
+      summary: "Update webhook";
+      description: "Update a webhook.";
+    };
+  }
+
+  rpc DeleteWebhook(DeleteWebhookRequest) returns (DeleteWebhookResponse) {
+    option (google.api.http) = {delete: "/v1beta1/admin/webhooks/{id}"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Webhook";
+      summary: "Delete webhook";
+      description: "Delete a webhook.";
+    };
+  }
+
+  rpc ListWebhooks(ListWebhooksRequest) returns (ListWebhooksResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/webhooks"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Webhook";
+      summary: "List webhooks";
+      description: "List all webhooks.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -612,3 +655,59 @@ message RevertBillingUsageRequest {
 }
 
 message RevertBillingUsageResponse {}
+
+message WebhookRequestBody {
+  // URL to send the webhook to (valid absolute URI via RFC 3986)
+  string url = 1 [(validate.rules).string = {uri: true}];
+  string description = 2;
+  // events to subscribe to, if empty all events are subscribed
+  repeated string subscribed_events = 3;
+  // headers to be sent with the webhook
+  map<string, string> headers = 4;
+  string state = 5 [(validate.rules).string = {
+    ignore_empty: true,
+    in: [
+      "enabled",
+      "disabled"
+    ]
+  }];
+
+  google.protobuf.Struct metadata = 20;
+}
+
+message CreateWebhookRequest {
+  WebhookRequestBody body = 1;
+}
+
+message CreateWebhookResponse {
+  Webhook webhook = 1;
+}
+
+message UpdateWebhookRequest {
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The webhook id to update."},
+    (validate.rules).string.uuid = true
+  ];
+  WebhookRequestBody body = 2;
+}
+
+message UpdateWebhookResponse {
+  Webhook webhook = 1;
+}
+
+message DeleteWebhookRequest {
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The webhook id to delete."},
+    (validate.rules).string.uuid = true
+  ];
+}
+
+message DeleteWebhookResponse {}
+
+message ListWebhooksRequest {}
+
+message ListWebhooksResponse {
+  repeated Webhook webhooks = 1;
+}
