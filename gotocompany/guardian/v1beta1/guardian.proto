@@ -859,6 +859,15 @@ message PolicyAppealConfig {
   }
   repeated Question questions = 5;
   bool allow_creator_details_failure = 6;
+  
+  message MetadataSource {
+    string name = 1;
+    string description = 2;
+    string type = 3;
+    google.protobuf.Value config = 4;
+    google.protobuf.Value value = 5;
+  }
+  map<string, MetadataSource> metadata_sources = 7;
 }
 
 // Policy is a configurable steps for appeal's approval
