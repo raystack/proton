@@ -1750,6 +1750,19 @@ service FrontierService {
       description: "Get the upcoming invoice of a billing account.";
     };
   }
+
+  // Incoming Webhooks
+  rpc BillingWebhookCallback(BillingWebhookCallbackRequest) returns (BillingWebhookCallbackResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/billing/webhooks/callback/{provider}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Webhook";
+      summary: "Accept Billing webhook";
+      description: "Accepts a Billing webhook and processes it.";
+    };
+  }
 }
 
 // Billing
@@ -3689,3 +3702,10 @@ message ListCurrentUserPreferencesRequest {}
 message ListCurrentUserPreferencesResponse {
   repeated Preference preferences = 1;
 }
+
+message BillingWebhookCallbackRequest {
+  string provider = 1 [(validate.rules).string = {min_len: 1}];
+  bytes body = 2;
+}
+
+message BillingWebhookCallbackResponse {}
