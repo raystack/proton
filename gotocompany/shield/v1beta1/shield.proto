@@ -481,6 +481,17 @@ service ShieldService {
       summary: "check permission for action on a resource by an user";
     };
   }
+
+  // Activity
+  rpc ListActivities(ListActivitiesRequest) returns(ListActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/activities";
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Activity";
+      summary: "Get all Activities";
+    };
+  }
 }
 
 message UserRequestBody {
@@ -1100,4 +1111,28 @@ message CheckResourceUserPermissionResponse {
     bool allowed = 4;
   }
   repeated ResourcePermissionResponse resource_permissions = 1;
+}
+
+message Activity {
+  string actor = 1;
+  string action = 2;
+  map<string, string> data = 3;
+  map<string, string> metadata = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+message ListActivitiesRequest {
+  string actor = 1;
+  string action = 2;
+  map<string, string> data = 3;
+  map<string, string> metadata = 4;
+  string start_time = 5;
+  string end_time = 6;
+  int32 page_size = 7;
+  int32 page_num = 8;
+}
+
+message ListActivitiesResponse {
+  int32 count = 1;
+  repeated Activity activities = 2;
 }
