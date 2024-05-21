@@ -306,6 +306,18 @@ service AdminService {
     };
   }
 
+  rpc RemovePlatformUser(RemovePlatformUserRequest) returns (RemovePlatformUserResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/platform/users/remove",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Platform";
+      summary: "Remove platform user";
+      description: "Removes a user from the platform.";
+    };
+  }
+
   // Checkout
   rpc DelegatedCheckout(DelegatedCheckoutRequest) returns (DelegatedCheckoutResponse) {
     option (google.api.http) = {
@@ -600,6 +612,13 @@ message ListPlatformUsersResponse {
   repeated User users = 1;
   repeated ServiceUser serviceusers = 2;
 }
+
+message RemovePlatformUserRequest {
+  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to remove from the the platform."}];
+  string serviceuser_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The service user id to remove from the the platform."}];
+}
+
+message RemovePlatformUserResponse {}
 
 message DelegatedCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
