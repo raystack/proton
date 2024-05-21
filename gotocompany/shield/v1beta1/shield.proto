@@ -492,6 +492,18 @@ service ShieldService {
       summary: "Get all Activities";
     };
   }
+
+  // Service Data
+  rpc CreateServiceDataKey(CreateServiceDataKeyRequest) returns (CreateServiceDataKeyResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/servicedata",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Create Service Data Key";
+    };
+  }
 }
 
 message UserRequestBody {
@@ -1135,4 +1147,23 @@ message ListActivitiesRequest {
 message ListActivitiesResponse {
   int32 count = 1;
   repeated Activity activities = 2;
+}
+
+message ServiceDataKeyRequestBody {
+  string project = 1;
+  string key = 2;
+  string description = 3;
+}
+
+message ServiceDataKey {
+  string urn = 1;
+  string id = 2;
+}
+
+message CreateServiceDataKeyRequest {
+  ServiceDataKeyRequestBody body = 1;
+}
+
+message CreateServiceDataKeyResponse {
+  ServiceDataKey service_data_key = 1;
 }
