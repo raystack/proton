@@ -138,10 +138,13 @@ message ListResourcesRequest {
   // this toggle if set, will return spec configs as well.
   // it's default value is false.
   bool with_spec_configs = 4;
+  int32 page_size = 5;
+  int32 page_num = 6;
 }
 
 message ListResourcesResponse {
   repeated Resource resources = 1;
+  int32 count = 2;
 }
 
 message GetResourceRequest {
