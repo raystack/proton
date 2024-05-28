@@ -584,6 +584,8 @@ message ListUsersRequest {
   int32 page_size = 1;
   int32 page_num = 2;
   string keyword = 3;
+  string sort = 4;
+  string direction = 5;
 }
 
 message ListUsersResponse {
