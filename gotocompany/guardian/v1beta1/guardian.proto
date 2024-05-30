@@ -187,6 +187,12 @@ service GuardianService {
     };
   }
 
+  rpc ListAppealActivities(ListAppealActivitiesRequest) returns (ListAppealActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/appeals/{appeal_id}/activities"
+    };
+  }
+
   rpc ListUserApprovals(ListUserApprovalsRequest) returns (ListUserApprovalsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/me/approvals"
@@ -591,6 +597,14 @@ message CreateAppealCommentResponse {
   AppealComment comment = 1;
 }
 
+message ListAppealActivitiesRequest {
+  string appeal_id = 1;
+}
+
+message ListAppealActivitiesResponse {
+  repeated AppealActivity activities = 1;
+}
+
 message ListUserApprovalsRequest {
   repeated string statuses = 2;
   repeated string order_by = 3;
@@ -988,6 +1002,14 @@ message AppealComment {
   string body = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
+}
+
+message AppealActivity {
+  string appeal_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  string type = 3;
+  string actor = 4;
+  google.protobuf.Struct data = 5;
 }
 
 // Resource contains information of resource from providers
