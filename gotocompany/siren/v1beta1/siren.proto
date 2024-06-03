@@ -198,6 +198,53 @@ service SirenService {
     };
   }
 
+  rpc ListSubscriptionReceivers(ListSubscriptionReceiversRequest) returns (ListSubscriptionReceiversResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List receivers of a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      get: "/v1beta1/subscriptions/{subscription_id}/receivers"
+    };
+  }
+
+  rpc AddSubscriptionReceiver(AddSubscriptionReceiverRequest) returns (AddSubscriptionReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Add a receiver of a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      post: "/v1beta1/subscriptions/{subscription_id}/receivers"
+      body: "*"
+    };
+  }
+
+  rpc UpdateSubscriptionReceiver(UpdateSubscriptionReceiverRequest) returns (UpdateSubscriptionReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update a receiver of a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      put: "/v1beta1/subscriptions/{subscription_id}/receivers/{receiver_id}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteSubscriptionReceiver(DeleteSubscriptionReceiverRequest) returns (DeleteSubscriptionReceiverResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete a receiver of a subscription";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      delete: "/v1beta1/subscriptions/{subscription_id}/receivers/{receiver_id}"
+    };
+  }
+
+
   rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Delete a subscription";
@@ -623,6 +670,10 @@ message ListSubscriptionsRequest {
   map<string, string> metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on subscription metadata matchers. the match key is written as map. eg, \"metadata[key1]=value1\""
   }];
+  uint64 receiver_id = 6;
+  map<string, string> subscription_receiver_labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on  subscription_receiver_labels matchers. the subscription_receiver_labels key is written as map. eg, \" subscription_receiver_labels[key1]=value1\""
+  }];
 }
 
 message ListSubscriptionsResponse {
@@ -669,6 +720,56 @@ message DeleteSubscriptionRequest {
 }
 
 message DeleteSubscriptionResponse {}
+
+message AddSubscriptionReceiverRequest{
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+}
+
+message ListSubscriptionReceiversRequest {
+  uint64 subscription_id = 1;
+  map<string, string> labels = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription receivers labels. the label is written as map. eg, \"labels[key1]=value1\""
+  }];
+}
+
+message ListSubscriptionReceiversResponse {
+  repeated SubscriptionReceiverRelation subscription_receivers = 1;
+}
+
+message SubscriptionReceiverRelation {
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message AddSubscriptionReceiverResponse {
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+}
+
+message UpdateSubscriptionReceiverRequest{
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+}
+
+message UpdateSubscriptionReceiverResponse {
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+}
+
+message DeleteSubscriptionReceiverRequest{
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+}
+
+message DeleteSubscriptionReceiverResponse {}
 
 message Receiver {
   uint64 id = 1;
