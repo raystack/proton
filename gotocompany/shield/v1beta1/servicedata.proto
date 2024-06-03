@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package gotocompany.shield.v1beta1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/goto/proton/shield/v1;shieldv1beta1";
+option java_outer_classname = "ServiceData";
+option java_package = "com.gotocompany.proton.shield.v1beta1";
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Service Data",
+    version: "0.1.0";
+  };
+  schemes: HTTP;
+};
+
+service ServiceDataService {
+   // Service Data
+   rpc CreateServiceDataKey(CreateServiceDataKeyRequest) returns (CreateServiceDataKeyResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/servicedata",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Create Service Data Key";
+    };
+  }
+
+  rpc UpsertUserServiceData(UpsertUserServiceDataRequest) returns (UpsertUserServiceDataResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/users/{user_id}/servicedata",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Upsert User Service Data";
+    };
+  }
+    
+  rpc UpsertGroupServiceData(UpsertGroupServiceDataRequest) returns (UpsertGroupServiceDataResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/groups/{group_id}/servicedata",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Upsert Group Service Data";
+    };
+  }
+}
+
+message ServiceDataKeyRequestBody {
+  string project = 1;
+  string key = 2;
+  string description = 3;
+}
+
+message ServiceDataKey {
+  string urn = 1;
+  string id = 2;
+}
+
+message CreateServiceDataKeyRequest {
+  ServiceDataKeyRequestBody body = 1;
+}
+
+message CreateServiceDataKeyResponse {
+  ServiceDataKey service_data_key = 1;
+}
+
+message UpsertServiceDataRequestBody {
+  string project = 1;
+  map<string, string> data = 2;
+}
+  
+message UpsertUserServiceDataRequest {
+  string user_id = 1;
+  UpsertServiceDataRequestBody body = 2;
+}
+
+message UpsertGroupServiceDataRequest {
+  string group_id = 1;
+  UpsertServiceDataRequestBody body = 2;
+}
+
+message UpsertUserServiceDataResponse {
+  map<string, string> data = 1;
+}
+
+message UpsertGroupServiceDataResponse {
+  map<string, string> data = 1;
+}
