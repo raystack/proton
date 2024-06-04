@@ -270,6 +270,13 @@ service GuardianService {
     };
   }
 
+  rpc RestoreGrant(RestoreGrantRequest) returns (RestoreGrantResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/grants/{id}/restore"
+      body: "*"
+    };
+  }
+
   rpc RevokeGrants(RevokeGrantsRequest) returns (RevokeGrantsResponse) {
     option (google.api.http) = {
       put: "/v1beta1/grants/revoke"
@@ -800,6 +807,15 @@ message RevokeGrantResponse {
   Grant grant = 1;
 }
 
+message RestoreGrantRequest {
+  string id = 1;
+  string reason = 2;
+}
+
+message RestoreGrantResponse {
+  Grant grant = 1;
+}
+
 message RevokeGrantsRequest {
   repeated string account_ids = 1;
   repeated string provider_types = 2;
@@ -1080,6 +1096,10 @@ message Grant {
   string source = 19;
   string status_in_provider = 20;
   string owner = 21;
+  string expiration_date_reason = 22;
+  string restore_reason = 23;
+  string restored_by = 24;
+  google.protobuf.Timestamp restored_at = 25;
 }
 
 message ProviderActivity {
