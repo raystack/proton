@@ -4,6 +4,8 @@ package gotocompany.shield.v1beta1;
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/goto/proton/shield/v1;shieldv1beta1";
 option java_outer_classname = "ServiceData";
@@ -51,6 +53,26 @@ service ServiceDataService {
       summary: "Upsert Group Service Data";
     };
   }
+
+  rpc GetUserServiceData(GetUserServiceDataRequest) returns (GetUserServiceDataResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{user_id}/servicedata"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Get User Service Data Key";
+    };
+  }
+
+  rpc GetGroupServiceData(GetGroupServiceDataRequest) returns (GetGroupServiceDataResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/groups/{group_id}/servicedata"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Service Data";
+      summary: "Get Group Service Data Key";
+    };
+  }
 }
 
 message ServiceDataKeyRequestBody {
@@ -93,4 +115,23 @@ message UpsertUserServiceDataResponse {
 
 message UpsertGroupServiceDataResponse {
   map<string, string> data = 1;
+}
+
+message GetUserServiceDataRequest {
+  string user_id = 1;
+  repeated string entity = 2 [(validate.rules).repeated.items.string = {in: "user", in: "group"}];
+  string project = 3;
+}
+
+message GetGroupServiceDataRequest {
+  string group_id = 1;
+  string project = 2;
+}
+
+message GetUserServiceDataResponse {
+  google.protobuf.Struct data = 1;
+}
+
+message GetGroupServiceDataResponse {
+  google.protobuf.Struct data = 1;
 }
