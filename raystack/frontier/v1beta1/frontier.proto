@@ -1442,6 +1442,18 @@ service FrontierService {
     };
   }
 
+  rpc RegisterBillingAccount(RegisterBillingAccountRequest) returns (RegisterBillingAccountResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/billing/{id}/register",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Register billing account to provider";
+      description: "Register a billing account to a provider if it's not already.";
+    };
+  }
+
   rpc ListBillingAccounts(ListBillingAccountsRequest) returns (ListBillingAccountsResponse) {
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1457,6 +1469,30 @@ service FrontierService {
       tags: "Billing";
       summary: "Delete billing account";
       description: "Delete a billing account by ID.";
+    };
+  }
+
+  rpc EnableBillingAccount(EnableBillingAccountRequest) returns (EnableBillingAccountResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/billing/{id}/enable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Enable billing account";
+      description: "Enable a billing account by ID.";
+    };
+  }
+
+  rpc DisableBillingAccount(DisableBillingAccountRequest) returns (DisableBillingAccountResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{org_id}/billing/{id}/disable",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Disable billing account";
+      description: "Disable a billing account by ID.";
     };
   }
 
@@ -1783,6 +1819,8 @@ message CreateBillingAccountRequest {
   string org_id = 1 [(validate.rules).string.min_len = 1];
   // Billing account to create.
   BillingAccountRequestBody body = 2 [(validate.rules).message.required = true];
+  // Offline billing account don't get registered with billing provider
+  bool offline = 3;
 }
 
 message CreateBillingAccountResponse {
@@ -1824,6 +1862,15 @@ message UpdateBillingAccountResponse {
   BillingAccount billing_account = 1;
 }
 
+message RegisterBillingAccountRequest {
+  // ID of the billing account to register
+  string id = 1 [(validate.rules).string.uuid = true];
+
+  string org_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message RegisterBillingAccountResponse {}
+
 message ListBillingAccountsRequest {
   // ID of the organization to list billing accounts for
   string org_id = 1 [(validate.rules).string.min_len = 1];
@@ -1844,6 +1891,22 @@ message DeleteBillingAccountRequest {
 }
 
 message DeleteBillingAccountResponse {}
+
+message EnableBillingAccountRequest {
+  // ID of the billing account to enable
+  string id = 1 [(validate.rules).string.uuid = true];
+  string org_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message EnableBillingAccountResponse {}
+
+message DisableBillingAccountRequest {
+  // ID of the billing account to disable
+  string id = 1 [(validate.rules).string.uuid = true];
+  string org_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message DisableBillingAccountResponse {}
 
 message GetBillingBalanceRequest {
   // ID of the billing account to get the balance for
