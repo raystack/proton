@@ -80,6 +80,13 @@ service JobSpecificationService {
     };
   }
 
+  // GetJobChangelog get all the changes done on a job
+  rpc GetJobChangelog(GetJobChangelogRequest) returns (GetJobChangelogResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/job/{job_name}/changelog"
+    };
+  }
+
   // DeleteJobSpecification deletes a job spec of a namespace
   rpc DeleteJobSpecification(DeleteJobSpecificationRequest) returns (DeleteJobSpecificationResponse) {
     option (google.api.http) = {
@@ -535,6 +542,26 @@ message GetDeployJobsStatusResponse {
 message DeployJobFailure {
   string job_name = 1;
   string message = 2;
+}
+
+message GetJobChangelogRequest {
+  string project_name = 1;
+  string job_name = 2;
+}
+
+message JobChange {
+  string attribute_name = 1;
+  string diff = 2;
+}
+
+message JobChangelog {
+  string event_type = 1;
+  string timestamp = 2;
+  repeated JobChange change = 3;
+}
+
+message GetJobChangelogResponse {
+  repeated JobChangelog history = 1;
 }
 
 message GetJobSpecificationsRequest {
