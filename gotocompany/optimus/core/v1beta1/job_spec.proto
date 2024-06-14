@@ -196,6 +196,7 @@ message AddJobSpecificationsRequest {
 message AddJobSpecificationsResponse {
   reserved 1;
   string log = 2;
+  repeated string successful_job_names = 3;
 }
 
 message UpdateJobSpecificationsRequest {
@@ -205,6 +206,7 @@ message UpdateJobSpecificationsRequest {
 }
 message UpdateJobSpecificationsResponse {
   string log = 1;
+  repeated string successful_job_names = 2;
 }
 
 message JobInspectRequest {
