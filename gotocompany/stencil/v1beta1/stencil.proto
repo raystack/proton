@@ -353,16 +353,21 @@ message SchemaChangedEvent {
   string namespace_name = 3;
   string schema_name = 4;
   repeated string updated_schemas = 5;
-  map<string,ImpactedFields> updated_fields = 6;
-  map<string,ImpactedSchemas> impacted_schemas = 7;
+  map<string, ImpactedFields> updated_fields = 6;
+  map<string, ImpactedSchemas> impacted_schemas = 7;
   int32 version = 8;
+  Metadata metadata = 9;
 }
 
 message ImpactedFields{
-  repeated string field_names=1;
+  repeated string field_names = 1;
 }
 
 message ImpactedSchemas{
-  repeated string schema_names=1;
+  repeated string schema_names = 1;
 }
 
+message Metadata {
+  string source_url = 1;
+  string commit_sha = 2;
+}
