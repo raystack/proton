@@ -1492,7 +1492,7 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Billing";
       summary: "Disable billing account";
-      description: "Disable a billing account by ID.";
+      description: "Disable a billing account by ID. Disabling a billing account doesn't automatically disable it's active subscriptions.";
     };
   }
 
@@ -1516,7 +1516,10 @@ service FrontierService {
 
   // Subscriptions
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
       summary: "Get subscription";
@@ -1528,6 +1531,10 @@ service FrontierService {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/cancel",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}/cancel",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
@@ -1537,7 +1544,10 @@ service FrontierService {
   }
 
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/subscriptions"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
       summary: "List subscriptions";
@@ -1549,6 +1559,10 @@ service FrontierService {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/change",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}/change",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
@@ -1561,6 +1575,10 @@ service FrontierService {
     option (google.api.http) = {
       put: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
@@ -1702,6 +1720,10 @@ service FrontierService {
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/organizations/{org_id}/billing/checkouts",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Checkout";
@@ -1711,7 +1733,10 @@ service FrontierService {
   }
 
   rpc ListCheckouts(ListCheckoutsRequest) returns (ListCheckoutsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/checkouts"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Checkout";
       summary: "List checkouts";
@@ -1754,7 +1779,10 @@ service FrontierService {
   }
 
   rpc ListBillingTransactions(ListBillingTransactionsRequest) returns (ListBillingTransactionsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/transactions"};
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/transactions"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/transactions"}
+    };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Transaction";
       summary: "List billing transactions";
@@ -1956,7 +1984,10 @@ message CreateBillingUsageResponse {}
 message ListBillingTransactionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.min_len = 1];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 
   google.protobuf.Timestamp since = 3;
 
@@ -1971,7 +2002,10 @@ message ListBillingTransactionsResponse {
 message GetSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to get the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
   // ID of the subscription to get
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -1985,7 +2019,10 @@ message GetSubscriptionResponse {
 message ListSubscriptionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to list subscriptions for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 
   // Filter subscriptions by state
   string state = 3;
@@ -2002,7 +2039,10 @@ message ListSubscriptionsResponse {
 message UpdateSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
   // ID of the subscription to update
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2017,7 +2057,10 @@ message UpdateSubscriptionResponse {
 message ChangeSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
   // ID of the subscription to update
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2054,7 +2097,10 @@ message ChangeSubscriptionResponse {
 message CancelSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
   // ID of the subscription to cancel
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2093,7 +2139,10 @@ message CheckFeatureEntitlementResponse {
 message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2  [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 
   string success_url = 3;
   string cancel_url = 4;
@@ -2114,7 +2163,10 @@ message CreateCheckoutResponse {
 message ListCheckoutsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to get the subscriptions for
-  string billing_id = 2 [(validate.rules).string.uuid = true];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 }
 
 message ListCheckoutsResponse {

@@ -323,6 +323,10 @@ service AdminService {
     option (google.api.http) = {
       post: "/v1beta1/admin/organizations/{org_id}/billing/{billing_id}/checkouts",
       body: "*"
+      additional_bindings {
+        post: "/v1beta1/admin/organizations/{org_id}/billing/checkouts",
+        body: "*"
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Checkout";
@@ -623,7 +627,10 @@ message RemovePlatformUserResponse {}
 message DelegatedCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string.min_len = 1];
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
 
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
