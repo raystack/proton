@@ -96,7 +96,7 @@ message CreateServiceDataKeyResponse {
 
 message UpsertServiceDataRequestBody {
   string project = 1;
-  map<string, string> data = 2;
+  google.protobuf.Struct data = 2;
 }
   
 message UpsertUserServiceDataRequest {
@@ -110,11 +110,11 @@ message UpsertGroupServiceDataRequest {
 }
 
 message UpsertUserServiceDataResponse {
-  map<string, string> data = 1;
+  google.protobuf.Struct data = 1;
 }
 
 message UpsertGroupServiceDataResponse {
-  map<string, string> data = 1;
+  google.protobuf.Struct data = 1;
 }
 
 message GetUserServiceDataRequest {
