@@ -170,6 +170,7 @@ message Schema {
   Compatibility compatibility = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
+  string source_url = 7;
 }
 
 message ListNamespacesRequest {}
@@ -237,6 +238,8 @@ message CreateSchemaRequest {
   bytes data = 3 [(google.api.field_behavior) = REQUIRED];
   Schema.Format format = 4;
   Schema.Compatibility compatibility = 5;
+  string source_url = 6;
+  string commit_sha = 7;
 }
 
 message CreateSchemaResponse {
@@ -266,6 +269,7 @@ message GetSchemaMetadataResponse {
   string name = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
+  string source_url = 7;
 }
 
 message UpdateSchemaMetadataRequest {
