@@ -66,6 +66,14 @@ service JobSpecificationService {
     };
   }
 
+  // UpsertJobSpecifications update or add jobs for a namespace which belongs to the given project
+  rpc UpsertJobSpecifications(UpsertJobSpecificationsRequest) returns (UpsertJobSpecificationsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/jobs-upsert"
+      body: "*"
+    };
+  }
+
   // GetJobSpecification reads a provided job spec of a namespace
   rpc GetJobSpecification(GetJobSpecificationRequest) returns (GetJobSpecificationResponse) {
     option (google.api.http) = {
@@ -207,6 +215,18 @@ message UpdateJobSpecificationsRequest {
 message UpdateJobSpecificationsResponse {
   string log = 1;
   repeated string successful_job_names = 2;
+}
+
+message UpsertJobSpecificationsRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  repeated JobSpecification specs = 3;
+}
+message UpsertJobSpecificationsResponse {
+  string log = 1;
+  repeated string successful_job_names = 2;
+  repeated string skipped_job_names = 3;
+  repeated string failed_job_names = 4;
 }
 
 message JobInspectRequest {
