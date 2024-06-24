@@ -865,6 +865,18 @@ service FrontierService {
     };
   }
 
+  rpc AddProjectPrincipal(AddProjectPrincipalRequest) returns (AddProjectPrincipalResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/projects/{id}/principals",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Add principal to project";
+      description: "Adds a principal to a project with the role passed as input";
+    };
+  }
+
   rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
     option (google.api.http) = {
       put: "/v1beta1/projects/{id}",
@@ -2139,7 +2151,7 @@ message CheckFeatureEntitlementResponse {
 message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // ID of the billing account to update the subscription for
-  string billing_id = 2  [(validate.rules).string = {
+  string billing_id = 2 [(validate.rules).string = {
     ignore_empty: true,
     uuid: true
   }];
@@ -3207,6 +3219,21 @@ message GetProjectRequest {
 message GetProjectResponse {
   Project project = 1;
 }
+
+message AddProjectPrincipalRequest {
+  string id = 1;
+  string role_id = 2 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role which is to be assigned to the principal"}
+  ];
+  string principal = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group being added to the project. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
+  ];
+}
+
+message AddProjectPrincipalResponse {}
 
 message UpdateProjectRequest {
   string id = 1;
