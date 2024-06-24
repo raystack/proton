@@ -868,7 +868,7 @@ service FrontierService {
   rpc AddProjectPrincipal(AddProjectPrincipalRequest) returns (AddProjectPrincipalResponse) {
     option (google.api.http) = {
       post: "/v1beta1/projects/{id}/principals",
-      body: "body"
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Project";
