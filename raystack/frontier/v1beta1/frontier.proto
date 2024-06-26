@@ -997,7 +997,7 @@ service FrontierService {
   }
 
   rpc CreatePolicyForProject(CreatePolicyForProjectRequest) returns (CreatePolicyForProjectResponse) {
-    option (google.api.http) = {delete: "/v1beta1/policies/projects/{project_id}"};
+    option (google.api.http) = {post: "/v1beta1/policies/projects/{project_id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Policy";
       summary: "Create Policy for Project"
