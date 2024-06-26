@@ -3324,8 +3324,8 @@ message CreatePolicyForProjectBody {
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role to which policy is assigned"}
   ];
-  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
-  string principal = 4 [
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
+  string principal = 3 [
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
   ];
@@ -3404,7 +3404,8 @@ message DeletePolicyRequest {
 message DeletePolicyResponse {}
 
 message CreatePolicyForProjectRequest {
-  CreatePolicyForProjectBody body = 1 [(validate.rules).message.required = true];
+  string project_id = 1 [(validate.rules).string.min_len = 3];
+  CreatePolicyForProjectBody body = 2 [(validate.rules).message.required = true];
 }
 
 message CreatePolicyForProjectResponse {}
