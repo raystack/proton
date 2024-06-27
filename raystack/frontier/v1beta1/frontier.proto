@@ -996,6 +996,18 @@ service FrontierService {
     };
   }
 
+  rpc CreatePolicyForProject(CreatePolicyForProjectRequest) returns (CreatePolicyForProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/policies/projects/{project_id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Policy";
+      summary: "Create Policy for Project"
+      description: "Create a policy for a project";
+    };
+  }
+
   // Relations
   rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
     option (google.api.http) = {
@@ -3309,6 +3321,19 @@ message PolicyRequestBody {
   google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`"}];
 }
 
+message CreatePolicyForProjectBody {
+  string role_id = 1 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role to which policy is assigned"}
+  ];
+  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
+  string principal = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
+  ];
+}
+
 message GetPermissionRequest {
   string id = 1;
 }
@@ -3380,6 +3405,13 @@ message DeletePolicyRequest {
 }
 
 message DeletePolicyResponse {}
+
+message CreatePolicyForProjectRequest {
+  string project_id = 1 [(validate.rules).string.min_len = 3];
+  CreatePolicyForProjectBody body = 2 [(validate.rules).message.required = true];
+}
+
+message CreatePolicyForProjectResponse {}
 
 message RelationRequestBody {
   reserved 2, 5;
