@@ -1756,6 +1756,18 @@ service FrontierService {
     };
   }
 
+  rpc GetCheckout(GetCheckoutRequest) returns (GetCheckoutResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts/{id}"
+      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/checkouts/{id}"}
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Checkout";
+      summary: "Get checkout";
+      description: "Get a checkout by ID.";
+    };
+  }
+
   // Billing Entitlements
   rpc CheckFeatureEntitlement(CheckFeatureEntitlementRequest) returns (CheckFeatureEntitlementResponse) {
     option (google.api.http) = {
@@ -2001,7 +2013,9 @@ message ListBillingTransactionsRequest {
     uuid: true
   }];
 
-  google.protobuf.Timestamp since = 3;
+  google.protobuf.Timestamp since = 3 [deprecated=true];
+  google.protobuf.Timestamp start_range = 4;
+  google.protobuf.Timestamp end_range = 5;
 
   repeated string expand = 101;
 }
@@ -2184,6 +2198,22 @@ message ListCheckoutsRequest {
 message ListCheckoutsResponse {
   // List of checkouts
   repeated CheckoutSession checkout_sessions = 1;
+}
+
+message GetCheckoutRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  // ID of the billing account to get the subscriptions for
+  string billing_id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+  // ID of the checkout to get
+  string id = 3 [(validate.rules).string.min_len = 1];
+}
+
+message GetCheckoutResponse {
+  // Checkout session
+  CheckoutSession checkout_session = 1;
 }
 
 message ProductRequestBody {
