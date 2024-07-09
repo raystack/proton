@@ -86,6 +86,13 @@ service ResourceService {
       body: "*"
     };
   }
+
+  // GetResourceChangelogs get all the change logs for a specific resource
+  rpc GetResourceChangelogs(GetResourceChangelogsRequest) returns (GetResourceChangelogsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/resource/{resource_name}/changelog"
+    };
+  }
 }
 
 message DeployResourceSpecificationRequest {
@@ -219,4 +226,24 @@ message DeleteResourceRequest {
 
 message DeleteResourceResponse {
   repeated string downstream_jobs = 1;
+}
+
+message GetResourceChangelogsRequest {
+  string project_name = 1;
+  string resource_name = 2;
+}
+
+message ResourceChange {
+  string attribute_name = 1;
+  string diff = 2;
+}
+
+message ResourceChangelog {
+  string event_type = 1;
+  string timestamp = 2;
+  repeated ResourceChange change = 3;
+}
+
+message GetResourceChangelogsResponse {
+  repeated ResourceChangelog history = 1;
 }
