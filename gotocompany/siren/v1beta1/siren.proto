@@ -642,7 +642,9 @@ message DeleteNamespaceResponse {}
 
 message ReceiverMetadata {
   uint64 id = 1;
-  google.protobuf.Struct configuration = 4;
+  google.protobuf.Struct configuration = 2;
+  map<string, string> subscription_receiver_labels = 3;
+
 }
 
 message Subscription {
@@ -674,6 +676,7 @@ message ListSubscriptionsRequest {
   map<string, string> subscription_receiver_labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "query result based on  subscription_receiver_labels matchers. the subscription_receiver_labels key is written as map. eg, \" subscription_receiver_labels[key1]=value1\""
   }];
+  bool with_subscription_receiver = 8;
 }
 
 message ListSubscriptionsResponse {
