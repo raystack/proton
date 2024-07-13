@@ -3764,6 +3764,7 @@ message ListOrganizationAuditLogsRequest {
 
   string source = 5;
   string action = 6;
+  bool ignore_system = 7;
 
   // start_time and end_time are inclusive
   google.protobuf.Timestamp start_time = 10;
