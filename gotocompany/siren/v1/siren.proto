@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package gotocompany.siren.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/goto/siren/proto/gotocompany/siren/v1;sirenv1";
+option java_multiple_files = true;
+option java_outer_classname = "ServiceManager";
+option java_package = "com.gotocompany.proton.siren";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Siren APIs v1";
+    description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
+    version: "0.7";
+  };
+  schemes: HTTP;
+};
+
+service SirenService {
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "List subscriptions";
+      tags: "Subscription";
+    };
+
+    option (google.api.http) = {
+      get: "/v1/subscriptions"
+    };
+  }
+}
+
+message Subscription {
+  uint64 id = 1;
+  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  uint64 namespace = 3;
+  repeated SubscriptionReceiverRelation receivers_relation = 4;
+  map<string, string> match = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Struct metadata = 8;
+  string created_by = 9;
+  string updated_by = 10;
+}
+
+message ListSubscriptionsRequest {
+  uint64 namespace_id = 1;
+  map<string, string> match = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription label matchers. the match key is written as map. eg, \"match[key1]=value1\""
+  }];
+  map<string, string> notification_match = 3  [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on applied notification label matchers. the notification_match key is written as map. eg, \"notification_match[key1]=value1\""
+  }];
+  string silence_id = 4;
+  map<string, string> metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on subscription metadata matchers. the match key is written as map. eg, \"metadata[key1]=value1\""
+  }];
+  uint64 receiver_id = 6;
+  map<string, string> subscription_receiver_labels = 7 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "query result based on  subscription_receiver_labels matchers. the subscription_receiver_labels key is written as map. eg, \" subscription_receiver_labels[key1]=value1\""
+  }];
+}
+
+message ListSubscriptionsResponse {
+  repeated Subscription subscriptions = 1;
+}
+
+message SubscriptionReceiverRelation {
+  uint64 subscription_id = 1;
+  uint64 receiver_id = 2;
+  map<string, string> labels = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
