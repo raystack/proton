@@ -614,6 +614,7 @@ message Subscription {
   message Phase {
     google.protobuf.Timestamp effective_at = 1;
     string plan_id = 2;
+    string reason = 3;
   }
   repeated Phase phases = 20;
 
