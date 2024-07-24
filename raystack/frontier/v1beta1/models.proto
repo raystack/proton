@@ -813,7 +813,7 @@ message Usage {
       "feature"
     ]
   }];
-  int64 amount = 6 [(validate.rules).int64 = {gte: 0}];
+  int64 amount = 6 [(validate.rules).int64 = {gt: 0}];
 
   // user_id is the user that triggered this usage
   string user_id = 7;
