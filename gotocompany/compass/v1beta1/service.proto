@@ -941,6 +941,7 @@ message GetGraphRequest {
       ""
     ]
   }];
+  optional bool with_attributes = 4;
 }
 
 message GetGraphResponse {
