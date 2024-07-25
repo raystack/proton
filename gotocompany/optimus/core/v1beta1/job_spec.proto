@@ -180,6 +180,14 @@ service JobSpecificationService {
       body: "*"
     };
   }
+
+  // BulkDeleteJobs deletes one or more jobs in bulk operation,
+  // while following postorder deletion, starting from jobs with no dependencies
+  rpc BulkDeleteJobs(BulkDeleteJobsRequest) returns (BulkDeleteJobsResponse) {
+    option (google.api.http) = {
+      delete: "/v1beta1/project/{project_name}/job/bulk-delete"
+    };
+  }
 }
 
 message DeployJobSpecificationRequest {
@@ -687,4 +695,23 @@ message SyncJobsStateRequest {
 }
 
 message SyncJobsStateResponse {
+}
+
+message BulkDeleteJobsRequest {
+  message JobToDelete {
+    string namespace_name = 1;
+    string job_name = 2;
+  }
+
+  string project_name = 1;
+  repeated JobToDelete jobs = 2;
+}
+
+message BulkDeleteJobsResponse {
+  message JobDeletionStatus {
+    bool success = 1;
+    string message = 2;
+  }
+
+  map<string, JobDeletionStatus> results_by_job_name = 1;
 }
