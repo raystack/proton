@@ -346,6 +346,21 @@ service CompassService {
     };
   }
 
+  rpc DeleteAssets(DeleteAssetsRequest) returns (DeleteAssetsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/assets/delete-by-query"
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete assets";
+      description: "Delete all assets that match with specified query expr";
+      tags: [
+        "Asset"
+      ];
+    };
+  }
+
   rpc GetAssetStargazers(GetAssetStargazersRequest) returns (GetAssetStargazersResponse) {
     option (google.api.http) = {
       get: "/v1beta1/assets/{id}/stargazers"
@@ -842,7 +857,7 @@ message SearchAssetsRequest {
     }
   ];
 
-  SearchFlags flags = 8 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  SearchFlags flags = 8 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "flags to control the search behavior (e.g. column level search, disable fuzzy, etc)"
   }];
 }
@@ -901,15 +916,15 @@ message SearchFlags {
       title: "SearchFlags"
     }
   };
-  bool is_column_search = 1 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  bool is_column_search = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "search column names instead of table urn or name."
   }];
 
-  bool disable_fuzzy = 2 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  bool disable_fuzzy = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "disable fuzzy search."
   }];
 
-  bool enable_highlight = 3 [ (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  bool enable_highlight = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "enable highlight in search response."
   }];
 }
@@ -1145,6 +1160,24 @@ message DeleteAssetRequest {
 }
 
 message DeleteAssetResponse {}
+
+message DeleteAssetsRequest {
+  string query_expr = 1 [
+    (validate.rules).string.min_len = 3,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "filter by query expr, example: refreshed_at <= \"2024-08-05T23:59:59\""
+    }
+  ];
+  bool dry_run = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "if set to true, then deletion should not proceed and only return the affected rows. else, will perform deletion in the background"
+    }
+  ];
+}
+
+message DeleteAssetsResponse {
+  uint32 affected_rows = 1;
+}
 
 message GetAssetStargazersRequest {
   string id = 1;

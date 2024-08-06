@@ -61,4 +61,8 @@ message Asset {
   // The timestamp when the asset was last modified.
   // This information is expected to be maintained by the system.
   google.protobuf.Timestamp update_time = 102;
+
+  // The timestamp when the asset was last refreshed.
+  // This information is expected to be maintained by the system.
+  google.protobuf.Timestamp refreshed_at = 103;
 }
