@@ -458,7 +458,7 @@ message ListAllOrganizationsRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of organizations to return per page. The default is 50."}
   ];
   int32 page_num = 4 [
     (validate.rules).int32 = {
@@ -471,7 +471,9 @@ message ListAllOrganizationsRequest {
 
 message ListAllOrganizationsResponse {
   repeated Organization organizations = 1;
-  int32 total_pages = 2;
+  int32 total_pages = 2[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Total number of pages in response"}
+      ];
 }
 
 message ListProjectsRequest {
