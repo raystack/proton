@@ -471,8 +471,8 @@ message ListAllOrganizationsRequest {
 
 message ListAllOrganizationsResponse {
   repeated Organization organizations = 1;
-  int32 total_pages = 2[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Total number of pages in response"}
+  int32 count = 2[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Total number of records present"}
       ];
 }
 
