@@ -664,10 +664,27 @@ message DelegatedCheckoutResponse {
 
 message ListAllInvoicesRequest {
   string org_id = 1;
+  int32 page_size = 2 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of invoices to return per page. The default is 50."}
+  ];
+  int32 page_num = 3 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+  ];
 }
 
 message ListAllInvoicesResponse {
   repeated Invoice invoices = 1;
+  int32 count = 2[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Total number of records present"}
+  ];
 }
 
 message ListAllBillingAccountsRequest {
