@@ -51,6 +51,12 @@ service ReplayService {
       put: "/v1beta1/project/{project_name}/replay/{replay_id}/cancel"
     };
   }
+
+  rpc GetReplayDetails(GetReplayDetailsRequest) returns (GetReplayDetailsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/replay"
+    };
+  }
 }
 
 message ListReplayRequest {
@@ -126,4 +132,16 @@ message CancelReplayRequest {
 message CancelReplayResponse {
   string job_name = 1;
   repeated ReplayRun replay_runs = 2;
+}
+
+message GetReplayDetailsRequest {
+  string project_name = 1;
+  string replay_id = 2;
+  repeated string job_names = 3;
+  google.protobuf.Timestamp scheduled_at = 4;
+  string status = 5;
+}
+
+message GetReplayDetailsResponse {
+  repeated GetReplayResponse replays = 1;
 }
