@@ -13,8 +13,8 @@ option java_package = "com.gotocompany.proton.shield.v1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Service Data",
-    version: "0.1.0";
+    title: "Shield Service Data API",
+    version: "0.1.1";
   };
   schemes: HTTP;
 };

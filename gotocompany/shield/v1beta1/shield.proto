@@ -9,17 +9,18 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
 option go_package = "github.com/goto/proton/shield/v1;shieldv1beta1";
-option java_outer_classname = "Shield";
+option java_outer_classname = "Admin";
 option java_package = "com.gotocompany.proton.shield.v1beta1";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Shield",
-    version: "0.1.0";
+    title: "Shield Admin API",
+    version: "0.1.1";
   };
   schemes: HTTP;
 };
 
+// This is supposed to be admin service.
 service ShieldService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
@@ -467,6 +468,16 @@ service ShieldService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Resource";
       summary: "Update Resource by ID";
+    };
+  }
+
+  rpc ListAllUserResources(ListAllUserResourcesRequest) returns (ListAllUserResourcesResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/{user_id}/resources",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource";
+      summary: "Get Resources with Authorized User Access on Any Resource Type";
     };
   }
 
@@ -1113,6 +1124,15 @@ message CheckResourceUserPermissionResponse {
     bool allowed = 4;
   }
   repeated ResourcePermissionResponse resource_permissions = 1;
+}
+
+message ListAllUserResourcesRequest {
+  string user_id = 1;
+  repeated string types = 2;
+}
+
+message ListAllUserResourcesResponse {
+  google.protobuf.Struct resources = 1;
 }
 
 message Activity {
