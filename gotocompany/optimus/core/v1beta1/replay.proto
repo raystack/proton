@@ -54,7 +54,7 @@ service ReplayService {
 
   rpc GetReplayDetails(GetReplayDetailsRequest) returns (GetReplayDetailsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/replay"
+      get: "/v1beta1/project/{project_name}/replay-details"
     };
   }
 }
