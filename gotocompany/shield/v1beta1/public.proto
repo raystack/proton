@@ -35,6 +35,7 @@ message ListUserResourcesByTypeRequest {
   string user_id = 1;
   string namespace = 2;
   string type = 3;
+  repeated string permissions = 4;
 }
 
 message ListUserResourcesByTypeResponse {
