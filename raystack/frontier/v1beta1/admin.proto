@@ -412,6 +412,19 @@ service AdminService {
       description: "List all webhooks.";
     };
   }
+
+  // Billing Account
+  rpc UpdateBillingAccountLimits(UpdateBillingAccountLimitsRequest) returns (UpdateBillingAccountLimitsResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/admin/organizations/{org_id}/billing/{id}/limits",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Update billing account limits";
+      description: "Update billing account limits.";
+    };
+  }
 }
 
 message ListAllUsersRequest {
@@ -771,3 +784,18 @@ message ListWebhooksRequest {}
 message ListWebhooksResponse {
   repeated Webhook webhooks = 1;
 }
+
+message UpdateBillingAccountLimitsRequest {
+  string org_id = 1 [(validate.rules).string = {min_len: 3}];
+  string id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+
+  // credit_min is the minimum credit limit for the billing account
+  // default is 0, negative numbers work as overdraft, positive
+  // numbers work as minimum purchase limit
+  int64 credit_min = 3;
+}
+
+message UpdateBillingAccountLimitsResponse {}
