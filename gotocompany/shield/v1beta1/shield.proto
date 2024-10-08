@@ -503,6 +503,28 @@ service ShieldService {
       summary: "Get all Activities";
     };
   }
+
+  rpc UpsertResourcesConfig(UpsertResourcesConfigRequest) returns (UpsertResourcesConfigResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/configs/resources/{name}";
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Resource Config";
+      summary: "Update Resource Configuration";
+    };
+  }
+
+  rpc UpsertRulesConfig(UpsertRulesConfigRequest) returns (UpsertRulesConfigResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/configs/rules/{name}";
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Rules Config";
+      summary: "Update Rules Configuration";
+    };
+  }
 }
 
 message UserRequestBody {
@@ -1158,4 +1180,30 @@ message ListActivitiesRequest {
 message ListActivitiesResponse {
   int32 count = 1;
   repeated Activity activities = 2;
+}
+
+message UpsertResourcesConfigRequest {
+  string name = 1;
+  string config = 2;
+}
+
+message UpsertResourcesConfigResponse {
+  uint32 id = 1;
+  string name = 2;
+  string config = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message UpsertRulesConfigRequest {
+  string name = 1;
+  string config = 2;
+}
+
+message UpsertRulesConfigResponse {
+  uint32 id = 1;
+  string name = 2;
+  string config = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
 }
