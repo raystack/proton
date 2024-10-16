@@ -41,9 +41,9 @@ service JobRunService {
     };
   }
   // JobRunList returns the current and past run status of jobs on a given range
-  rpc GetLatestJobRuns(GetLatestJobRunsRequest) returns (GetLatestJobRunsResponse) {
+  rpc GetJobRuns(GetJobRunsRequest) returns (GetJobRunsResponse) {
     option (google.api.http) = {
-      get: "/v1beta1/project/{project_name}/job/{job_name}/latest-runs"
+      get: "/v1beta1/project/{project_name}/job/{job_name}/job_runs"
     };
   }
   // RegisterJobEvent notifies optimus service about an event related to job
@@ -117,15 +117,16 @@ message JobRunInputRequest {
   string jobrun_id = 7;
 }
 
-// get latest 10 runs by schedule time
-message GetLatestJobRunsRequest {
+// get latest 1 runs by schedule time by default when start date and end date is not mentioned
+message GetJobRunsRequest {
   string project_name = 1;
   string job_name = 2;
-  // state is an optional filter
   string state = 3;
+  google.protobuf.Timestamp since = 4;
+  google.protobuf.Timestamp until = 5;
 }
 
-message GetLatestJobRunsResponse {
+message GetJobRunsResponse {
   repeated JobRun job_runs = 1;
 }
 
