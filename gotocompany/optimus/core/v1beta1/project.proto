@@ -85,4 +85,6 @@ message ProjectSpecification {
     string location = 7;
   }
   map<string, ProjectPreset> presets = 4;
+
+  map<string, string> variables = 5;
 }

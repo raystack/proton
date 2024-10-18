@@ -76,4 +76,5 @@ message GetNamespaceResponse {
 message NamespaceSpecification {
   string name = 1;
   map<string, string> config = 2;
+  map<string, string> variables = 3;
 }
