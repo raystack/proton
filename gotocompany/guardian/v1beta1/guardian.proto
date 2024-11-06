@@ -801,6 +801,8 @@ message UpdateGrantResponse {
 message RevokeGrantRequest {
   string id = 1;
   string reason = 2;
+  bool skip_notification = 3;
+  bool skip_revoke_in_provider = 4;
 }
 
 message RevokeGrantResponse {
