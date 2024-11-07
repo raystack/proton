@@ -126,8 +126,16 @@ message GetJobRunsRequest {
   google.protobuf.Timestamp until = 5;
 }
 
+message JobRunWithDetail {
+  string state = 1;
+  google.protobuf.Timestamp scheduled_at = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+}
+
 message GetJobRunsResponse {
-  repeated JobRun job_runs = 1;
+  reserved 1;
+  repeated JobRunWithDetail job_runs = 2;
 }
 
 message JobRunRequest {
