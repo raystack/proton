@@ -2568,6 +2568,7 @@ message CreateUserResponse {
 
 message ListOrganizationsByUserRequest {
   string id = 1;
+  string state = 2;
 }
 
 message ListOrganizationsByUserResponse {
