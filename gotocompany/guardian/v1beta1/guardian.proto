@@ -838,6 +838,7 @@ message Role {
   string name = 2;
   string description = 3;
   repeated google.protobuf.Value permissions = 4;
+  string type = 5;
 }
 
 message PolicyConfig {
