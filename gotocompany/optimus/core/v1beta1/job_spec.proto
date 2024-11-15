@@ -452,6 +452,8 @@ message JobSpecification {
       JobEvent.Type on = 1;
       repeated string channels = 2;
       map<string, string> config = 3;
+      string severity = 4;
+      string team = 5;
     }
     repeated Notifiers notify = 2;
 
@@ -499,12 +501,13 @@ message JobConfigItem {
 message JobEvent {
   enum Type {
     TYPE_UNSPECIFIED = 0;
-    
-    TYPE_SLA_MISS = 1;
     reserved 2 to 5;
+    reserved 20;
+
+    TYPE_SLA_MISS = 1;
     TYPE_JOB_SUCCESS = 6;
     TYPE_FAILURE = 7;
-    TYPE_SUCCESS = 20;
+    TYPE_REPLAY_LIFECYCLE = 21;
 
     TYPE_TASK_RETRY = 8;
     TYPE_TASK_SUCCESS = 9;
