@@ -3069,6 +3069,7 @@ message ListOrganizationUsersRequest {
   string permission_filter = 2 [deprecated = true];
 
   bool with_roles = 3;
+  repeated string role_filters = 4;
 }
 
 message ListOrganizationUsersResponse {
