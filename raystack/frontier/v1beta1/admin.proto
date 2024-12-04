@@ -344,6 +344,18 @@ service AdminService {
     };
   }
 
+  rpc GenerateInvoices(GenerateInvoicesRequest) returns (GenerateInvoicesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/billing/invoices/generate",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Invoice";
+      summary: "Trigger invoice generation";
+      description: "Triggers the creation of credit overdraft invoices for all billing accounts.";
+    };
+  }
+
   rpc ListAllBillingAccounts(ListAllBillingAccountsRequest) returns (ListAllBillingAccountsResponse) {
     option (google.api.http) = {get: "/v1beta1/admin/billing/accounts"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -699,6 +711,10 @@ message ListAllInvoicesResponse {
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Total number of records present"}
   ];
 }
+
+message GenerateInvoicesRequest {}
+
+message GenerateInvoicesResponse {}
 
 message ListAllBillingAccountsRequest {
   string org_id = 1;
