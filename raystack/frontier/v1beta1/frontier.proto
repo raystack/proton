@@ -2579,6 +2579,7 @@ message ListOrganizationsByUserResponse {
 
 message ListOrganizationsByCurrentUserRequest {
   string state = 1;
+
 }
 
 message ListOrganizationsByCurrentUserResponse {
@@ -2612,6 +2613,21 @@ message ListProjectsByCurrentUserRequest {
   bool non_inherited = 3;
 
   bool with_member_count = 4;
+
+  int32 page_size = 5 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+  ];
+  int32 page_num = 6 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+  ];
 }
 
 message ListProjectsByCurrentUserResponse {
@@ -2622,6 +2638,7 @@ message ListProjectsByCurrentUserResponse {
     repeated string permissions = 2;
   }
   repeated AccessPair access_pairs = 2;
+  int32 count = 3;
 }
 
 message EnableUserRequest {
