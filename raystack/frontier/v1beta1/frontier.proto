@@ -2539,7 +2539,7 @@ message ListUsersRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
   ];
   int32 page_num = 2 [
     (validate.rules).int32 = {
@@ -2618,7 +2618,7 @@ message ListProjectsByCurrentUserRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
   ];
   int32 page_num = 6 [
     (validate.rules).int32 = {
@@ -3046,7 +3046,7 @@ message ListOrganizationsRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
   ];
   int32 page_num = 4 [
     (validate.rules).int32 = {
