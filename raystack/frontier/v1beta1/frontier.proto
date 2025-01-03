@@ -2539,7 +2539,7 @@ message ListUsersRequest {
       gte: 1,
       ignore_empty: true,
     },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 50."}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
   ];
   int32 page_num = 2 [
     (validate.rules).int32 = {
@@ -2612,6 +2612,21 @@ message ListProjectsByCurrentUserRequest {
   bool non_inherited = 3;
 
   bool with_member_count = 4;
+
+  int32 page_size = 5 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
+  ];
+  int32 page_num = 6 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+  ];
 }
 
 message ListProjectsByCurrentUserResponse {
@@ -2622,6 +2637,7 @@ message ListProjectsByCurrentUserResponse {
     repeated string permissions = 2;
   }
   repeated AccessPair access_pairs = 2;
+  int32 count = 3;
 }
 
 message EnableUserRequest {
@@ -3025,6 +3041,20 @@ message OrganizationRequestBody {
 message ListOrganizationsRequest {
   string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Frontier instance will be listed."}];
   string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be `enabled` or `disabled`."}];
+  int32 page_size = 3 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
+  ];
+  int32 page_num = 4 [
+    (validate.rules).int32 = {
+      gte: 1,
+      ignore_empty: true,
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+  ];
 }
 
 message ListOrganizationsResponse {
