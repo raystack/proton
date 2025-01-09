@@ -2455,7 +2455,10 @@ message AuthenticateRequest {
   string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://frontier.example.com\"`"}];
 
   // email of the user for magic links
-  string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}];
+  string email = 4 [ 
+    (validate.rules).string.email = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}
+  ];
 
   // callback_url will be used by strategy as last step to finish authentication flow
   // in OIDC this host will receive "state" and "code" query params, in case of magic links
