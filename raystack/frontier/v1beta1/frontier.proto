@@ -435,6 +435,15 @@ service FrontierService {
     };
   }
 
+  rpc ListServiceUserProjects(ListServiceUserProjectsRequest) returns (ListServiceUserProjectsResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/projects"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "ServiceUser";
+      summary: "List service sser projects"
+      description: "List all projects the service user belongs to";
+    };
+  }
+
   // Group
   rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups"};
@@ -2940,6 +2949,29 @@ message DeleteServiceUserTokenRequest {
 }
 
 message DeleteServiceUserTokenResponse {}
+
+message ListServiceUserProjectsRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list projects for."}];
+  string org_id = 2 [
+    (validate.rules).string.min_len = 3,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+  ];
+  // list of permissions needs to be checked against each project
+  // query params are set as with_permissions=get&with_permissions=delete
+  // to be represented as array
+  repeated string with_permissions = 3;
+}
+
+message ListServiceUserProjectsResponse {
+  repeated Project projects = 1;
+
+  message AccessPair {
+    string project_id = 1;
+    repeated string permissions = 2;
+  }
+  repeated AccessPair access_pairs = 2;
+}
 
 // Organization
 
