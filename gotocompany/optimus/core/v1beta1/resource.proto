@@ -35,6 +35,13 @@ service ResourceService {
     };
   }
 
+  rpc SyncExternalTables(SyncExternalTablesRequest) returns (SyncExternalTablesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/external-table/sync"
+      body: "*"
+    };
+  }
+
   // Database CRUD
   // CreateResource registers a new resource of a namespace which belongs to a project
   rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
@@ -112,6 +119,18 @@ message ListResourceSpecificationRequest {
   string project_name = 1;
   string datastore_name = 2;
   string namespace_name = 3;
+}
+
+message SyncExternalTablesRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string table_name = 3;
+  bool force = 4;
+}
+
+message SyncExternalTablesResponse {
+  repeated string successfully_synced = 1;
+  string error = 2;
 }
 
 message ListResourceSpecificationResponse {
