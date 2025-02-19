@@ -156,13 +156,13 @@ service AdminService {
 
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/admin/organizations/{organization_id}/kyc",
+      put: "/v1beta1/admin/organizations/{org_id}/kyc",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "OrganizationKyc";
-      summary: "Set KYC status of an organization";
-      description: "Set KYC status of an organization using ID or name";
+      summary: "Set KYC information of an organization";
+      description: "Set KYC information of an organization using ID or name";
     };
   }
 
@@ -829,7 +829,7 @@ message UpdateBillingAccountLimitsRequest {
 message UpdateBillingAccountLimitsResponse {}
 
 message SetOrganizationKycRequest {
-  string organization_id = 1;
+  string org_id = 1;
   bool status = 2;
   string link = 3;
 }

@@ -151,7 +151,7 @@ message Organization {
 }
 
 message OrganizationKyc {
-  string organization_id = 1;
+  string org_id = 1;
   bool status = 2;
   string link = 3;
   google.protobuf.Timestamp created_at = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
