@@ -701,7 +701,7 @@ service FrontierService {
   rpc SetOrganizationKycStatus(SetOrganizationKycStatusRequest) returns (SetOrganizationKycStatusResponse) {
     option (google.api.http) = {
       put: "/v1beta1/organizations/{organization_id}/kyc",
-      body: *
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "OrganizationKyc";
