@@ -3370,7 +3370,7 @@ message GetOrganizationKycStatusRequest {
 }
 
 message GetOrganizationKycStatusResponse {
-  OrganizationKyc organizationKyc = 1;
+  OrganizationKyc organization_kyc = 1;
 }
 
 // Project
