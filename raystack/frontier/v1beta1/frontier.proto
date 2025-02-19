@@ -699,7 +699,7 @@ service FrontierService {
   }
 
   rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/kyc"};
+    option (google.api.http) = {get: "/v1beta1/organizations/{organization_id}/kyc"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "OrganizationKyc";
       summary: "Get KYC info of an organization";
