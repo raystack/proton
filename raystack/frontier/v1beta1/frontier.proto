@@ -3362,7 +3362,7 @@ message SetOrganizationKycStatusRequest {
 }
 
 message SetOrganizationKycStatusResponse {
-  OrganizationKyc organizationKyc = 1;
+  OrganizationKyc organization_kyc = 1;
 }
 
 message GetOrganizationKycStatusRequest {
