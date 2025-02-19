@@ -154,6 +154,18 @@ service AdminService {
     };
   }
 
+  rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/organizations/{organization_id}/kyc",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "OrganizationKyc";
+      summary: "Set KYC status of an organization";
+      description: "Set KYC status of an organization using ID or name";
+    };
+  }
+
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {get: "/v1beta1/admin/projects"};
@@ -815,3 +827,13 @@ message UpdateBillingAccountLimitsRequest {
 }
 
 message UpdateBillingAccountLimitsResponse {}
+
+message SetOrganizationKycRequest {
+  string organization_id = 1;
+  bool status = 2;
+  string link = 3;
+}
+
+message SetOrganizationKycResponse {
+  OrganizationKyc organization_kyc = 1;
+}

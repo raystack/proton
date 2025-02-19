@@ -698,24 +698,12 @@ service FrontierService {
     };
   }
 
-  rpc SetOrganizationKycStatus(SetOrganizationKycStatusRequest) returns (SetOrganizationKycStatusResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{organization_id}/kyc",
-      body: "*"
-    };
+  rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{id}/kyc"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "OrganizationKyc";
-      summary: "Set KYC status of an organization";
-      description: "Set KYC status of an organization using ID or name";
-    };
-  }
-
-  rpc GetOrganizationKycStatus(GetOrganizationKycStatusRequest) returns (GetOrganizationKycStatusResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{organization_id}/kyc"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "OrganizationKyc";
-      summary: "Get KYC status of an organization";
-      description: "Get KYC status of an organization using ID or name";
+      summary: "Get KYC info of an organization";
+      description: "Get KYC info of an organization using ID or name";
     };
   }
 
@@ -3358,21 +3346,11 @@ message DeleteOrganizationRequest {
 
 message DeleteOrganizationResponse {}
 
-message SetOrganizationKycStatusRequest {
-  string organization_id = 1;
-  bool status = 2;
-  string link = 3;
-}
-
-message SetOrganizationKycStatusResponse {
-  OrganizationKyc organization_kyc = 1;
-}
-
-message GetOrganizationKycStatusRequest {
+message GetOrganizationKycRequest {
   string organization_id = 1;
 }
 
-message GetOrganizationKycStatusResponse {
+message GetOrganizationKycResponse {
   OrganizationKyc organization_kyc = 1;
 }
 
