@@ -3356,7 +3356,7 @@ message DeleteOrganizationRequest {
 message DeleteOrganizationResponse {}
 
 message SetOrganizationKycStatusRequest {
-  string organizationID = 1;
+  string organization_id = 1;
   bool status = 2;
   string link = 3;
 }
@@ -3366,7 +3366,7 @@ message SetOrganizationKycStatusResponse {
 }
 
 message GetOrganizationKycStatusRequest {
-  string id = 1;
+  string organization_id = 1;
 }
 
 message GetOrganizationKycStatusResponse {
