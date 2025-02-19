@@ -156,7 +156,7 @@ service AdminService {
 
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/organizations/{organization_id}/kyc",
+      put: "/v1beta1/admin/organizations/{organization_id}/kyc",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
