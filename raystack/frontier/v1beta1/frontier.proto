@@ -296,6 +296,18 @@ service FrontierService {
     };
   }
 
+  rpc CreateAudience(CreateAudienceRequest) returns (CreateAudienceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/self/enrollments",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Audience";
+      summary: "Create Audience";
+      description: "Create audience and capture their subscription status"
+    };
+  }
+
   // ServieUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers"};
@@ -2742,6 +2754,37 @@ message ListCurrentUserInvitationsRequest {}
 message ListCurrentUserInvitationsResponse {
   repeated Invitation invitations = 1;
   repeated Organization orgs = 2;
+}
+
+message CreateAudienceRequest{
+  string name = 1 [
+    (validation.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "full name of the user"}
+  ];
+  string email = 2 [
+    (validate.rules).string.email = true,
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
+  ];
+  string phone = 3[
+    (validate.rules).string = {min_len: 10, max_len: 15},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "phone number of the user, prefixed with country code"}
+  ];
+  string activity = 4[
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
+  ];
+  SUBSCRIPTION_STATUS status = 5[
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity"} //todo: how to use enum here ??
+  ];
+  string source = 6[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
+  ];
+}
+
+message CreateAudienceResponse{
+  Audience audience = 1;
 }
 
 // Serviceuser
