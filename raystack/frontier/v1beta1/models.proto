@@ -940,8 +940,8 @@ message CheckoutSetupBody {
 
 
 enum SUBSCRIPTION_STATUS{
-  SUBSCRIBED = 0;
-  UNSUBSCRIBED = 1;
+  UNSUBSCRIBED = 0;
+  SUBSCRIBED = 1;
 }
 
 message Audience {
