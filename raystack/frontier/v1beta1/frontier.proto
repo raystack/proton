@@ -2758,7 +2758,7 @@ message ListCurrentUserInvitationsResponse {
 
 message CreateAudienceRequest{
   string name = 1 [
-    (validation.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "full name of the user"}
   ];
   string email = 2 [
