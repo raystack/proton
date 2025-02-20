@@ -2757,29 +2757,21 @@ message ListCurrentUserInvitationsResponse {
 }
 
 message CreateAudienceRequest{
-  string name = 1 [
+  string activity = 1[
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "full name of the user"}
-  ];
-  string email = 2 [
-    (validate.rules).string.email = true,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
-  ];
-  string phone = 3[
-    (validate.rules).string = {min_len: 10, max_len: 15},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "phone number of the user, prefixed with country code"}
-  ];
-  string activity = 4[
-    (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
   ];
-  SUBSCRIPTION_STATUS status = 5[
+  SUBSCRIPTION_STATUS status = 2[
     (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity"} //todo: how to use enum here ??
   ];
-  string source = 6[
+  string source = 3[
+    (google.api.field_behavior) = REQUIRED,
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
+  ];
+  google.protobuf.Struct metadata = 4[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
   ];
 }
 
