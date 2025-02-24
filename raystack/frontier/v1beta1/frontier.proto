@@ -296,15 +296,15 @@ service FrontierService {
     };
   }
 
-  rpc CreateAudience(CreateAudienceRequest) returns (CreateAudienceResponse) {
+  rpc CreateEnrollmentForCurrentUser(CreateEnrollmentForCurrentUserRequest) returns (CreateEnrollmentForCurrentUserResponse) {
     option (google.api.http) = {
       post: "/v1beta1/users/self/enrollments",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Audience";
-      summary: "Create Audience";
-      description: "Create audience and capture their subscription status"
+      tags: "Enrollment";
+      summary: "Create enrollment";
+      description: "Create enrollment for current user and capture their subscription status"
     };
   }
 
@@ -2756,9 +2756,10 @@ message ListCurrentUserInvitationsResponse {
   repeated Organization orgs = 2;
 }
 
-message CreateAudienceRequest{
+message CreateEnrollmentForCurrentUserRequest{
   string activity = 1[
     (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
   ];
@@ -2769,6 +2770,8 @@ message CreateAudienceRequest{
   ];
   string source = 3[
     (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
   ];
   google.protobuf.Struct metadata = 4[
@@ -2776,7 +2779,7 @@ message CreateAudienceRequest{
   ];
 }
 
-message CreateAudienceResponse{
+message CreateEnrollmentForCurrentUserResponse{
   Audience audience = 1;
 }
 
