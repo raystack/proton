@@ -2764,7 +2764,8 @@ message CreateAudienceRequest{
   ];
   SUBSCRIPTION_STATUS status = 2[
     (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity"} //todo: how to use enum here ??
+    (validate.rules).enum = {defined_only: true},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. "}
   ];
   string source = 3[
     (google.api.field_behavior) = REQUIRED,
