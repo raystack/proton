@@ -2765,7 +2765,7 @@ message CreateAudienceRequest{
   SUBSCRIPTION_STATUS status = 2[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).enum = {defined_only: true},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. "}
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 0 for UNSUBSCRIBED; 1 for SUBSCRIBED;"}
   ];
   string source = 3[
     (google.api.field_behavior) = REQUIRED,
