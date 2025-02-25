@@ -321,7 +321,7 @@ service FrontierService {
 
   rpc UpdateEnrollmentForCurrentUser(UpdateEnrollmentForCurrentUserRequest) returns (UpdateEnrollmentForCurrentUserResponse) {
     option (google.api.http) = {
-      put: "/v1beta1/users/self/enrollments",
+      put: "/v1beta1/users/self/enrollments/{id}",
       body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
