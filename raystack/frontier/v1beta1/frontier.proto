@@ -2846,7 +2846,7 @@ message UpdateEnrollmentForCurrentUserRequest{
 }
 
 message UpdateEnrollmentForCurrentUserResponse{
-  repeated Audience audience = 1;
+  Audience audience = 1;
 }
 
 // Serviceuser
