@@ -308,7 +308,7 @@ service FrontierService {
     };
   }
 
-  rpc GetEnrollmentForCurrentUser(GetEnrollmentForCurrentUserRequest) returns (GetEnrollmentForCurrentUserResponse) {
+  rpc ListEnrollmentForCurrentUser(ListEnrollmentForCurrentUserRequest) returns (ListEnrollmentForCurrentUserResponse) {
     option (google.api.http) = {
       get: "/v1beta1/users/self/enrollments"
     };
@@ -2794,11 +2794,11 @@ message CreateEnrollmentForCurrentUserResponse{
   Audience audience = 1;
 }
 
-message GetEnrollmentForCurrentUserRequest{
+message ListEnrollmentForCurrentUserRequest{
 }
 
-message GetEnrollmentForCurrentUserResponse{
-  Audience audience = 1;
+message ListEnrollmentForCurrentUserResponse{
+  repeated Audience audience = 1;
 }
 
 // Serviceuser
