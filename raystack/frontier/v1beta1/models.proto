@@ -939,9 +939,10 @@ message CheckoutSetupBody {
 }
 
 
-enum SUBSCRIPTION_STATUS{
-  UNSUBSCRIBED = 0;
-  SUBSCRIBED = 1;
+enum SubscriptionStatus {
+  SUBSCRIPTIONSTATUS_UNSPECIFIED = 0;
+  SUBSCRIPTIONSTATUS_UNSUBSCRIBED = 1;
+  SUBSCRIPTIONSTATUS_SUBSCRIBED = 2;
 }
 
 message Audience {
@@ -950,7 +951,7 @@ message Audience {
   string email = 8;
   string phone = 10;
   string activity = 15;
-  SUBSCRIPTION_STATUS status = 20;
+  SubscriptionStatus status = 20;
   google.protobuf.Timestamp changed_at = 21;
   string source = 25;
   bool verified = 27;

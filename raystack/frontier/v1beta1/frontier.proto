@@ -2774,7 +2774,7 @@ message CreateEnrollmentForCurrentUserRequest{
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
   ];
-  SUBSCRIPTION_STATUS status = 2[
+  SubscriptionStatus status = 2[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).enum = {defined_only: true},
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 0 for UNSUBSCRIBED; 1 for SUBSCRIBED;"}
