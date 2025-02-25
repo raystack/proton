@@ -698,6 +698,15 @@ service FrontierService {
     };
   }
 
+  rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {
+    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/kyc"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "OrganizationKyc";
+      summary: "Get KYC info of an organization";
+      description: "Get KYC info of an organization using ID or name";
+    };
+  }
+
   // Deprecated: use ListServiceUsers instead
   rpc ListOrganizationServiceUsers(ListOrganizationServiceUsersRequest) returns (ListOrganizationServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/organizations/{id}/serviceusers"};
@@ -3336,6 +3345,14 @@ message DeleteOrganizationRequest {
 }
 
 message DeleteOrganizationResponse {}
+
+message GetOrganizationKycRequest {
+  string org_id = 1;
+}
+
+message GetOrganizationKycResponse {
+  OrganizationKyc organization_kyc = 1;
+}
 
 // Project
 
