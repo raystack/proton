@@ -308,6 +308,17 @@ service FrontierService {
     };
   }
 
+  rpc GetEnrollmentForCurrentUser(GetEnrollmentForCurrentUserRequest) returns (GetEnrollmentForCurrentUserResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/users/self/enrollments"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Enrollment";
+      summary: "Get enrollment";
+      description: "Get enrollment for current user"
+    };
+  }
+
   // ServieUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers"};
@@ -2780,6 +2791,13 @@ message CreateEnrollmentForCurrentUserRequest{
 }
 
 message CreateEnrollmentForCurrentUserResponse{
+  Audience audience = 1;
+}
+
+message GetEnrollmentForCurrentUserRequest{
+}
+
+message GetEnrollmentForCurrentUserResponse{
   Audience audience = 1;
 }
 
