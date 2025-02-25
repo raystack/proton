@@ -938,9 +938,6 @@ message CheckoutSetupBody {
   bool customer_portal = 2;
 }
 
-
-
-
 message Audience {
   // subscription status
   enum Status {

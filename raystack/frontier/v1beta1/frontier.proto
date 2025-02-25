@@ -319,6 +319,19 @@ service FrontierService {
     };
   }
 
+  rpc UpdateEnrollmentForCurrentUser(UpdateEnrollmentForCurrentUserRequest) returns (UpdateEnrollmentForCurrentUserResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/users/self/enrollments",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Enrollment";
+      summary: "Get enrollment";
+      description: "Update enrollment for current user"
+    };
+  }
+
+
   // ServieUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers"};
@@ -2801,6 +2814,33 @@ message ListEnrollmentForCurrentUserRequest{
 }
 
 message ListEnrollmentForCurrentUserResponse{
+  repeated Audience audience = 1;
+}
+
+message UpdateEnrollmentForCurrentUserRequest{
+  string activity = 1[
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
+  ];
+  Audience.Status status = 2[
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).enum = {defined_only: true},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
+  ];
+  string source = 3[
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
+  ];
+  google.protobuf.Struct metadata = 4[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
+  ];
+}
+
+message UpdateEnrollmentForCurrentUserResponse{
   repeated Audience audience = 1;
 }
 
