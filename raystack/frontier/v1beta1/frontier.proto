@@ -2795,8 +2795,7 @@ message CreateEnrollmentForCurrentUserResponse{
 }
 
 message ListEnrollmentForCurrentUserRequest{
-  string activity = 1[
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+  optional string activity = 1[
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
   ];
 }
