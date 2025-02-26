@@ -5,6 +5,7 @@ package raystack.frontier.v1beta1;
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
 
@@ -950,4 +951,30 @@ message CheckoutProductBody {
 message CheckoutSetupBody {
   bool payment_method = 1;
   bool customer_portal = 2;
+}
+
+message RQLRequest {
+  repeated RQLFilter filters = 1;
+  repeated string group_by = 2;
+  uint32 offset = 3;
+  uint32 limit = 4;
+  string search = 5;
+  repeated RQLSort sort = 6;
+}
+
+message RQLFilter {
+  string name = 1;
+  string operator = 2;
+  google.protobuf.Any value = 3;
+}
+
+message RQLSort {
+  string key = 1;
+  string order = 2 [(validate.rules).string = {in: ["asc", "desc"]}];
+}
+
+message RQLQueryPaginationResponse {
+  uint32 offset = 1;
+  uint32 limit = 2;
+  uint32 total_count = 3;
 }
