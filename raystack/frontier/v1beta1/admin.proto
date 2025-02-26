@@ -159,7 +159,7 @@ service AdminService {
     option (google.api.http) = {post: "/v1beta1/admin/organizations/search"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
-      body: "body";
+      body: "*";
       summary: "Search organizations";
       description: "Search organization based on org demographic properties and billing plan details";
     };
