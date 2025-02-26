@@ -988,7 +988,7 @@ message RQLFilter {
   oneof value {
     bool bool_value = 3;
     string string_value = 4;
-    uint64 int_value = 5;
+    float number_value = 5;
   }
 }
 
