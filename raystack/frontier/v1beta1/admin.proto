@@ -154,6 +154,16 @@ service AdminService {
     };
   }
 
+  rpc SearchOrganizations(RQLRequest) returns (SearchOrganizationsResponse) {
+    option (google.api.http) = {post: "/v1beta1/admin/organizations/search"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      body: "RQLRequest";
+      summary: "Search organizations";
+      description: "Search organization based on org demographic properties and billing plan details";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -836,4 +846,25 @@ message SetOrganizationKycRequest {
 
 message SetOrganizationKycResponse {
   OrganizationKyc organization_kyc = 1;
+}
+
+message  SearchOrganizationsResponse {
+  message OrganizationResult {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    google.protobuf.Struct metadata = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6 ;
+    string state = 7;
+    string avatar = 8;
+    string created_by = 9;
+    string billing_plan_name = 10;
+    string payment_mode = 11 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
+    google.protobuf.Timestamp billing_cycle_ends_at = 12;
+    string country = 13;
+  }
+
+  repeated OrganizationResult organizations = 1;
+  RQLQueryPaginationResponse pagination = 2;
 }
