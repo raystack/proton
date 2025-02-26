@@ -951,3 +951,25 @@ message CheckoutSetupBody {
   bool payment_method = 1;
   bool customer_portal = 2;
 }
+
+message Audience {
+  // subscription status
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_UNSUBSCRIBED = 1;
+    STATUS_SUBSCRIBED = 2;
+  }
+  string id = 1;
+  string name = 5;
+  string email = 8;
+  string phone = 10;
+  string activity = 15;
+  Status status = 20;
+  google.protobuf.Timestamp changed_at = 21;
+  string source = 25;
+  bool verified = 27;
+  google.protobuf.Timestamp created_at = 30;
+  google.protobuf.Timestamp updated_at = 31;
+  google.protobuf.Struct metadata = 35;
+}
+
