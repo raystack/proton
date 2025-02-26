@@ -308,7 +308,7 @@ service FrontierService {
     };
   }
 
-  rpc ListEnrollmentForCurrentUser(ListEnrollmentForCurrentUserRequest) returns (ListEnrollmentForCurrentUserResponse) {
+  rpc ListEnrollmentsForCurrentUser(ListEnrollmentsForCurrentUserRequest) returns (ListEnrollmentsForCurrentUserResponse) {
     option (google.api.http) = {
       get: "/v1beta1/users/self/enrollments"
     };
@@ -2807,13 +2807,13 @@ message CreateEnrollmentForCurrentUserResponse{
   Audience audience = 1;
 }
 
-message ListEnrollmentForCurrentUserRequest{
+message ListEnrollmentsForCurrentUserRequest{
   optional string activity = 1[
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
   ];
 }
 
-message ListEnrollmentForCurrentUserResponse{
+message ListEnrollmentsForCurrentUserResponse{
   repeated Audience audience = 1;
 }
 
