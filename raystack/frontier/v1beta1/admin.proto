@@ -849,7 +849,7 @@ message SetOrganizationKycResponse {
   OrganizationKyc organization_kyc = 1;
 }
 
-message  SearchOrganizationsResponse {
+message SearchOrganizationsResponse {
   message OrganizationResult {
     string id = 1;
     string name = 2;
