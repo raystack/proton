@@ -860,16 +860,15 @@ message SearchOrganizationsResponse {
     string id = 1;
     string name = 2;
     string title = 3;
-    google.protobuf.Struct metadata = 4;
-    google.protobuf.Timestamp created_at = 5;
-    google.protobuf.Timestamp updated_at = 6 ;
-    string state = 7;
-    string avatar = 8;
-    string created_by = 9;
-    string billing_plan_name = 10;
-    string payment_mode = 11 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
-    google.protobuf.Timestamp billing_cycle_ends_at = 12;
-    string country = 13;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5 ;
+    string state = 6;
+    string avatar = 7;
+    string created_by = 8;
+    string billing_plan_name = 9;
+    string payment_mode = 10 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
+    google.protobuf.Timestamp billing_cycle_ends_at = 11;
+    string country = 12;
   }
 
   repeated OrganizationResult organizations = 1;
