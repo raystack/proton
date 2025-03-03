@@ -961,8 +961,10 @@ message UpdateProspectRequest{
   ];
   string email = 5[
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 1},
-    (validate.rules).string.email = true,
+    (validate.rules).string = {
+      min_len: 1,
+      email: true,
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
   ];
   string phone = 6[
@@ -982,7 +984,10 @@ message UpdateProspectRequest{
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
   ];
   string source = 9[
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (validate.rules).string = {
+      ignore_empty: true,
+      pattern: "^[A-Za-z0-9-_]+$",
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
   ];
   bool verified = 10[

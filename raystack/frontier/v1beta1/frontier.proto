@@ -4082,7 +4082,10 @@ message CreateProspectRequest{
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
   ];
   string source = 9[
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (validate.rules).string = {
+      ignore_empty: true,
+      pattern: "^[A-Za-z0-9-_]+$",
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
   ];
   bool verified = 10[
