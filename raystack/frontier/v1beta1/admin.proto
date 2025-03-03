@@ -958,7 +958,6 @@ message UpdateProspectRequest{
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
   ];
   string phone = 6[
-    (validate.rules).string.pattern = "^[0-9+()- ]+$",
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "phone number of the user"}
   ];
   string activity = 7[
