@@ -933,7 +933,7 @@ message ListProspectsResponse{
 }
 
 message GetProspectRequest{
-  RQLRequest query = 1;
+  string id = 1;
 }
 
 message GetProspectResponse{
