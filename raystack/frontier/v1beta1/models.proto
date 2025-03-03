@@ -973,3 +973,32 @@ message Audience {
   google.protobuf.Struct metadata = 35;
 }
 
+message RQLRequest {
+  repeated RQLFilter filters = 1;
+  repeated string group_by = 2;
+  uint32 offset = 3;
+  uint32 limit = 4;
+  string search = 5;
+  repeated RQLSort sort = 6;
+}
+
+message RQLFilter {
+  string name = 1;
+  string operator = 2;
+  oneof value {
+    bool bool_value = 3;
+    string string_value = 4;
+    float number_value = 5;
+  }
+}
+
+message RQLSort {
+  string key = 1;
+  string order = 2 [(validate.rules).string = {in: ["asc", "desc"]}];
+}
+
+message RQLQueryPaginationResponse {
+  uint32 offset = 1;
+  uint32 limit = 2;
+  uint32 total_count = 3;
+}

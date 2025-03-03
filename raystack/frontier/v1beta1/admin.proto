@@ -5,6 +5,7 @@ package raystack.frontier.v1beta1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
@@ -151,6 +152,18 @@ service AdminService {
       tags: "Organization";
       summary: "List all organizations";
       description: "Lists all the organizations in a Frontier instance. It can be filtered by user and state.";
+    };
+  }
+
+  rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organizations";
+      description: "Search organization based on org demographic properties and billing plan details";
     };
   }
 
@@ -834,6 +847,30 @@ message SetOrganizationKycRequest {
   string link = 3;
 }
 
+message SearchOrganizationsRequest {
+  RQLRequest query = 1;
+}
+
 message SetOrganizationKycResponse {
   OrganizationKyc organization_kyc = 1;
+}
+
+message SearchOrganizationsResponse {
+  message OrganizationResult {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5 ;
+    string state = 6;
+    string avatar = 7;
+    string created_by = 8;
+    string billing_plan_name = 9;
+    string payment_mode = 10 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
+    google.protobuf.Timestamp billing_cycle_ends_at = 11;
+    string country = 12;
+  }
+
+  repeated OrganizationResult organizations = 1;
+  RQLQueryPaginationResponse pagination = 2;
 }
