@@ -4072,7 +4072,7 @@ message CreateProspectRequest{
   ];
   Prospect.Status status = 8 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {defined_only: true, required: true},
+    (validate.rules).enum = {in:[1,2]},
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
   ];
   string source = 9[
