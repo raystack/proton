@@ -464,7 +464,7 @@ service AdminService {
   }
 
   // Prospects
-  rpc ListProspects(ListProspectsRequest) returns (ListProspectsRequest) {
+  rpc ListProspects(ListProspectsRequest) returns (ListProspectsResponse) {
     option (google.api.http) = {
       post: "/v1beta1/admin/prospects/list"
       body: "query"
@@ -476,7 +476,19 @@ service AdminService {
     };
   }
 
-  rpc UpdateProspect(UpdateProspectRequest) returns (UpdateProspectRequest) {
+  rpc GetProspect(GetProspectRequest) returns (GetProspectResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/prospects/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Prospect";
+      summary: "Get prospect";
+      description: "Get prospect by ID"
+    };
+  }
+
+
+  rpc UpdateProspect(UpdateProspectRequest) returns (UpdateProspectResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/prospects/{id}",
       body: "*"
@@ -488,7 +500,7 @@ service AdminService {
     };
   }
 
-  rpc DeleteProspect(DeleteProspectRequest) returns (DeleteProspectRequest) {
+  rpc DeleteProspect(DeleteProspectRequest) returns (DeleteProspectResponse) {
     option (google.api.http) = {
       delete: "/v1beta1/admin/prospects/{id}",
     };
@@ -918,6 +930,14 @@ message ListProspectsRequest{
 
 message ListProspectsResponse{
   repeated Prospect prospect = 1;
+}
+
+message GetProspectRequest{
+  RQLRequest query = 1;
+}
+
+message GetProspectResponse{
+  Prospect prospect = 1;
 }
 
 message UpdateProspectRequest{
