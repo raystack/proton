@@ -296,43 +296,7 @@ service FrontierService {
     };
   }
 
-  rpc CreateEnrollmentForCurrentUser(CreateEnrollmentForCurrentUserRequest) returns (CreateEnrollmentForCurrentUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users/self/enrollments",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Enrollment";
-      summary: "Create enrollment";
-      description: "Create enrollment for current user and capture their subscription status"
-    };
-  }
-
-  rpc ListEnrollmentsForCurrentUser(ListEnrollmentsForCurrentUserRequest) returns (ListEnrollmentsForCurrentUserResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/users/self/enrollments"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Enrollment";
-      summary: "List enrollments";
-      description: "List enrollments for current user"
-    };
-  }
-
-  rpc UpdateEnrollmentForCurrentUser(UpdateEnrollmentForCurrentUserRequest) returns (UpdateEnrollmentForCurrentUserResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/users/self/enrollments/{id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Enrollment";
-      summary: "Update enrollment";
-      description: "Update enrollment for current user for given ID"
-    };
-  }
-
-
-  // ServieUser
+  // ServiceUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
     option (google.api.http) = {get: "/v1beta1/serviceusers"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -1906,6 +1870,19 @@ service FrontierService {
       description: "Accepts a Billing webhook and processes it.";
     };
   }
+
+  // Prospects
+  rpc CreateProspect(CreateProspectRequest) returns (CreateProspectResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/prospects",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Prospect";
+      summary: "Create prospect";
+      description: "Create prospect for given email and activity"
+    };
+  }
 }
 
 // Billing
@@ -2787,75 +2764,6 @@ message ListCurrentUserInvitationsRequest {}
 message ListCurrentUserInvitationsResponse {
   repeated Invitation invitations = 1;
   repeated Organization orgs = 2;
-}
-
-message CreateEnrollmentForCurrentUserRequest{
-  string activity = 1[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 1},
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
-  ];
-  Audience.Status status = 2[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {defined_only: true},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
-  ];
-  string source = 3[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 1},
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
-  ];
-  google.protobuf.Struct metadata = 4[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
-  ];
-}
-
-message CreateEnrollmentForCurrentUserResponse{
-  Audience audience = 1;
-}
-
-message ListEnrollmentsForCurrentUserRequest{
-  optional string activity = 1[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
-  ];
-}
-
-message ListEnrollmentsForCurrentUserResponse{
-  repeated Audience audience = 1;
-}
-
-message UpdateEnrollmentForCurrentUserRequest{
-  string id = 5[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {uuid: true},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the audience to update."}
-  ];
-  string activity = 1[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 1},
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. Newsletter, Waitlist, Blogs etc"}
-  ];
-  Audience.Status status = 2[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {defined_only: true},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
-  ];
-  string source = 3[
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 1},
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
-  ];
-  google.protobuf.Struct metadata = 4[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
-  ];
-}
-
-message UpdateEnrollmentForCurrentUserResponse{
-  Audience audience = 1;
 }
 
 // Serviceuser
@@ -4140,3 +4048,45 @@ message BillingWebhookCallbackRequest {
 }
 
 message BillingWebhookCallbackResponse {}
+
+message CreateProspectRequest{
+  string name = 1[
+    (validate.rules).string.pattern = "^[A-Za-z ]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "name of the user"}
+  ];
+  string email = 5[
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
+    (validate.rules).string.email = true,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
+  ];
+  string phone = 6[
+    (validate.rules).string.pattern = "^[0-9+()- ]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "phone number of the user"}
+  ];
+  string activity = 7[
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 1},
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. newsletter, waitlist, blogs etc"}
+  ];
+  Prospect.Status status = 8 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).enum = {defined_only: true, required: true},
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
+  ];
+  string source = 9[
+    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
+  ];
+  bool verified = 10[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "verification status of this user addition e.g. true, false"}
+  ];
+  google.protobuf.Struct metadata = 11[
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
+  ];
+}
+
+message CreateProspectResponse{
+  Prospect prospect = 1;
+}

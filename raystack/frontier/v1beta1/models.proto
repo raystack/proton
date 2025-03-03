@@ -952,7 +952,7 @@ message CheckoutSetupBody {
   bool customer_portal = 2;
 }
 
-message Audience {
+message Prospect {
   // subscription status
   enum Status {
     STATUS_UNSPECIFIED = 0;
