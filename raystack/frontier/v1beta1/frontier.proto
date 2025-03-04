@@ -1872,7 +1872,7 @@ service FrontierService {
   }
 
   // Prospects
-  rpc CreateProspect(CreateProspectRequest) returns (CreateProspectResponse) {
+  rpc CreateProspectPublic(CreateProspectPublicRequest) returns (CreateProspectPublicResponse) {
     option (google.api.http) = {
       post: "/v1beta1/prospects",
       body: "*"
@@ -1880,7 +1880,7 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Prospect";
       summary: "Create prospect";
-      description: "Create prospect for given email and activity"
+      description: "Create prospect for given email and activity. Available for public access.";
     };
   }
 }
@@ -4049,7 +4049,7 @@ message BillingWebhookCallbackRequest {
 
 message BillingWebhookCallbackResponse {}
 
-message CreateProspectRequest{
+message CreateProspectPublicRequest{
   string name = 1[
     (validate.rules).string = {
       ignore_empty: true,
@@ -4076,11 +4076,6 @@ message CreateProspectRequest{
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. newsletter, waitlist, blogs etc"}
   ];
-  Prospect.Status status = 8 [
-    (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {in:[1,2]},
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "subscription status for this activity. Allowed values - 1 for UNSUBSCRIBED; 2 for SUBSCRIBED;"}
-  ];
   string source = 9[
     (validate.rules).string = {
       ignore_empty: true,
@@ -4088,14 +4083,11 @@ message CreateProspectRequest{
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
   ];
-  bool verified = 10[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "verification status of this user addition e.g. true, false"}
-  ];
   google.protobuf.Struct metadata = 11[
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
   ];
 }
 
-message CreateProspectResponse{
+message CreateProspectPublicResponse{
   Prospect prospect = 1;
 }
