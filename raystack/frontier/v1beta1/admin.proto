@@ -929,7 +929,7 @@ message ListProspectsRequest{
 }
 
 message ListProspectsResponse{
-  repeated Prospect prospect = 1;
+  repeated Prospect prospects = 1;
 }
 
 message GetProspectRequest{
