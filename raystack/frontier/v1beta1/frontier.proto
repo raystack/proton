@@ -4089,5 +4089,4 @@ message CreateProspectPublicRequest{
 }
 
 message CreateProspectPublicResponse{
-  Prospect prospect = 1;
 }
