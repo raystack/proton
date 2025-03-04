@@ -865,12 +865,13 @@ message SearchOrganizationsResponse {
     string state = 6;
     string avatar = 7;
     string created_by = 8;
-    string billing_plan_name = 9;
+    string plan_name = 9;
     string payment_mode = 10 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
     google.protobuf.Timestamp billing_cycle_ends_at = 11;
     string country = 12;
     string subscription_status = 14;
     string plan_interval = 15;
+    string plan_id = 16;
   }
 
   repeated OrganizationResult organizations = 1;
