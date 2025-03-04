@@ -869,7 +869,6 @@ message SearchOrganizationsResponse {
     string payment_mode = 10 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
     google.protobuf.Timestamp billing_cycle_ends_at = 11;
     string country = 12;
-    string plan = 13;
     string subscription_status = 14;
     string plan_interval = 15;
   }
