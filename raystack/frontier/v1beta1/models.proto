@@ -1005,10 +1005,10 @@ message RQLQueryPaginationResponse {
 
 message RQLQueryGroupResponse {
   string name = 1;
-  repeated GroupData data = 2;
+  repeated RQLQueryGroupData data = 2;
 }
 
-message GroupData {
+message RQLQueryGroupData {
   string name = 1;
   uint32 count = 2;
 }
