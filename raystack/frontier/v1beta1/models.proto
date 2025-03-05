@@ -993,7 +993,7 @@ message RQLFilter {
 }
 
 message RQLSort {
-  string key = 1;
+  string name = 1;
   string order = 2 [(validate.rules).string = {in: ["asc", "desc"]}];
 }
 
