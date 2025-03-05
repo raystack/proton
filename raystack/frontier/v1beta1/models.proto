@@ -1002,3 +1002,13 @@ message RQLQueryPaginationResponse {
   uint32 limit = 2;
   uint32 total_count = 3;
 }
+
+message RQLQueryGroupResponse {
+  string name = 1;
+  repeated GroupData data = 2;
+}
+
+message GroupData {
+  string name = 1;
+  uint32 count = 2;
+}

@@ -876,4 +876,5 @@ message SearchOrganizationsResponse {
 
   repeated OrganizationResult organizations = 1;
   RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse groups = 3;
 }
