@@ -993,7 +993,7 @@ message RQLFilter {
 }
 
 message RQLSort {
-  string key = 1;
+  string name = 1;
   string order = 2 [(validate.rules).string = {in: ["asc", "desc"]}];
 }
 
@@ -1001,4 +1001,14 @@ message RQLQueryPaginationResponse {
   uint32 offset = 1;
   uint32 limit = 2;
   uint32 total_count = 3;
+}
+
+message RQLQueryGroupResponse {
+  string name = 1;
+  repeated RQLQueryGroupData data = 2;
+}
+
+message RQLQueryGroupData {
+  string name = 1;
+  uint32 count = 2;
 }
