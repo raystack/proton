@@ -1012,3 +1012,11 @@ message RQLQueryGroupData {
   string name = 1;
   uint32 count = 2;
 }
+
+message ExportOrganizationsRequest {
+}
+
+message ExportOrganizationsResponse {
+  bytes content = 1;
+  int32 chunk_number = 2;
+}

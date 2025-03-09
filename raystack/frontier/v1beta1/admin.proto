@@ -167,6 +167,17 @@ service AdminService {
     };
   }
 
+  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream ExportOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations/export"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Export organizations";
+      description: "Export organization with demographic properties and billing plan details";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
