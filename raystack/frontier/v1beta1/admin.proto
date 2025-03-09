@@ -164,6 +164,7 @@ service AdminService {
       tags: "Organization";
       summary: "Search organizations";
       description: "Search organization based on org demographic properties and billing plan details";
+      produces: "text/csv";
     };
   }
 
