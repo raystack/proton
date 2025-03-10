@@ -169,7 +169,7 @@ service AdminService {
     };
   }
 
-  rpc ExportOrganizations(ExportOrganizationsRequest) returns (google.api.HttpBody) {
+  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/admin/organizations/export"
     };
