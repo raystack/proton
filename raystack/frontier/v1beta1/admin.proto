@@ -959,6 +959,8 @@ message ListProspectsRequest{
 
 message ListProspectsResponse{
   repeated Prospect prospects = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
 }
 
 message GetProspectRequest{
