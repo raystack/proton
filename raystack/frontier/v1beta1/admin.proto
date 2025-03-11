@@ -169,6 +169,7 @@ service AdminService {
     };
   }
 
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/admin/organizations/export"

@@ -1015,8 +1015,3 @@ message RQLQueryGroupData {
 
 message ExportOrganizationsRequest {
 }
-
-message ExportOrganizationsResponse {
-  bytes content = 1;
-  int32 chunk_number = 2;
-}
