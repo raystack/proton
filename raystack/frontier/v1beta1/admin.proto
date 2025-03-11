@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/api/httpbody.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
@@ -164,6 +165,19 @@ service AdminService {
       tags: "Organization";
       summary: "Search organizations";
       description: "Search organization based on org demographic properties and billing plan details";
+      produces: "text/csv";
+    };
+  }
+
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations/export"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Export organizations";
+      description: "Export organization with demographic properties and billing plan details";
     };
   }
 

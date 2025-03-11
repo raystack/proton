@@ -1012,3 +1012,6 @@ message RQLQueryGroupData {
   string name = 1;
   uint32 count = 2;
 }
+
+message ExportOrganizationsRequest {
+}

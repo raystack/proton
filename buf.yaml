@@ -9,3 +9,5 @@ breaking:
     - WIRE
   except:
     - RESERVED_MESSAGE_NO_DELETE
+lint:
+  allow_comment_ignores: true
