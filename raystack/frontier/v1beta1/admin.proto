@@ -165,7 +165,6 @@ service AdminService {
       tags: "Organization";
       summary: "Search organizations";
       description: "Search organization based on org demographic properties and billing plan details";
-      produces: "text/csv";
     };
   }
 
@@ -178,6 +177,7 @@ service AdminService {
       tags: "Organization";
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
+      produces: "text/csv";
     };
   }
 
