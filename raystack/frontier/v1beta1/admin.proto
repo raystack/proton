@@ -178,24 +178,6 @@ service AdminService {
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
       produces: ["text/csv"];
-      responses: {
-        key: "200";
-        value: {
-          description: "Successful response";
-          schema: {
-            json_schema: {
-              ref: "google.api.HttpBody"
-            }
-          };
-          headers: {
-            key: "Content-Type";
-            value:  {
-              type: "string",
-              default: "text/csv"
-            }
-          }
-        }
-      }
     };
   }
 
