@@ -177,7 +177,7 @@ service AdminService {
       tags: "Organization";
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
-      produces: "text/csv";
+      produces: ["text/csv"];
       responses: {
         key: "200";
         value: {
