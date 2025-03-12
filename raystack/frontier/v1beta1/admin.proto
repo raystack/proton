@@ -189,7 +189,10 @@ service AdminService {
           };
           headers: {
             key: "Content-Type";
-            value: "text/csv";
+            value:  {
+              type: "string",
+              default: "text/csv"
+            }
           }
         }
       }
