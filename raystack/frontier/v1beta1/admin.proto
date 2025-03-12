@@ -177,7 +177,25 @@ service AdminService {
       tags: "Organization";
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
-      produces: "text/csv";
+      produces: ["text/csv"];
+      responses: {
+        key: "200",
+        value: {
+          description: "CSV stream response"
+          schema: {
+            json_schema: {
+              type: STRING
+            }
+          }
+          headers: {
+            key: "Content-Type"
+            value: {
+              description: "Content type of the response"
+              default: "text/csv"
+            }
+          }
+        }
+      }
     };
   }
 
