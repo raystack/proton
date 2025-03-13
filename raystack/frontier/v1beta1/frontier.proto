@@ -1577,7 +1577,10 @@ service FrontierService {
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
     option (google.api.http) = {
       get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/subscriptions"}
+      additional_bindings {
+        get: "/v1beta1/organizations/{org_id}/billing/subscriptions"
+        options (google.api.operation) = { operation_id: "ListBillingSubscriptions" }
+      }
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Subscription";
