@@ -1833,6 +1833,17 @@ service FrontierService {
     };
   }
 
+  rpc TotalDebitedTransactions(TotalDebitedTransactionsRequest) returns (TotalDebitedTransactionsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/debited_transactions_total"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Transaction";
+      summary: "Sum of amount of debited transactions including refunds";
+      description: "Sum of amount of debited transactions including refunds";
+    };
+  }
+
   // Invoice
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
     option (google.api.http) = {
@@ -2055,6 +2066,19 @@ message ListBillingTransactionsRequest {
 message ListBillingTransactionsResponse {
   // List of transactions
   repeated BillingTransaction transactions = 1;
+}
+
+message TotalDebitedTransactionsRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  // ID of the billing account
+  string billing_id = 2 [(validate.rules).string = {
+    uuid: true
+  }];
+}
+
+message TotalDebitedTransactionsResponse {
+  // Total debited amount in the billing account
+  BillingAccount.Balance debited = 1;
 }
 
 message GetSubscriptionRequest {
