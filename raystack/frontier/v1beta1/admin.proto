@@ -1109,7 +1109,7 @@ message SearchOrganizationUsersRequest {
 }
 
 message SearchOrganizationUsersResponse {
-  message OrganizationUsers {
+  message OrganizationUser {
     string id = 1;
     string name = 2;
     string title = 3;
@@ -1117,10 +1117,12 @@ message SearchOrganizationUsersResponse {
     google.protobuf.Timestamp joined_at = 5;
     string state = 6;
     string avatar = 7;
-    string created_by = 8;
+    string role_name = 8;
+    string role_title = 9;
+    string role_id = 10;
   }
 
-  repeated OrganizationUsers org_users = 1;
+  repeated OrganizationUser org_users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
