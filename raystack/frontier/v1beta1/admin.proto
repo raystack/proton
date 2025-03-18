@@ -1123,6 +1123,7 @@ message SearchOrganizationUsersResponse {
     string role_names = 8;
     string role_titles = 9;
     string role_ids = 10;
+    string organization_id = 11;
   }
 
   repeated OrganizationUser org_users = 1;
