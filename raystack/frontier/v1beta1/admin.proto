@@ -1109,7 +1109,7 @@ message SearchOrganizationUsersRequest {
 }
 
 message SearchOrganizationUsersResponse {
-  message OrganizationUsersResult {
+  message OrganizationUsers {
     string id = 1;
     string name = 2;
     string title = 3;
@@ -1120,7 +1120,7 @@ message SearchOrganizationUsersResponse {
     string created_by = 8;
   }
 
-  repeated OrganizationUsersResult org_users = 1;
+  repeated OrganizationUsers org_users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
