@@ -168,6 +168,17 @@ service AdminService {
     };
   }
 
+  rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{id}/users/search", 
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organization users";
+    };
+  }
+
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
@@ -1093,4 +1104,29 @@ message CreateProspectRequest{
 
 message CreateProspectResponse{
   Prospect prospect = 1;
+}
+
+message SearchOrganizationUsersRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchOrganizationUsersResponse {
+  message OrganizationUser {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    string email = 4;
+    google.protobuf.Timestamp joined_at = 5;
+    string state = 6;
+    string avatar = 7;
+    repeated string role_names = 8;
+    repeated string role_titles = 9;
+    repeated string role_ids = 10;
+    string organization_id = 11;
+  }
+
+  repeated OrganizationUser org_users = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
 }
