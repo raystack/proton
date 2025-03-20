@@ -180,6 +180,7 @@ service AdminService {
   }
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/admin/organizations/export"
@@ -188,6 +189,20 @@ service AdminService {
       tags: "Organization";
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
+      produces: "text/csv";
+    };
+  }
+
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  rpc ExportOrganizationUsers(ExportOrganizationUsersRequest) returns (stream google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1beta1/organizations/{id}/users/export"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Export organization users";
+      description: "Export organization user their role details";
       produces: "text/csv";
     };
   }
@@ -1129,4 +1144,8 @@ message SearchOrganizationUsersResponse {
   repeated OrganizationUser org_users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
+}
+
+message ExportOrganizationUsersRequest{
+  string id = 1 [(validate.rules).string.min_len = 3];
 }
