@@ -180,6 +180,7 @@ service AdminService {
   }
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/admin/organizations/export"
@@ -193,6 +194,7 @@ service AdminService {
   }
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizationUsers(ExportOrganizationUsersRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/organizations/{id}/users/export"
