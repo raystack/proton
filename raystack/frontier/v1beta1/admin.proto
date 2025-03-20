@@ -1147,4 +1147,5 @@ message SearchOrganizationUsersResponse {
 }
 
 message ExportOrganizationUsersRequest{
+  string id = 1 [(validate.rules).string.min_len = 3];
 }
