@@ -1120,9 +1120,9 @@ message SearchOrganizationUsersResponse {
     google.protobuf.Timestamp joined_at = 5;
     string state = 6;
     string avatar = 7;
-    string role_names = 8;
-    string role_titles = 9;
-    string role_ids = 10;
+    repeated string role_names = 8;
+    repeated string role_titles = 9;
+    repeated string role_ids = 10;
     string organization_id = 11;
   }
 
