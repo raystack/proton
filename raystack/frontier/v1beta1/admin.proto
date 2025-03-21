@@ -170,7 +170,7 @@ service AdminService {
 
   rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/users/search", 
+      post: "/v1beta1/admin/organizations/{id}/users/search", 
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
