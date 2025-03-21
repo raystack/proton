@@ -1173,7 +1173,7 @@ message SearchOrganizationProjectsResponse {
     string title = 3;
     string state = 4;
     int64 member_count = 5;
-    repeated string avatars = 6;
+    repeated string user_ids = 6;
     google.protobuf.Timestamp created_at = 7;
     string organization_id = 8;
   }
