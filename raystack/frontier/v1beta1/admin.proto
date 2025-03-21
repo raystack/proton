@@ -1167,7 +1167,7 @@ message SearchOrganizationProjectsRequest {
 }
 
 message SearchOrganizationProjectsResponse {
-  message OrganizationProjects {
+  message OrganizationProject {
     string id = 1;
     string name = 2;
     string title = 3;
@@ -1178,7 +1178,7 @@ message SearchOrganizationProjectsResponse {
     string organization_id = 8;
   }
 
-  repeated OrganizationProjects org_projects = 1;
+  repeated OrganizationProject org_projects = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
