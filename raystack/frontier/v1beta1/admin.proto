@@ -1161,6 +1161,11 @@ message ExportOrganizationUsersRequest{
   string id = 1 [(validate.rules).string.min_len = 3];
 }
 
+message SearchOrganizationProjectsRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
 message SearchOrganizationProjectsResponse {
   message OrganizationProjects {
     string id = 1;
