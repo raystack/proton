@@ -179,6 +179,17 @@ service AdminService {
     };
   }
 
+  rpc SearchOrganizationProjects(SearchOrganizationProjectsRequest) returns (SearchOrganizationProjectsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/organizations/{id}/projects/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organization projects";
+    };
+  }
+
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
@@ -1148,4 +1159,21 @@ message SearchOrganizationUsersResponse {
 
 message ExportOrganizationUsersRequest{
   string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message SearchOrganizationProjectsResponse {
+  message OrganizationProjects {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    string state = 4;
+    int64 member_count = 5;
+    repeated string avatars = 6;
+    google.protobuf.Timestamp created_at = 7;
+    string organization_id = 8;
+  }
+
+  repeated OrganizationProjects org_projects = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
 }
