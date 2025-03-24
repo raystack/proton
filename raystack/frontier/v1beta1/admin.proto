@@ -218,6 +218,20 @@ service AdminService {
     };
   }
 
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  rpc ExportOrganizationProjects(ExportOrganizationProjectsRequest) returns (stream google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations/{id}/projects/export"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Export organization projects";
+      description: "Export organization projects with user IDs";
+      produces: "text/csv";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -1181,4 +1195,8 @@ message SearchOrganizationProjectsResponse {
   repeated OrganizationProject org_projects = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
+}
+
+message ExportOrganizationProjectsRequest{
+  string id = 1 [(validate.rules).string.min_len = 3];
 }
