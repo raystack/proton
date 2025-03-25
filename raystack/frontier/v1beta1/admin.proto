@@ -1157,7 +1157,7 @@ message SearchOrganizationUsersResponse {
     string name = 2;
     string title = 3;
     string email = 4;
-    google.protobuf.Timestamp joined_at = 5;
+    google.protobuf.Timestamp org_joined_at = 5;
     string state = 6;
     string avatar = 7;
     repeated string role_names = 8;
