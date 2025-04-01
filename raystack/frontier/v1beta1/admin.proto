@@ -179,6 +179,17 @@ service AdminService {
     };
   }
 
+  rpc SearchProjectUsers(SearchProjectUsersRequest) returns (SearchProjectUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/projects/{id}/users/search", 
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Project";
+      summary: "Search Project users";
+    };
+  }
+
   rpc SearchOrganizationProjects(SearchOrganizationProjectsRequest) returns (SearchOrganizationProjectsResponse) {
     option (google.api.http) = {
       post: "/v1beta1/admin/organizations/{id}/projects/search",
@@ -1199,4 +1210,27 @@ message SearchOrganizationProjectsResponse {
 
 message ExportOrganizationProjectsRequest{
   string id = 1 [(validate.rules).string.min_len = 3];
+}
+
+message SearchProjectUsersRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchProjectUsersResponse {
+  message ProjectUser {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    string email = 4;
+    string avatar = 7;
+    repeated string role_names = 8;
+    repeated string role_titles = 9;
+    repeated string role_ids = 10;
+    string project_id = 11;
+  }
+
+  repeated ProjectUser project_users = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
 }
