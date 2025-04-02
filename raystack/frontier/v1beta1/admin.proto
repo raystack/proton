@@ -201,6 +201,17 @@ service AdminService {
     };
   }
 
+  rpc SearchOrganizationInvoices(SearchOrganizationInvoicesRequest) returns (SearchOrganizationInvoicesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations/{id}/invoices/search", 
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organization invoices";
+    };
+  }
+
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
@@ -1231,6 +1242,24 @@ message SearchProjectUsersResponse {
   }
 
   repeated ProjectUser project_users = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message SearchOrganizationInvoicesRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchOrganizationInvoicesResponse {
+  message OrganizationInvoice {
+    int64 amount = 1;
+    string status = 2;
+    string invoice_link = 3;
+    google.protobuf.Timestamp billed_on = 7;
+  }
+
+  repeated OrganizationInvoice organization_invoices = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
