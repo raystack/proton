@@ -1253,10 +1253,12 @@ message SearchOrganizationInvoicesRequest {
 
 message SearchOrganizationInvoicesResponse {
   message OrganizationInvoice {
-    int64 amount = 1;
-    string status = 2;
-    string invoice_link = 3;
-    google.protobuf.Timestamp billed_on = 7;
+    string id = 1;
+    int64 amount = 2;
+    string status = 3;
+    string invoice_link = 4;
+    google.protobuf.Timestamp billed_on = 5;
+    string org_id = 6;
   }
 
   repeated OrganizationInvoice organization_invoices = 1;
