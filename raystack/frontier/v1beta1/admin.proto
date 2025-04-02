@@ -1255,7 +1255,7 @@ message SearchOrganizationInvoicesResponse {
   message OrganizationInvoice {
     string id = 1;
     int64 amount = 2;
-    string status = 3;
+    string state = 3;
     string invoice_link = 4;
     google.protobuf.Timestamp billed_on = 5;
     string org_id = 6;
