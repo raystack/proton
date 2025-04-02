@@ -212,6 +212,17 @@ service AdminService {
     };
   }
 
+  rpc SearchOrganizationTokens(SearchOrganizationTokensRequest) returns (SearchOrganizationTokensResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations/{id}/tokens/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organization tokens";
+    };
+  }
+
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
@@ -1263,6 +1274,27 @@ message SearchOrganizationInvoicesResponse {
   }
 
   repeated OrganizationInvoice organization_invoices = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message SearchOrganizationTokensRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchOrganizationTokensResponse {
+  message OrganizationToken {
+    string id = 1;
+    int64 amount = 2;
+    string currency = 3;
+    string state = 4;
+    string invoice_link = 5;
+    google.protobuf.Timestamp billed_on = 6;
+    string org_id = 7;
+  }
+
+  repeated OrganizationToken organization_tokens = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
