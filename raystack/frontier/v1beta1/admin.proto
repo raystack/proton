@@ -1285,13 +1285,14 @@ message SearchOrganizationTokensRequest {
 
 message SearchOrganizationTokensResponse {
   message OrganizationToken {
-    string id = 1;
-    int64 amount = 2;
-    string currency = 3;
-    string state = 4;
-    string invoice_link = 5;
-    google.protobuf.Timestamp billed_on = 6;
-    string org_id = 7;
+    int64 amount = 1;
+    string type = 2;
+    string description = 3;
+    string user_id = 4;
+    string user_title = 5;
+    string user_avatar = 6;
+    google.protobuf.Timestamp created_at =7;
+    string org_id = 8;
   }
 
   repeated OrganizationToken organization_tokens = 1;
