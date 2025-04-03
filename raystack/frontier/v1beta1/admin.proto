@@ -1258,7 +1258,7 @@ message SearchOrganizationInvoicesResponse {
     string currency = 3;
     string state = 4;
     string invoice_link = 5;
-    google.protobuf.Timestamp billed_on = 6;
+    google.protobuf.Timestamp created_at = 6;
     string org_id = 7;
   }
 
