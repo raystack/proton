@@ -1337,7 +1337,7 @@ message SearchOrganizationServiceUserCredentialsRequest {
 message SearchOrganizationServiceUserCredentialsResponse {
   message OrganizationServiceUserCredential {
     string title = 1;
-    string user_title = 2;
+    string serviceuser_title = 2;
     google.protobuf.Timestamp created_at =3;
     string org_id = 4;
   }
