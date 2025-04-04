@@ -1336,14 +1336,10 @@ message SearchOrganizationServiceUserCredentialsRequest {
 
 message SearchOrganizationServiceUserCredentialsResponse {
   message OrganizationServiceUserCredential {
-    int64 amount = 1;
-    string type = 2;
-    string description = 3;
-    string user_id = 4;
-    string user_title = 5;
-    string user_avatar = 6;
-    google.protobuf.Timestamp created_at =7;
-    string org_id = 8;
+    string title = 1;
+    string user_title = 2;
+    google.protobuf.Timestamp created_at =3;
+    string org_id = 4;
   }
 
   repeated OrganizationServiceUserCredential organization_serviceuser_credentials = 1;
