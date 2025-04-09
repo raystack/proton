@@ -290,6 +290,18 @@ service AdminService {
     };
   }
 
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/users/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Search users";
+      description: "Search users based on their properties";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -1360,6 +1372,25 @@ message SearchOrganizationServiceUserCredentialsResponse {
   }
 
   repeated OrganizationServiceUserCredential organization_serviceuser_credentials = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message SearchUsersRequest {
+  RQLRequest query = 1;
+}
+
+message SearchUsersResponse {
+  message UserResult {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    google.protobuf.Timestamp created_at = 4;
+    string state = 5;
+    string avatar = 6;
+  }
+
+  repeated UserResult users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
