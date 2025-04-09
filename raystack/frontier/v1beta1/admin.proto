@@ -302,6 +302,17 @@ service AdminService {
     };
   }
 
+  rpc ListOrganizationsKyc(ListOrganizationsKycRequest) returns (ListOrganizationsKycResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations/kyc",
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "OrganizationKyc";
+      summary: "List KYC information of all organizations";
+      description: "List KYC information of all organization";
+    };
+  }
+
   // Projects
   rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
     option (google.api.http) = {get: "/v1beta1/admin/projects"};
@@ -1036,6 +1047,12 @@ message SearchOrganizationsRequest {
 
 message SetOrganizationKycResponse {
   OrganizationKyc organization_kyc = 1;
+}
+
+message ListOrganizationsKycRequest {}
+
+message ListOrganizationsKycResponse {
+  repeated OrganizationKyc organizations_kyc = 1;
 }
 
 message SearchOrganizationsResponse {
