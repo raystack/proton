@@ -1381,16 +1381,7 @@ message SearchUsersRequest {
 }
 
 message SearchUsersResponse {
-  message UserResult {
-    string id = 1;
-    string name = 2;
-    string title = 3;
-    google.protobuf.Timestamp created_at = 4;
-    string state = 5;
-    string avatar = 6;
-  }
-
-  repeated UserResult users = 1;
+  repeated User users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
