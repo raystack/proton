@@ -290,6 +290,32 @@ service AdminService {
     };
   }
 
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  rpc ExportUsers(ExportUsersRequest) returns (stream google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/users/export"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Export users";
+      description: "Export user with demographic properties and billing plan details";
+      produces: "text/csv";
+    };
+  }
+
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/users/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Search users";
+      description: "Search users based on their properties";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -1363,3 +1389,15 @@ message SearchOrganizationServiceUserCredentialsResponse {
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
+
+message SearchUsersRequest {
+  RQLRequest query = 1;
+}
+
+message SearchUsersResponse {
+  repeated User users = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message ExportUsersRequest {}
