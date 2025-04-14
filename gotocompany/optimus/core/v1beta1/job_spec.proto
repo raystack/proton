@@ -409,6 +409,7 @@ message JobSpecification {
   string start_date = 4;
   string end_date = 5; // optional
   string interval = 6;
+  string scheduler_state = 25;
 
   bool depends_on_past = 7; // should only execute today if yesterday was completed with success?
   bool catch_up = 8 [deprecated = true]; // should backfill till today?
