@@ -316,6 +316,17 @@ service AdminService {
     };
   }
 
+  rpc SearchUserOrganizations(SearchUserOrganizationsRequest) returns (SearchUserOrganizationsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/users/{id}/organizations/search", 
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Search users organizations";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -1401,3 +1412,30 @@ message SearchUsersResponse {
 }
 
 message ExportUsersRequest {}
+
+message SearchUserOrganizationsRequest {
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user ID"},
+    (validate.rules).string.uuid = true
+  ];
+  RQLRequest query = 2;
+}
+
+message SearchUserOrganizationsResponse {
+  message UserOrganization {
+    string org_id = 1;
+    string org_title = 2;
+    string org_name = 3;
+    string org_avatar = 4;
+    int64 project_count = 5;
+    repeated string role_names = 6;
+    repeated string role_titles = 7;
+    repeated string role_ids = 8;
+    google.protobuf.Timestamp org_joined_on = 9;
+    string user_id = 10;
+  }
+  repeated UserOrganization user_organizations = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
