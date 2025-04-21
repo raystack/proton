@@ -156,6 +156,17 @@ service AdminService {
     };
   }
 
+  rpc AdminCreateOrganization(AdminCreateOrganizationRequest) returns (AdminCreateOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Create organization as superadmin";
+    };
+  }
+
   rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {
     option (google.api.http) = {
       post: "/v1beta1/admin/organizations/search",
@@ -1438,4 +1449,41 @@ message SearchUserOrganizationsResponse {
   repeated UserOrganization user_organizations = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
+}
+
+message AdminCreateOrganizationRequest {
+  message OrganizationRequestBody {
+    string name = 1 [
+      (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the organization. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"frontier-org1-acme\"`"}
+    ];
+    string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
+    google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
+    string avatar = 4 [
+      (validate.rules).string = {
+        pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
+        max_len: 250000,
+        ignore_empty: true,
+      },
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
+        example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
+      }
+    ];
+
+    // this user will be invited to org as owner.
+    // if this user doesn't exist, it will be created first
+    string org_owner_email = 5 [
+      (validate.rules).string.email = true,
+      (google.api.field_behavior) = REQUIRED,
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The email of the user. The email must be unique within the entire Frontier instance.<br/>*Example:*`\"john.doe@raystack.org\"`"}
+    ];
+  }
+
+  OrganizationRequestBody body = 1 [(validate.rules).message.required = true];
+}
+
+message AdminCreateOrganizationResponse {
+  Organization organization = 1;
 }
