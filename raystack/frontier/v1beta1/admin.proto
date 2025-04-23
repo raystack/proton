@@ -1144,7 +1144,7 @@ message UpdateBillingAccountDetailsRequest {
   // due_in_days is the number of days after the invoice finalization
   // that it will be considered overdue, if set to 0, the customer will
   // be charged immediately
-  int64 due_in_days = 4;
+  int64 due_in_days = 4 [(validate.rules).int64 = {gte: 0}];
 }
 
 message UpdateBillingAccountDetailsResponse {}
