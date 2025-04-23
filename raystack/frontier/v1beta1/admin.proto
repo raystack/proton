@@ -1110,7 +1110,7 @@ message UpdateBillingAccountLimitsRequest {
 message UpdateBillingAccountLimitsResponse {}
 
 message GetBillingAccountDetailsRequest {
-  string org_id = 1 [(validate.rules).string = {min_len: 3}];
+  string org_id = 1 [(validate.rules).string = {uuid: true}];
   string id = 2 [(validate.rules).string = {
     ignore_empty: true,
     uuid: true
@@ -1130,7 +1130,7 @@ message GetBillingAccountDetailsResponse {
 }
 
 message UpdateBillingAccountDetailsRequest {
-  string org_id = 1 [(validate.rules).string = {min_len: 3}];
+  string org_id = 1 [(validate.rules).string = {uuid: true}];
   string id = 2 [(validate.rules).string = {
     ignore_empty: true,
     uuid: true
