@@ -150,6 +150,7 @@ message JobRunRequest {
 
 message JobRunResponse {
   repeated JobRun job_runs = 1;
+  string message = 2;
 }
 
 message InstanceSpec {
