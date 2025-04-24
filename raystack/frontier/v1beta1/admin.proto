@@ -167,6 +167,17 @@ service AdminService {
     };
   }
 
+  rpc AdminUpdateOrganization(AdminUpdateOrganizationRequest) returns (AdminUpdateOrganizationResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/admin/organizations/{id}",
+      body: "body"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Update organization by ID as superadmin";
+    };
+  }
+
   rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {
     option (google.api.http) = {
       post: "/v1beta1/admin/organizations/search",
@@ -1551,5 +1562,30 @@ message AdminCreateOrganizationRequest {
 }
 
 message AdminCreateOrganizationResponse {
+  Organization organization = 1;
+}
+
+message AdminUpdateOrganizationRequest {
+  message OrganizationRequestBody {
+    string title = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
+    google.protobuf.Struct metadata = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
+    string avatar = 3 [
+      (validate.rules).string = {
+        pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
+        max_len: 250000,
+        ignore_empty: true,
+      },
+      (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
+        example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
+      }
+    ];
+  }
+
+  string id = 1;
+  OrganizationRequestBody body = 2 [(validate.rules).message.required = true];
+}
+
+message AdminUpdateOrganizationResponse {
   Organization organization = 1;
 }
