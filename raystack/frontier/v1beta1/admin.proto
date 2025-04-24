@@ -634,6 +634,7 @@ service AdminService {
 
   // Billing Account
   rpc UpdateBillingAccountLimits(UpdateBillingAccountLimitsRequest) returns (UpdateBillingAccountLimitsResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/billing/{id}/limits",
       body: "*"
@@ -642,6 +643,31 @@ service AdminService {
       tags: "Billing";
       summary: "Update billing account limits";
       description: "Update billing account limits.";
+      deprecated: true;
+    };
+  }
+
+  // GetBillingAccountDetails returns the billing account details that can be updated via UpdateBillingAccountDetails
+  rpc GetBillingAccountDetails(GetBillingAccountDetailsRequest) returns (GetBillingAccountDetailsResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/admin/organizations/{org_id}/billing/{id}/details"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Get billing account details";
+      description: "Get billing account details that can be updated.";
+    };
+  }
+
+  rpc UpdateBillingAccountDetails(UpdateBillingAccountDetailsRequest) returns (UpdateBillingAccountDetailsResponse) {
+    option (google.api.http) = {
+      put: "/v1beta1/admin/organizations/{org_id}/billing/{id}/details",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Billing";
+      summary: "Update billing account details";
+      description: "Update billing account details.";
     };
   }
 
@@ -1082,6 +1108,46 @@ message UpdateBillingAccountLimitsRequest {
 }
 
 message UpdateBillingAccountLimitsResponse {}
+
+message GetBillingAccountDetailsRequest {
+  string org_id = 1 [(validate.rules).string = {uuid: true}];
+  string id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+}
+
+message GetBillingAccountDetailsResponse {
+  // credit_min is the minimum credit limit for the billing account
+  // default is 0, negative numbers work as overdraft, positive
+  // numbers work as minimum purchase limit
+  int64 credit_min = 1;
+
+  // due_in_days is the number of days after the invoice finalization
+  // that it will be considered overdue, if set to 0, the customer will
+  // be charged immediately
+  int64 due_in_days = 2;
+}
+
+message UpdateBillingAccountDetailsRequest {
+  string org_id = 1 [(validate.rules).string = {uuid: true}];
+  string id = 2 [(validate.rules).string = {
+    ignore_empty: true,
+    uuid: true
+  }];
+
+  // credit_min is the minimum credit limit for the billing account
+  // default is 0, negative numbers work as overdraft, positive
+  // numbers work as minimum purchase limit
+  int64 credit_min = 3;
+
+  // due_in_days is the number of days after the invoice finalization
+  // that it will be considered overdue, if set to 0, the customer will
+  // be charged immediately
+  int64 due_in_days = 4 [(validate.rules).int64 = {gte: 0}];
+}
+
+message UpdateBillingAccountDetailsResponse {}
 
 message SetOrganizationKycRequest {
   string org_id = 1;
