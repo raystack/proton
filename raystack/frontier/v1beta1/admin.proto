@@ -340,7 +340,7 @@ service AdminService {
 
   rpc SearchUserProjects(SearchUserProjectsRequest) returns (SearchUserProjectsResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/admin/users/{id}/organizations/{org_id}/projects",
+      post: "/v1beta1/admin/users/{user_id}/organizations/{org_id}/projects",
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
