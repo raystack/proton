@@ -1548,13 +1548,12 @@ message SearchUserProjectsResponse {
     string project_title = 2;
     string project_name = 3;
     google.protobuf.Timestamp project_created_on = 4;
-    int64 project_count = 5;
-    repeated string user_names = 6;
-    repeated string user_titles = 7;
-    repeated string user_ids = 8;
-    repeated string user_avatars = 9;
-    string org_id = 10;
-    string user_id = 11;
+    repeated string user_names = 5;
+    repeated string user_titles = 6;
+    repeated string user_ids = 7;
+    repeated string user_avatars = 8;
+    string org_id = 9;
+    string user_id = 10;
   }
 
   repeated UserProjects user_projects = 1;
