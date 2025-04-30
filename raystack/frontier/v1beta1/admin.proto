@@ -1543,7 +1543,7 @@ message SearchUserProjectsRequest {
 }
 
 message SearchUserProjectsResponse {
-  message UserProjects {
+  message UserProject {
     string project_id = 1;
     string project_title = 2;
     string project_name = 3;
@@ -1556,7 +1556,7 @@ message SearchUserProjectsResponse {
     string user_id = 10;
   }
 
-  repeated UserProjects user_projects = 1;
+  repeated UserProject user_projects = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
