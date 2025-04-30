@@ -338,6 +338,17 @@ service AdminService {
     };
   }
 
+  rpc SearchUserProjects(SearchUserProjectsRequest) returns (SearchUserProjectsResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/users/{user_id}/organizations/{org_id}/projects",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Search projects of a user within an org";
+    };
+  }
+
   rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
     option (google.api.http) = {
       put: "/v1beta1/admin/organizations/{org_id}/kyc",
@@ -1513,6 +1524,39 @@ message SearchUserOrganizationsResponse {
     string user_id = 10;
   }
   repeated UserOrganization user_organizations = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message SearchUserProjectsRequest {
+  string user_id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user ID"},
+    (validate.rules).string.uuid = true
+  ];
+  string org_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "org ID"},
+    (validate.rules).string.uuid = true
+  ];
+  RQLRequest query = 3;
+}
+
+message SearchUserProjectsResponse {
+  message UserProject {
+    string project_id = 1;
+    string project_title = 2;
+    string project_name = 3;
+    google.protobuf.Timestamp project_created_on = 4;
+    repeated string user_names = 5;
+    repeated string user_titles = 6;
+    repeated string user_ids = 7;
+    repeated string user_avatars = 8;
+    string org_id = 9;
+    string user_id = 10;
+  }
+
+  repeated UserProject user_projects = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
