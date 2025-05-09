@@ -40,6 +40,21 @@ service JobRunService {
       get: "/v1beta1/project/{project_name}/job/{job_name}/run"
     };
   }
+
+  // CreateSchedulerRole creates a new role in the scheduler
+  rpc GetSchedulerRole(GetSchedulerRoleRequest) returns (GetSchedulerRoleResponse) {
+    option (google.api.http) = {
+      get: "/v1beta1/project/{project_name}/namespace/{namespace_name}/role"
+    };
+  }
+
+  // CreateSchedulerRole creates a new role in the scheduler
+  rpc CreateSchedulerRole(CreateSchedulerRoleRequest) returns (CreateSchedulerRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/namespace/{namespace_name}/role"
+    };
+  }
+
   // JobRunList returns the current and past run status of jobs on a given range
   rpc GetJobRuns(GetJobRunsRequest) returns (GetJobRunsResponse) {
     option (google.api.http) = {
@@ -152,6 +167,25 @@ message JobRunResponse {
   repeated JobRun job_runs = 1;
   string message = 2;
 }
+
+message GetSchedulerRoleRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string role_name = 3;
+}
+
+message GetSchedulerRoleResponse {
+  repeated string permissions = 1;
+}
+
+
+message CreateSchedulerRoleRequest {
+  string project_name = 1;
+  string namespace_name = 2;
+  string role_name = 3;
+}
+
+message CreateSchedulerRoleResponse {}
 
 message InstanceSpec {
   reserved 2, 4;
