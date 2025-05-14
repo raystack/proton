@@ -260,6 +260,9 @@ service AdminService {
     };
     option (openapi.v3.schema) = {
       title: "This is an overridden message schema title";
+      tags: "Organization";
+      summary: "Export organizations";
+      description: "Export organization with demographic properties and billing plan details";
     };
   }
 
