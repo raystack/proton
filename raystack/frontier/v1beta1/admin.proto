@@ -259,12 +259,38 @@ service AdminService {
       produces: "text/csv";
     };
     option (gnostic.openapi.v3.operation) = {
-      // title: "This is an overridden message schema title";
-      tags: "Organization";
+      tags: ["Organization"];
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
+      responses: {
+        response_or_reference: [
+          {
+            name: "200",
+            value: {
+              response: {
+                description: "Successful organization export in CSV format",
+                content: {
+                  additional_properties: [
+                    {
+                      name: "text/csv",
+                      value: {
+                        schema: {
+                          schema: {
+                            type: "string",
+                            format: "binary"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
     };
-  }
+}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
