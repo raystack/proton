@@ -126,6 +126,154 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     security_requirement: {key: "Bearer"}
   }
 };
+
+option (gnostic.openapi.v3.document) = {
+  openapi: "3.0.0"
+  info: {
+    title: "Frontier Administration API"
+    version: "0.2.0"
+    description: "The Frontier APIs adhere to the OpenAPI specification, also known as Swagger, which provides a standardized approach for designing, documenting, and consuming RESTful APIs. With OpenAPI, you gain a clear understanding of the API endpoints, request/response structures, and authentication mechanisms supported by the Frontier APIs. By leveraging the OpenAPI specification, developers can easily explore and interact with the Frontier APIs using a variety of tools and libraries. The OpenAPI specification enables automatic code generation, interactive API documentation, and seamless integration with API testing frameworks, making it easier than ever to integrate Frontier into your existing applications and workflows."
+    contact: {
+      name: "Raystack Foundation"
+      url: "https://raystack.org/"
+      email: "hello@raystack.org"
+    }
+    license: {
+      name: "Apache 2.0"
+      url: "https://github.com/raystack/frontier/blob/main/LICENSE"
+    }
+  }
+  servers: [
+    {
+      url: "http://127.0.0.1:7400"
+      description: "Local development server"
+    }
+  ]
+  tags: [
+    {name: "User"},
+    {name: "Group"},
+    {name: "Organization"},
+    {name: "Project"},
+    {name: "Relation"},
+    {name: "Resource"},
+    {name: "Policy"},
+    {name: "Role"},
+    {name: "Permission"}
+  ]
+  components: {
+    security_schemes: {
+      additional_properties: [
+        {
+          name: "Basic"
+          value: {
+            security_scheme: {
+              type: "http"
+              scheme: "basic"
+              description: "use Client ID as username and Client Secret as password"
+            }
+          }
+        },
+        {
+          name: "Bearer"
+          value: {
+            security_scheme: {
+              type: "http"
+              scheme: "bearer"
+              description: "Access token or JWT token, prefixed by Bearer: Bearer <token>"
+            }
+          }
+        }
+      ]
+    }
+    responses: {
+      additional_properties: [
+        {
+          name: "Error"
+          value: {
+            response: {
+              description: "Error response"
+              content: {
+                additional_properties: [
+                  {
+                    name: "application/json"
+                    value: {
+                      schema: {
+                        schema: {
+                          type: "object"
+                          properties: {
+                            additional_properties: [
+                              {
+                                name: "code"
+                                value: {
+                                  schema: {
+                                    type: "integer"
+                                    format: "int32"
+                                  }
+                                }
+                              },
+                              {
+                                name: "message"
+                                value: {
+                                  schema: {
+                                    type: "string"
+                                  }
+                                }
+                              },
+                              {
+                                name: "details"
+                                value: {
+                                  schema: {
+                                    type: "array"
+                                    items: {
+                                      schema_or_reference: [
+                                        {
+                                          schema: {
+                                            type: "object"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+  security: [
+    {
+      additional_properties: [
+        {
+          name: "Basic"
+          value: {
+            value: []
+          }
+        }
+      ]
+    },
+    {
+      additional_properties: [
+        {
+          name: "Bearer"
+          value: {
+            value: []
+          }
+        }
+      ]
+    }
+  ]
+};
+
 service AdminService {
   // Users
   rpc ListAllUsers(ListAllUsersRequest) returns (ListAllUsersResponse) {
@@ -248,7 +396,7 @@ service AdminService {
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
+rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
     option (google.api.http) = {
       get: "/v1beta1/admin/organizations/export"
     };
@@ -262,13 +410,75 @@ service AdminService {
       tags: ["Organization"];
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
+      operation_id: "AdminService_ExportOrganizations";
       responses: {
+        default: {
+          response: {
+            description: "Error response",
+            content: {
+              additional_properties: [
+                {
+                  name: "application/json",
+                  value: {
+                    schema: {
+                      schema: {
+                        type: "object",
+                        properties: {
+                          additional_properties: [
+                            {
+                              name: "code",
+                              value: {
+                                schema: {
+                                  type: "integer",
+                                  format: "int32",
+                                  description: "Error code"
+                                }
+                              }
+                            },
+                            {
+                              name: "message",
+                              value: {
+                                schema: {
+                                  type: "string",
+                                  description: "Error message"
+                                }
+                              }
+                            },
+                            {
+                              name: "details",
+                              value: {
+                                schema: {
+                                  type: "array",
+                                  description: "Error details",
+                                  items: {
+                                    schema_or_reference: [
+                                      {
+                                        schema: {
+                                          type: "object",
+                                          description: "Any protobuf message"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
         response_or_reference: [
           {
             name: "200",
             value: {
               response: {
-                description: "Successful organization export in CSV format",
+                description: "Successful CSV export",
                 content: {
                   additional_properties: [
                     {
@@ -290,7 +500,7 @@ service AdminService {
         ]
       }
     };
-}
+  }
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
