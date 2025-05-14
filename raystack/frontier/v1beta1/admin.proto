@@ -10,7 +10,7 @@ import "google/api/httpbody.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
-import "openapiv3/annotations.proto";
+import "gnostic/openapi/v3/annotations.proto";
 
 option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
 option java_outer_classname = "Frontier";
@@ -258,8 +258,8 @@ service AdminService {
       description: "Export organization with demographic properties and billing plan details";
       produces: "text/csv";
     };
-    option (openapi.v3.schema) = {
-      title: "This is an overridden message schema title";
+    option (gnostic.openapi.v3.operation) = {
+      // title: "This is an overridden message schema title";
       tags: "Organization";
       summary: "Export organizations";
       description: "Export organization with demographic properties and billing plan details";
