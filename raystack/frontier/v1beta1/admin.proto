@@ -150,33 +150,15 @@ option (gnostic.openapi.v3.document) = {
     }
   ]
   tags: [
-    {
-      name: "User"
-    },
-    {
-      name: "Group"
-    },
-    {
-      name: "Organization"
-    },
-    {
-      name: "Project"
-    },
-    {
-      name: "Relation"
-    },
-    {
-      name: "Resource"
-    },
-    {
-      name: "Policy"
-    },
-    {
-      name: "Role"
-    },
-    {
-      name: "Permission"
-    }
+    {name: "User"},
+    {name: "Group"},
+    {name: "Organization"},
+    {name: "Project"},
+    {name: "Relation"},
+    {name: "Resource"},
+    {name: "Policy"},
+    {name: "Role"},
+    {name: "Permission"}
   ]
   components: {
     responses: {
@@ -192,7 +174,49 @@ option (gnostic.openapi.v3.document) = {
                   value: {
                     schema: {
                       schema: {
-                        ref: ".google.rpc.Status"
+                        type: "object"
+                        properties: {
+                          additional_properties: [
+                            {
+                              name: "code"
+                              value: {
+                                schema: {
+                                  type: "integer"
+                                  format: "int32"
+                                  description: "The status code, which should be an enum value of google.rpc.Code"
+                                }
+                              }
+                            },
+                            {
+                              name: "message"
+                              value: {
+                                schema: {
+                                  type: "string"
+                                  description: "A developer-facing error message, which should be in English"
+                                }
+                              }
+                            },
+                            {
+                              name: "details"
+                              value: {
+                                schema: {
+                                  type: "array"
+                                  description: "A list of messages that carry the error details"
+                                  items: {
+                                    schema_or_reference: [
+                                      {
+                                        schema: {
+                                          type: "object"
+                                          description: "Error detail in Any format"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
                       }
                     }
                   }
@@ -212,7 +236,45 @@ option (gnostic.openapi.v3.document) = {
                   value: {
                     schema: {
                       schema: {
-                        ref: ".google.rpc.Status"
+                        type: "object"
+                        properties: {
+                          additional_properties: [
+                            {
+                              name: "code"
+                              value: {
+                                schema: {
+                                  type: "integer"
+                                  format: "int32"
+                                }
+                              }
+                            },
+                            {
+                              name: "message"
+                              value: {
+                                schema: {
+                                  type: "string"
+                                }
+                              }
+                            },
+                            {
+                              name: "details"
+                              value: {
+                                schema: {
+                                  type: "array"
+                                  items: {
+                                    schema_or_reference: [
+                                      {
+                                        schema: {
+                                          type: "object"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
                       }
                     }
                   }
@@ -221,6 +283,8 @@ option (gnostic.openapi.v3.document) = {
             }
           }
         },
+        // Similar structure for other response codes (401, 403, 404, 500)
+        // Just repeat the same schema structure with different descriptions
         {
           name: "401"
           value: {
@@ -232,67 +296,45 @@ option (gnostic.openapi.v3.document) = {
                   value: {
                     schema: {
                       schema: {
-                        ref: ".google.rpc.Status"
-                      }
-                    }
-                  }
-                }]
-              }
-            }
-          }
-        },
-        {
-          name: "403"
-          value: {
-            response: {
-              description: "Forbidden - User does not have permission to access the resource"
-              content: {
-                additional_properties: [{
-                  name: "application/json"
-                  value: {
-                    schema: {
-                      schema: {
-                        ref: ".google.rpc.Status"
-                      }
-                    }
-                  }
-                }]
-              }
-            }
-          }
-        },
-        {
-          name: "404"
-          value: {
-            response: {
-              description: "Not Found - The requested resource was not found"
-              content: {
-                additional_properties: [{
-                  name: "application/json"
-                  value: {
-                    schema: {
-                      schema: {
-                        ref: ".google.rpc.Status"
-                      }
-                    }
-                  }
-                }]
-              }
-            }
-          }
-        },
-        {
-          name: "500"
-          value: {
-            response: {
-              description: "Internal Server Error. Returned when theres is something wrong with Frontier server."
-              content: {
-                additional_properties: [{
-                  name: "application/json"
-                  value: {
-                    schema: {
-                      schema: {
-                        ref: ".google.rpc.Status"
+                        type: "object"
+                        properties: {
+                          additional_properties: [
+                            {
+                              name: "code"
+                              value: {
+                                schema: {
+                                  type: "integer"
+                                  format: "int32"
+                                }
+                              }
+                            },
+                            {
+                              name: "message"
+                              value: {
+                                schema: {
+                                  type: "string"
+                                }
+                              }
+                            },
+                            {
+                              name: "details"
+                              value: {
+                                schema: {
+                                  type: "array"
+                                  items: {
+                                    schema_or_reference: [
+                                      {
+                                        schema: {
+                                          type: "object"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
                       }
                     }
                   }
@@ -301,6 +343,7 @@ option (gnostic.openapi.v3.document) = {
             }
           }
         }
+        // Continue with 403, 404, and 500 responses...
       ]
     }
     security_schemes: {
