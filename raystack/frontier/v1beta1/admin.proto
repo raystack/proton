@@ -146,21 +146,163 @@ option (gnostic.openapi.v3.document) = {
   servers: [
     {
       url: "http://127.0.0.1:7400"
-      description: "Local development server"
+      description: "Local server"
     }
   ]
   tags: [
-    {name: "User"},
-    {name: "Group"},
-    {name: "Organization"},
-    {name: "Project"},
-    {name: "Relation"},
-    {name: "Resource"},
-    {name: "Policy"},
-    {name: "Role"},
-    {name: "Permission"}
+    {
+      name: "User"
+    },
+    {
+      name: "Group"
+    },
+    {
+      name: "Organization"
+    },
+    {
+      name: "Project"
+    },
+    {
+      name: "Relation"
+    },
+    {
+      name: "Resource"
+    },
+    {
+      name: "Policy"
+    },
+    {
+      name: "Role"
+    },
+    {
+      name: "Permission"
+    }
   ]
   components: {
+    responses: {
+      additional_properties: [
+        {
+          name: "200"
+          value: {
+            response: {
+              description: "OK - A successful response."
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        },
+        {
+          name: "400"
+          value: {
+            response: {
+              description: "Bad Request - The request was malformed or contained invalid parameters."
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        },
+        {
+          name: "401"
+          value: {
+            response: {
+              description: "Unauthorized - Authentication is required"
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        },
+        {
+          name: "403"
+          value: {
+            response: {
+              description: "Forbidden - User does not have permission to access the resource"
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        },
+        {
+          name: "404"
+          value: {
+            response: {
+              description: "Not Found - The requested resource was not found"
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        },
+        {
+          name: "500"
+          value: {
+            response: {
+              description: "Internal Server Error. Returned when theres is something wrong with Frontier server."
+              content: {
+                additional_properties: [{
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      schema: {
+                        ref: ".google.rpc.Status"
+                      }
+                    }
+                  }
+                }]
+              }
+            }
+          }
+        }
+      ]
+    }
     security_schemes: {
       additional_properties: [
         {
@@ -179,71 +321,8 @@ option (gnostic.openapi.v3.document) = {
             security_scheme: {
               type: "http"
               scheme: "bearer"
+              bearer_format: "JWT"
               description: "Access token or JWT token, prefixed by Bearer: Bearer <token>"
-            }
-          }
-        }
-      ]
-    }
-    responses: {
-      additional_properties: [
-        {
-          name: "Error"
-          value: {
-            response: {
-              description: "Error response"
-              content: {
-                additional_properties: [
-                  {
-                    name: "application/json"
-                    value: {
-                      schema: {
-                        schema: {
-                          type: "object"
-                          properties: {
-                            additional_properties: [
-                              {
-                                name: "code"
-                                value: {
-                                  schema: {
-                                    type: "integer"
-                                    format: "int32"
-                                  }
-                                }
-                              },
-                              {
-                                name: "message"
-                                value: {
-                                  schema: {
-                                    type: "string"
-                                  }
-                                }
-                              },
-                              {
-                                name: "details"
-                                value: {
-                                  schema: {
-                                    type: "array"
-                                    items: {
-                                      schema_or_reference: [
-                                        {
-                                          schema: {
-                                            type: "object"
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
             }
           }
         }
@@ -412,67 +491,6 @@ rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.H
       description: "Export organization with demographic properties and billing plan details";
       operation_id: "AdminService_ExportOrganizations";
       responses: {
-        default: {
-          response: {
-            description: "Error response",
-            content: {
-              additional_properties: [
-                {
-                  name: "application/json",
-                  value: {
-                    schema: {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          additional_properties: [
-                            {
-                              name: "code",
-                              value: {
-                                schema: {
-                                  type: "integer",
-                                  format: "int32",
-                                  description: "Error code"
-                                }
-                              }
-                            },
-                            {
-                              name: "message",
-                              value: {
-                                schema: {
-                                  type: "string",
-                                  description: "Error message"
-                                }
-                              }
-                            },
-                            {
-                              name: "details",
-                              value: {
-                                schema: {
-                                  type: "array",
-                                  description: "Error details",
-                                  items: {
-                                    schema_or_reference: [
-                                      {
-                                        schema: {
-                                          type: "object",
-                                          description: "Any protobuf message"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        },
         response_or_reference: [
           {
             name: "200",
