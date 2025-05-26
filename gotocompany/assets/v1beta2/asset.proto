@@ -50,6 +50,10 @@ message Asset {
   //Optional. List of labels the user has.
   map<string, string> labels = 33;
 
+  // Represent the soft deletion.
+  // True meaning deleted.
+  bool is_deleted = 34;
+
   // The timestamp of the generated event.
   // Event schemas is defined in the common event schema.
   gotocompany.assets.v1beta2.Event event = 100;
