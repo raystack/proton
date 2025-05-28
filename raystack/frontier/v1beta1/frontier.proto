@@ -1931,6 +1931,8 @@ message GetBillingAccountRequest {
 
   bool with_payment_methods = 3;
 
+  bool with_billing_details = 4;
+
   repeated string expand = 101;
 }
 
@@ -1940,6 +1942,9 @@ message GetBillingAccountResponse {
 
   // List of payment methods
   repeated PaymentMethod payment_methods = 2;
+
+  // Billing details
+  BillingAccountDetails billing_details = 3;
 }
 
 message UpdateBillingAccountRequest {
