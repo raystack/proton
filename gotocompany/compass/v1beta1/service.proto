@@ -1070,11 +1070,9 @@ message GetAllAssetsRequest {
   bool with_total = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "if set include total field in response"
   }];
-  bool is_deleted = 11 [
-    (validate.rules).string.ignore_empty = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "filter by soft deletion flag assets"
-    }
+  bool is_deleted = 11 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "filter by soft deletion flag assets"
+  }
   ];
 }
 
