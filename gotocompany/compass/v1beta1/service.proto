@@ -1528,6 +1528,7 @@ message Asset {
   google.protobuf.Timestamp updated_at = 14;
   string url = 15;
   repeated Probe probes = 16;
+  bool is_deleted = 17;
 }
 
 message Probe {
