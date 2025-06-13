@@ -1610,8 +1610,7 @@ message AdminCreateOrganizationResponse {
 }
 
 message SearchInvoicesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
-  RQLRequest query = 2;
+  RQLRequest query = 1;
 }
 
 message SearchInvoicesResponse {
