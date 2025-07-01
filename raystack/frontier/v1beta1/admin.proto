@@ -1668,7 +1668,7 @@ message SearchOrganizationServiceUsersResponse {
     string id = 1;
     string title = 2;
     string org_id = 3;
-    repeated string project_titles = 4;  }
+    repeated string project_titles = 4;
     google.protobuf.Timestamp created_at = 5;
 }
 
