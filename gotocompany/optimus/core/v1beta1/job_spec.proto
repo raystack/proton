@@ -414,8 +414,9 @@ message JobSpecification {
   bool depends_on_past = 7; // should only execute today if yesterday was completed with success?
   bool catch_up = 8 [deprecated = true]; // should backfill till today?
 
-  string task_name = 9;
-  repeated JobConfigItem config = 10;
+  string task_name = 9 [deprecated = true];
+  repeated JobConfigItem config = 10 [deprecated = true];
+  JobSpecTask task = 26;
 
   string window_size = 11 [deprecated = true];
   string window_offset = 12 [deprecated = true];
@@ -489,9 +490,16 @@ message HttpDependency {
   map<string, string> params = 4;
 }
 
+message JobSpecTask {
+  string name = 1;
+  string version = 3;
+  repeated JobConfigItem config = 2;
+}
+
 message JobSpecHook {
   string name = 1;
   repeated JobConfigItem config = 2;
+  string version = 3;
 }
 
 message JobConfigItem {
