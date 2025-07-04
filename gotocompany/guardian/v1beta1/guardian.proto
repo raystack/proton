@@ -976,6 +976,7 @@ message Policy {
       string role = 2;
       AppealOptions options = 3;
       PolicyConfig policy = 4;
+      string account_type = 5;
     }
     repeated AdditionalAppeal appeals = 2;
   }
