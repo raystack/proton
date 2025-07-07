@@ -136,6 +136,15 @@ service AdminService {
     };
   }
 
+  rpc ListAllServiceUsers(ListAllServiceUsersRequest) returns (ListAllServiceUsersResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/serviceusers"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List all service users";
+      description: "Lists all the service users from all the organizations in a Frontier instance.";
+    };
+  }
+
   // Group
   rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (google.api.http) = {get: "/v1beta1/admin/groups"};
@@ -181,7 +190,7 @@ service AdminService {
 
   rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/admin/organizations/{id}/users/search", 
+      post: "/v1beta1/admin/organizations/{id}/users/search",
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -192,7 +201,7 @@ service AdminService {
 
   rpc SearchProjectUsers(SearchProjectUsersRequest) returns (SearchProjectUsersResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/admin/projects/{id}/users/search", 
+      post: "/v1beta1/admin/projects/{id}/users/search",
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -214,7 +223,7 @@ service AdminService {
 
   rpc SearchOrganizationInvoices(SearchOrganizationInvoicesRequest) returns (SearchOrganizationInvoicesResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/admin/organizations/{id}/invoices/search", 
+      post: "/v1beta1/admin/organizations/{id}/invoices/search",
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -242,6 +251,17 @@ service AdminService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "Organization";
       summary: "Search organization service user credentials";
+    };
+  }
+
+  rpc SearchOrganizationServiceUsers(SearchOrganizationServiceUsersRequest) returns (SearchOrganizationServiceUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/organizations/{id}/serviceusers/search",
+      body: "query"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Organization";
+      summary: "Search organization service users";
     };
   }
 
@@ -329,7 +349,7 @@ service AdminService {
 
   rpc SearchUserOrganizations(SearchUserOrganizationsRequest) returns (SearchUserOrganizationsResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/admin/users/{id}/organizations/search", 
+      post: "/v1beta1/admin/users/{id}/organizations/search",
       body: "query"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -778,6 +798,13 @@ message ListAllUsersRequest {
 message ListAllUsersResponse {
   int32 count = 1;
   repeated User users = 2;
+}
+
+message ListAllServiceUsersRequest {
+}
+
+message ListAllServiceUsersResponse {
+  repeated ServiceUser service_users = 1;
 }
 
 message ListGroupsRequest {
@@ -1627,6 +1654,31 @@ message SearchInvoicesResponse {
   }
 
   repeated Invoice invoices = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}
+
+message SearchOrganizationServiceUsersRequest {
+  string id = 1 [(validate.rules).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchOrganizationServiceUsersResponse {
+  message Project {
+    string id = 1;
+    string title = 2;
+    string name = 3;
+  }
+  message OrganizationServiceUser {
+    string id = 1;
+    string title = 2;
+    string org_id = 3;
+    repeated Project projects = 4;
+    google.protobuf.Timestamp created_at = 5;
+}
+
+
+  repeated OrganizationServiceUser organization_service_users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
