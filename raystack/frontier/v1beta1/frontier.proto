@@ -1804,6 +1804,18 @@ service FrontierService {
     };
   }
 
+  rpc CheckCreditEntitlement(CheckCreditEntitlementRequest) returns (CheckCreditEntitlementResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/billing/check",
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Entitlement";
+      summary: "Check credit entitlement";
+      description: "Check if a billing account has enough credits to cover the amount.";
+    };
+  }
+
   // Transactions
   rpc CreateBillingUsage(CreateBillingUsageRequest) returns (CreateBillingUsageResponse) {
     option (google.api.http) = {
@@ -2220,6 +2232,15 @@ message CheckFeatureEntitlementRequest {
 }
 
 message CheckFeatureEntitlementResponse {
+  bool status = 1;
+}
+
+message CheckCreditEntitlementRequest {
+  string org_id = 1 [(validate.rules).string.min_len = 3];
+  int64 amount = 2 [(validate.rules).int64 = {gt: 0}];
+}
+
+message CheckCreditEntitlementResponse {
   bool status = 1;
 }
 
