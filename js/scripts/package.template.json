@@ -1,0 +1,28 @@
+{
+  "name": "@raystack/proton",
+  "version": "0.1.0",
+  "description": "TypeScript/JavaScript client library for Raystack APIs generated from Protocol Buffer definitions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {},
+  "keywords": ["raystack"],
+  "homepage": "https://github.com/raystack/proton#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raystack/proton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raystack/proton/issues"
+  },
+  "scripts": {},
+  "author": "Raystack",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@bufbuild/protobuf": "^1.6.0",
+    "@connectrpc/connect": "^1.2.0",
+    "@connectrpc/connect-query": "^1.2.0"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.0.0"
+  }
+}
