@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import { writeFile, readFile, readdir } from "node:fs/promises";
+import { writeFile, readFile, readdir, copyFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import chalk from "chalk";
@@ -10,9 +10,11 @@ const __dirname = path.dirname(__filename);
 const outDir = path.resolve(__dirname, "../dist");
 const bufGenFile = path.join(__dirname, "../", "buf.gen.yaml");
 const packageTemplatePath = path.join(__dirname, "package.template.json");
+const readmeTemplatePath = path.join(__dirname, "README.template.md");
 const nodeModulesBin = path.join(__dirname, "../node_modules/.bin");
 const raystackDir = path.join(outDir, "raystack");
 const packagePath = path.join(outDir, "package.json");
+const readmePath = path.join(outDir, "README.md");
 const protonRoot = path.join(__dirname, "../..");
 
 // Parse command line arguments
@@ -47,6 +49,14 @@ async function createPackageJson(services) {
     
   } catch (error) {
     console.warn("Warning: Could not generate package.json:", error.message);
+  }
+}
+
+async function copyReadme() {
+  try {
+    await copyFile(readmeTemplatePath, readmePath);
+  } catch (error) {
+    console.warn("Warning: Could not copy README:", error.message);
   }
 }
 
@@ -197,6 +207,9 @@ async function main() {
     
     await createPackageJson(services);
     console.log(chalk.green("✅ Package.json generated successfully"));
+    
+    await copyReadme();
+    console.log(chalk.green("✅ README copied successfully"));
     
     console.log(chalk.bold.green("🎉 Generation completed successfully!"));
   } catch (error) {
