@@ -24,5 +24,10 @@
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    }
   }
 }

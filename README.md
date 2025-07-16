@@ -47,6 +47,102 @@ buf generate --path raystack/assets
 
 Check out Compass [implementation](https://github.com/raystack/compass) for reference.
 
+## JavaScript/TypeScript Client
+
+A pre-built JavaScript/TypeScript client package is available for browser and Node.js environments:
+
+### Installation
+
+```bash
+npm install @raystack/proton
+```
+
+For browser applications using TanStack Query:
+```bash
+npm install @raystack/proton @tanstack/react-query
+```
+
+### Usage
+
+#### Browser Example (React)
+
+```typescript
+import { FrontierService } from '@raystack/proton/frontier';
+import { createConnectTransport } from '@connectrpc/connect-web';
+import { createPromiseClient } from '@connectrpc/connect';
+
+// Create transport
+const transport = createConnectTransport({
+  baseUrl: 'https://api.example.com'
+});
+
+// Create client
+const client = createPromiseClient(FrontierService, transport);
+
+// Use the client
+async function listUsers() {
+  const response = await client.listUsers({
+    pageSize: 10
+  });
+  return response.users;
+}
+```
+
+#### With TanStack Query
+
+```typescript
+import { FrontierServiceQueries } from '@raystack/proton/frontier';
+import { useQuery } from '@tanstack/react-query';
+
+function UsersList() {
+  const { data, isLoading } = useQuery(
+    FrontierServiceQueries.listUsers(transport, { pageSize: 10 })
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  
+  return (
+    <ul>
+      {data?.users?.map(user => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### Node.js Example
+
+```typescript
+import { FrontierService } from '@raystack/proton/frontier';
+import { createConnectTransport } from '@connectrpc/connect-node';
+import { createPromiseClient } from '@connectrpc/connect';
+
+const transport = createConnectTransport({
+  baseUrl: 'https://api.example.com',
+  httpVersion: '2'
+});
+
+const client = createPromiseClient(FrontierService, transport);
+
+const users = await client.listUsers({ pageSize: 10 });
+console.log(users);
+```
+
+### Available Services
+
+The package provides exports for all Raystack services:
+- `@raystack/proton/frontier` - Frontier API
+- `@raystack/proton/compass` - Compass API
+- `@raystack/proton/assets` - Assets API
+- `@raystack/proton/guardian` - Guardian API
+- And more...
+
+Each service export includes:
+- Service client (e.g., `FrontierService`)
+- TanStack Query helpers (e.g., `FrontierServiceQueries`) - optional
+- TypeScript types and interfaces
+
 ## Contribute
 
 <details>
