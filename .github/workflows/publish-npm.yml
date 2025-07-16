@@ -7,10 +7,27 @@ on:
       - feat_release_connect-js-package
 
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: bufbuild/buf-setup-action@v1.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint protobuf files
+        run: buf lint
+      - name: Check breaking changes
+        run: buf breaking --against 'https://github.com/raystack/proton.git#branch=main'
+        if: github.ref != 'refs/heads/main'
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bufbuild/buf-setup-action@v1.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v3
         with:
           node-version: 22
