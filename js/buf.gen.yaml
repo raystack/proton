@@ -1,17 +1,17 @@
 version: v1
 plugins:
-  - plugin: es
+  - name: es
     opt:
       - target=ts
       - import_extension=none
     out: js/dist
-  - plugin: ts
+  - name: ts
     out: js/dist
-  - plugin: connect-es
+  - name: connect-es
     opt:
       - target=ts
     out: js/dist
-  - plugin: connect-query
+  - name: connect-query
     opt:
       - target=ts
     out: js/dist
