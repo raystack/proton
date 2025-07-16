@@ -2,6 +2,7 @@ import { exec } from "node:child_process";
 import { writeFile, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import chalk from "chalk";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +14,11 @@ const nodeModulesBin = path.join(__dirname, "../node_modules/.bin");
 const raystackDir = path.join(outDir, "raystack");
 const packagePath = path.join(outDir, "package.json");
 const protonRoot = path.join(__dirname, "../..");
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const hashArg = args.find(arg => arg.startsWith('--hash='));
+const hash = hashArg ? hashArg.split('=')[1] : null;
 
 async function createPackageJson(services) {
   try {
@@ -29,6 +35,11 @@ async function createPackageJson(services) {
 
     packageTemplate.exports = exports;
 
+    // Add hash to version if provided
+    if (hash) {
+      packageTemplate.version = `${packageTemplate.version}-${hash}`;
+    }
+
     await writeFile(
       packagePath,
       JSON.stringify(packageTemplate, null, 2) + "\n",
@@ -40,6 +51,7 @@ async function createPackageJson(services) {
 }
 
 async function generateProtoJSFiles() {
+  console.log(chalk.blue("🔧 Generating protobuf files..."));
   return new Promise((resolve, reject) => {
     const currentPath = process.env.PATH || "";
     const env = {
@@ -155,6 +167,7 @@ async function createServiceIndex(servicePath) {
 }
 
 async function createIndexFiles(services) {
+  console.log(chalk.green("📦 Creating index files..."));
   
   for (const service of services) {
     const servicePath = path.join(raystackDir, service);
@@ -168,12 +181,27 @@ async function createIndexFiles(services) {
 }
 async function main() {
   try {
+    console.log(chalk.bold.cyan("🚀 Starting protobuf generation..."));
+    if (hash) {
+      console.log(chalk.magenta(`🔗 Using hash: ${hash}`));
+    }
+    
     await generateProtoJSFiles();
+    console.log(chalk.green("✅ Protobuf files generated successfully"));
+    
     const services = await getServiceList();
+    console.log(chalk.yellow(`📋 Found ${services.length} services: ${services.join(", ")}`));
+    
     await createIndexFiles(services);
+    console.log(chalk.green("✅ Index files created successfully"));
+    
     await createPackageJson(services);
+    console.log(chalk.green("✅ Package.json generated successfully"));
+    
+    console.log(chalk.bold.green("🎉 Generation completed successfully!"));
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error(chalk.red("❌ Error:"), error.message);
+    process.exit(1);
   }
 }
 
