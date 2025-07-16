@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "description": "Protobuf definitions for Raystack",
   "scripts": {
-    "generate": "node ./scripts/generate.mjs"
+    "clean": "rm -rf dist",
+    "generate": "npm run clean && node ./scripts/generate.mjs"
   },
   "author": "Raystack",
   "license": "Apache-2.0",
   "devDependencies": {
     "@bufbuild/protoc-gen-es": "^1.6.0",
     "@connectrpc/protoc-gen-connect-es": "^1.2.0",
-    "@connectrpc/protoc-gen-connect-query": "^1.2.0"
+    "@connectrpc/protoc-gen-connect-query": "^1.2.0",
+    "@protobuf-ts/plugin": "^2.11.1"
   },
   "main": "index.js",
   "private": true

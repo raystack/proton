@@ -5,6 +5,8 @@ plugins:
       - target=ts
       - import_extension=none
     out: js/dist
+  - plugin: ts
+    out: js/dist
   - plugin: connect-es
     opt:
       - target=ts
