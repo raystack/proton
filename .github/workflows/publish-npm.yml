@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feat_release_connect-js-package
 
 jobs:
   validate:
