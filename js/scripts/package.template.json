@@ -20,7 +20,9 @@
   "dependencies": {
     "@bufbuild/protobuf": "^1.6.0",
     "@connectrpc/connect": "^1.2.0",
-    "@connectrpc/connect-query": "^1.2.0"
+    "@connectrpc/connect-query": "^1.2.0",
+    "@protobuf-ts/runtime": "^2.11.1",
+    "@protobuf-ts/runtime-rpc": "^2.11.1"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.0.0"
