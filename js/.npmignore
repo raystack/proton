@@ -1,0 +1,24 @@
+# Build scripts and configuration
+scripts/
+buf.gen.yaml
+.gitignore
+
+# Source files (we want to ship dist instead)
+src/
+
+# Development dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Development files
+*.log
+.env*
+example.ts
+
+# Template and backup files
+package.template.json
+package.json.backup
+*.backup
+
+# Test files
+test-imports.js

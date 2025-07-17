@@ -1,0 +1,20 @@
+{
+  "name": "@raystack/proton",
+  "version": "0.1.0",
+  "description": "Protobuf definitions for Raystack",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "node ./scripts/generate.mjs"
+  },
+  "author": "Raystack",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^1.6.0",
+    "@connectrpc/protoc-gen-connect-es": "^1.2.0",
+    "@connectrpc/protoc-gen-connect-query": "^1.2.0",
+    "@protobuf-ts/plugin": "^2.11.1",
+    "chalk": "^5.3.0"
+  },
+  "main": "index.js",
+  "private": true
+}
