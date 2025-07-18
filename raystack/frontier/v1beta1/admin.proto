@@ -1697,4 +1697,5 @@ message GetCurrentAdminUserRequest {}
 
 message GetCurrentAdminUserResponse {
   User user = 1;
+  ServiceUser service_user = 2;
 }
