@@ -772,6 +772,16 @@ service AdminService {
     };
   }
 
+  // Admin Self
+  rpc GetCurrentAdminUser(GetCurrentAdminUserRequest) returns (GetCurrentAdminUserResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/users/self"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "Get current admin user";
+      description: "Returns the current authenticated admin user profile. Returns 403 Forbidden if the user is not an admin.";
+    };
+  }
+
 }
 
 message ListAllUsersRequest {
@@ -1681,4 +1691,10 @@ message SearchOrganizationServiceUsersResponse {
   repeated OrganizationServiceUser organization_service_users = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
+}
+
+message GetCurrentAdminUserRequest {}
+
+message GetCurrentAdminUserResponse {
+  User user = 1;
 }
