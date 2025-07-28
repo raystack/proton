@@ -7,10 +7,6 @@ plugins:
     out: js/dist
   - name: ts
     out: js/dist
-  - name: connect-es
-    opt:
-      - target=ts
-    out: js/dist
   - name: connect-query
     opt:
       - target=ts
