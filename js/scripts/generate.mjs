@@ -30,12 +30,35 @@ async function createPackageJson(services) {
     // Generate exports for each service
     const exports = {};
 
-    // Add individual service exports
+    // Add root export
+    exports["."] = {
+      "types": "./index.ts",
+      "import": "./index.ts",
+      "default": "./index.ts"
+    };
+
+    // Add individual service exports with proper TypeScript configuration
     for (const service of services) {
-      exports[`./${service}`] = `./raystack/${service}/index.ts`;
+      const serviceIndexPath = path.join(raystackDir, service, "index.ts");
+      try {
+        await readFile(serviceIndexPath);
+        // Service has index.ts, include it in exports
+        exports[`./${service}`] = {
+          "types": `./raystack/${service}/index.ts`,
+          "import": `./raystack/${service}/index.ts`,
+          "default": `./raystack/${service}/index.ts`
+        };
+      } catch (error) {
+        // Service doesn't have index.ts, skip it
+        console.log(chalk.yellow(`⚠️  Skipping ${service} export - no index.ts found`));
+      }
     }
 
     packageTemplate.exports = exports;
+
+    // Update main and types to point to TypeScript files since consumers are TS-only
+    packageTemplate.main = "index.ts";
+    packageTemplate.types = "index.ts";
 
     // Add hash to version if provided
     if (hash) {
@@ -169,11 +192,32 @@ async function createServiceIndex(servicePath) {
     allExports.push(...connectExports, ...queryExports, ...protoExports);
   }
   
+  // Only create an index file if there are exports
   if (allExports.length > 0) {
     const indexContent = allExports.join('\n') + '\n';
     const indexPath = path.join(servicePath, "index.ts");
     await writeFile(indexPath, indexContent);
   }
+}
+
+async function createRootIndex(services) {
+  const rootIndexPath = path.join(outDir, "index.ts");
+  const exports = [];
+  
+  for (const service of services) {
+    const serviceIndexPath = path.join(raystackDir, service, "index.ts");
+    try {
+      await readFile(serviceIndexPath);
+      // Service has index.ts, include it
+      exports.push(`export * as ${service} from "./raystack/${service}";`);
+    } catch (error) {
+      // Service doesn't have index.ts, skip it
+      console.log(chalk.yellow(`⚠️  Skipping ${service} - no index.ts found`));
+    }
+  }
+  
+  const indexContent = exports.join('\n') + '\n';
+  await writeFile(rootIndexPath, indexContent);
 }
 
 async function createIndexFiles(services) {
@@ -204,6 +248,9 @@ async function main() {
     
     await createIndexFiles(services);
     console.log(chalk.green("✅ Index files created successfully"));
+    
+    await createRootIndex(services);
+    console.log(chalk.green("✅ Root index file created successfully"));
     
     await createPackageJson(services);
     console.log(chalk.green("✅ Package.json generated successfully"));
