@@ -117,6 +117,7 @@ async function getServiceFiles(versionPath) {
   return {
     connectFiles: files.filter(file => file.endsWith('_connect.ts') && !file.includes('_connectquery')),
     connectQueryFiles: files.filter(file => file.includes('_connectquery.ts')),
+    pbFiles: files.filter((file) => file.endsWith("_pb.ts")),
     protoTsFiles: files.filter(file => 
       file.endsWith('.ts') && 
       !file.endsWith('_pb.ts') && 
@@ -165,8 +166,15 @@ function processConnectQueryFiles(version, connectQueryFiles) {
 }
 
 function processProtoTsFiles(version, protoTsFiles) {
-  return protoTsFiles.map(protoTsFile => {
-    const baseName = protoTsFile.replace('.ts', '');
+  return protoTsFiles.map((protoTsFile) => {
+    const baseName = protoTsFile.replace(".ts", "");
+    return `export * from "./${version}/${baseName}";`;
+  });
+}
+
+function processPbFiles(version, pbFiles) {
+  return pbFiles.map((pbFile) => {
+    const baseName = pbFile.replace(".ts", "");
     return `export * from "./${version}/${baseName}";`;
   });
 }
@@ -183,13 +191,24 @@ async function createServiceIndex(servicePath) {
   
   for (const version of versions) {
     const versionPath = path.join(servicePath, version);
-    const { connectFiles, connectQueryFiles, protoTsFiles } = await getServiceFiles(versionPath);
-    
-    const connectExports = await processConnectFiles(versionPath, version, connectFiles);
+    const { connectFiles, connectQueryFiles, pbFiles, protoTsFiles } =
+      await getServiceFiles(versionPath);
+
+    const connectExports = await processConnectFiles(
+      versionPath,
+      version,
+      connectFiles,
+    );
     const queryExports = processConnectQueryFiles(version, connectQueryFiles);
+    const pbExports = processPbFiles(version, pbFiles);
     const protoExports = processProtoTsFiles(version, protoTsFiles);
-    
-    allExports.push(...connectExports, ...queryExports, ...protoExports);
+
+    allExports.push(
+      ...connectExports,
+      ...queryExports,
+      ...pbExports,
+      ...protoExports,
+    );
   }
   
   // Only create an index file if there are exports
