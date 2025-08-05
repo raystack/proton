@@ -5,8 +5,6 @@ plugins:
       - target=ts
       - import_extension=none
     out: js/dist
-  - name: ts
-    out: js/dist
   - name: connect-query
     opt:
       - target=ts
