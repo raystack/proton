@@ -32,9 +32,9 @@ async function createPackageJson(services) {
 
     // Add root export
     exports["."] = {
-      "types": "./index.ts",
-      "import": "./index.ts",
-      "default": "./index.ts"
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
     };
 
     // Add individual service exports with proper TypeScript configuration
@@ -44,9 +44,9 @@ async function createPackageJson(services) {
         await readFile(serviceIndexPath);
         // Service has index.ts, include it in exports
         exports[`./${service}`] = {
-          "types": `./raystack/${service}/index.ts`,
-          "import": `./raystack/${service}/index.ts`,
-          "default": `./raystack/${service}/index.ts`
+          "types": `./raystack/${service}/index.d.ts`,
+          "import": `./raystack/${service}/index.js`,
+          "default": `./raystack/${service}/index.js`
         };
       } catch (error) {
         // Service doesn't have index.ts, skip it
@@ -55,10 +55,6 @@ async function createPackageJson(services) {
     }
 
     packageTemplate.exports = exports;
-
-    // Update main and types to point to TypeScript files since consumers are TS-only
-    packageTemplate.main = "index.ts";
-    packageTemplate.types = "index.ts";
 
     // Add hash to version if provided
     if (hash) {
@@ -121,6 +117,7 @@ async function getServiceFiles(versionPath) {
     protoTsFiles: files.filter(file => 
       file.endsWith('.ts') && 
       !file.endsWith('_pb.ts') && 
+      !file.endsWith('.d.ts') && 
       !file.endsWith('_connect.ts') && 
       !file.includes('_connectquery') && 
       !file.endsWith('.client.ts')
@@ -179,6 +176,7 @@ function processPbFiles(version, pbFiles) {
   });
 }
 
+
 async function createServiceIndex(servicePath) {
   const versionDirs = await readdir(servicePath, { withFileTypes: true });
   const versions = versionDirs
@@ -214,13 +212,21 @@ async function createServiceIndex(servicePath) {
   // Only create an index file if there are exports
   if (allExports.length > 0) {
     const indexContent = allExports.join('\n') + '\n';
-    const indexPath = path.join(servicePath, "index.ts");
-    await writeFile(indexPath, indexContent);
+    
+    // Create all index files with the same content (ESM syntax works for all)
+    const files = [
+      { path: path.join(servicePath, "index.ts"), desc: "TypeScript source" },
+      { path: path.join(servicePath, "index.js"), desc: "JavaScript ESM" },
+      { path: path.join(servicePath, "index.d.ts"), desc: "TypeScript definitions" }
+    ];
+    
+    for (const file of files) {
+      await writeFile(file.path, indexContent);
+    }
   }
 }
 
 async function createRootIndex(services) {
-  const rootIndexPath = path.join(outDir, "index.ts");
   const exports = [];
   
   for (const service of services) {
@@ -236,7 +242,17 @@ async function createRootIndex(services) {
   }
   
   const indexContent = exports.join('\n') + '\n';
-  await writeFile(rootIndexPath, indexContent);
+  
+  // Create all root index files with the same content (ESM syntax works for all)
+  const files = [
+    { path: path.join(outDir, "index.ts"), desc: "TypeScript source" },
+    { path: path.join(outDir, "index.js"), desc: "JavaScript ESM" },
+    { path: path.join(outDir, "index.d.ts"), desc: "TypeScript definitions" }
+  ];
+  
+  for (const file of files) {
+    await writeFile(file.path, indexContent);
+  }
 }
 
 async function createIndexFiles(services) {
