@@ -2,12 +2,12 @@ version: v1
 plugins:
   - name: es
     opt:
-      - target=ts
+      - target=ts+js+dts
       - import_extension=none
     out: js/dist
   - name: ts
     out: js/dist
   - name: connect-query
     opt:
-      - target=ts
+      - target=ts+js+dts
     out: js/dist
