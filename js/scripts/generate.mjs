@@ -194,18 +194,16 @@ async function createServiceIndex(servicePath) {
   if (allExports.length > 0) {
     const indexContent = allExports.join('\n') + '\n';
     
-    // Create index.ts (for TypeScript consumers)
-    const indexTsPath = path.join(servicePath, "index.ts");
-    await writeFile(indexTsPath, indexContent);
+    // Create all index files with the same content (ESM syntax works for all)
+    const files = [
+      { path: path.join(servicePath, "index.ts"), desc: "TypeScript source" },
+      { path: path.join(servicePath, "index.js"), desc: "JavaScript ESM" },
+      { path: path.join(servicePath, "index.d.ts"), desc: "TypeScript definitions" }
+    ];
     
-    // Create index.js (ESM exports - same as TypeScript)
-    const jsContent = indexContent;
-    const indexJsPath = path.join(servicePath, "index.js");
-    await writeFile(indexJsPath, jsContent);
-    
-    // Create index.d.ts (TypeScript definitions)
-    const indexDtsPath = path.join(servicePath, "index.d.ts");
-    await writeFile(indexDtsPath, indexContent);
+    for (const file of files) {
+      await writeFile(file.path, indexContent);
+    }
   }
 }
 
@@ -226,18 +224,16 @@ async function createRootIndex(services) {
   
   const indexContent = exports.join('\n') + '\n';
   
-  // Create index.ts (for TypeScript consumers)
-  const rootIndexTsPath = path.join(outDir, "index.ts");
-  await writeFile(rootIndexTsPath, indexContent);
+  // Create all root index files with the same content (ESM syntax works for all)
+  const files = [
+    { path: path.join(outDir, "index.ts"), desc: "TypeScript source" },
+    { path: path.join(outDir, "index.js"), desc: "JavaScript ESM" },
+    { path: path.join(outDir, "index.d.ts"), desc: "TypeScript definitions" }
+  ];
   
-  // Create index.js (ESM exports - same as TypeScript)
-  const jsContent = indexContent;
-  const rootIndexJsPath = path.join(outDir, "index.js");
-  await writeFile(rootIndexJsPath, jsContent);
-  
-  // Create index.d.ts (TypeScript definitions)
-  const rootIndexDtsPath = path.join(outDir, "index.d.ts");
-  await writeFile(rootIndexDtsPath, indexContent);
+  for (const file of files) {
+    await writeFile(file.path, indexContent);
+  }
 }
 
 async function createIndexFiles(services) {
