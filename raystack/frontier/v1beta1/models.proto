@@ -1084,9 +1084,3 @@ message RevokeUserSessionRequest {
 
 message RevokeUserSessionResponse {}
 
-message ListSessionsRequest {}
-
-message ListSessionsResponse {
-  repeated Session sessions = 1;
-}
-
