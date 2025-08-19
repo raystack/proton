@@ -1043,12 +1043,12 @@ message SessionBase {
 }
 
 message Session {
-  SessionBase sessionBase = 1;
-  bool isCurrentSession = 2;
+  SessionBase session_base = 1;
+  bool is_current_session = 2;
 }
 
 message UserSession {
-  SessionBase sessionBase = 1;
+  SessionBase session_base = 1;
 }
 
 message ListSessionsRequest {}
