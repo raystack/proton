@@ -1191,6 +1191,28 @@ service FrontierService {
     };
   }
 
+  rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/sessions/{session_id}/revoke"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Revoke session";
+      description: "Revoke a specific session for the current authenticated user.";
+    };
+  }
+
+  rpc PingUserSession(PingUserSessionRequest) returns (PingUserSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/users/{user_id}/sessions/ping"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "Ping user session";
+      description: "Ping user's session.";
+    };
+  }
+
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
     option (google.api.http) = {get: "/v1beta1/auth"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -4148,12 +4170,4 @@ message CreateProspectPublicRequest{
 }
 
 message CreateProspectPublicResponse{
-}
-
-// Session management
-
-message ListSessionsRequest { }
-
-message ListSessionsResponse {
-  repeated Session sessions = 1;
 }

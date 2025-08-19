@@ -782,6 +782,26 @@ service AdminService {
     };
   }
 
+  rpc ListUserSessions(ListUserSessionsRequest) returns (ListUserSessionsResponse) {
+    option (google.api.http) = {get: "/v1beta1/admin/users/{user_id}/sessions"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "User";
+      summary: "List user sessions";
+      description: "Returns a list of all sessions for a specific user. Admin access required.";
+    };
+  }
+
+  rpc RevokeUserSession(RevokeUserSessionRequest) returns (RevokeUserSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/admin/users/{user_id}/sessions/{session_id}/revoke"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Admin";
+      summary: "Revoke user session";
+      description: "Revoke a specific session for a specific user (admin only).";
+    };
+  }
+
 }
 
 message ListAllUsersRequest {

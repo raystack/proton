@@ -1030,7 +1030,7 @@ message ExportOrganizationsRequest {
 
 // Session management
 
-message Session {
+message SessionBase {
   string id = 1;
   google.protobuf.Struct metadata = 2;
   google.protobuf.Timestamp created_at = 3;
@@ -1040,5 +1040,53 @@ message Session {
   string ip_address = 7;
   string location = 8;
   string timestamp = 9;
-  bool isCurrentSession = 10;
 }
+
+message Session {
+  SessionBase sessionBase = 1;
+  bool isCurrentSession = 2;
+}
+
+message UserSession {
+  SessionBase sessionBase = 1;
+}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+}
+
+message RevokeSessionResponse {}
+
+message ListUserSessionsRequest {
+  string user_id = 1;
+}
+
+message ListUserSessionsResponse {
+  repeated UserSession user_sessions = 1;
+}
+
+message PingUserSessionRequest {
+  string user_id = 1;
+}
+
+message PingUserSessionResponse {}
+
+message RevokeUserSessionRequest {
+  string user_id = 1;
+  string session_id = 2;
+}
+
+message RevokeUserSessionResponse {}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
