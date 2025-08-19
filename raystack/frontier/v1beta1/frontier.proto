@@ -1182,6 +1182,15 @@ service FrontierService {
     };
   }
 
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {
+    option (google.api.http) = { get: "/v1beta1/sessions" };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Authn";
+      summary: "List current user active sessions";
+      description: "Returns a list of all active sessions for the current authenticated user.";
+    };
+  }
+
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
     option (google.api.http) = {get: "/v1beta1/auth"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -4139,4 +4148,12 @@ message CreateProspectPublicRequest{
 }
 
 message CreateProspectPublicResponse{
+}
+
+// Session management
+
+message ListSessionsRequest { }
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
 }

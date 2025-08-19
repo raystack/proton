@@ -1027,3 +1027,18 @@ message RQLQueryGroupData {
 
 message ExportOrganizationsRequest {
 }
+
+// Session management
+
+message Session {
+  string id = 1;
+  google.protobuf.Struct metadata = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  string os = 5;
+  string browser = 6;
+  string ip_address = 7;
+  string location = 8;
+  string timestamp = 9;
+  bool isCurrentSession = 10;
+}
