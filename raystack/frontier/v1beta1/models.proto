@@ -1063,9 +1063,7 @@ message ListUserSessionsResponse {
   repeated Session user_sessions = 1;
 }
 
-message PingUserSessionRequest {
-  string user_id = 1;
-}
+message PingUserSessionRequest {}
 
 message PingUserSessionResponse {}
 
