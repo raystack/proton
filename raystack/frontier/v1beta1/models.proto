@@ -1031,14 +1031,16 @@ message ExportOrganizationsRequest {
 // Session management
 
 message Session {
+  message Meta {
+    string operating_system = 1;
+    string browser = 2;
+    string ip_address = 3;
+    string location = 4;
+  }
+  
   string id = 1;
-  string operating_system = 2;
-  string browser = 3;
-  string ip_address = 4;
-  string location = 5;
-  bool is_current_session = 6;
-  google.protobuf.Struct metadata = 7;
-  google.protobuf.Timestamp created_at = 8;
-  google.protobuf.Timestamp updated_at = 9;
-  google.protobuf.Timestamp deleted_at = 10;
+  Meta metadata = 2;
+  bool is_current_session = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
 }
