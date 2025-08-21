@@ -1042,35 +1042,3 @@ message Session {
   google.protobuf.Timestamp updated_at = 9;
   google.protobuf.Timestamp deleted_at = 10;
 }
-
-message ListSessionsRequest {}
-
-message ListSessionsResponse {
-  repeated Session sessions = 1;
-}
-
-message RevokeSessionRequest {
-  string session_id = 1;
-}
-
-message RevokeSessionResponse {}
-
-message ListUserSessionsRequest {
-  string user_id = 1;
-}
-
-message ListUserSessionsResponse {
-  repeated Session user_sessions = 1;
-}
-
-message PingUserSessionRequest {}
-
-message PingUserSessionResponse {}
-
-message RevokeUserSessionRequest {
-  string user_id = 1;
-  string session_id = 2;
-}
-
-message RevokeUserSessionResponse {}
-

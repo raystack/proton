@@ -1705,3 +1705,18 @@ message GetCurrentAdminUserResponse {
   User user = 1;
   ServiceUser service_user = 2;
 }
+
+message ListUserSessionsRequest {
+  string user_id = 1;
+}
+
+message ListUserSessionsResponse {
+  repeated Session user_sessions = 1;
+}
+
+message RevokeUserSessionRequest {
+  string user_id = 1;
+  string session_id = 2;
+}
+
+message RevokeUserSessionResponse {}

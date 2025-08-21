@@ -4149,3 +4149,19 @@ message CreateProspectPublicRequest{
 
 message CreateProspectPublicResponse{
 }
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+}
+
+message RevokeSessionResponse {}
+
+message PingUserSessionRequest {}
+
+message PingUserSessionResponse {}
