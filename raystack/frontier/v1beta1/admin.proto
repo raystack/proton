@@ -1711,7 +1711,7 @@ message ListUserSessionsRequest {
 }
 
 message ListUserSessionsResponse {
-  repeated Session user_sessions = 1;
+  repeated Session sessions = 1;
 }
 
 message RevokeUserSessionRequest {
