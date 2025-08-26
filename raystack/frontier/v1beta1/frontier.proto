@@ -1182,6 +1182,15 @@ service FrontierService {
     };
   }
 
+  // Returns a list of all active sessions for the current authenticated user.
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {}
+
+  // Revoke a specific session for the current authenticated user.
+  rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse) {}
+
+  // Ping user current active session.
+  rpc PingUserSession(PingUserSessionRequest) returns (PingUserSessionResponse) {}
+
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
     option (google.api.http) = {get: "/v1beta1/auth"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -4140,3 +4149,19 @@ message CreateProspectPublicRequest{
 
 message CreateProspectPublicResponse{
 }
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+}
+
+message RevokeSessionResponse {}
+
+message PingUserSessionRequest {}
+
+message PingUserSessionResponse {}

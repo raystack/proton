@@ -782,6 +782,12 @@ service AdminService {
     };
   }
 
+  // Returns a list of all sessions for a specific user. Admin access required.
+  rpc ListUserSessions(ListUserSessionsRequest) returns (ListUserSessionsResponse) {}
+
+  // Revoke a specific session for a specific user (admin only).
+  rpc RevokeUserSession(RevokeUserSessionRequest) returns (RevokeUserSessionResponse) {}
+
 }
 
 message ListAllUsersRequest {
@@ -1699,3 +1705,18 @@ message GetCurrentAdminUserResponse {
   User user = 1;
   ServiceUser service_user = 2;
 }
+
+message ListUserSessionsRequest {
+  string user_id = 1;
+}
+
+message ListUserSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message RevokeUserSessionRequest {
+  string user_id = 1;
+  string session_id = 2;
+}
+
+message RevokeUserSessionResponse {}
