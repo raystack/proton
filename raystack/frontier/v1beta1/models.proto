@@ -1044,3 +1044,41 @@ message Session {
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
 }
+
+// Audit Record models
+
+message AuditRecordActor {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string type = 2  [(google.api.field_behavior) = REQUIRED];
+  string name = 3;
+  google.protobuf.Struct metadata = 4;
+}
+
+message AuditRecordResource {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string type = 2 [(google.api.field_behavior) = REQUIRED];
+  string name = 3;
+  google.protobuf.Struct metadata = 4;
+}
+
+message AuditRecordTarget {
+  string id = 1;
+  string type = 2;
+  string name = 3;
+  google.protobuf.Struct metadata = 4;
+}
+
+message AuditRecord {
+  string id = 1;
+  
+  AuditRecordActor actor = 2;
+  string event = 3;
+  AuditRecordResource resource = 4;
+  AuditRecordTarget target = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  string org_id = 7;
+  string req_id = 8;
+  google.protobuf.Struct metadata = 9;
+
+  google.protobuf.Timestamp created_at = 10;
+}

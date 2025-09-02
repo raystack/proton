@@ -788,6 +788,9 @@ service AdminService {
   // Revoke a specific session for a specific user (admin only).
   rpc RevokeUserSession(RevokeUserSessionRequest) returns (RevokeUserSessionResponse) {}
 
+  // Audit Records (Admin Only)
+  rpc ListAuditRecords(ListAuditRecordsRequest) returns (ListAuditRecordsResponse) {}
+
 }
 
 message ListAllUsersRequest {
@@ -1720,3 +1723,15 @@ message RevokeUserSessionRequest {
 }
 
 message RevokeUserSessionResponse {}
+
+// Admin Audit Record messages
+
+message ListAuditRecordsRequest {
+  RQLRequest query = 1;
+}
+
+message ListAuditRecordsResponse {
+  repeated AuditRecord audit_records = 1;
+  RQLQueryPaginationResponse pagination = 2;
+  RQLQueryGroupResponse group = 3;
+}

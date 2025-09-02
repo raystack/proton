@@ -1308,15 +1308,18 @@ service FrontierService {
 
   // Audit logs
   rpc ListOrganizationAuditLogs(ListOrganizationAuditLogsRequest) returns (ListOrganizationAuditLogsResponse) {
+    option deprecated = true;
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/auditlogs"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "AuditLog";
       summary: "List audit logs";
-      description: "Returns a list of audit logs of an organization in Frontier.";
+      description: "Returns a list of audit logs of an organization in Frontier. DEPRECATED: Use admin ListAuditRecords API instead.";
+      deprecated: true;
     };
   }
 
   rpc CreateOrganizationAuditLogs(CreateOrganizationAuditLogsRequest) returns (CreateOrganizationAuditLogsResponse) {
+    option deprecated = true;
     option (google.api.http) = {
       post: "/v1beta1/organizations/{org_id}/auditlogs",
       body: "*"
@@ -1324,16 +1327,19 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "AuditLog";
       summary: "Create audit log";
-      description: "Create new audit logs in a batch.";
+      description: "Create new audit logs in a batch. DEPRECATED: Use CreateAuditRecord API instead.";
+      deprecated: true;
     };
   }
 
   rpc GetOrganizationAuditLog(GetOrganizationAuditLogRequest) returns (GetOrganizationAuditLogResponse) {
+    option deprecated = true;
     option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/auditlogs/{id}"};
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "AuditLog";
       summary: "Get audit log";
-      description: "Get an audit log by ID.";
+      description: "Get an audit log by ID. DEPRECATED: Use admin GetAuditRecord API instead.";
+      deprecated: true;
     };
   }
 
@@ -1915,6 +1921,9 @@ service FrontierService {
       description: "Create prospect for given email and activity. Available for public access.";
     };
   }
+
+  // Audit Records
+  rpc CreateAuditRecord(CreateAuditRecordRequest) returns (CreateAuditRecordResponse) {}
 }
 
 // Billing
@@ -4165,3 +4174,34 @@ message RevokeSessionResponse {}
 message PingUserSessionRequest {}
 
 message PingUserSessionResponse {}
+
+// Audit Record messages for user-facing API
+message CreateAuditRecordRequest {
+  AuditRecordActor actor = 1 [(google.api.field_behavior) = REQUIRED];
+  
+  string event = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string = {min_len: 3}
+  ];
+  
+  // Base resource on which this change happened
+  AuditRecordResource resource = 3 [(google.api.field_behavior) = REQUIRED];
+  
+  // Related resource info (optional)
+  AuditRecordTarget target = 4;
+  
+  // When the event occurred
+  google.protobuf.Timestamp occurred_at = 5 [(google.api.field_behavior) = REQUIRED];
+  
+  string org_id = 6 [(validate.rules).string.uuid = true];
+  
+  // Request ID for tracing
+  string req_id = 7;
+  
+  // Flexible metadata field for any additional data including reason, changes, etc.
+  google.protobuf.Struct metadata = 8;
+}
+
+message CreateAuditRecordResponse {
+  AuditRecord audit_record = 1;
+}
