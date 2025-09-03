@@ -1048,7 +1048,7 @@ message Session {
 // Audit Record models
 
 message AuditRecordActor {
-  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.uuid = true];
   string type = 2  [(google.api.field_behavior) = REQUIRED];
   string name = 3;
   google.protobuf.Struct metadata = 4;
