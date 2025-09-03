@@ -1327,7 +1327,7 @@ service FrontierService {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags: "AuditLog";
       summary: "Create audit log";
-      description: "Create new audit logs in a batch. DEPRECATED: Use CreateAuditRecord API instead.";
+      description: "Create new audit logs in a batch. DEPRECATED: Use ListAuditRecords API instead with filters.";
       deprecated: true;
     };
   }
