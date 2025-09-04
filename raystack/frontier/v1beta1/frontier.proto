@@ -4175,7 +4175,6 @@ message PingUserSessionRequest {}
 
 message PingUserSessionResponse {}
 
-// Audit Record messages for user-facing API
 message CreateAuditRecordRequest {
   AuditRecordActor actor = 1 [(google.api.field_behavior) = REQUIRED];
   

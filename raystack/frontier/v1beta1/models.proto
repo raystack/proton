@@ -1049,7 +1049,7 @@ message Session {
 
 message AuditRecordActor {
   string id = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.uuid = true];
-  string type = 2  [(google.api.field_behavior) = REQUIRED];
+  string type = 2; // not mandatory if id is zeroUUID
   string name = 3;
   google.protobuf.Struct metadata = 4;
 }
