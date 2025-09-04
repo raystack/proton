@@ -63,10 +63,4 @@ message GetProjectResponse {
 message ProjectSpecification {
   string name = 1;
   map<string, string> config = 2;
-
-  message ProjectSecret {
-    string name = 1;
-    string value = 2;
-  }
-  repeated ProjectSecret secrets = 3;
 }
