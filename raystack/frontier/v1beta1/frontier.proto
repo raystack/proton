@@ -4199,6 +4199,11 @@ message CreateAuditRecordRequest {
   
   // Flexible metadata field for any additional data including reason, changes, etc.
   google.protobuf.Struct metadata = 8;
+
+  // Idempotency key to prevent duplicate audit records. Can be used for storing external id.
+  string idempotency_key = 9 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.uuid = true];
 }
 
 message CreateAuditRecordResponse {
