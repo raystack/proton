@@ -1707,7 +1707,9 @@ message GetCurrentAdminUserResponse {
 }
 
 message ListUserSessionsRequest {
-  string user_id = 1;
+  string user_id = 1 [
+    (validate.rules).string.min_len = 1
+  ];
 }
 
 message ListUserSessionsResponse {
