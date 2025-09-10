@@ -1708,7 +1708,8 @@ message GetCurrentAdminUserResponse {
 
 message ListUserSessionsRequest {
   string user_id = 1 [
-    (validate.rules).string.min_len = 1
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.uuid = true
   ];
 }
 
