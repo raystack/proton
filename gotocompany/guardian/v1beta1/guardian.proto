@@ -212,6 +212,20 @@ service GuardianService {
     };
   }
 
+  rpc GenerateUserApprovalSummaries(GenerateUserApprovalSummariesRequest) returns (GenerateUserApprovalSummariesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/me/approvals/summaries"
+      body: "*"
+    };
+  }
+
+  rpc GenerateApprovalSummaries(GenerateApprovalSummariesRequest) returns (GenerateApprovalSummariesResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/approvals/summaries"
+      body: "*"
+    };
+  }
+
   rpc UpdateApproval(UpdateApprovalRequest) returns (UpdateApprovalResponse) {
     option (google.api.http) = {
       post: "/v1beta1/appeals/{id}/approvals/{approval_name}"
@@ -651,6 +665,10 @@ message ListUserApprovalsRequest {
   repeated string account_types = 9;
   repeated string resource_types = 10;
   bool stale = 11;
+  string role_starts_with = 12;
+  string role_ends_with = 13;
+  string role_contains = 14;
+  repeated string step_names = 15;
 }
 
 message ListUserApprovalsResponse {
@@ -676,11 +694,31 @@ message ListApprovalsRequest {
   repeated string account_types = 9;
   repeated string resource_types = 10;
   bool stale = 11;
+  string role_starts_with = 12;
+  string role_ends_with = 13;
+  string role_contains = 14;
+  repeated string step_names = 15;
 }
 
 message ListApprovalsResponse {
   repeated Approval approvals = 1;
   int32 total = 2;
+}
+
+message GenerateUserApprovalSummariesRequest {
+  map<string, SummaryParameters> summary_items = 1;
+}
+
+message GenerateUserApprovalSummariesResponse {
+  map<string, SummaryResult> summary_items = 1;
+}
+
+message GenerateApprovalSummariesRequest {
+  map<string, SummaryParameters> summary_items = 1;
+}
+
+message GenerateApprovalSummariesResponse {
+  map<string, SummaryResult> summary_items = 1;
 }
 
 message UpdateApprovalRequest {
@@ -1130,4 +1168,21 @@ message ProviderActivity {
   Resource resource = 12;
   string provider_activity_id = 13;
   repeated string related_permissions = 14;
+}
+
+// Summary is global interface to summarize the implementor
+message SummaryParameters {
+  map<string, google.protobuf.Value> filters = 1;
+  repeated string group_bys = 2;
+}
+
+message SummaryResult {
+  message Group {
+    map<string, google.protobuf.Value> group_fields = 1;
+    int32 count = 2;
+  }
+
+  SummaryParameters applied_parameters = 1;
+  repeated Group groups = 2;
+  int32 count = 3;
 }
