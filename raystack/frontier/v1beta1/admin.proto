@@ -1715,7 +1715,7 @@ message ListUserSessionsResponse {
 }
 
 message RevokeUserSessionRequest {
-  string session_id = 1 [
+  string session_id = 2 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
