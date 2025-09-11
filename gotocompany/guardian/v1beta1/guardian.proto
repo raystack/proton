@@ -513,6 +513,8 @@ message ListUserAppealsRequest {
   }];
   string q = 10;
   repeated string account_types = 11;
+  repeated string group_ids = 12;
+  repeated string group_types = 13;
 }
 
 message ListUserAppealsResponse {
@@ -540,6 +542,8 @@ message ListAppealsRequest {
   }];
   string q = 12;
   repeated string account_types = 13;
+  repeated string group_ids = 14;
+  repeated string group_types = 15;
 }
 
 message ListAppealsResponse {
@@ -601,6 +605,8 @@ message CreateAppealRequest {
   repeated Resource resources = 2;
   string account_type = 3;
   string description = 4;
+  string group_id = 5;
+  string group_type = 6;
 }
 
 message PatchAppealRequest {
@@ -778,6 +784,8 @@ message ListGrantsRequest {
     ignore_empty: true
   }];
   string q = 15;
+  repeated string group_ids = 16;
+  repeated string group_types = 17;
 }
 
 message ListGrantsResponse {
@@ -805,6 +813,8 @@ message ListUserGrantsRequest {
     ignore_empty: true
   }];
   string q = 13;
+  repeated string group_ids = 14;
+  repeated string group_types = 15;
 }
 
 message ListUserGrantsResponse {
@@ -1069,6 +1079,8 @@ message Appeal {
   Grant grant = 22;
   string description = 23;
   uint32 revision = 24;
+  string group_id = 25;
+  string group_type = 26;
 }
 
 // Approval is an approval item that generated in an appeal based on the selected policy
