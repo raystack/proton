@@ -601,12 +601,16 @@ message CreateAppealRequest {
     string role = 2;
     google.protobuf.Struct options = 3;
     google.protobuf.Struct details = 4;
+    string group_id = 5;
+    string group_type = 6;
   }
   repeated Resource resources = 2;
   string account_type = 3;
   string description = 4;
-  string group_id = 5;
-  string group_type = 6;
+  reserved 5;
+  reserved "group_id";
+  reserved 6;
+  reserved "group_type";
 }
 
 message PatchAppealRequest {
@@ -1163,6 +1167,8 @@ message Grant {
   string restore_reason = 23;
   string restored_by = 24;
   google.protobuf.Timestamp restored_at = 25;
+  string group_id = 26;
+  string group_type = 27;
 }
 
 message ProviderActivity {
