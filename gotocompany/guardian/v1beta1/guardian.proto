@@ -679,6 +679,8 @@ message ListUserApprovalsRequest {
   string role_ends_with = 13;
   string role_contains = 14;
   repeated string step_names = 15;
+  repeated string provider_types = 16;
+  repeated string provider_urns = 17;
 }
 
 message ListUserApprovalsResponse {
