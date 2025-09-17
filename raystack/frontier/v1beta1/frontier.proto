@@ -4157,7 +4157,10 @@ message ListSessionsResponse {
 }
 
 message RevokeSessionRequest {
-  string session_id = 1;
+  string session_id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.uuid = true
+  ];
 }
 
 message RevokeSessionResponse {}
