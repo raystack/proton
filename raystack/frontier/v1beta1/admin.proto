@@ -1735,7 +1735,7 @@ message ListAuditRecordsRequest {
 }
 
 message ExportAuditRecordsRequest {
-  RQLRequest query = 1;
+  RQLExportRequest query = 1;
 }
 
 message ListAuditRecordsResponse {

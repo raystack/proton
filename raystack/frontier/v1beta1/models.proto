@@ -994,6 +994,12 @@ message RQLRequest {
   repeated RQLSort sort = 6;
 }
 
+message RQLExportRequest {
+  repeated RQLFilter filters = 1;
+  string search = 2;
+  repeated RQLSort sort = 3;
+}
+
 message RQLFilter {
   string name = 1;
   string operator = 2;
