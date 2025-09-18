@@ -118,6 +118,13 @@ service GuardianService {
     };
   }
 
+  rpc CreateResource(CreateResourceRequest) returns (CreateResourceResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/resources"
+      body: "resource"
+    };
+  }
+
   rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
     option (google.api.http) = {
       get: "/v1beta1/resources"
@@ -445,6 +452,14 @@ message UpdatePolicyRequest {
 
 message UpdatePolicyResponse {
   Policy policy = 1;
+}
+
+message CreateResourceRequest {
+  Resource resource = 1;
+}
+
+message CreateResourceResponse {
+  Resource resource = 1;
 }
 
 message ListResourcesRequest {
