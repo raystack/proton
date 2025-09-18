@@ -696,6 +696,7 @@ message ListUserApprovalsRequest {
   repeated string step_names = 15;
   repeated string provider_types = 16;
   repeated string provider_urns = 17;
+  repeated string actors = 18;
 }
 
 message ListUserApprovalsResponse {
@@ -727,6 +728,7 @@ message ListApprovalsRequest {
   repeated string step_names = 15;
   repeated string provider_types = 16;
   repeated string provider_urns = 17;
+  repeated string actors = 18;
 }
 
 message ListApprovalsResponse {
