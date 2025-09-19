@@ -994,6 +994,12 @@ message RQLRequest {
   repeated RQLSort sort = 6;
 }
 
+message RQLExportRequest {
+  repeated RQLFilter filters = 1;
+  string search = 2;
+  repeated RQLSort sort = 3;
+}
+
 message RQLFilter {
   string name = 1;
   string operator = 2;
@@ -1077,7 +1083,7 @@ message AuditRecord {
   AuditRecordTarget target = 5;
   google.protobuf.Timestamp occurred_at = 6;
   string org_id = 7;
-  string req_id = 8;
+  string request_id = 8;
   google.protobuf.Struct metadata = 9;
 
   google.protobuf.Timestamp created_at = 10;

@@ -4198,7 +4198,7 @@ message CreateAuditRecordRequest {
   string org_id = 6 [(validate.rules).string.uuid = true];
   
   // Request ID for tracing
-  string req_id = 7;
+  string request_id = 7;
   
   // Flexible metadata field for any additional data including reason, changes, etc.
   google.protobuf.Struct metadata = 8;

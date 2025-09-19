@@ -791,6 +791,10 @@ service AdminService {
   // Audit Records (Admin Only)
   rpc ListAuditRecords(ListAuditRecordsRequest) returns (ListAuditRecordsResponse) {}
 
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  rpc ExportAuditRecords(ExportAuditRecordsRequest) returns (stream google.api.HttpBody) {}
+
 }
 
 message ListAllUsersRequest {
@@ -1734,6 +1738,10 @@ message RevokeUserSessionResponse {}
 
 message ListAuditRecordsRequest {
   RQLRequest query = 1;
+}
+
+message ExportAuditRecordsRequest {
+  RQLExportRequest query = 1;
 }
 
 message ListAuditRecordsResponse {
