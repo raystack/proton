@@ -1718,8 +1718,11 @@ message ListUserSessionsResponse {
 }
 
 message RevokeUserSessionRequest {
-  string user_id = 1;
-  string session_id = 2;
+  reserved 1;
+  string session_id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.uuid = true
+  ];
 }
 
 message RevokeUserSessionResponse {}
