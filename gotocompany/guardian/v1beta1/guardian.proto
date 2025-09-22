@@ -480,6 +480,8 @@ message ListResourcesRequest {
   }];
   repeated string order_by = 10;
   string q = 11;
+  repeated string group_ids = 12;
+  repeated string group_types = 13;
 }
 
 message ListResourcesResponse {
@@ -1166,6 +1168,8 @@ message Resource {
   string parent_id = 12;
   repeated Resource children = 13;
   string global_urn = 14;
+  string group_id = 15;
+  string group_type = 16;
 }
 
 message Grant {
