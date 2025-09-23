@@ -1,0 +1,21 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package gotocompany.raccoon.v1beta1;
+
+option go_package = "github.com/goto/proton/raccoon/v1;raccoonv1";
+option java_multiple_files = true;
+option java_outer_classname = "TotalEventCount";
+option java_package = "com.gotocompany.proton.raccoon";
+/*
+*This proto is created to serialize the kafka message containing
+* a event count and event timestamp field. It will be used to send
+* the total event count delivered by raccoon in a periodic interval
+* to a kafka topic
+*/
+message TotalEventCountMessage {
+  //timestamp when the kafka message is created
+  google.protobuf.Timestamp event_timestamp = 1;
+  //total event count delivered by raccoon
+  int32 event_count = 2;
+}
