@@ -490,16 +490,45 @@ message HttpDependency {
   map<string, string> params = 4;
 }
 
+message SLAMissAlertConfig {
+  google.protobuf.Duration duration_threshold = 1;
+  string severity = 2;
+}
+
+message RetryAlertConfig {
+  int32 count_threshold = 1;
+  string severity = 2;
+}
+
+message SuccessAlertConfig {
+  string severity = 1;
+}
+
+message FailureAlertConfig {
+  string severity = 1;
+}
+
+message OperatorAlertConfig {
+  bool disable_anomaly_detection = 1;
+  repeated SLAMissAlertConfig sla_miss = 2;
+  repeated RetryAlertConfig retry = 3;
+  SuccessAlertConfig success = 4;
+  FailureAlertConfig failure = 5;
+  string team = 6;
+}
+
 message JobSpecTask {
   string name = 1;
-  string version = 3;
   repeated JobConfigItem config = 2;
+  string version = 3;
+  OperatorAlertConfig alert = 4;
 }
 
 message JobSpecHook {
   string name = 1;
   repeated JobConfigItem config = 2;
   string version = 3;
+  OperatorAlertConfig alert = 4;
 }
 
 message JobConfigItem {
