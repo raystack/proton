@@ -532,6 +532,7 @@ message ListUserAppealsRequest {
   repeated string account_types = 11;
   repeated string group_ids = 12;
   repeated string group_types = 13;
+  repeated string resource_ids = 14;
 }
 
 message ListUserAppealsResponse {
@@ -561,6 +562,7 @@ message ListAppealsRequest {
   repeated string account_types = 13;
   repeated string group_ids = 14;
   repeated string group_types = 15;
+  repeated string resource_ids = 16;
 }
 
 message ListAppealsResponse {
