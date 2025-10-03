@@ -1110,6 +1110,9 @@ message UpsertAssetRequest {
   Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
+  bool update_only = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "If true, it return error if the asset does not exist"
+  }];
 }
 
 message UpsertAssetResponse {
@@ -1153,6 +1156,10 @@ message UpsertPatchAssetRequest {
   // Currently, it is only applicable when both upstreams and downstreams are
   // empty/not specified.
   bool overwrite_lineage = 4;
+
+  bool update_only = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "If true, it return error if the asset does not exist"
+  }];
 }
 
 message UpsertPatchAssetResponse {
