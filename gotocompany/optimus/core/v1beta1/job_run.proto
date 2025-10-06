@@ -82,6 +82,14 @@ service JobRunService {
       get: "/v1beta1/project/{project_name}/job/{job_name}/interval"
     };
   }
+
+  // GetJobRunLineageSummary gets the summary of a specific job run execution & all its upstream dependencies.
+  rpc GetJobRunLineageSummary(GetJobRunLineageSummaryRequest) returns (GetJobRunLineageSummaryResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/job-run-lineage-summary"
+      body: "*"
+    };
+  }
 }
 
 message GetIntervalRequest {
@@ -234,4 +242,48 @@ message TaskWindow {
   google.protobuf.Duration size = 1;
   google.protobuf.Duration offset = 2;
   string truncate_to = 3;
+}
+
+message GetJobRunLineageSummaryRequest {
+  repeated TargetJobRunIdentifier target_jobs = 1;
+  int32 number_of_upstream_per_level = 2;
+}
+
+message TargetJobRunIdentifier {
+  string job_name = 1;
+  google.protobuf.Timestamp scheduled_at = 2;
+}
+
+message GetJobRunLineageSummaryResponse {
+  repeated JobRunLineageSummary jobs = 1;
+}
+
+message JobRunLineageSummary {
+  string job_name = 1;
+  google.protobuf.Timestamp scheduled_at = 2;
+  repeated JobExecutionSummary job_runs = 3;
+}
+
+message JobExecutionSummary {
+  string job_name = 1;
+  SLAConfig sla = 2;
+  int32 level = 3;
+  JobRunSummary job_run_summary = 4;
+}
+
+message JobRunSummary {
+  google.protobuf.Timestamp scheduled_at = 1;
+  google.protobuf.Timestamp sla_time = 2;
+  google.protobuf.Timestamp job_start_time = 3;
+  google.protobuf.Timestamp job_end_time = 4;
+  google.protobuf.Timestamp wait_start_time = 5;
+  google.protobuf.Timestamp wait_end_time = 6;
+  google.protobuf.Timestamp task_start_time = 7;
+  google.protobuf.Timestamp task_end_time = 8;
+  google.protobuf.Timestamp hook_start_time = 9;
+  google.protobuf.Timestamp hook_end_time = 10;
+}
+
+message SLAConfig {
+  google.protobuf.Duration duration = 1;
 }
