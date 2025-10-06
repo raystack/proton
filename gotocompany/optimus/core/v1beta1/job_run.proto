@@ -90,6 +90,14 @@ service JobRunService {
       body: "*"
     };
   }
+
+  // IdentifyPotentialSLABreach notifies optimus service about potential SLA breach for given job(s)
+  rpc IdentifyPotentialSLABreach(IdentifyPotentialSLABreachRequest) returns (IdentifyPotentialSLABreachResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/project/{project_name}/potential_sla_breach/identify"
+      body: "*"
+    };
+  }
 }
 
 message GetIntervalRequest {
@@ -286,4 +294,29 @@ message JobRunSummary {
 
 message SLAConfig {
   google.protobuf.Duration duration = 1;
+}
+
+message IdentifyPotentialSLABreachRequest {
+  string project_name = 1;
+  repeated string job_names = 2;
+  map<string, string> job_labels = 3;
+  int32 next_scheduled_range_in_hours = 4;
+  bool alert_on_breach = 5;
+  string severity = 6;
+}
+
+message IdentifyPotentialSLABreachResponse {
+  map<string, UpstreamJobsStatus> jobs = 1;
+}
+
+message UpstreamJobStatus {
+  string project_name = 1;
+  string job_name = 2;
+  google.protobuf.Timestamp inferred_sla_time = 3;
+  int32 relative_level = 4;
+  string status = 5;
+}
+
+message UpstreamJobsStatus {
+  repeated UpstreamJobStatus jobs_status = 1;
 }
