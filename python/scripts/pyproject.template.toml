@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raystack-proton"
+version = "0.1.0"
+description = "Python client library for Raystack services"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Raystack"}
+]
+dependencies = [
+    "protobuf>=4.21.0",
+    "grpcio>=1.50.0",
+    "connectrpc>=1.0.0",
+    "googleapis-common-protos>=1.56.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/raystack/proton"
+Repository = "https://github.com/raystack/proton"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["raystack*"]

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "proton-python-dev"
+version = "0.0.1"
+description = "Development dependencies for Proton Python package"
+requires-python = ">=3.8"
+
+dependencies = [
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+
+[project.scripts]
+proton-build = "scripts.build:build_cli"
+proton-clean = "scripts.build:clean"
+proton-publish = "scripts.build:publish"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
