@@ -25,7 +25,7 @@ def publish():
 
     # Check if build package is installed
     check_build = subprocess.run(
-        ["python3", "-m", "build", "--version"],
+        [sys.executable, "-m", "build", "--version"],
         capture_output=True
     )
     if check_build.returncode != 0:
@@ -35,7 +35,7 @@ def publish():
 
     print("Building wheel...")
     result = subprocess.run(
-        ["python3", "-m", "build", "--wheel"],
+        [sys.executable, "-m", "build", "--wheel"],
         cwd=dist_dir
     )
 
@@ -82,7 +82,7 @@ def build(version_hash=None):
                 if not init_file.exists():
                     init_file.touch()
 
-    # Copy pyproject.toml template to dist with version update
+    # Copy pyproject.toml template to dist
     template_file = Path(__file__).parent / "pyproject.template.toml"
     if template_file.exists():
         print("Copying pyproject.toml to dist...")
@@ -90,8 +90,9 @@ def build(version_hash=None):
 
         # Update version if hash is provided
         if version_hash:
-            content = content.replace('version = "0.1.0"', f'version = "0.1.0-{version_hash}"')
-            print(f"Set version to: 0.1.0-{version_hash}")
+            version_str = f"0.1.0+{version_hash}"
+            content = content.replace('version = "0.1.0"', f'version = "{version_str}"')
+            print(f"Set version to: {version_str}")
 
         (dist_dir / "pyproject.toml").write_text(content)
 
