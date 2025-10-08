@@ -28,8 +28,7 @@ def publish():
 
     # Check if build package is installed
     check_build = subprocess.run(
-        [sys.executable, "-m", "build", "--version"],
-        capture_output=True
+        [sys.executable, "-m", "build", "--version"], capture_output=True
     )
     if check_build.returncode != 0:
         print("Error: 'build' package not installed. Install it with:")
@@ -37,10 +36,7 @@ def publish():
         sys.exit(1)
 
     print("Building wheel...")
-    result = subprocess.run(
-        [sys.executable, "-m", "build", "--wheel"],
-        cwd=DIST_DIR
-    )
+    result = subprocess.run([sys.executable, "-m", "build", "--wheel"], cwd=DIST_DIR)
 
     if result.returncode != 0:
         print("Wheel build failed!", file=sys.stderr)
@@ -50,7 +46,7 @@ def publish():
     print(f"Output: {DIST_DIR}/dist/")
 
 
-def build(version_hash=None):
+def build():
     """Generate Python code from proto files."""
     clean()
 
@@ -87,12 +83,13 @@ def build(version_hash=None):
         print("Copying pyproject.toml to dist...")
         content = template_file.read_text()
 
-        # Update version if hash is provided
-        if version_hash:
-            version_str = f"0.1.0+{version_hash}"
-            content = content.replace('version = "0.1.0"', f'version = "{version_str}"')
-            print(f"Set version to: {version_str}")
+        # Generate CalVer format: YYYY.MM.DD.HHMMSS
+        from datetime import datetime
 
+        now = datetime.utcnow()
+        version_str = now.strftime("%Y.%m.%d.%H%M%S")
+        content = content.replace('version = "0.1.0"', f'version = "{version_str}"')
+        print(f"Set version to: {version_str}")
         (DIST_DIR / "pyproject.toml").write_text(content)
 
     # Copy README to dist
@@ -112,28 +109,23 @@ def build(version_hash=None):
 
 def build_cli():
     """CLI entry point for build command."""
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Build Python protobuf package")
-    parser.add_argument("--hash", help="Version hash to append (e.g., git commit hash)")
-
-    args = parser.parse_args()
-    build(version_hash=args.hash)
+    build()
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Build Python protobuf package")
-    parser.add_argument("command", choices=["clean", "build", "publish"], help="Command to run")
-    parser.add_argument("--hash", help="Version hash to append (e.g., git commit hash)")
+    parser.add_argument(
+        "command", choices=["clean", "build", "publish"], help="Command to run"
+    )
 
     args = parser.parse_args()
 
     if args.command == "clean":
         clean()
     elif args.command == "build":
-        build(version_hash=args.hash)
+        build()
     elif args.command == "publish":
         publish()
 

@@ -41,7 +41,7 @@ jobs:
           pip install -e .
 
       - name: Build Python package
-        run: proton-build --hash ${{ github.sha }}
+        run: proton-build
 
       - name: Build wheel
         run: proton-publish
