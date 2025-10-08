@@ -25,4 +25,4 @@ Repository = "https://github.com/raystack/proton"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["raystack*"]
+include = ["raystack*", "validate*", "google*", "protoc_gen_openapiv2*"]
