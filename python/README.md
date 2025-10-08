@@ -2,6 +2,8 @@
 
 Python client library for Raystack services, generated from Protocol Buffer definitions.
 
+**PyPI:** https://pypi.org/project/raystack-proton/
+
 ## Installation
 
 ```bash

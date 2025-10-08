@@ -47,6 +47,22 @@ buf generate --path raystack/assets
 
 Check out Compass [implementation](https://github.com/raystack/compass) for reference.
 
+## Python Client
+
+A pre-built Python client package is available:
+
+### Installation
+
+```bash
+pip install raystack-proton
+```
+
+**PyPI:** https://pypi.org/project/raystack-proton/
+
+### Usage
+
+See the [Python README](python/README.md) for detailed usage examples.
+
 ## JavaScript/TypeScript Client
 
 A pre-built JavaScript/TypeScript client package is available for browser and Node.js environments:
@@ -56,6 +72,8 @@ A pre-built JavaScript/TypeScript client package is available for browser and No
 ```bash
 npm install @raystack/proton
 ```
+
+**NPM:** https://npmjs.com/package/@raystack/proton
 
 For browser applications using TanStack Query:
 ```bash
