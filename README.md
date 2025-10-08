@@ -75,6 +75,10 @@ npm install @raystack/proton
 
 **NPM:** https://npmjs.com/package/@raystack/proton
 
+### Usage
+
+See the [JavaScript README](js/README.md) for detailed usage examples.
+
 For browser applications using TanStack Query:
 ```bash
 npm install @raystack/proton @tanstack/react-query

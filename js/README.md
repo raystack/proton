@@ -2,6 +2,8 @@
 
 TypeScript/JavaScript client library for Raystack APIs generated from Protocol Buffer definitions.
 
+**NPM:** https://npmjs.com/package/@raystack/proton
+
 ## Installation
 
 ```bash
