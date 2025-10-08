@@ -51,4 +51,4 @@ jobs:
         with:
           repository-url: ${{ env.PYPI_REPOSITORY_URL }}
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          packages-dir: dist/dist/
+          packages-dir: python/dist/dist/
