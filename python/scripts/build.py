@@ -7,19 +7,22 @@ import sys
 from pathlib import Path
 
 
+# Get the proton root directory
+ROOT_DIR = Path(__file__).parent.parent.parent
+PYTHON_DIR = Path(__file__).parent.parent
+DIST_DIR = PYTHON_DIR / "dist"
+
+
 def clean():
     """Remove the dist directory."""
-    dist_dir = Path(__file__).parent.parent / "dist"
-    if dist_dir.exists():
-        print(f"Cleaning {dist_dir}")
-        shutil.rmtree(dist_dir)
+    if DIST_DIR.exists():
+        print(f"Cleaning {DIST_DIR}")
+        shutil.rmtree(DIST_DIR)
 
 
 def publish():
     """Build wheel for publishing."""
-    dist_dir = Path(__file__).parent.parent / "dist"
-
-    if not dist_dir.exists():
+    if not DIST_DIR.exists():
         print("Error: dist directory not found. Run 'build' first.", file=sys.stderr)
         sys.exit(1)
 
@@ -36,7 +39,7 @@ def publish():
     print("Building wheel...")
     result = subprocess.run(
         [sys.executable, "-m", "build", "--wheel"],
-        cwd=dist_dir
+        cwd=DIST_DIR
     )
 
     if result.returncode != 0:
@@ -44,15 +47,12 @@ def publish():
         sys.exit(1)
 
     print("Wheel built successfully!")
-    print(f"Output: {dist_dir}/dist/")
+    print(f"Output: {DIST_DIR}/dist/")
 
 
 def build(version_hash=None):
     """Generate Python code from proto files."""
     clean()
-
-    # Get the proton root directory
-    root_dir = Path(__file__).parent.parent.parent
 
     cmd = [
         "buf",
@@ -66,17 +66,16 @@ def build(version_hash=None):
     ]
 
     print(f"Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=root_dir)
+    result = subprocess.run(cmd, cwd=ROOT_DIR)
 
     if result.returncode != 0:
         print("Build failed!", file=sys.stderr)
         sys.exit(1)
 
     # Create __init__.py files in all directories
-    dist_dir = Path(__file__).parent.parent / "dist"
-    if dist_dir.exists():
+    if DIST_DIR.exists():
         print("Creating __init__.py files...")
-        for dir_path in dist_dir.rglob("*"):
+        for dir_path in DIST_DIR.rglob("*"):
             if dir_path.is_dir():
                 init_file = dir_path / "__init__.py"
                 if not init_file.exists():
@@ -94,13 +93,19 @@ def build(version_hash=None):
             content = content.replace('version = "0.1.0"', f'version = "{version_str}"')
             print(f"Set version to: {version_str}")
 
-        (dist_dir / "pyproject.toml").write_text(content)
+        (DIST_DIR / "pyproject.toml").write_text(content)
 
     # Copy README to dist
-    readme_file = Path(__file__).parent.parent / "README.md"
+    readme_file = PYTHON_DIR / "README.md"
     if readme_file.exists():
         print("Copying README.md to dist...")
-        shutil.copy(readme_file, dist_dir / "README.md")
+        shutil.copy(readme_file, DIST_DIR / "README.md")
+
+    # Copy LICENSE to dist
+    license_file = ROOT_DIR / "LICENSE"
+    if license_file.exists():
+        print("Copying LICENSE to dist...")
+        shutil.copy(license_file, DIST_DIR / "LICENSE")
 
     print("Build successful!")
 
