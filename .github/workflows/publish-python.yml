@@ -6,11 +6,9 @@ on:
       - main
       - feat_add_python_client
 
-env:
-  PYPI_REPOSITORY_URL: https://test.pypi.org/legacy/
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -49,6 +47,5 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          repository-url: ${{ env.PYPI_REPOSITORY_URL }}
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
           packages-dir: python/dist/dist/
