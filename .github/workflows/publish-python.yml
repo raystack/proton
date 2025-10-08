@@ -24,9 +24,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install buf
-        run: |
-          curl -sSL "https://github.com/bufbuild/buf/releases/download/v1.28.1/buf-Linux-x86_64.tar.gz" | tar -xz -C /usr/local --strip-components 1
-        working-directory: .
+        uses: bufbuild/buf-setup-action@v1.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Python dependencies
         run: |
