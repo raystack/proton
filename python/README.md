@@ -8,32 +8,61 @@ Python client library for Raystack services, generated from Protocol Buffer defi
 pip install raystack-proton
 ```
 
+This will automatically install the required dependencies:
+- `connect-python>=0.5.0` - Connect RPC client
+- `googleapis-common-protos>=1.50.0` - Common Google API types
+- `grpcio>=1.50.0` - gRPC runtime
+- `protobuf>=4.21.0,<7.0.0` - Protocol Buffer runtime
+
 ## Usage
 
-### Using Frontier Admin Service
+This library uses [Connect RPC](https://github.com/connectrpc/connect-python) for communication with Raystack services.
+
+### Synchronous Client
 
 ```python
-from connectrpc.client import ConnectClient
 from raystack.frontier.v1beta1 import admin_connect, admin_pb2
 
-# Create the client
-client = ConnectClient(
-    base_url="https://your-frontier-api.com",
-    headers={"Authorization": "Bearer YOUR_TOKEN"}  # Optional auth
-)
+# Create client
+admin_client = admin_connect.AdminServiceClientSync("http://localhost:8082")
 
-# Create the admin service client
-admin_client = admin_connect.AdminServiceClient(client)
-
-# Check federated resource permission
+# Make request with authentication headers
 request = admin_pb2.CheckFederatedResourcePermissionRequest(
-    resource="resource_id",
-    permission="permission_name",
-    subject="user_id"
+    subject="user:<user-id>",
+    resource="app/organization:<org-id>",
+    permission="get"
 )
-response = admin_client.check_federated_resource_permission(request)
 
-print(f"Allowed: {response.status}")
+response = admin_client.check_federated_resource_permission(
+    request,
+    headers={"Authorization": "<auth-token>"}
+)
+print(f"Has permission: {response.status}")
+```
+
+### Async Client
+
+```python
+import asyncio
+from raystack.frontier.v1beta1 import admin_connect, admin_pb2
+
+async def check_permission():
+    admin_client = admin_connect.AdminServiceClient("http://localhost:8082")
+
+    request = admin_pb2.CheckFederatedResourcePermissionRequest(
+        subject="user:<user-id>",
+        resource="app/organization:<org-id>",
+        permission="get"
+    )
+
+    response = await admin_client.check_federated_resource_permission(
+        request,
+        headers={"Authorization": "<auth-token>"}
+    )
+    print(f"Has permission: {response.status}")
+
+# Run the async function
+asyncio.run(check_permission())
 ```
 
 ## Development
