@@ -6,9 +6,15 @@ on:
       - main
       - feat_add_python_client
 
+env:
+  PYPI_REPOSITORY_URL: https://test.pypi.org/legacy/
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     defaults:
       run:
         working-directory: python
@@ -40,8 +46,9 @@ jobs:
       - name: Build wheel
         run: proton-publish
 
-      # - name: Upload wheel artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: python-wheel
-      #     path: python/dist/dist/*.whl
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ env.PYPI_REPOSITORY_URL }}
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          packages-dir: dist/dist/
