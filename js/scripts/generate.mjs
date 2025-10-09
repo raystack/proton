@@ -10,11 +10,11 @@ const __dirname = path.dirname(__filename);
 const outDir = path.resolve(__dirname, "../dist");
 const bufGenFile = path.join(__dirname, "../", "buf.gen.yaml");
 const packageTemplatePath = path.join(__dirname, "package.template.json");
-const readmeTemplatePath = path.join(__dirname, "README.template.md");
+const readmePath = path.join(__dirname, "../README.md");
 const nodeModulesBin = path.join(__dirname, "../node_modules/.bin");
 const raystackDir = path.join(outDir, "raystack");
 const packagePath = path.join(outDir, "package.json");
-const readmePath = path.join(outDir, "README.md");
+const readmeDistPath = path.join(outDir, "README.md");
 const protonRoot = path.join(__dirname, "../..");
 
 // Parse command line arguments
@@ -73,7 +73,7 @@ async function createPackageJson(services) {
 
 async function copyReadme() {
   try {
-    await copyFile(readmeTemplatePath, readmePath);
+    await copyFile(readmePath, readmeDistPath);
   } catch (error) {
     console.warn("Warning: Could not copy README:", error.message);
   }

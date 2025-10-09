@@ -1,0 +1,10 @@
+dist/
+
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+python/dist/
