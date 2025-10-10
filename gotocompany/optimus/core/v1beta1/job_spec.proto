@@ -493,6 +493,8 @@ message HttpDependency {
 message SLAMissAlertConfig {
   google.protobuf.Duration duration_threshold = 1;
   string severity = 2;
+  bool auto_threshold = 3;
+  string team = 4;
 }
 
 message RetryAlertConfig {
