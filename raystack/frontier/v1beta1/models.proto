@@ -544,6 +544,8 @@ message PreferenceTrait {
 
   string input_hints = 19;
   
+  reserved 20 to 26;
+  
   InputType input_type = 27;
 }
 
