@@ -521,6 +521,17 @@ message AuditLog {
 // PreferenceTrait is a trait that can be used to add preferences to a resource
 // it explains what preferences are available for a resource
 message PreferenceTrait {
+  enum InputType {
+    INPUT_TYPE_UNSPECIFIED = 0;
+    INPUT_TYPE_TEXT = 1;
+    INPUT_TYPE_TEXTAREA = 2;
+    INPUT_TYPE_SELECT = 3;
+    INPUT_TYPE_COMBOBOX = 4;
+    INPUT_TYPE_CHECKBOX = 5;
+    INPUT_TYPE_MULTISELECT = 6;
+    INPUT_TYPE_NUMBER = 7;
+  }
+  
   string resource_type = 1;
   string name = 2;
   string title = 3;
@@ -532,15 +543,10 @@ message PreferenceTrait {
   string default = 9;
 
   string input_hints = 19;
-  oneof input {
-    string text = 20;
-    string textarea = 21;
-    string select = 22;
-    string combobox = 23;
-    string checkbox = 24;
-    string multiselect = 25;
-    string number = 26;
-  }
+  
+  reserved 20 to 26;
+  
+  InputType input_type = 27;
 }
 
 message Preference {
