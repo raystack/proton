@@ -300,9 +300,11 @@ message IdentifyPotentialSLABreachRequest {
   string project_name = 1;
   repeated string job_names = 2;
   map<string, string> job_labels = 3;
-  int32 next_scheduled_range_in_hours = 4;
+  int32 next_scheduled_range_in_hours = 4 [deprecated = true]; // use scheduled_range_in_hours
   bool alert_on_breach = 5;
   string severity = 6;
+  google.protobuf.Timestamp reference_time = 7; // RFC3339 format
+  int32 scheduled_range_in_hours = 8;
 }
 
 message IdentifyPotentialSLABreachResponse {
