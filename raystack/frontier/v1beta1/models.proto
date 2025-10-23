@@ -1089,6 +1089,7 @@ message AuditRecord {
   AuditRecordTarget target = 5;
   google.protobuf.Timestamp occurred_at = 6;
   string org_id = 7;
+  string org_name = 11;
   string request_id = 8;
   google.protobuf.Struct metadata = 9;
 
