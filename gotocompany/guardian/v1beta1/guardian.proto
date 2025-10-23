@@ -701,6 +701,8 @@ message ListUserApprovalsRequest {
   repeated string provider_types = 16;
   repeated string provider_urns = 17;
   repeated string actors = 18;
+  google.protobuf.Timestamp start_time = 19;
+  google.protobuf.Timestamp end_time = 20;
 }
 
 message ListUserApprovalsResponse {
@@ -733,6 +735,8 @@ message ListApprovalsRequest {
   repeated string provider_types = 16;
   repeated string provider_urns = 17;
   repeated string actors = 18;
+  google.protobuf.Timestamp start_time = 19;
+  google.protobuf.Timestamp end_time = 20;
 }
 
 message ListApprovalsResponse {
@@ -816,14 +820,39 @@ message ListGrantsRequest {
   repeated string group_ids = 16;
   repeated string group_types = 17;
   bool with_approvals = 18;
+  repeated string summary_group_bys = 19;
+  repeated string summary_uniques = 20;
+  uint32 expiring_in_days = 21;
+  repeated string field_masks = 23;
+  bool with_pending_appeal = 24;
+  string role_starts_with = 25;
+  string role_ends_with = 26;
+  string role_contains = 27;
+  google.protobuf.Timestamp start_time = 28;
+  google.protobuf.Timestamp end_time = 29;
 }
 
 message ListGrantsResponse {
   repeated Grant grants = 1;
   int32 total = 2;
+  SummaryResult summary = 3;
 }
 
 message ListUserGrantsRequest {
+  enum InactiveGrantPolicy {
+    // Unspecified behavior. Defaults to INCLUDE_ALL.
+    // The server should treat this as INACTIVE_GRANT_POLICY_INCLUDE_ALL.
+    INACTIVE_GRANT_POLICY_UNSPECIFIED = 0;
+
+    // Include all grants, both active and inactive.
+    // This is the default behavior if no policy is specified.
+    INACTIVE_GRANT_POLICY_INCLUDE_ALL = 1;
+
+    // Smart visibility mode:
+    // - If a resource has both active and inactive grants, only active ones are shown.
+    INACTIVE_GRANT_POLICY_SMART = 2;
+  }
+
   repeated string statuses = 1;
   repeated string account_ids = 2;
   repeated string account_types = 3;
@@ -845,11 +874,23 @@ message ListUserGrantsRequest {
   string q = 13;
   repeated string group_ids = 14;
   repeated string group_types = 15;
+  repeated string summary_group_bys = 16;
+  repeated string summary_uniques = 17;
+  uint32 expiring_in_days = 18;
+  repeated string field_masks = 19;
+  bool with_pending_appeal = 20;
+  string role_starts_with = 21;
+  string role_ends_with = 22;
+  string role_contains = 23;
+  InactiveGrantPolicy inactive_grant_policy = 24;
+  google.protobuf.Timestamp start_time = 25;
+  google.protobuf.Timestamp end_time = 26;
 }
 
 message ListUserGrantsResponse {
   repeated Grant grants = 1;
   int32 total = 2;
+  SummaryResult summary = 3;
 }
 
 message ListUserRolesRequest {
@@ -1079,7 +1120,7 @@ message Policy {
     string type = 1;
     google.protobuf.Value config = 2;
   }
-  CustomSteps custom_steps =  11;
+  CustomSteps custom_steps = 11;
 }
 
 message AppealOptions {
@@ -1203,6 +1244,7 @@ message Grant {
   google.protobuf.Timestamp restored_at = 25;
   string group_id = 26;
   string group_type = 27;
+  string pending_appeal_id = 28;
 }
 
 message ProviderActivity {
@@ -1234,7 +1276,16 @@ message SummaryResult {
     int32 count = 2;
   }
 
+  message Unique {
+    string field = 1;
+    repeated google.protobuf.Value values = 2;
+    int32 count = 3;
+  }
+
   SummaryParameters applied_parameters = 1;
   repeated Group groups = 2;
-  int32 count = 3;
+  int32 count = 3; // deprecated
+  repeated Unique uniques = 4;
+  int32 groups_count = 5;
+  int32 uniques_count = 6;
 }
