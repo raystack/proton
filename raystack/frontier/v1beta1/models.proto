@@ -1063,6 +1063,7 @@ message AuditRecordActor {
   string id = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.uuid = true];
   string type = 2; // not mandatory if id is zeroUUID
   string name = 3;
+  string title = 5;
   google.protobuf.Struct metadata = 4;
 }
 
