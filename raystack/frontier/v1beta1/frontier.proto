@@ -2883,20 +2883,6 @@ message GetServiceUserResponse {
   ServiceUser serviceuser = 1;
 }
 
-message UpdateServiceUserRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to update."}];
-  ServiceUserRequestBody body = 2;
-  string org_id = 3 [
-    (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
-  ];
-}
-
-message UpdateServiceUserResponse {
-  ServiceUser serviceuser = 1;
-}
-
 message DeleteServiceUserRequest {
   string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete."}];
   string org_id = 2 [
