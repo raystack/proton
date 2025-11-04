@@ -1306,43 +1306,6 @@ service FrontierService {
     };
   }
 
-  // Audit logs
-  rpc ListOrganizationAuditLogs(ListOrganizationAuditLogsRequest) returns (ListOrganizationAuditLogsResponse) {
-    option deprecated = true;
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/auditlogs"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "AuditLog";
-      summary: "List audit logs";
-      description: "Returns a list of audit logs of an organization in Frontier. DEPRECATED: Use admin ListAuditRecords API instead.";
-      deprecated: true;
-    };
-  }
-
-  rpc CreateOrganizationAuditLogs(CreateOrganizationAuditLogsRequest) returns (CreateOrganizationAuditLogsResponse) {
-    option deprecated = true;
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/auditlogs",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "AuditLog";
-      summary: "Create audit log";
-      description: "Create new audit logs in a batch. DEPRECATED: Use ListAuditRecords API instead with filters.";
-      deprecated: true;
-    };
-  }
-
-  rpc GetOrganizationAuditLog(GetOrganizationAuditLogRequest) returns (GetOrganizationAuditLogResponse) {
-    option deprecated = true;
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/auditlogs/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "AuditLog";
-      summary: "Get audit log";
-      description: "Get an audit log by ID. DEPRECATED: Use admin GetAuditRecord API instead.";
-      deprecated: true;
-    };
-  }
-
   // Preferences
 
   // DescribePreferences list down all the supported preferences of entities
@@ -3970,40 +3933,6 @@ message ListMetaSchemasRequest {}
 
 message ListMetaSchemasResponse {
   repeated MetaSchema metaschemas = 1;
-}
-
-// Audit logs
-
-message ListOrganizationAuditLogsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-
-  string source = 5;
-  string action = 6;
-  bool ignore_system = 7;
-
-  // start_time and end_time are inclusive
-  google.protobuf.Timestamp start_time = 10;
-  google.protobuf.Timestamp end_time = 11;
-}
-
-message ListOrganizationAuditLogsResponse {
-  repeated AuditLog logs = 1;
-}
-
-message CreateOrganizationAuditLogsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  repeated AuditLog logs = 2 [(validate.rules).repeated.min_items = 1];
-}
-
-message CreateOrganizationAuditLogsResponse {}
-
-message GetOrganizationAuditLogRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  string id = 2 [(validate.rules).string.min_len = 3];
-}
-
-message GetOrganizationAuditLogResponse {
-  AuditLog log = 1;
 }
 
 // Preferences
