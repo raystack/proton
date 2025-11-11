@@ -4091,7 +4091,9 @@ message RevokeSessionResponse {}
 
 message PingUserSessionRequest {}
 
-message PingUserSessionResponse {}
+message PingUserSessionResponse {
+  Session.Meta metadata = 1;
+}
 
 message CreateAuditRecordRequest {
   AuditRecordActor actor = 1 [(google.api.field_behavior) = REQUIRED];

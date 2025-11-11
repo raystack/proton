@@ -1044,10 +1044,16 @@ message ExportOrganizationsRequest {
 
 message Session {
   message Meta {
+    message Location {
+      string city = 1;
+      string country = 2;
+      string latitude = 3;
+      string longitude = 4;
+    }
     string operating_system = 1;
     string browser = 2;
     string ip_address = 3;
-    string location = 4;
+    Location location = 4;
   }
   
   string id = 1;
