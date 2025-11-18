@@ -2081,11 +2081,15 @@ message TotalDebitedTransactionsResponse {
 
 message GetSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to get the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
   // ID of the subscription to get
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2098,11 +2102,15 @@ message GetSubscriptionResponse {
 
 message ListSubscriptionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to list subscriptions for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   // Filter subscriptions by state
   string state = 3;
@@ -2118,11 +2126,15 @@ message ListSubscriptionsResponse {
 
 message UpdateSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
   // ID of the subscription to update
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2136,11 +2148,15 @@ message UpdateSubscriptionResponse {
 
 message ChangeSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
   // ID of the subscription to update
   string id = 3 [(validate.rules).string.min_len = 1];
 
@@ -2176,11 +2192,15 @@ message ChangeSubscriptionResponse {
 
 message CancelSubscriptionRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
   // ID of the subscription to cancel
   string id = 3 [(validate.rules).string.min_len = 1];
 
