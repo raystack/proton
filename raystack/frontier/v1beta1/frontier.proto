@@ -2080,8 +2080,15 @@ message TotalDebitedTransactionsResponse {
 }
 
 message GetSubscriptionRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
+  // DEPRECATED: org_id will be inferred from subscription id
+  string org_id = 1 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      min_len: 3
+    }
+  ];
+  // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to get the subscription for
   string billing_id = 2 [
     deprecated = true,
@@ -2125,8 +2132,15 @@ message ListSubscriptionsResponse {
 }
 
 message UpdateSubscriptionRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
+  // DEPRECATED: org_id will be inferred from subscription id
+  string org_id = 1 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      min_len: 3
+    }
+  ];
+  // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
@@ -2147,8 +2161,15 @@ message UpdateSubscriptionResponse {
 }
 
 message ChangeSubscriptionRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
+  // DEPRECATED: org_id will be inferred from subscription id
+  string org_id = 1 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      min_len: 3
+    }
+  ];
+  // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
@@ -2191,8 +2212,15 @@ message ChangeSubscriptionResponse {
 }
 
 message CancelSubscriptionRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
+  // DEPRECATED: org_id will be inferred from subscription id
+  string org_id = 1 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      min_len: 3
+    }
+  ];
+  // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
