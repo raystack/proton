@@ -2275,11 +2275,15 @@ message CheckCreditEntitlementResponse {
 
 message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2  [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2  [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   string success_url = 3;
   string cancel_url = 4;
@@ -2299,11 +2303,15 @@ message CreateCheckoutResponse {
 
 message ListCheckoutsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to get the subscriptions for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 }
 
 message ListCheckoutsResponse {
@@ -2312,12 +2320,22 @@ message ListCheckoutsResponse {
 }
 
 message GetCheckoutRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account to get the subscriptions for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: org_id is not needed, checkout can be fetched by id alone
+  string org_id = 1 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      min_len: 3
+    }
+  ];
+  // DEPRECATED: billing_id is not needed, checkout can be fetched by id alone
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
   // ID of the checkout to get
   string id = 3 [(validate.rules).string.min_len = 1];
 }
