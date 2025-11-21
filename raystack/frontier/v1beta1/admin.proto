@@ -1033,11 +1033,15 @@ message RemovePlatformUserResponse {}
 
 message DelegatedCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
+  // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   // Subscription to create
   CheckoutSubscriptionBody subscription_body = 10;
