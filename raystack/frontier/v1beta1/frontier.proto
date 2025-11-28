@@ -2048,11 +2048,14 @@ message CreateBillingUsageResponse {}
 
 message ListBillingTransactionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   google.protobuf.Timestamp since = 3 [deprecated=true];
   google.protobuf.Timestamp start_range = 4;
@@ -2068,10 +2071,14 @@ message ListBillingTransactionsResponse {
 
 message TotalDebitedTransactionsRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account
-  string billing_id = 2 [(validate.rules).string = {
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 }
 
 message TotalDebitedTransactionsResponse {
@@ -2510,11 +2517,14 @@ message UpdatePlanResponse {
 
 message ListInvoicesRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account to list invoices for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   bool nonzero_amount_only = 3;
 
@@ -2528,11 +2538,14 @@ message ListInvoicesResponse {
 
 message GetUpcomingInvoiceRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
-  // ID of the billing account to get the upcoming invoice for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 }
 
 message GetUpcomingInvoiceResponse {
