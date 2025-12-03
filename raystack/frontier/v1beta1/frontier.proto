@@ -2030,15 +2030,17 @@ message HasTrialedResponse {
 
 message CreateBillingUsageRequest {
   string org_id = 1;
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
-  // either provide billing_id of the org or API can infer the default
-  // billing ID from either org_id or project_id, not both
-  string project_id = 4;
+  // DEPRECATED
+  string project_id = 4 [deprecated = true];
 
   // Usage to create
   repeated Usage usages = 3;
@@ -2253,15 +2255,17 @@ message ListPlansResponse {
 
 message CheckFeatureEntitlementRequest {
   string org_id = 1;
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 2 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
-  // either provide billing_id of the org or API can infer the default
-  // billing ID from either org_id or project_id, not both
-  string project_id = 4;
+  // DEPRECATED
+  string project_id = 4 [deprecated = true];
 
   // feature or product name
   string feature = 3 [(validate.rules).string.min_len = 1];
