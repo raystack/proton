@@ -1094,16 +1094,18 @@ message ListAllBillingAccountsResponse {
 }
 
 message RevertBillingUsageRequest {
-  // either provide org_id or infer org from project_id
   string org_id = 1;
-  string project_id = 2;
+  // DEPRECATED
+  string project_id = 2 [deprecated = true];
 
-  // either provide billing_id of the org or API can infer the default
-  // billing ID from either org_id or project_id, not both
-  string billing_id = 3 [(validate.rules).string = {
-    ignore_empty: true,
-    uuid: true
-  }];
+  // DEPRECATED: billing_id will be inferred from org_id
+  string billing_id = 3 [
+    deprecated = true,
+    (validate.rules).string = {
+      ignore_empty: true,
+      uuid: true
+    }
+  ];
 
   // usage id to revert, a usage can only be allowed to revert once
   string usage_id = 4 [(validate.rules).string = {uuid: true}];
