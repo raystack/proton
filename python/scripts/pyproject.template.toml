@@ -13,7 +13,7 @@ authors = [
     {name = "Raystack"}
 ]
 dependencies = [
-    "connect-python>=0.5.0",
+    "connect-python==0.5.0",
     "googleapis-common-protos>=1.50.0",
     "grpcio>=1.50.0",
     "protobuf>=4.21.0,<7.0.0",
