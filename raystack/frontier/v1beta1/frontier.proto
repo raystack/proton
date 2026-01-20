@@ -1920,7 +1920,10 @@ message GetBillingAccountRequest {
   // ID of the billing account to get
   string id = 1 [(validate.rules).string.min_len = 1];
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 
   bool with_payment_methods = 3;
 
@@ -1944,7 +1947,10 @@ message UpdateBillingAccountRequest {
   // ID of the billing account to update
   string id = 1 [(validate.rules).string.uuid = true];
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 
   // Billing account to update.
   BillingAccountRequestBody body = 3;
@@ -1959,7 +1965,10 @@ message RegisterBillingAccountRequest {
   // ID of the billing account to register
   string id = 1 [(validate.rules).string.uuid = true];
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
 message RegisterBillingAccountResponse {}
@@ -1980,7 +1989,10 @@ message DeleteBillingAccountRequest {
   // ID of the billing account to delete
   string id = 1 [(validate.rules).string.uuid = true];
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
 message DeleteBillingAccountResponse {}
@@ -1988,7 +2000,10 @@ message DeleteBillingAccountResponse {}
 message EnableBillingAccountRequest {
   // ID of the billing account to enable
   string id = 1 [(validate.rules).string.uuid = true];
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
 message EnableBillingAccountResponse {}
@@ -1996,7 +2011,10 @@ message EnableBillingAccountResponse {}
 message DisableBillingAccountRequest {
   // ID of the billing account to disable
   string id = 1 [(validate.rules).string.uuid = true];
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
 message DisableBillingAccountResponse {}
@@ -2005,7 +2023,10 @@ message GetBillingBalanceRequest {
   // ID of the billing account to get the balance for
   string id = 1 [(validate.rules).string.uuid = true];
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
 message GetBillingBalanceResponse {
@@ -2015,9 +2036,15 @@ message GetBillingBalanceResponse {
 
 message HasTrialedRequest {
   // ID of the billing account to check
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [
+    deprecated = true,
+    (validate.rules).string.uuid = true
+  ]; // DEPRECATED: billing_id will be inferred from plan_id
 
-  string org_id = 2 [(validate.rules).string.min_len = 1];
+  string org_id = 2 [
+    deprecated = true,
+    (validate.rules).string.min_len = 1
+  ]; // DEPRECATED: org_id will be inferred from plan_id
 
   // ID of the plan to check
   string plan_id = 3 [(validate.rules).string.min_len = 1];
