@@ -153,6 +153,15 @@ service GuardianService {
     };
   }
 
+  rpc GetProviderRoles(GetProviderRolesRequest) returns (GetProviderRolesResponse) {
+    option (google.api.http) = {get: "/v1beta1/providers/{name}/roles"};
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Providers";
+      summary: "Get Provider Default Roles";
+      description: "Get Provider Roles returns a list of roles supported by a provider while creating a new provider";
+    };
+  }
+
   rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
     option (google.api.http) = {
       post: "/v1beta1/providers"
@@ -552,6 +561,24 @@ message GetProviderTypesRequest {}
 
 message GetProviderTypesResponse {
   repeated ProviderType provider_types = 1;
+}
+
+message GetProviderRolesRequest {
+  string name = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = 
+    {description: "Name of the provider"}
+  ];
+  string resource_type = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = 
+    {description: "Resource type for which the roles are to be fetched"}
+  ];
+}
+
+message GetProviderRolesResponse {
+  repeated string roles = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = 
+    {description: "List of roles supported by the provider"}
+  ];
 }
 
 message CreateProviderRequest {
