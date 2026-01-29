@@ -555,6 +555,12 @@ message Preference {
   string value = 3;
   string resource_id = 4;
   string resource_type = 5;
+  // scope_type defines the context type for scoped preferences (e.g., "app/organization")
+  // If empty, the preference is global (not scoped to any context)
+  string scope_type = 6;
+  // scope_id is the identifier of the scope context (e.g., organization ID)
+  // Only applicable when scope_type is set
+  string scope_id = 7;
 
   google.protobuf.Timestamp created_at = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the preference was created.",
@@ -947,6 +953,12 @@ message PreferenceRequestBody {
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string value = 3;
+  // scope_type defines the context type for scoped preferences (e.g., "app/organization")
+  // If empty, the preference is global (not scoped to any context)
+  string scope_type = 4;
+  // scope_id is the identifier of the scope context (e.g., organization ID)
+  // Only applicable when scope_type is set
+  string scope_id = 5;
 }
 
 message CheckoutSubscriptionBody {
