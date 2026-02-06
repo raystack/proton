@@ -4115,6 +4115,14 @@ message CreateUserPreferencesResponse {
 
 message ListUserPreferencesRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
+  // scope_type filters preferences by context type (e.g., "app/organization")
+  // If empty, returns all user preferences (global + all scoped)
+  // If set with scope_id, returns preferences for the specific scope,
+  // with trait defaults for any unset preferences
+  string scope_type = 2;
+  // scope_id filters preferences by scope identifier (e.g., organization ID)
+  // Only applicable when scope_type is set
+  string scope_id = 3;
 }
 
 message ListUserPreferencesResponse {
@@ -4129,7 +4137,16 @@ message CreateCurrentUserPreferencesResponse {
   repeated Preference preferences = 1;
 }
 
-message ListCurrentUserPreferencesRequest {}
+message ListCurrentUserPreferencesRequest {
+  // scope_type filters preferences by context type (e.g., "app/organization")
+  // If empty, returns all user preferences (global + all scoped)
+  // If set with scope_id, returns global preferences + preferences for the specific scope,
+  // with trait defaults for any unset preferences
+  string scope_type = 1;
+  // scope_id filters preferences by scope identifier (e.g., organization ID)
+  // Only applicable when scope_type is set
+  string scope_id = 2;
+}
 
 message ListCurrentUserPreferencesResponse {
   repeated Preference preferences = 1;
