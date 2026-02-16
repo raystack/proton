@@ -518,7 +518,7 @@ message AuditLog {
   }];
 }
 
-// InputHintOption represents a selectable option with a machine-readable name and user-friendly title
+// InputHintOption represents a selectable option with a machine-readable name and user-friendly descriptu=ion
 message InputHintOption {
   // Machine-readable identifier (e.g., "sq_km", "megagram")
   string name = 1;
@@ -555,7 +555,7 @@ message PreferenceTrait {
   reserved 20 to 26;
   
   InputType input_type = 27;
-  // Structured input options with name and title for select/combobox/multiselect inputs
+  // Structured input options with name and description for select/combobox/multiselect inputs
   // Takes precedence over input_hints when both are provided
   repeated InputHintOption input_options = 28;
 }
