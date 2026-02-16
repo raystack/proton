@@ -518,7 +518,7 @@ message AuditLog {
   }];
 }
 
-// InputHintOption represents a selectable option with a machine-readable name and user-friendly descriptu=ion
+// InputHintOption represents a selectable option with a machine-readable name and user-friendly description
 message InputHintOption {
   // Machine-readable identifier (e.g., "sq_km", "megagram")
   string name = 1;
