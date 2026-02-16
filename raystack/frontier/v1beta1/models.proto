@@ -518,6 +518,14 @@ message AuditLog {
   }];
 }
 
+// InputHintOption represents a selectable option with a machine-readable name and user-friendly description
+message InputHintOption {
+  // Machine-readable identifier (e.g., "sq_km", "megagram")
+  string name = 1;
+  // User-friendly display description (e.g., "Square Kilometers", "Megagram (Mg)")
+  string description = 2;
+}
+
 // PreferenceTrait is a trait that can be used to add preferences to a resource
 // it explains what preferences are available for a resource
 message PreferenceTrait {
@@ -547,6 +555,8 @@ message PreferenceTrait {
   reserved 20 to 26;
   
   InputType input_type = 27;
+  // Structured input options with name and description for select/combobox/multiselect inputs
+  repeated InputHintOption input_options = 28;
 }
 
 message Preference {
@@ -561,6 +571,9 @@ message Preference {
   // scope_id is the identifier of the scope context (e.g., organization ID)
   // Only applicable when scope_type is set
   string scope_id = 7;
+  // value_description is the human-readable display description for the value
+  // Populated from InputHintOption.description when the trait has input_options configured
+  string value_description = 8;
 
   google.protobuf.Timestamp created_at = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the preference was created.",
