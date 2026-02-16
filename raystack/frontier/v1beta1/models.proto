@@ -556,7 +556,6 @@ message PreferenceTrait {
   
   InputType input_type = 27;
   // Structured input options with name and description for select/combobox/multiselect inputs
-  // Takes precedence over input_hints when both are provided
   repeated InputHintOption input_options = 28;
 }
 
