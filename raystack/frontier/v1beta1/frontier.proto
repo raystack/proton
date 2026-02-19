@@ -1887,6 +1887,9 @@ service FrontierService {
 
   // Audit Records
   rpc CreateAuditRecord(CreateAuditRecordRequest) returns (CreateAuditRecordResponse) {}
+
+  // Personal Access Token
+  rpc CreateCurrentUserPersonalToken(CreateCurrentUserPersonalTokenRequest) returns (CreateCurrentUserPersonalTokenResponse) {}
 }
 
 // Billing
@@ -4255,4 +4258,28 @@ message CreateAuditRecordRequest {
 
 message CreateAuditRecordResponse {
   AuditRecord audit_record = 1;
+}
+
+message CreateCurrentUserPersonalTokenRequest {
+  // Machine-friendly identifier, unique per user per org
+  string name = 1 [
+    (validate.rules).string.min_len = 1,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Human-friendly display name
+  string title = 2;
+  string org_id = 3 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Roles to scope the token to (e.g., ["app_organization_manager", "app_project_owner"])
+  repeated string roles = 4 [(google.api.field_behavior) = REQUIRED];
+  // For project-scoped roles: empty = all projects, non-empty = specific projects
+  repeated string project_ids = 5;
+  google.protobuf.Timestamp expires_at = 6 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Struct metadata = 7;
+}
+
+message CreateCurrentUserPersonalTokenResponse {
+  PersonalAccessToken token = 1;
 }
