@@ -442,6 +442,8 @@ message ServiceUserToken {
 message PersonalAccessToken {
   string id = 1;
   string title = 2;
+  string user_id = 3;
+  string org_id = 4;
 
   // token will only be returned once as part of the create process
   // this value is never persisted in the system so if lost, can't be recovered
@@ -459,6 +461,11 @@ message PersonalAccessToken {
 
   google.protobuf.Timestamp created_at = 12 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "The time when the token was created.",
+    example: "\"2023-06-07T05:39:56.961Z\""
+  }];
+
+  google.protobuf.Timestamp updated_at = 13 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "The time when the token was last updated.",
     example: "\"2023-06-07T05:39:56.961Z\""
   }];
 
