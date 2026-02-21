@@ -454,20 +454,29 @@ message PersonalAccessToken {
     example: "\"2024-06-07T05:39:56.961Z\""
   }];
 
-  google.protobuf.Timestamp last_used_at = 11 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The time when the token was last used.",
-    example: "\"2024-06-07T05:39:56.961Z\""
-  }];
+  google.protobuf.Timestamp last_used_at = 11 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the token was last used.",
+      example: "\"2024-06-07T05:39:56.961Z\""
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 
-  google.protobuf.Timestamp created_at = 12 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The time when the token was created.",
-    example: "\"2023-06-07T05:39:56.961Z\""
-  }];
+  google.protobuf.Timestamp created_at = 12 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the token was created.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 
-  google.protobuf.Timestamp updated_at = 13 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "The time when the token was last updated.",
-    example: "\"2023-06-07T05:39:56.961Z\""
-  }];
+  google.protobuf.Timestamp updated_at = 13 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "The time when the token was last updated.",
+      example: "\"2023-06-07T05:39:56.961Z\""
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 
   google.protobuf.Struct metadata = 20;
 }
