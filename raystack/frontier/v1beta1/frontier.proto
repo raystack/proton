@@ -2,1184 +2,340 @@ syntax = "proto3";
 
 package raystack.frontier.v1beta1;
 
-import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 import "raystack/frontier/v1beta1/models.proto";
 import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
 option java_outer_classname = "Frontier";
 option java_package = "io.raystack.proton.frontier.v1beta1";
-// These annotations are used when generating the OpenAPI file.
-option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    title: "Frontier General APIs",
-    version: "0.2.0";
-  };
-  schemes: HTTP;
-  tags: [
-    {name: "User"},
-    {
-      name: "Group";
-      description: "Groups in Frontier are used to manage users and their access to resources. Each group has a unique name and id that can be used to grant access to resources. When a user is added to a group, they inherit the access permissions that have been granted to the group. This allows you to manage access to resources at scale, without having to grant permissions to individual users."
-    },
-    {name: "Role"},
-    {name: "Organization"},
-    {name: "Project"},
-    {name: "Policy"},
-    {name: "Relation"},
-    {name: "Permission"},
-    {name: "Namespace"},
-    {name: "Resource"},
-    {
-      name: "Authz";
-      description: "Authorization APIs"
-    },
-    {
-      name: "Authn";
-      description: "Authentication APIs"
-    },
-    {
-      name: "MetaSchema";
-      description: "Manage Metadata Schemas which are used to validate metadata object while creating user/org/group/role. Frontier automatically generates default metaschemas with `label` and `description` fields. You can also update these metaschemas to add/edit more fields."
-    }
-  ];
-  consumes: "application/json";
-  produces: "application/json";
-  host: "127.0.0.1:7400";
-  responses: {
-    key: "200";
-    value: {
-      description: "OK - A successful response.";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  responses: {
-    key: "400";
-    value: {
-      description: "Bad Request - The request was malformed or contained invalid parameters.";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  responses: {
-    key: "401";
-    value: {
-      description: "Unauthorized - Authentication is required";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  responses: {
-    key: "403";
-    value: {
-      description: "Forbidden - User does not have permission to access the resource";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  responses: {
-    key: "404";
-    value: {
-      description: "Not Found - The requested resource was not found";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  responses: {
-    key: "500";
-    value: {
-      description: "Internal Server Error. Returned when theres is something wrong with Frontier server.";
-      schema: {
-        json_schema: {ref: ".google.rpc.Status"}
-      }
-    }
-  }
-  security_definitions: {
-    security: {
-      key: "Basic";
-      value: {
-        type: TYPE_BASIC;
-        in: IN_HEADER;
-        name: "Basic Authentication";
-        description: "Client ID/Secret authentication";
-      }
-    }
-    security: {
-      key: "Bearer";
-      value: {
-        type: TYPE_API_KEY
-        in: IN_HEADER
-        description: "The Authorization header must be set to Bearer followed by a space and a token."
-        name: "Authorization"
-      }
-    }
-  }
-  security: {
-    security_requirement: {key: "Basic"}
-    security_requirement: {key: "Bearer"}
-  }
-};
 service FrontierService {
   // Users
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/users"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "List public users";
-      description: "Returns the users from all the organizations in a Frontier instance. It can be filtered by keyword, organization, group and state. Additionally you can include page number and page size for pagination."
-    };
   }
 
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Create user";
-      description: "Create a user with the given details. A user is not attached to an organization or a group by default,and can be invited to the org/group. The name of the user must be unique within the entire Frontier instance. If a user name is not provided, Frontier automatically generates a name from the user email. The user metadata is validated against the user metaschema. By default the user metaschema contains `labels` and `descriptions` for the user. The `title` field can be optionally added for a user-friendly name. <br/><br/>*Example:*`{\"email\":\"john.doe@raystack.org\",\"title\":\"John Doe\",metadata:{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}}`";
-      security: {};
-    };
   }
 
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get user";
-      description: "Get a user by id searched over all organizations in Frontier.";
-    };
   }
 
   rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}/groups"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "List user groups";
-      description: "Lists all the groups a user belongs to across all organization in Frontier. To get the groups of a user in a specific organization, use the org_id filter in the query parameter.";
-    };
   }
 
   rpc ListCurrentUserGroups(ListCurrentUserGroupsRequest) returns (ListCurrentUserGroupsResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self/groups"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "List my groups";
-    };
   }
 
   rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get current user";
-    };
   }
 
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/users/{id}",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Update user";
-    };
   }
 
   rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/users/self",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Update current user";
-    };
   }
 
   rpc EnableUser(EnableUserRequest) returns (EnableUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users/{id}/enable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Enable user";
-      description: "Sets the state of the user as enabled. The user will be able to log in and access the Frontier instance."
-    };
   }
 
   rpc DisableUser(DisableUserRequest) returns (DisableUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users/{id}/disable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Disable user";
-      description: "Sets the state of the user as diabled.The user's membership to groups and organizations will still exist along with all it's roles for access control, but the user will not be able to log in and access the Frontier instance."
-    };
   }
 
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
-    option (google.api.http) = {delete: "/v1beta1/users/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Delete user";
-      description: "Delete an user permanently forever and all of its relations (organizations, groups, etc)";
-    };
   }
 
   rpc ListOrganizationsByUser(ListOrganizationsByUserRequest) returns (ListOrganizationsByUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}/organizations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get user organizations"
-      description: "This API returns two list of organizations for the user. i) The list of orgs which the current user is already a part of ii) The list of organizations the user can join directly (based on domain whitelisted and verified by the org). This list will also contain orgs of which user is already a part of. Note: the domain needs to be verified by the org before the it is returned as one of the joinable orgs by domain";
-    };
   }
 
   rpc ListOrganizationsByCurrentUser(ListOrganizationsByCurrentUserRequest) returns (ListOrganizationsByCurrentUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self/organizations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get my organizations"
-      description: "This API returns two list of organizations for the current logged in user. i) The list of orgs which the current user is already a part of ii) The list of organizations the user can join directly (based on domain whitelisted and verified by the org). This list will also contain orgs of which user is already a part of. Note: the domain needs to be verified by the org before the it is returned as one of the joinable orgs by domain";
-    };
   }
 
   rpc ListProjectsByUser(ListProjectsByUserRequest) returns (ListProjectsByUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}/projects"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get user projects"
-      description: "Get all the projects a user belongs to.";
-    };
   }
 
   rpc ListProjectsByCurrentUser(ListProjectsByCurrentUserRequest) returns (ListProjectsByCurrentUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self/projects"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "Get my projects"
-      description: "Get all projects the current user belongs to";
-    };
   }
 
   rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}/invitations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "List user invitations";
-      description: "List all the invitations sent to a user.";
-    };
   }
 
   rpc ListCurrentUserInvitations(ListCurrentUserInvitationsRequest) returns (ListCurrentUserInvitationsResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self/invitations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "User";
-      summary: "List user invitations";
-      description: "List all the invitations sent to current user.";
-    };
   }
 
   // ServiceUser
   rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/serviceusers"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "List org service users";
-      description: "Returns the service user of an organization in a Frontier instance. It can be filter by it's state"
-    };
   }
 
   rpc CreateServiceUser(CreateServiceUserRequest) returns (CreateServiceUserResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/serviceusers",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Create service user";
-      description: "Create a service user.";
-    };
   }
 
   rpc GetServiceUser(GetServiceUserRequest) returns (GetServiceUserResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Get service user";
-      description: "Get service user details by its id.";
-    };
   }
 
   rpc DeleteServiceUser(DeleteServiceUserRequest) returns (DeleteServiceUserResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/serviceusers/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Delete service user";
-      description: "Delete a service user permanently and all of its relations (keys, organizations, roles, etc)";
-    };
   }
 
   rpc CreateServiceUserJWK(CreateServiceUserJWKRequest) returns (CreateServiceUserJWKResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/serviceusers/{id}/keys",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Create service user public/private key pair";
-      description: "Generate a service user key and return it, the private key part of the response will not be persisted and should be kept securely by client.";
-    };
   }
 
   rpc ListServiceUserJWKs(ListServiceUserJWKsRequest) returns (ListServiceUserJWKsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/keys"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "List service user keys";
-      description: "List all the keys of a service user with its details except jwk.";
-    };
   }
 
   rpc GetServiceUserJWK(GetServiceUserJWKRequest) returns (GetServiceUserJWKResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/keys/{key_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Get service user key";
-      description: "Get a service user public RSA JWK set.";
-    };
   }
 
   rpc DeleteServiceUserJWK(DeleteServiceUserJWKRequest) returns (DeleteServiceUserJWKResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/serviceusers/{id}/keys/{key_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Delete service user key";
-      description: "Delete a service user key permanently.";
-    };
   }
 
   rpc CreateServiceUserCredential(CreateServiceUserCredentialRequest) returns (CreateServiceUserCredentialResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/serviceusers/{id}/secrets",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Create service user client credentials";
-      description: "Generate a service user credential and return it. The credential value will not be persisted and should be securely stored by client.";
-    };
   }
 
   rpc ListServiceUserCredentials(ListServiceUserCredentialsRequest) returns (ListServiceUserCredentialsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/secrets"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "List service user credentials";
-      description: "List all the credentials of a service user.";
-    };
   }
 
   rpc DeleteServiceUserCredential(DeleteServiceUserCredentialRequest) returns (DeleteServiceUserCredentialResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/serviceusers/{id}/secrets/{secret_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Delete service user credentials";
-      description: "Delete a service user credential.";
-    };
   }
 
   rpc CreateServiceUserToken(CreateServiceUserTokenRequest) returns (CreateServiceUserTokenResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/serviceusers/{id}/tokens",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Create service user token";
-      description: "Generate a service user token and return it. The token value will not be persisted and should be securely stored by client.";
-    };
   }
 
   rpc ListServiceUserTokens(ListServiceUserTokensRequest) returns (ListServiceUserTokensResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/tokens"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "List service user tokens";
-      description: "List all the tokens of a service user.";
-    };
   }
 
   rpc DeleteServiceUserToken(DeleteServiceUserTokenRequest) returns (DeleteServiceUserTokenResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/serviceusers/{id}/tokens/{token_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "Delete service user token";
-      description: "Delete a service user token.";
-    };
   }
 
   rpc ListServiceUserProjects(ListServiceUserProjectsRequest) returns (ListServiceUserProjectsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/serviceusers/{id}/projects"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "ServiceUser";
-      summary: "List service sser projects"
-      description: "List all projects the service user belongs to";
-    };
   }
 
   // Group
   rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "List organization groups";
-      description: "Get all groups that belong to an organization. The results can be filtered by state which can be either be enabled or disabled.";
-    };
   }
 
   rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/groups",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Create group";
-      description: "Create a new group in an organization which serves as a container for users. The group can be assigned roles and permissions and can be used to manage access to resources. Also a group can also be assigned to other groups.";
-    };
   }
 
   rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Get group";
-    };
   }
 
   rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{org_id}/groups/{id}",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Update group";
-    };
   }
 
   rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/groups/{id}/users"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "List group users";
-      description: "Returns a list of users that belong to a group.";
-    };
   }
 
   rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/groups/{id}/users",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Add group user"
-      description: "Adds a principle(user and service-users) to a group, existing users in the group will be ignored. A group can't have nested groups as members.";
-    };
   }
 
   rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/groups/{id}/users/{user_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Remove group user";
-      description: "Removes a principle(user and service-users) from a group. If the user is not in the group, the request will succeed but no changes will be made.";
-    };
   }
 
   rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/groups/{id}/enable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Enable group";
-      description: "Sets the state of the group as enabled. The `enabled` flag is used to determine if the group can be used for access control."
-    };
   }
 
   rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/groups/{id}/disable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Disable group";
-      description: "Sets the state of the group as disabled. The group will not be available for access control and the existing users in the group will not be able to access any resources that are assigned to the group. No other users can be added to the group while it is disabled."
-    };
   }
 
   rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/groups/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Group";
-      summary: "Delete group";
-      description: "Delete an organization group permanently and all of its relations";
-    };
   }
 
   // Roles
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-    option (google.api.http) = {get: "/v1beta1/roles"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "List platform roles";
-      description: "Returns a list of platform wide roles available in enitre Frontier instance along with their associated permissions";
-    };
   }
 
   rpc ListOrganizationRoles(ListOrganizationRolesRequest) returns (ListOrganizationRolesResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/roles"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "List organization roles"
-      description: "Returns a list of custom roles created under an organization with their associated permissions";
-    };
   }
 
   rpc CreateOrganizationRole(CreateOrganizationRoleRequest) returns (CreateOrganizationRoleResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/roles",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Create organization role";
-      description: "Create a custom role under an organization. This custom role will only be available for assignment to the principles within the organization.";
-    };
   }
 
   rpc GetOrganizationRole(GetOrganizationRoleRequest) returns (GetOrganizationRoleResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/roles/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Get organization role"
-      description: "Returns a custom role under an organization along with its associated permissions";
-    };
   }
 
   rpc UpdateOrganizationRole(UpdateOrganizationRoleRequest) returns (UpdateOrganizationRoleResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{org_id}/roles/{id}",
-      body: "body";
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Update organization role";
-      description: "Update a custom role under an organization. This custom role will only be available for assignment to the principles within the organization."
-    };
   }
 
   rpc DeleteOrganizationRole(DeleteOrganizationRoleRequest) returns (DeleteOrganizationRoleResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/roles/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Role";
-      summary: "Delete organization role";
-      description: "Delete a custom role and all of its relations under an organization permanently.";
-    };
   }
 
   // Organizations
   rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List organizations";
-      description: "Returns a list of organizations. It can be filtered by userID or organization state.";
-    };
   }
 
   rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Create organization";
-    };
   }
 
   rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Get organization";
-      description: "Get organization by ID or name";
-    };
   }
 
   rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Update organization";
-      description: "Update organization by ID";
-    };
   }
 
   rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/projects"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Get organization projects"
-      description: "Get all projects that belong to an organization";
-    };
   }
 
   rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/admins"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List organization admins";
-      description: "Returns a list admins of an organization";
-    };
   }
 
   rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/users"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List organization users";
-    };
   }
 
   rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/users",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Add organization user";
-      description: "Add a user to an organization. A user must exists in Frontier before adding it to an org. This request will fail if the user doesn't exists";
-    };
   }
 
   rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{id}/users/{user_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Remove organization user";
-      description: "Remove a user from an organization";
-    };
   }
 
   rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/kyc"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "OrganizationKyc";
-      summary: "Get KYC info of an organization";
-      description: "Get KYC info of an organization using ID or name";
-    };
   }
 
   // Deprecated: use ListServiceUsers instead
   rpc ListOrganizationServiceUsers(ListOrganizationServiceUsersRequest) returns (ListOrganizationServiceUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/serviceusers"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List organization service users";
-    };
   }
 
   rpc ListOrganizationInvitations(ListOrganizationInvitationsRequest) returns (ListOrganizationInvitationsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/invitations"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List pending invitations";
-      description: "Returns all pending invitations queued for an organization";
-    };
   }
 
   rpc CreateOrganizationInvitation(CreateOrganizationInvitationRequest) returns (CreateOrganizationInvitationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/invitations",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Invite user"
-      description: "Invite users to an organization, if user is not registered on the platform, it will be notified. Invitations expire in 7 days";
-    };
   }
 
   rpc GetOrganizationInvitation(GetOrganizationInvitationRequest) returns (GetOrganizationInvitationResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/invitations/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Get pending invitation";
-      description: "Returns a pending invitation queued for an organization";
-    };
   }
 
   rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/invitations/{id}/accept",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Accept pending invitation";
-      description: "Accept pending invitation queued for an organization. The user will be added to the organization and groups defined in the invitation";
-    };
   }
 
   rpc DeleteOrganizationInvitation(DeleteOrganizationInvitationRequest) returns (DeleteOrganizationInvitationResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/invitations/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Delete pending invitation";
-      description: "Delete a pending invitation queued for an organization";
-    };
   }
 
   rpc ListOrganizationDomains(ListOrganizationDomainsRequest) returns (ListOrganizationDomainsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/domains"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "List org domains";
-      description: "Returns all domains whitelisted for an organization (both pending and verified if no filters are provided for the state). The verified domains allow users email with the org's whitelisted domain to join the organization without invitation.";
-    };
   }
 
   rpc CreateOrganizationDomain(CreateOrganizationDomainRequest) returns (CreateOrganizationDomainResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/domains",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Create org domain";
-      description: "Add a domain to an organization which if verified allows all users of the same domain to be signed up to the organization without invitation. This API generates a verification token for a domain which must be added to your domain's DNS provider as a TXT record should be verified with Frontier VerifyOrganizationDomain API before it can be used as an Organization's trusted domain to sign up users.";
-    };
   }
 
   rpc DeleteOrganizationDomain(DeleteOrganizationDomainRequest) returns (DeleteOrganizationDomainResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/domains/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Delete org domain";
-      description: "Remove a domain from the list of an organization's trusted domains list";
-    };
   }
 
   rpc GetOrganizationDomain(GetOrganizationDomainRequest) returns (GetOrganizationDomainResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/domains/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Get org domain";
-      description: "Get a domain from the list of an organization's whitelisted domains. Returns both verified and unverified domains by their ID";
-    };
   }
 
   rpc VerifyOrganizationDomain(VerifyOrganizationDomainRequest) returns (VerifyOrganizationDomainResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/domains/{id}/verify",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Verify org domain";
-      description: "Verify a domain for an organization with a verification token generated by Frontier GenerateDomainVerificationToken API. The token must be added to your domain's DNS provider as a TXT record before it can be verified. This API returns the state of the domain (pending/verified) after verification.";
-    };
   }
 
   rpc JoinOrganization(JoinOrganizationRequest) returns (JoinOrganizationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/join",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Join organization";
-      description: "Allows the current logged in user to join the Org if one is not a part of it. The user will only be able to join when the user email's domain matches the organization's whitelisted domains.";
-    };
   }
 
   rpc EnableOrganization(EnableOrganizationRequest) returns (EnableOrganizationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/enable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Enable organization";
-      description: "Sets the state of the organization as enabled. The existing users in the org will be able to access any organization resources."
-    };
   }
 
   rpc DisableOrganization(DisableOrganizationRequest) returns (DisableOrganizationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/disable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Disable organization";
-      description: "Sets the state of the organization as disabled. The existing users in the org will not be able to access any organization resources."
-    };
   }
 
   rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Organization";
-      summary: "Delete organization"
-      description: "Delete an organization and all of its relations permanently. The organization users will not be deleted from Frontier.";
-    };
   }
 
   // Projects
   rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Create project";
-    };
   }
 
   rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Get project";
-      description: "Returns a project by ID";
-    };
   }
 
   rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/projects/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Update project";
-      description: "Updates a project by ID";
-    };
   }
 
   rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}/admins"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "List project admins"
-      description: "Returns a collection of admins of a project";
-    };
   }
 
   rpc ListProjectUsers(ListProjectUsersRequest) returns (ListProjectUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}/users"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "List project users"
-      description: "Returns a collection of users of a project. Filter by user permissions is supported.";
-    };
   }
 
   rpc ListProjectServiceUsers(ListProjectServiceUsersRequest) returns (ListProjectServiceUsersResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}/serviceusers"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "List project serviceusers"
-      description: "Returns a collection of users of a project.";
-    };
   }
 
   rpc ListProjectGroups(ListProjectGroupsRequest) returns (ListProjectGroupsResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}/groups"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "List project groups"
-      description: "Returns a collection of groups of a project.";
-    };
   }
 
   rpc EnableProject(EnableProjectRequest) returns (EnableProjectResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects/{id}/enable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Enable project";
-    };
   }
 
   rpc DisableProject(DisableProjectRequest) returns (DisableProjectResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects/{id}/disable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Disable project";
-    };
   }
 
   rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
-    option (google.api.http) = {delete: "/v1beta1/projects/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Project";
-      summary: "Delete Project"
-      description: "Delete a project all of its relations permanently.";
-    };
   }
 
   // Policies
   rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/policies",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Create policy";
-      description: "Creates a policy ";
-    };
   }
 
   rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-    option (google.api.http) = {get: "/v1beta1/policies/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Get policy";
-      description: "Returns a policy by ID";
-    };
   }
 
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
-    option (google.api.http) = {get: "/v1beta1/policies"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "List all policies";
-      description: "Lists all the policies from all the organizations in a Frontier instance. It can be filtered by organization, project, user, role and group.";
-    };
   }
 
   rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/policies/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Update policy";
-      description: "Updates a policy by ID";
-    };
   }
 
   rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {
-    option (google.api.http) = {delete: "/v1beta1/policies/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Delete Policy"
-      description: "Delete a policy all of its relations permanently.";
-    };
   }
 
   rpc CreatePolicyForProject(CreatePolicyForProjectRequest) returns (CreatePolicyForProjectResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/policies/projects/{project_id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Policy";
-      summary: "Create Policy for Project"
-      description: "Create a policy for a project";
-    };
   }
 
   // Relations
   rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/relations",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Relation";
-      summary: "Create relation";
-    };
   }
 
   rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
-    option (google.api.http) = {get: "/v1beta1/relations/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Relation";
-      summary: "Get relation";
-      description: "Returns a relation by ID";
-    };
   }
 
   rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
-    option (google.api.http) = {delete: "/v1beta1/relations/{relation}/object/{object}/subject/{subject}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Relation";
-      summary: "Delete relation";
-      description: "Remove a subject having a relation from an object";
-    };
   }
 
   // Permissions
   rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
-    option (google.api.http) = {get: "/v1beta1/permissions"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Get all permissions";
-    };
   }
 
   rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
-    option (google.api.http) = {get: "/v1beta1/permissions/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Permission";
-      summary: "Get permission";
-      description: "Returns a permission by ID";
-    };
   }
 
   // Namespaces
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Get all namespaces";
-      description: "Returns the list of all namespaces in a Frontier instance";
-    };
   }
 
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Namespace";
-      summary: "Get namespace";
-      description: "Returns a namespace by ID";
-    };
   }
 
   // Resources
   rpc ListProjectResources(ListProjectResourcesRequest) returns (ListProjectResourcesResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{project_id}/resources"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Resource";
-      summary: "Get all resources";
-    };
   }
 
   rpc CreateProjectResource(CreateProjectResourceRequest) returns (CreateProjectResourceResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects/{project_id}/resources",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Resource";
-      summary: "Create resource";
-      description: "Creates a resource in a project";
-    };
   }
 
   rpc GetProjectResource(GetProjectResourceRequest) returns (GetProjectResourceResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{project_id}/resources/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Resource";
-      summary: "Get resource";
-      description: "Returns a project resource by ID";
-    };
   }
 
   rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/projects/{project_id}/resources/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Resource";
-      summary: "Update resource";
-      description: "Updates a resource in a project";
-    };
   }
 
   rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {
-    option (google.api.http) = {delete: "/v1beta1/projects/{project_id}/resources/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Resource";
-      summary: "Delete resource";
-      description: "Deletes a resource from a project permanently";
-    };
   }
 
   // Authz
   rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/check",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authz";
-      summary: "Check";
-      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account. Frontier will extract principal from the current logged in session cookie (if any), or the client id and secret (in case of service users) or the access token.";
-    };
   }
 
   rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/batchcheck",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authz";
-      summary: "Batch check";
-      description: "Returns true if a principal has required permissions to access a resource and false otherwise.<br/> Note the principal can be a user or a service account, and Frontier will the credentials from the current logged in principal from the session cookie (if any), or the client id and secret (in case of service users) or the access token (in case of human user accounts).";
-    };
   }
 
   // Authn
   rpc GetJWKs(GetJWKsRequest) returns (GetJWKsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/auth/jwks"
-      additional_bindings {get: "/.well-known/jwks.json"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authz";
-      summary: "Get well known JWKs";
-    };
   }
 
   // Returns a list of all active sessions for the current authenticated user.
@@ -1192,697 +348,191 @@ service FrontierService {
   rpc PingUserSession(PingUserSessionRequest) returns (PingUserSessionResponse) {}
 
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
-    option (google.api.http) = {get: "/v1beta1/auth"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authn";
-      summary: "List authentication strategies";
-      description: "Returns a list of identity providers configured on an instance level in Frontier. e.g Google, AzureAD, Github etc";
-    };
   }
 
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/auth/register/{strategy_name}"
-      additional_bindings {
-        post: "/v1beta1/auth/register/{strategy_name}"
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authn";
-      summary: "Authenticate with a strategy";
-      description: "Authenticate a user with a strategy. By default, after successful authentication no operation will be performed to apply redirection in case of browsers, provide a url in the authenticate request body that will be used for redirection after authentication. Also set redirect as true for redirecting the user request to the redirect_url after successful authentication.";
-    };
   }
 
   rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/auth/callback"
-      additional_bindings {
-        post: "/v1beta1/auth/callback"
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authn";
-      summary: "Callback from a strategy";
-      description: "Callback from a strategy. This is the endpoint where the strategy will redirect the user after successful authentication. This endpoint will be called with the code and state query parameters. The code will be used to get the access token from the strategy and the state will be used to get the return_to url from the session and redirect the user to that url.";
-    };
   }
 
   rpc AuthToken(AuthTokenRequest) returns (AuthTokenResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/auth/token"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authn";
-      summary: "Generate access token by given credentials";
-      description: "Access token can be generated by providing the credentials in the request body/header. The credentials can be client id and secret or service account generated key jwt. Use the generated access token in Authorization header to access the frontier resources.";
-    };
   }
 
   rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/auth/logout"
-      additional_bindings {delete: "/v1beta1/auth/logout"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Authn";
-      summary: "Logout from a strategy";
-      description: "";
-    };
   }
 
   // MetaSchemas
   rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {
-    option (google.api.http) = {get: "/v1beta1/meta/schemas"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "MetaSchema";
-      summary: "List metaschemas";
-      description: "Returns a list of all metaschemas configured on an instance level in Frontier. e.g user, project, organization etc";
-    };
   }
 
   rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/meta/schemas",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "MetaSchema";
-      summary: "Create metaschema";
-      description: "Create a new metadata schema. The metaschema **name** must be unique within the entire Frontier instance and can contain only alphanumeric characters, dashes and underscores. The metaschema **schema** must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
-    };
   }
 
   rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
-    option (google.api.http) = {get: "/v1beta1/meta/schemas/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "MetaSchema";
-      summary: "Get metaschema";
-      description: "Get a metadata schema by ID.";
-    };
   }
 
   rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/meta/schemas/{id}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "MetaSchema";
-      summary: "Update metaschema";
-      description: "Update a metadata schema. Only `schema` field of a metaschema can be updated. The metaschema `schema` must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema. <br/>*Example:* `{name:\"user\",schema:{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"}},\"description\":{\"type\":\"string\"}}}}`";
-    };
   }
 
   rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
-    option (google.api.http) = {delete: "/v1beta1/meta/schemas/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "MetaSchema";
-      summary: "Delete metaschema";
-      description: "Delete a metadata schema permanently. Once deleted the metaschema won't be used to validate the metadata. For example, if a metaschema(with `label` and `description` fields) is used to validate the metadata of a user, then deleting the metaschema will not validate the metadata of the user and metadata field can contain any key-value pair(and say another field called `foo` can be inserted in a user's metadata).";
-    };
   }
 
   // Preferences
 
   // DescribePreferences list down all the supported preferences of entities
   rpc DescribePreferences(DescribePreferencesRequest) returns (DescribePreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/preferences/traits"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Describe preferences";
-      description: "Returns a list of all preferences supported by Frontier.";
-    };
   }
 
   rpc CreateOrganizationPreferences(CreateOrganizationPreferencesRequest) returns (CreateOrganizationPreferencesResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{id}/preferences",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Create organization preferences";
-      description: "Create a new organization preferences. The organization preferences **name** must be unique within the organization and can contain only alphanumeric characters, dashes and underscores.";
-    };
   }
   rpc ListOrganizationPreferences(ListOrganizationPreferencesRequest) returns (ListOrganizationPreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{id}/preferences"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "List organization preferences";
-      description: "List an organization preferences by ID.";
-    };
   }
 
   rpc CreateProjectPreferences(CreateProjectPreferencesRequest) returns (CreateProjectPreferencesResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/projects/{id}/preferences",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Create project preferences";
-      description: "Create a new project preferences. The project preferences **name** must be unique within the project and can contain only alphanumeric characters, dashes and underscores.";
-    };
   }
   rpc ListProjectPreferences(ListProjectPreferencesRequest) returns (ListProjectPreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/projects/{id}/preferences"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "List project preferences";
-      description: "List a project preferences by ID.";
-    };
   }
 
   rpc CreateGroupPreferences(CreateGroupPreferencesRequest) returns (CreateGroupPreferencesResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/groups/{id}/preferences",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Create group preferences";
-      description: "Create a new group preferences. The group preferences **name** must be unique within the group and can contain only alphanumeric characters, dashes and underscores.";
-    };
   }
   rpc ListGroupPreferences(ListGroupPreferencesRequest) returns (ListGroupPreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/groups/{id}/preferences"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "List group preferences";
-      description: "List a group preferences by ID.";
-    };
   }
 
   rpc CreateUserPreferences(CreateUserPreferencesRequest) returns (CreateUserPreferencesResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users/{id}/preferences",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Create user preferences";
-      description: "Create a new user preferences. The user preferences **name** must be unique within the user and can contain only alphanumeric characters, dashes and underscores.";
-    };
   }
   rpc ListUserPreferences(ListUserPreferencesRequest) returns (ListUserPreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/{id}/preferences"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "List user preferences";
-      description: "List a user preferences by ID.";
-    };
   }
   rpc CreateCurrentUserPreferences(CreateCurrentUserPreferencesRequest) returns (CreateCurrentUserPreferencesResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/users/self/preferences",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "Create current user preferences";
-      description: "Create a new user preferences. The user preferences **name** must be unique within the user and can contain only alphanumeric characters, dashes and underscores.";
-    };
   }
   rpc ListCurrentUserPreferences(ListCurrentUserPreferencesRequest) returns (ListCurrentUserPreferencesResponse) {
-    option (google.api.http) = {get: "/v1beta1/users/self/preferences"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Preference";
-      summary: "List current user preferences";
-      description: "List a user preferences by ID.";
-    };
   }
 
   // Billing account
   rpc CreateBillingAccount(CreateBillingAccountRequest) returns (CreateBillingAccountResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Create billing account";
-      description: "Create a new billing account for an organization.";
-    };
   }
 
   rpc GetBillingAccount(GetBillingAccountRequest) returns (GetBillingAccountResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Get billing account";
-      description: "Get a billing account by ID.";
-    };
   }
 
   rpc UpdateBillingAccount(UpdateBillingAccountRequest) returns (UpdateBillingAccountResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{org_id}/billing/{id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Update billing account";
-      description: "Update a billing account by ID.";
-    };
   }
 
   rpc RegisterBillingAccount(RegisterBillingAccountRequest) returns (RegisterBillingAccountResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{id}/register",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Register billing account to provider";
-      description: "Register a billing account to a provider if it's not already.";
-    };
   }
 
   rpc ListBillingAccounts(ListBillingAccountsRequest) returns (ListBillingAccountsResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "List billing accounts";
-      description: "List billing accounts of an organization.";
-    };
   }
 
   rpc DeleteBillingAccount(DeleteBillingAccountRequest) returns (DeleteBillingAccountResponse) {
-    option (google.api.http) = {delete: "/v1beta1/organizations/{org_id}/billing/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Delete billing account";
-      description: "Delete a billing account by ID.";
-    };
   }
 
   rpc EnableBillingAccount(EnableBillingAccountRequest) returns (EnableBillingAccountResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{id}/enable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Enable billing account";
-      description: "Enable a billing account by ID.";
-    };
   }
 
   rpc DisableBillingAccount(DisableBillingAccountRequest) returns (DisableBillingAccountResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{id}/disable",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Disable billing account";
-      description: "Disable a billing account by ID. Disabling a billing account doesn't automatically disable it's active subscriptions.";
-    };
   }
 
   rpc GetBillingBalance(GetBillingBalanceRequest) returns (GetBillingBalanceResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}/balance"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Get billing balance";
-      description: "Get the balance of a billing account by ID.";
-    };
   }
 
   rpc HasTrialed(HasTrialedRequest) returns (HasTrialedResponse) {
-    option (google.api.http) = {get: "/v1beta1/organizations/{org_id}/billing/{id}/plans/{plan_id}/trialed"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Billing";
-      summary: "Has trialed";
-      description: "Check if a billing account has trialed.";
-    };
   }
 
   // Subscriptions
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Subscription";
-      summary: "Get subscription";
-      description: "Get a subscription by ID.";
-    };
   }
 
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/cancel",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}/cancel",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Subscription";
-      summary: "Cancel subscription";
-      description: "Cancel a subscription by ID.";
-    };
   }
 
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/subscriptions"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Subscription";
-      summary: "List subscriptions";
-      description: "List subscriptions of a billing account.";
-    };
   }
 
   rpc ChangeSubscription(ChangeSubscriptionRequest) returns (ChangeSubscriptionResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}/change",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}/change",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Subscription";
-      summary: "Change subscription plan";
-      description: "Change a subscription plan by ID.";
-    };
   }
 
   rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/organizations/{org_id}/billing/{billing_id}/subscriptions/{id}",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/{org_id}/billing/subscriptions/{id}",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Subscription";
-      summary: "Update subscription";
-      description: "Update a subscription by ID.";
-    };
   }
 
   // Billing Product
   rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/billing/products",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Product";
-      summary: "Create product";
-      description: "Create a new product for platform.";
-    };
   }
 
   rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/products/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Product";
-      summary: "Get product";
-      description: "Get a product by ID.";
-    };
   }
 
   rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/products"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Product";
-      summary: "List products";
-      description: "List all products of a platform.";
-    };
   }
 
   rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/billing/products/{id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Product";
-      summary: "Update product";
-      description: "Update a product by ID.";
-    };
   }
 
   rpc CreateFeature(CreateFeatureRequest) returns (CreateFeatureResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/billing/features",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Create feature";
-      description: "Create a new feature for platform.";
-    };
   }
 
   rpc GetFeature(GetFeatureRequest) returns (GetFeatureResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/features/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Get feature";
-      description: "Get a feature by ID.";
-    };
   }
 
   rpc UpdateFeature(UpdateFeatureRequest) returns (UpdateFeatureResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/billing/features/{id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "Update feature";
-      description: "Update a feature by ID.";
-    };
   }
 
   rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/features"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Feature";
-      summary: "List features";
-      description: "List all features";
-    };
   }
 
   // Plans
   rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/billing/plans",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Plan";
-      summary: "Create plan";
-      description: "Create a new plan for platform.";
-    };
   }
 
   rpc ListPlans(ListPlansRequest) returns (ListPlansResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/plans"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Plan";
-      summary: "List plans";
-      description: "List all plans.";
-    };
   }
 
   rpc GetPlan(GetPlanRequest) returns (GetPlanResponse) {
-    option (google.api.http) = {get: "/v1beta1/billing/plans/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Plan";
-      summary: "Get plan";
-      description: "Get a plan by ID.";
-    };
   }
 
   rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/billing/plans/{id}",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Plan";
-      summary: "Update plan";
-      description: "Update a plan by ID.";
-    };
   }
 
   // Checkout
   rpc CreateCheckout(CreateCheckoutRequest) returns (CreateCheckoutResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/{org_id}/billing/checkouts",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Checkout";
-      summary: "Checkout a product or subscription";
-      description: "Checkout a product to buy it one time or start a subscription plan on a billing account.";
-    };
   }
 
   rpc ListCheckouts(ListCheckoutsRequest) returns (ListCheckoutsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/checkouts"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Checkout";
-      summary: "List checkouts";
-      description: "List all checkouts of a billing account.";
-    };
   }
 
   rpc GetCheckout(GetCheckoutRequest) returns (GetCheckoutResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/checkouts/{id}"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/checkouts/{id}"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Checkout";
-      summary: "Get checkout";
-      description: "Get a checkout by ID.";
-    };
   }
 
   // Billing Entitlements
   rpc CheckFeatureEntitlement(CheckFeatureEntitlementRequest) returns (CheckFeatureEntitlementResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/check",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/billing/check",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Entitlement";
-      summary: "Check entitlement";
-      description: "Check if a billing account is entitled to a feature.";
-    };
   }
 
   rpc CheckCreditEntitlement(CheckCreditEntitlementRequest) returns (CheckCreditEntitlementResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/billing/check",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Entitlement";
-      summary: "Check credit entitlement";
-      description: "Check if a billing account has enough credits to cover the amount.";
-    };
   }
 
   // Transactions
   rpc CreateBillingUsage(CreateBillingUsageRequest) returns (CreateBillingUsageResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/organizations/{org_id}/billing/{billing_id}/usages",
-      body: "*"
-      additional_bindings {
-        post: "/v1beta1/organizations/billing/usages",
-        body: "*"
-      }
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Usage";
-      summary: "Create billing usage";
-      description: "Report a new billing usage for a billing account.";
-    };
   }
 
   rpc ListBillingTransactions(ListBillingTransactionsRequest) returns (ListBillingTransactionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/transactions"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/transactions"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Transaction";
-      summary: "List billing transactions";
-      description: "List all transactions of a billing account.";
-    };
   }
 
   rpc TotalDebitedTransactions(TotalDebitedTransactionsRequest) returns (TotalDebitedTransactionsResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/debited_transactions_total"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Transaction";
-      summary: "Sum of amount of debited transactions including refunds";
-      description: "Sum of amount of debited transactions including refunds";
-    };
   }
 
   // Invoice
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/invoices"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Invoice";
-      summary: "List invoices";
-      description: "List all invoices of a billing account.";
-    };
   }
 
   rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {
-    option (google.api.http) = {
-      get: "/v1beta1/organizations/{org_id}/billing/{billing_id}/invoices/upcoming"
-      additional_bindings {get: "/v1beta1/organizations/{org_id}/billing/invoices/upcoming"}
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Invoice";
-      summary: "Get upcoming invoice";
-      description: "Get the upcoming invoice of a billing account.";
-    };
   }
 
   // Incoming Webhooks
   rpc BillingWebhookCallback(BillingWebhookCallbackRequest) returns (BillingWebhookCallbackResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/billing/webhooks/callback/{provider}",
-      body: "body"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Webhook";
-      summary: "Accept Billing webhook";
-      description: "Accepts a Billing webhook and processes it.";
-    };
   }
 
   // Prospects
   rpc CreateProspectPublic(CreateProspectPublicRequest) returns (CreateProspectPublicResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/prospects",
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "Prospect";
-      summary: "Create prospect";
-      description: "Create prospect for given email and activity. Available for public access.";
-    };
   }
 
   // Audit Records
@@ -2613,28 +1263,28 @@ message AuthCallbackRequest {
 message AuthCallbackResponse {}
 
 message AuthenticateRequest {
-  string strategy_name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Name of the strategy to use for authentication.<br/> *Example:* `google`"}];
+  string strategy_name = 1 [];
 
   // by default, location redirect header for starting authentication flow if applicable
   // will be skipped unless this is set to true, useful in browser, same value will
   // also be returned as endpoint in response anyway
-  bool redirect_onstart = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "If set to true, location header will be set for redirect to start auth flow"}];
+  bool redirect_onstart = 2 [];
 
   // by default, after successful authentication(flow completes) no operation will be performed,
   // to apply redirection in case of browsers, provide an url that will be used
   // after authentication where users are sent from frontier.
   // return_to should be one of the allowed urls configured at instance level
-  string return_to = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "URL to redirect after successful authentication.<br/> *Example:*`\"https://frontier.example.com\"`"}];
+  string return_to = 3 [];
 
   // email of the user for magic links
-  string email = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Email of the user to authenticate. Used for magic links.<br/> *Example:*`example@acme.org`"}];
+  string email = 4 [];
 
   // callback_url will be used by strategy as last step to finish authentication flow
   // in OIDC this host will receive "state" and "code" query params, in case of magic links
   // this will be the url where user is redirected after clicking on magic link.
   // For most cases it could be host of frontier but in case of proxies, this will be proxy public endpoint.
   // callback_url should be one of the allowed urls configured at instance level
-  string callback_url = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Host which should handle the call to finish authentication flow, for most cases it could be host of frontier but in case of proxies, this will be proxy public endpoint.<br/> *Example:*`https://frontier.example.com/v1beta1/auth/callback`"}];
+  string callback_url = 5 [];
 
   // TODO(kushsharma): add support for passing state from client and returning it once auth is finished
 }
@@ -2682,25 +1332,19 @@ message AuthTokenResponse {
 
 message UserRequestBody {
   string name = 1 [
-    (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the user. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores and must start with a letter. If not provided, Frontier automatically generates a name from the user email. "}
+    (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"
   ];
   string email = 2 [
     (validate.rules).string.email = true,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The email of the user. The email must be unique within the entire Frontier instance.<br/>*Example:*`\"john.doe@raystack.org\"`"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for users that can hold key value pairs pre-defined in User Metaschema. The metadata object can be used to store arbitrary information about the user such as label, description etc. By default the user metaschema contains labels and descriptions for the user. Update the same to add more fields to the user metadata object. <br/>*Example:*`{\"label\": {\"key1\": \"value1\"}, \"description\": \"User Description\"}`"}];
-  string title = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the user. Can also be left empty. <br/>*Example:*`\"John Doe\"`"}];
+  google.protobuf.Struct metadata = 3 [, \"description\": \"User Description\"}`"}];
+  string title = 4 [];
   string avatar = 5 [
     (validate.rules).string = {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
       max_len: 250000,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`.",
-      example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
     }
   ];
 }
@@ -2710,20 +1354,18 @@ message ListUsersRequest {
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
+    }
   ];
   int32 page_num = 2 [
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+    }
   ];
-  string keyword = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The keyword to search for in name or email."}];
-  string org_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter users by."}];
-  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The group id to filter by."}];
-  string state = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be enabled or disabled."}];
+  string keyword = 3 [];
+  string org_id = 4 [];
+  string group_id = 5 [];
+  string state = 6 [];
 }
 
 message ListUsersResponse {
@@ -2789,15 +1431,13 @@ message ListProjectsByCurrentUserRequest {
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
+    }
   ];
   int32 page_num = 6 [
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+    }
   ];
 }
 
@@ -2879,8 +1519,8 @@ message ListCurrentUserGroupsResponse {
 message ListUserGroupsRequest {
   reserved 2;
 
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the user to get groups for."}];
-  string org_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter groups by. If not provided, groups from all organizations are returned."}];
+  string id = 1 [];
+  string org_id = 3 [];
 }
 
 message ListUserGroupsResponse {
@@ -2893,7 +1533,7 @@ message UpdateCurrentUserRequest {
 
 message ListUserInvitationsRequest {
   // id is email id of the user
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user email to list the invitations for."}];
+  string id = 1 [];
 }
 
 message ListUserInvitationsResponse {
@@ -2912,10 +1552,9 @@ message ListCurrentUserInvitationsResponse {
 message ListServiceUsersRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to filter service users by."}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be enabled or disabled."}];
+  string state = 2 [];
 }
 
 message ListServiceUsersResponse {
@@ -2923,10 +1562,7 @@ message ListServiceUsersResponse {
 }
 
 message ServiceUserRequestBody {
-  string title = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "User friendly name of the service user.",
-    example: "\"Order Service\""
-  }];
+  string title = 1 [];
   google.protobuf.Struct metadata = 2;
 }
 
@@ -2934,8 +1570,7 @@ message CreateServiceUserRequest {
   ServiceUserRequestBody body = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -2944,11 +1579,10 @@ message CreateServiceUserResponse {
 }
 
 message GetServiceUserRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to get."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -2957,23 +1591,21 @@ message GetServiceUserResponse {
 }
 
 message DeleteServiceUserRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message DeleteServiceUserResponse {}
 
 message CreateServiceUserJWKRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
+  string id = 1 [];
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -2982,12 +1614,11 @@ message CreateServiceUserJWKResponse {
 }
 
 message GetServiceUserJWKRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to get a key for."}];
-  string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to get."}];
+  string id = 1 [];
+  string key_id = 2 [];
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -2996,11 +1627,10 @@ message GetServiceUserJWKResponse {
 }
 
 message ListServiceUserJWKsRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list keys for."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3009,24 +1639,22 @@ message ListServiceUserJWKsResponse {
 }
 
 message DeleteServiceUserJWKRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a key for."}];
-  string key_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the key to delete."}];
+  string id = 1 [];
+  string key_id = 2 [];
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message DeleteServiceUserJWKResponse {}
 
 message CreateServiceUserCredentialRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a key for."}];
+  string id = 1 [];
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3035,11 +1663,10 @@ message CreateServiceUserCredentialResponse {
 }
 
 message ListServiceUserCredentialsRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list secrets for."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3049,24 +1676,22 @@ message ListServiceUserCredentialsResponse {
 }
 
 message DeleteServiceUserCredentialRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a secret for."}];
-  string secret_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the secret to delete."}];
+  string id = 1 [];
+  string secret_id = 2 [];
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message DeleteServiceUserCredentialResponse {}
 
 message CreateServiceUserTokenRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to create a token for."}];
+  string id = 1 [];
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3075,11 +1700,10 @@ message CreateServiceUserTokenResponse {
 }
 
 message ListServiceUserTokensRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list tokens for."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3088,23 +1712,21 @@ message ListServiceUserTokensResponse {
 }
 
 message DeleteServiceUserTokenRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to delete a token for."}];
-  string token_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the token to delete."}];
+  string id = 1 [];
+  string token_id = 2 [];
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message DeleteServiceUserTokenResponse {}
 
 message ListServiceUserProjectsRequest {
-  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The unique ID of the service user to list projects for."}];
+  string id = 1 [];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the service user belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
   // list of permissions needs to be checked against each project
   // query params are set as with_permissions=get&with_permissions=delete
@@ -3130,7 +1752,7 @@ message ListOrganizationGroupsRequest {
     pattern: "^[A-Za-z0-9_-]+$",
     min_len: 3
   }];
-  string state = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state of the group to filter by. It can be enabled or disabled."}];
+  string state = 3 [];
 
   repeated string group_ids = 4;
   bool with_members = 5;
@@ -3144,8 +1766,7 @@ message ListOrganizationGroupsResponse {
 message CreateOrganizationRoleRequest {
   RoleRequestBody body = 1 [(validate.rules).message.required = true];
   string org_id = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the role belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3201,40 +1822,33 @@ message DeleteOrganizationRoleResponse {}
 message OrganizationRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the organization. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores.<br/>*Example:*`\"frontier-org1-acme\"`"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the organization. Can also be left empty.<br/> *Example*: `\"Acme Inc\"`"}];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for organizations that can hold key value pairs defined in Organization Metaschema. The metadata object can be used to store arbitrary information about the organization such as labels, descriptions etc. The default Organization Metaschema contains labels and descripton fields. Update the Organization Metaschema to add more fields. <br/>*Example*:`{\"labels\": {\"key\": \"value\"}, \"description\": \"Organization description\"}`"}];
+  string title = 2 [];
+  google.protobuf.Struct metadata = 3 [, \"description\": \"Organization description\"}`"}];
   string avatar = 4 [
     (validate.rules).string = {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
       max_len: 250000,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "The avatar is base64 encoded image data of the user. Can also be left empty. The image should be less than 200KB. Should follow the regex pattern `^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$`."
-      example: "\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA\""
     }
   ];
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user ID to filter by. It can be used to list all the organizations that the user is a member of. Otherwise, all the organizations in the Frontier instance will be listed."}];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The state to filter by. It can be `enabled` or `disabled`."}];
+  string user_id = 1 [];
+  string state = 2 [];
   int32 page_size = 3 [
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The maximum number of users to return per page. The default is 1000."}
+    }
   ];
   int32 page_num = 4 [
     (validate.rules).int32 = {
       gte: 1,
       ignore_empty: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The page number to return. The default is 1."}
+    }
   ];
 }
 
@@ -3295,7 +1909,7 @@ message ListOrganizationUsersResponse {
 
 message AddOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  repeated string user_ids = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "List of user IDs to be added to the organization."}];
+  repeated string user_ids = 2 [];
 }
 
 message AddOrganizationUsersResponse {}
@@ -3317,10 +1931,9 @@ message ListOrganizationServiceUsersResponse {
 
 message ListOrganizationInvitationsRequest {
   string org_id = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which user is invited"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string user_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id filter is the email id of user who are invited inside the organization."}];
+  string user_id = 2 [];
 }
 
 message ListOrganizationInvitationsResponse {
@@ -3329,19 +1942,17 @@ message ListOrganizationInvitationsResponse {
 
 message CreateOrganizationInvitationRequest {
   string org_id = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which user is invited"}
+    (google.api.field_behavior) = REQUIRED
   ];
   repeated string user_ids = 2 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).repeated = {
       min_items: 1,
       max_items: 10
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "user_id is email id of user who are invited inside the organization. If user is not registered on the platform, it will be notified"}
+    }
   ];
-  repeated string group_ids = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of group ids to which user needs to be added as a member."}];
-  repeated string role_ids = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "list of role ids to which user needs to be added as a member. Roles are binded at organization level by default."}];
+  repeated string group_ids = 3 [];
+  repeated string role_ids = 4 [];
 }
 
 message CreateOrganizationInvitationResponse {
@@ -3372,10 +1983,9 @@ message DeleteOrganizationInvitationRequest {
 message ListOrganizationDomainsRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domains are to be listed"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter to list domains by their state (pending/verified). If not provided, all domains for an org will be listed"}];
+  string state = 2 [];
 }
 
 message ListOrganizationDomainsResponse {
@@ -3385,8 +1995,7 @@ message ListOrganizationDomainsResponse {
 message ListOrganizationsByDomainRequest {
   string name = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "domain name to be used to list all the organizations that have this domain whitelisted"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3403,13 +2012,11 @@ message JoinOrganizationResponse {}
 message GetOrganizationDomainRequest {
   string id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the domain to be retrieved"}
+    (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domain is to be retrieved"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3420,13 +2027,11 @@ message GetOrganizationDomainResponse {
 message CreateOrganizationDomainRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domains are to be added"}
+    (google.api.field_behavior) = REQUIRED
   ];
   string domain = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "domain name to be added to the trusted domain list"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3437,13 +2042,11 @@ message CreateOrganizationDomainResponse {
 message DeleteOrganizationDomainRequest {
   string id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the domain to be deleted"}
+    (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domains are to be deleted"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3452,13 +2055,11 @@ message DeleteOrganizationDomainResponse {}
 message VerifyOrganizationDomainRequest {
   string org_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization for which whitelisted domains are to be verified"}
+    (google.api.field_behavior) = REQUIRED
   ];
   string id = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the domain to be verified"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3499,15 +2100,13 @@ message GetOrganizationKycResponse {
 message ProjectRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the project. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores.<br/> *Example:* `frontier-playground`"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the project. Can also be left empty. <br/> *Example:* `Frontier Playground`"}];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for projects that can hold key value pairs defined in Project Metaschema."}];
+  string title = 2 [];
+  google.protobuf.Struct metadata = 3 [];
   string org_id = 4 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the organization to which project belongs"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3521,7 +2120,7 @@ message CreateProjectResponse {
 
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string state = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Filter projects by state. If not specified, all projects are returned. <br/> *Possible values:* `enabled` or `disabled`"}];
+  string state = 2 [];
 
   bool with_member_count = 3;
 }
@@ -3623,32 +2222,27 @@ message DeleteProjectResponse {}
 message PolicyRequestBody {
   string role_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role to which policy is assigned"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
+  string title = 3 [];
   string resource = 2 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The resource to which policy is assigned in this format `namespace:uuid`. <br/> *Example:* `app/guardian:70f69c3a-334b-4f25-90b8-4d4f3be6b8e2`"}
+    (google.api.field_behavior) = REQUIRED
   ];
   string principal = 4 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  google.protobuf.Struct metadata = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for policies that can hold key value pairs defined in Policy Metaschema.<br/> *Example:* `{\"labels\": {\"key\": \"value\"}, \"description\": \"Policy description\"}`"}];
+  google.protobuf.Struct metadata = 5 [, \"description\": \"Policy description\"}`"}];
 }
 
 message CreatePolicyForProjectBody {
   string role_id = 1 [
     (validate.rules).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "unique id of the role to which policy is assigned"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the policy. Can also be left empty. <br/> *Example:* `Policy title`"}];
+  string title = 2 [];
   string principal = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "principal is the user or group to which policy is assigned. The principal id must be prefixed with its namespace id in this format `namespace:uuid`. The namespace can be `app/user`, `app/group` or `app/serviceuser` (coming up!) and uuid is the unique id of the principal. <br/> *Example:* `app/user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3698,11 +2292,11 @@ message GetPolicyResponse {
 }
 
 message ListPoliciesRequest {
-  string org_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization id to filter by."}];
-  string project_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The project id to filter by."}];
-  string user_id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The user id to filter by."}];
-  string role_id = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The role id to filter by."}];
-  string group_id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The group id to filter by."}];
+  string org_id = 1 [];
+  string project_id = 2 [];
+  string user_id = 3 [];
+  string role_id = 4 [];
+  string group_id = 5 [];
 }
 
 message ListPoliciesResponse {
@@ -3773,18 +2367,16 @@ message GroupRequestBody {
   reserved 4;
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the group. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores."}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the group. Can also be left empty."}];
-  google.protobuf.Struct metadata = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Metadata object for groups that can hold key value pairs defined in Group Metaschema. The metadata object can be used to store arbitrary information about the group such as labels, descriptions etc. The default Group Metaschema contains labels and descripton fields. Update the Group Metaschema to add more fields.<br/>*Example:*`{\"labels\": {\"key\": \"value\"}, \"description\": \"Group description\"}`"}];
+  string title = 2 [];
+  google.protobuf.Struct metadata = 3 [, \"description\": \"Group description\"}`"}];
 }
 
 message CreateGroupRequest {
   GroupRequestBody body = 1 [(validate.rules).message.required = true];
   string org_id = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the group belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3810,8 +2402,7 @@ message UpdateGroupRequest {
   string id = 1;
   GroupRequestBody body = 2;
   string org_id = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The organization ID to which the group belongs to."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -3896,16 +2487,14 @@ message ListProjectResourcesResponse {
 message ResourceRequestBody {
   reserved 4, 5;
   string name = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the resource.  Must be unique within the project. <br/> *Example:* `my-resource`"}
+    (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The title can contain any UTF-8 character, used to provide a human-readable name for the resource. Can also be left empty."}];
+  string title = 2 [];
   string namespace = 3 [
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The namespace of the resource. The resource namespace are created when permissions for that resource is created in Frontier. If namespace doesn't exists the request will fail. <br/> *Example:* `compute/instance`"}
+    (google.api.field_behavior) = REQUIRED
   ];
   // format namespace:uuid or just uuid for user
-  string principal = 6 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "UserID or ServiceUserID that should be marked as owner of the resource. If not provided, the current logged in user will be made the resource owner. <br/> *Example:* `user:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
+  string principal = 6 [];
   google.protobuf.Struct metadata = 7;
 }
 
@@ -3913,7 +2502,7 @@ message CreateProjectResourceRequest {
   ResourceRequestBody body = 1 [(validate.rules).message.required = true];
   // project uuid or name
   string project_id = 2;
-  string id = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Autogenerated if skipped."}];
+  string id = 3 [];
 }
 
 message CreateProjectResourceResponse {
@@ -3949,19 +2538,16 @@ message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [
-    deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Deprecated. Use `resource` field instead."}
+    deprecated = true
   ];
   string object_namespace = 2 [
-    deprecated = true,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "Deprecated. Use `resource` field instead."}
+    deprecated = true
   ];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get`, `list`, `compute.instance.create`"}
+    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
-  string resource = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
+  string resource = 4 [];
 }
 
 message CheckResourcePermissionResponse {
@@ -3978,10 +2564,9 @@ message BatchCheckPermissionRequest {
 message BatchCheckPermissionBody {
   string permission = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$",
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "the permission name to check. <br/> *Example:* `get` or `list`"}
+    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
-  string resource = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "`namespace:uuid` or `namespace:name` of the org or project, and `namespace:urn` of a resource under a project. In case of an org/project either provide the complete namespace (app/organization) or Frontier can also parse aliases for the same as `org` or `project`. <br/> *Example:* `organization:92f69c3a-334b-4f25-90b8-4d4f3be6b825` or `app/project:project-name` or `compute/instance:92f69c3a-334b-4f25-90b8-4d4f3be6b825`"}];
+  string resource = 2 [];
 }
 
 message BatchCheckPermissionResponse {
@@ -3998,13 +2583,11 @@ message BatchCheckPermissionResponsePair {
 message MetaSchemaRequestBody {
   string name = 1 [
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The name of the metaschema. The name must be unique within the entire Frontier instance. The name can contain only alphanumeric characters, dashes and underscores."}
+    (google.api.field_behavior) = REQUIRED
   ];
   string schema = 2 [
     (validate.rules).string.min_len = 2,
-    (google.api.field_behavior) = REQUIRED,
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "The schema of the metaschema. The schema must be a valid JSON schema.Please refer to https://json-schema.org/ to know more about json schema."}
+    (google.api.field_behavior) = REQUIRED
   ];
 }
 
@@ -4164,37 +2747,31 @@ message CreateProspectPublicRequest{
     (validate.rules).string = {
       ignore_empty: true,
       pattern: "^[A-Za-z ]+$",
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "full name of the user"}
+    }
   ];
   string email = 5[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
       min_len: 1,
       email: true,
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "email of the user"}
+    }
   ];
   string phone = 6[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "phone number of the user"}
   ];
   string activity = 7[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
       min_len: 1,
       pattern: "^[A-Za-z0-9-_]+$",
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "activity for which user is subscribing, e.g. newsletter, waitlist, blogs etc"}
+    }
   ];
   string source = 9[
     (validate.rules).string = {
       ignore_empty: true,
       pattern: "^[A-Za-z0-9-_]+$",
-    },
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "source of this user addition e.g. platform, website, admin etc"}
+    }
   ];
   google.protobuf.Struct metadata = 11[
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "additional info as key value pair"}
   ];
 }
 
