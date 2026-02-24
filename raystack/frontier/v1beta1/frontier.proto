@@ -4270,10 +4270,11 @@ message CreateCurrentUserPersonalTokenRequest {
     (validate.rules).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
-  // Roles to scope the token to (e.g., ["app_organization_manager", "app_project_owner"])
-  repeated string roles = 3 [
+  // Role ids to scope the token to
+  repeated string role_ids = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1}
+    (validate.rules).repeated = {min_items: 1},
+    (validate.rules).repeated.items.string.uuid = true
   ];
   // For project-scoped roles: empty = all projects, non-empty = specific projects
   repeated string project_ids = 4 [(validate.rules).repeated.items.string.uuid = true];
