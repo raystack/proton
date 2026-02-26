@@ -1889,7 +1889,7 @@ service FrontierService {
   rpc CreateAuditRecord(CreateAuditRecordRequest) returns (CreateAuditRecordResponse) {}
 
   // Personal Access Token
-  rpc CreateCurrentUserPersonalToken(CreateCurrentUserPersonalTokenRequest) returns (CreateCurrentUserPersonalTokenResponse) {}
+  rpc CreateCurrentUserPAT(CreateCurrentUserPATRequest) returns (CreateCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -4260,7 +4260,7 @@ message CreateAuditRecordResponse {
   AuditRecord audit_record = 1;
 }
 
-message CreateCurrentUserPersonalTokenRequest {
+message CreateCurrentUserPATRequest {
   // Human-friendly display name, unique per user per org
   string title = 1 [
     (validate.rules).string.min_len = 1,
@@ -4270,7 +4270,7 @@ message CreateCurrentUserPersonalTokenRequest {
     (validate.rules).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
-  // Role ids to scope the token to
+  // Role ids to scope the PAT to
   repeated string role_ids = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).repeated = {min_items: 1},
@@ -4282,6 +4282,6 @@ message CreateCurrentUserPersonalTokenRequest {
   google.protobuf.Struct metadata = 6;
 }
 
-message CreateCurrentUserPersonalTokenResponse {
-  PersonalAccessToken token = 1;
+message CreateCurrentUserPATResponse {
+  PAT pat = 1;
 }
