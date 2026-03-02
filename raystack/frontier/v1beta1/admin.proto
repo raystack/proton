@@ -3,6 +3,7 @@ syntax = "proto3";
 package raystack.frontier.v1beta1;
 
 import "google/api/field_behavior.proto";
+import "google/api/httpbody.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "raystack/frontier/v1beta1/models.proto";
@@ -240,10 +241,10 @@ message ListAllUsersRequest {
       ignore_empty: true,
     }
   ];
-  string keyword = 3 [];
-  string org_id = 4 [];
-  string group_id = 5 [];
-  string state = 6 [];
+  string keyword = 3;
+  string org_id = 4;
+  string group_id = 5;
+  string state = 6;
 }
 
 message ListAllUsersResponse {
@@ -260,8 +261,8 @@ message ListAllServiceUsersResponse {
 
 message ListGroupsRequest {
   reserved 1;
-  string org_id = 2 [];
-  string state = 3 [];
+  string org_id = 2;
+  string state = 3;
 }
 
 message ListGroupsResponse {
@@ -269,8 +270,8 @@ message ListGroupsResponse {
 }
 
 message ListAllOrganizationsRequest {
-  string user_id = 1 [];
-  string state = 2 [];
+  string user_id = 1;
+  string state = 2;
   int32 page_size = 3 [
     (validate.rules).int32 = {
       gte: 1,
@@ -287,13 +288,12 @@ message ListAllOrganizationsRequest {
 
 message ListAllOrganizationsResponse {
   repeated Organization organizations = 1;
-  int32 count = 2[
-      ];
+  int32 count = 2;
 }
 
 message ListProjectsRequest {
-  string org_id = 1 [];
-  string state = 2 [];
+  string org_id = 1;
+  string state = 2;
 }
 
 message ListProjectsResponse {
@@ -301,8 +301,8 @@ message ListProjectsResponse {
 }
 
 message ListRelationsRequest {
-  string subject = 1 [];
-  string object = 2 [];
+  string subject = 1;
+  string object = 2;
 }
 
 message ListRelationsResponse {
@@ -310,9 +310,9 @@ message ListRelationsResponse {
 }
 
 message ListResourcesRequest {
-  string user_id = 1 [];
-  string project_id = 2 [];
-  string organization_id = 3 [];
+  string user_id = 1;
+  string project_id = 2;
+  string organization_id = 3;
   string namespace = 4 [
     (validate.rules).string.min_len = 3
   ];
@@ -357,12 +357,12 @@ message PermissionRequestBody {
   string namespace = 2 [
     deprecated = true
   ];
-  google.protobuf.Struct metadata = 3 [];
-  string title = 4 [];
+  google.protobuf.Struct metadata = 3;
+  string title = 4;
 
   // key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.
   // Use this instead of using name and namespace fields
-  string key = 5 [];
+  string key = 5;
 }
 
 message CreatePermissionRequest {
@@ -420,8 +420,8 @@ message CheckFederatedResourcePermissionResponse {
 }
 
 message AddPlatformUserRequest {
-  string user_id = 1 [];
-  string serviceuser_id = 2 [];
+  string user_id = 1;
+  string serviceuser_id = 2;
 
   string relation = 3 [
     (google.api.field_behavior) = REQUIRED
@@ -438,8 +438,8 @@ message ListPlatformUsersResponse {
 }
 
 message RemovePlatformUserRequest {
-  string user_id = 1 [];
-  string serviceuser_id = 2 [];
+  string user_id = 1;
+  string serviceuser_id = 2;
 }
 
 message RemovePlatformUserResponse {}
@@ -487,8 +487,7 @@ message ListAllInvoicesRequest {
 
 message ListAllInvoicesResponse {
   repeated Invoice invoices = 1;
-  int32 count = 2[
-  ];
+  int32 count = 2;
 }
 
 message GenerateInvoicesRequest {}
@@ -555,7 +554,7 @@ message CreateWebhookResponse {
 
 message UpdateWebhookRequest {
   string id = 1 [
-    (google.api.field_behavior) = REQUIRED
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
   WebhookRequestBody body = 2;
@@ -567,7 +566,7 @@ message UpdateWebhookResponse {
 
 message DeleteWebhookRequest {
   string id = 1 [
-    (google.api.field_behavior) = REQUIRED
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
 }
@@ -720,8 +719,7 @@ message UpdateProspectRequest{
       email: true,
     }
   ];
-  string phone = 6[
-  ];
+  string phone = 6;
   string activity = 7[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
@@ -739,10 +737,8 @@ message UpdateProspectRequest{
       pattern: "^[A-Za-z0-9-_]+$",
     }
   ];
-  bool verified = 10[
-  ];
-  google.protobuf.Struct metadata = 11[
-  ];
+  bool verified = 10;
+  google.protobuf.Struct metadata = 11;
 }
 
 message UpdateProspectResponse{
@@ -773,8 +769,7 @@ message CreateProspectRequest{
       email: true,
     }
   ];
-  string phone = 6[
-  ];
+  string phone = 6;
   string activity = 7[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
@@ -792,10 +787,8 @@ message CreateProspectRequest{
       pattern: "^[A-Za-z0-9-_]+$",
     }
   ];
-  bool verified = 10[
-  ];
-  google.protobuf.Struct metadata = 11[
-  ];
+  bool verified = 10;
+  google.protobuf.Struct metadata = 11;
 }
 
 message CreateProspectResponse{
@@ -959,7 +952,7 @@ message ExportUsersRequest {}
 
 message SearchUserOrganizationsRequest {
   string id = 1 [
-    (google.api.field_behavior) = REQUIRED
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
   RQLRequest query = 2;
@@ -985,11 +978,11 @@ message SearchUserOrganizationsResponse {
 
 message SearchUserProjectsRequest {
   string user_id = 1 [
-    (google.api.field_behavior) = REQUIRED
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
   string org_id = 2 [
-    (google.api.field_behavior) = REQUIRED
+    (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.uuid = true
   ];
   RQLRequest query = 3;
@@ -1020,8 +1013,8 @@ message AdminCreateOrganizationRequest {
       (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
       (google.api.field_behavior) = REQUIRED
     ];
-    string title = 2 [];
-    google.protobuf.Struct metadata = 3 [, \"description\": \"Organization description\"}`"}];
+    string title = 2;
+    google.protobuf.Struct metadata = 3;
     string avatar = 4 [
       (validate.rules).string = {
         pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",

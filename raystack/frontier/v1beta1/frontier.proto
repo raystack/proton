@@ -1263,28 +1263,28 @@ message AuthCallbackRequest {
 message AuthCallbackResponse {}
 
 message AuthenticateRequest {
-  string strategy_name = 1 [];
+  string strategy_name = 1;
 
   // by default, location redirect header for starting authentication flow if applicable
   // will be skipped unless this is set to true, useful in browser, same value will
   // also be returned as endpoint in response anyway
-  bool redirect_onstart = 2 [];
+  bool redirect_onstart = 2;
 
   // by default, after successful authentication(flow completes) no operation will be performed,
   // to apply redirection in case of browsers, provide an url that will be used
   // after authentication where users are sent from frontier.
   // return_to should be one of the allowed urls configured at instance level
-  string return_to = 3 [];
+  string return_to = 3;
 
   // email of the user for magic links
-  string email = 4 [];
+  string email = 4;
 
   // callback_url will be used by strategy as last step to finish authentication flow
   // in OIDC this host will receive "state" and "code" query params, in case of magic links
   // this will be the url where user is redirected after clicking on magic link.
   // For most cases it could be host of frontier but in case of proxies, this will be proxy public endpoint.
   // callback_url should be one of the allowed urls configured at instance level
-  string callback_url = 5 [];
+  string callback_url = 5;
 
   // TODO(kushsharma): add support for passing state from client and returning it once auth is finished
 }
@@ -1338,8 +1338,8 @@ message UserRequestBody {
     (validate.rules).string.email = true,
     (google.api.field_behavior) = REQUIRED
   ];
-  google.protobuf.Struct metadata = 3 [, \"description\": \"User Description\"}`"}];
-  string title = 4 [];
+  google.protobuf.Struct metadata = 3;
+  string title = 4;
   string avatar = 5 [
     (validate.rules).string = {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
@@ -1362,10 +1362,10 @@ message ListUsersRequest {
       ignore_empty: true,
     }
   ];
-  string keyword = 3 [];
-  string org_id = 4 [];
-  string group_id = 5 [];
-  string state = 6 [];
+  string keyword = 3;
+  string org_id = 4;
+  string group_id = 5;
+  string state = 6;
 }
 
 message ListUsersResponse {
@@ -1519,8 +1519,8 @@ message ListCurrentUserGroupsResponse {
 message ListUserGroupsRequest {
   reserved 2;
 
-  string id = 1 [];
-  string org_id = 3 [];
+  string id = 1;
+  string org_id = 3;
 }
 
 message ListUserGroupsResponse {
@@ -1533,7 +1533,7 @@ message UpdateCurrentUserRequest {
 
 message ListUserInvitationsRequest {
   // id is email id of the user
-  string id = 1 [];
+  string id = 1;
 }
 
 message ListUserInvitationsResponse {
@@ -1554,7 +1554,7 @@ message ListServiceUsersRequest {
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
-  string state = 2 [];
+  string state = 2;
 }
 
 message ListServiceUsersResponse {
@@ -1562,7 +1562,7 @@ message ListServiceUsersResponse {
 }
 
 message ServiceUserRequestBody {
-  string title = 1 [];
+  string title = 1;
   google.protobuf.Struct metadata = 2;
 }
 
@@ -1579,7 +1579,7 @@ message CreateServiceUserResponse {
 }
 
 message GetServiceUserRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1591,7 +1591,7 @@ message GetServiceUserResponse {
 }
 
 message DeleteServiceUserRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1601,7 +1601,7 @@ message DeleteServiceUserRequest {
 message DeleteServiceUserResponse {}
 
 message CreateServiceUserJWKRequest {
-  string id = 1 [];
+  string id = 1;
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
@@ -1614,8 +1614,8 @@ message CreateServiceUserJWKResponse {
 }
 
 message GetServiceUserJWKRequest {
-  string id = 1 [];
-  string key_id = 2 [];
+  string id = 1;
+  string key_id = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1627,7 +1627,7 @@ message GetServiceUserJWKResponse {
 }
 
 message ListServiceUserJWKsRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1639,8 +1639,8 @@ message ListServiceUserJWKsResponse {
 }
 
 message DeleteServiceUserJWKRequest {
-  string id = 1 [];
-  string key_id = 2 [];
+  string id = 1;
+  string key_id = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1650,7 +1650,7 @@ message DeleteServiceUserJWKRequest {
 message DeleteServiceUserJWKResponse {}
 
 message CreateServiceUserCredentialRequest {
-  string id = 1 [];
+  string id = 1;
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
@@ -1663,7 +1663,7 @@ message CreateServiceUserCredentialResponse {
 }
 
 message ListServiceUserCredentialsRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1676,8 +1676,8 @@ message ListServiceUserCredentialsResponse {
 }
 
 message DeleteServiceUserCredentialRequest {
-  string id = 1 [];
-  string secret_id = 2 [];
+  string id = 1;
+  string secret_id = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1687,7 +1687,7 @@ message DeleteServiceUserCredentialRequest {
 message DeleteServiceUserCredentialResponse {}
 
 message CreateServiceUserTokenRequest {
-  string id = 1 [];
+  string id = 1;
   string title = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
@@ -1700,7 +1700,7 @@ message CreateServiceUserTokenResponse {
 }
 
 message ListServiceUserTokensRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1712,8 +1712,8 @@ message ListServiceUserTokensResponse {
 }
 
 message DeleteServiceUserTokenRequest {
-  string id = 1 [];
-  string token_id = 2 [];
+  string id = 1;
+  string token_id = 2;
   string org_id = 3 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1723,7 +1723,7 @@ message DeleteServiceUserTokenRequest {
 message DeleteServiceUserTokenResponse {}
 
 message ListServiceUserProjectsRequest {
-  string id = 1 [];
+  string id = 1;
   string org_id = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -1752,7 +1752,7 @@ message ListOrganizationGroupsRequest {
     pattern: "^[A-Za-z0-9_-]+$",
     min_len: 3
   }];
-  string state = 3 [];
+  string state = 3;
 
   repeated string group_ids = 4;
   bool with_members = 5;
@@ -1824,8 +1824,8 @@ message OrganizationRequestBody {
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [];
-  google.protobuf.Struct metadata = 3 [, \"description\": \"Organization description\"}`"}];
+  string title = 2;
+  google.protobuf.Struct metadata = 3;
   string avatar = 4 [
     (validate.rules).string = {
       pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
@@ -1836,8 +1836,8 @@ message OrganizationRequestBody {
 }
 
 message ListOrganizationsRequest {
-  string user_id = 1 [];
-  string state = 2 [];
+  string user_id = 1;
+  string state = 2;
   int32 page_size = 3 [
     (validate.rules).int32 = {
       gte: 1,
@@ -1909,7 +1909,7 @@ message ListOrganizationUsersResponse {
 
 message AddOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  repeated string user_ids = 2 [];
+  repeated string user_ids = 2;
 }
 
 message AddOrganizationUsersResponse {}
@@ -1933,7 +1933,7 @@ message ListOrganizationInvitationsRequest {
   string org_id = 1 [
     (google.api.field_behavior) = REQUIRED
   ];
-  string user_id = 2 [];
+  string user_id = 2;
 }
 
 message ListOrganizationInvitationsResponse {
@@ -1951,8 +1951,8 @@ message CreateOrganizationInvitationRequest {
       max_items: 10
     }
   ];
-  repeated string group_ids = 3 [];
-  repeated string role_ids = 4 [];
+  repeated string group_ids = 3;
+  repeated string role_ids = 4;
 }
 
 message CreateOrganizationInvitationResponse {
@@ -1985,7 +1985,7 @@ message ListOrganizationDomainsRequest {
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
-  string state = 2 [];
+  string state = 2;
 }
 
 message ListOrganizationDomainsResponse {
@@ -2102,8 +2102,8 @@ message ProjectRequestBody {
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [];
-  google.protobuf.Struct metadata = 3 [];
+  string title = 2;
+  google.protobuf.Struct metadata = 3;
   string org_id = 4 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -2120,7 +2120,7 @@ message CreateProjectResponse {
 
 message ListOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
-  string state = 2 [];
+  string state = 2;
 
   bool with_member_count = 3;
 }
@@ -2224,7 +2224,7 @@ message PolicyRequestBody {
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 3 [];
+  string title = 3;
   string resource = 2 [
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
@@ -2232,7 +2232,7 @@ message PolicyRequestBody {
   string principal = 4 [
     (google.api.field_behavior) = REQUIRED
   ];
-  google.protobuf.Struct metadata = 5 [, \"description\": \"Policy description\"}`"}];
+  google.protobuf.Struct metadata = 5;
 }
 
 message CreatePolicyForProjectBody {
@@ -2240,7 +2240,7 @@ message CreatePolicyForProjectBody {
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [];
+  string title = 2;
   string principal = 3 [
     (google.api.field_behavior) = REQUIRED
   ];
@@ -2292,11 +2292,11 @@ message GetPolicyResponse {
 }
 
 message ListPoliciesRequest {
-  string org_id = 1 [];
-  string project_id = 2 [];
-  string user_id = 3 [];
-  string role_id = 4 [];
-  string group_id = 5 [];
+  string org_id = 1;
+  string project_id = 2;
+  string user_id = 3;
+  string role_id = 4;
+  string group_id = 5;
 }
 
 message ListPoliciesResponse {
@@ -2369,8 +2369,8 @@ message GroupRequestBody {
     (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [];
-  google.protobuf.Struct metadata = 3 [, \"description\": \"Group description\"}`"}];
+  string title = 2;
+  google.protobuf.Struct metadata = 3;
 }
 
 message CreateGroupRequest {
@@ -2489,12 +2489,12 @@ message ResourceRequestBody {
   string name = 1 [
     (google.api.field_behavior) = REQUIRED
   ];
-  string title = 2 [];
+  string title = 2;
   string namespace = 3 [
     (google.api.field_behavior) = REQUIRED
   ];
   // format namespace:uuid or just uuid for user
-  string principal = 6 [];
+  string principal = 6;
   google.protobuf.Struct metadata = 7;
 }
 
@@ -2502,7 +2502,7 @@ message CreateProjectResourceRequest {
   ResourceRequestBody body = 1 [(validate.rules).message.required = true];
   // project uuid or name
   string project_id = 2;
-  string id = 3 [];
+  string id = 3;
 }
 
 message CreateProjectResourceResponse {
@@ -2547,7 +2547,7 @@ message CheckResourcePermissionRequest {
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
-  string resource = 4 [];
+  string resource = 4;
 }
 
 message CheckResourcePermissionResponse {
@@ -2566,7 +2566,7 @@ message BatchCheckPermissionBody {
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
-  string resource = 2 [];
+  string resource = 2;
 }
 
 message BatchCheckPermissionResponse {
@@ -2756,8 +2756,7 @@ message CreateProspectPublicRequest{
       email: true,
     }
   ];
-  string phone = 6[
-  ];
+  string phone = 6;
   string activity = 7[
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
@@ -2771,8 +2770,7 @@ message CreateProspectPublicRequest{
       pattern: "^[A-Za-z0-9-_]+$",
     }
   ];
-  google.protobuf.Struct metadata = 11[
-  ];
+  google.protobuf.Struct metadata = 11;
 }
 
 message CreateProspectPublicResponse{
