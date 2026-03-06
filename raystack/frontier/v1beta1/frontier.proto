@@ -537,6 +537,9 @@ service FrontierService {
 
   // Audit Records
   rpc CreateAuditRecord(CreateAuditRecordRequest) returns (CreateAuditRecordResponse) {}
+
+  // Personal Access Token
+  rpc CreateCurrentUserPAT(CreateCurrentUserPATRequest) returns (CreateCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -2830,4 +2833,30 @@ message CreateAuditRecordRequest {
 
 message CreateAuditRecordResponse {
   AuditRecord audit_record = 1;
+}
+
+message CreateCurrentUserPATRequest {
+  // Human-friendly display name, unique per user per org
+  string title = 1 [
+    (validate.rules).string.min_len = 1,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  string org_id = 2 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Role ids to scope the PAT to
+  repeated string role_ids = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).repeated = {min_items: 1},
+    (validate.rules).repeated.items.string.uuid = true
+  ];
+  // For project-scoped roles: empty = all projects, non-empty = specific projects
+  repeated string project_ids = 4 [(validate.rules).repeated.items.string.uuid = true];
+  google.protobuf.Timestamp expires_at = 5 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Struct metadata = 6;
+}
+
+message CreateCurrentUserPATResponse {
+  PAT pat = 1;
 }
