@@ -2868,10 +2868,12 @@ message ListCurrentUserPATsRequest {
     (validate.rules).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
+  RQLRequest query = 2;
 }
 
 message ListCurrentUserPATsResponse {
   repeated PAT pats = 1;
+  RQLQueryPaginationResponse pagination = 2;
 }
 
 message GetCurrentUserPATRequest {
