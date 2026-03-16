@@ -2863,7 +2863,9 @@ message CreateCurrentUserPATResponse {
   PAT pat = 1;
 }
 
-message ListRolesForPATRequest {}
+message ListRolesForPATRequest {
+  repeated string scopes = 1;
+}
 
 message ListRolesForPATResponse {
   repeated Role roles = 1;
