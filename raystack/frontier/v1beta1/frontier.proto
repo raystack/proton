@@ -540,8 +540,9 @@ service FrontierService {
 
   // Personal Access Token
   rpc CreateCurrentUserPAT(CreateCurrentUserPATRequest) returns (CreateCurrentUserPATResponse) {}
-
   rpc ListRolesForPAT(ListRolesForPATRequest) returns (ListRolesForPATResponse) {}
+  rpc ListCurrentUserPATs(ListCurrentUserPATsRequest) returns (ListCurrentUserPATsResponse) {}
+  rpc GetCurrentUserPAT(GetCurrentUserPATRequest) returns (GetCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -2869,4 +2870,28 @@ message ListRolesForPATRequest {
 
 message ListRolesForPATResponse {
   repeated Role roles = 1;
+}
+
+message ListCurrentUserPATsRequest {
+  string org_id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  RQLRequest query = 2;
+}
+
+message ListCurrentUserPATsResponse {
+  repeated PAT pats = 1;
+  RQLQueryPaginationResponse pagination = 2;
+}
+
+message GetCurrentUserPATRequest {
+  string id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+message GetCurrentUserPATResponse {
+  PAT pat = 1;
 }

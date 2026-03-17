@@ -280,6 +280,9 @@ message PAT {
   // this value is never persisted in the system so if lost, can't be recovered
   string token = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
 
+  repeated string role_ids = 6;
+  repeated string project_ids = 7;
+
   google.protobuf.Timestamp expires_at = 10;
   google.protobuf.Timestamp last_used_at = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
   google.protobuf.Timestamp created_at = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
