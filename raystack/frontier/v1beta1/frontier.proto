@@ -540,6 +540,7 @@ service FrontierService {
 
   // Personal Access Token
   rpc CreateCurrentUserPAT(CreateCurrentUserPATRequest) returns (CreateCurrentUserPATResponse) {}
+  rpc ListRolesForPAT(ListRolesForPATRequest) returns (ListRolesForPATResponse) {}
   rpc ListCurrentUserPATs(ListCurrentUserPATsRequest) returns (ListCurrentUserPATsResponse) {}
   rpc GetCurrentUserPAT(GetCurrentUserPATRequest) returns (GetCurrentUserPATResponse) {}
 }
@@ -2861,6 +2862,14 @@ message CreateCurrentUserPATRequest {
 
 message CreateCurrentUserPATResponse {
   PAT pat = 1;
+}
+
+message ListRolesForPATRequest {
+  repeated string scopes = 1;
+}
+
+message ListRolesForPATResponse {
+  repeated Role roles = 1;
 }
 
 message ListCurrentUserPATsRequest {
