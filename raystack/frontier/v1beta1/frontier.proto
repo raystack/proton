@@ -543,6 +543,7 @@ service FrontierService {
   rpc ListRolesForPAT(ListRolesForPATRequest) returns (ListRolesForPATResponse) {}
   rpc ListCurrentUserPATs(ListCurrentUserPATsRequest) returns (ListCurrentUserPATsResponse) {}
   rpc GetCurrentUserPAT(GetCurrentUserPATRequest) returns (GetCurrentUserPATResponse) {}
+  rpc DeleteCurrentUserPAT(DeleteCurrentUserPATRequest) returns (DeleteCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -2895,3 +2896,12 @@ message GetCurrentUserPATRequest {
 message GetCurrentUserPATResponse {
   PAT pat = 1;
 }
+
+message DeleteCurrentUserPATRequest {
+  string id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+message DeleteCurrentUserPATResponse {}
