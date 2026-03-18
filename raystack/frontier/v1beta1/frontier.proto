@@ -544,6 +544,7 @@ service FrontierService {
   rpc ListCurrentUserPATs(ListCurrentUserPATsRequest) returns (ListCurrentUserPATsResponse) {}
   rpc GetCurrentUserPAT(GetCurrentUserPATRequest) returns (GetCurrentUserPATResponse) {}
   rpc DeleteCurrentUserPAT(DeleteCurrentUserPATRequest) returns (DeleteCurrentUserPATResponse) {}
+  rpc UpdateCurrentUserPAT(UpdateCurrentUserPATRequest) returns (UpdateCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -2905,3 +2906,27 @@ message DeleteCurrentUserPATRequest {
 }
 
 message DeleteCurrentUserPATResponse {}
+
+message UpdateCurrentUserPATRequest {
+  string id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  string title = 2 [
+    (validate.rules).string.min_len = 1,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Role ids to scope the PAT to
+  repeated string role_ids = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).repeated = {min_items: 1},
+    (validate.rules).repeated.items.string.uuid = true
+  ];
+  // For project-scoped roles: empty = all projects, non-empty = specific projects
+  repeated string project_ids = 4 [(validate.rules).repeated.items.string.uuid = true];
+  google.protobuf.Struct metadata = 5;
+}
+
+message UpdateCurrentUserPATResponse {
+  PAT pat = 1;
+}
