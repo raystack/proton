@@ -545,6 +545,7 @@ service FrontierService {
   rpc GetCurrentUserPAT(GetCurrentUserPATRequest) returns (GetCurrentUserPATResponse) {}
   rpc DeleteCurrentUserPAT(DeleteCurrentUserPATRequest) returns (DeleteCurrentUserPATResponse) {}
   rpc UpdateCurrentUserPAT(UpdateCurrentUserPATRequest) returns (UpdateCurrentUserPATResponse) {}
+  rpc RegenerateCurrentUserPAT(RegenerateCurrentUserPATRequest) returns (RegenerateCurrentUserPATResponse) {}
 }
 
 // Billing
@@ -2928,5 +2929,17 @@ message UpdateCurrentUserPATRequest {
 }
 
 message UpdateCurrentUserPATResponse {
+  PAT pat = 1;
+}
+
+message RegenerateCurrentUserPATRequest {
+  string id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  google.protobuf.Timestamp expires_at = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message RegenerateCurrentUserPATResponse {
   PAT pat = 1;
 }
