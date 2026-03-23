@@ -546,6 +546,7 @@ service FrontierService {
   rpc DeleteCurrentUserPAT(DeleteCurrentUserPATRequest) returns (DeleteCurrentUserPATResponse) {}
   rpc UpdateCurrentUserPAT(UpdateCurrentUserPATRequest) returns (UpdateCurrentUserPATResponse) {}
   rpc RegenerateCurrentUserPAT(RegenerateCurrentUserPATRequest) returns (RegenerateCurrentUserPATResponse) {}
+  rpc CheckCurrentUserPATTitle(CheckCurrentUserPATTitleRequest) returns (CheckCurrentUserPATTitleResponse) {}
 }
 
 // Billing
@@ -2942,4 +2943,22 @@ message RegenerateCurrentUserPATRequest {
 
 message RegenerateCurrentUserPATResponse {
   PAT pat = 1;
+}
+
+message CheckCurrentUserPATTitleRequest {
+  string org_id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Checks if this title is available for the current user in the given org.
+  // Comparison is case-insensitive.
+  string title = 2 [
+    (validate.rules).string.min_len = 1,
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+message CheckCurrentUserPATTitleResponse {
+  // True if the title is available for use, false if already taken.
+  bool available = 1;
 }
