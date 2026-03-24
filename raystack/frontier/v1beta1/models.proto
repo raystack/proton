@@ -270,17 +270,17 @@ message ServiceUserToken {
   google.protobuf.Timestamp created_at = 4;
 }
 
-// PATScope pairs a role with its scope and optional resource IDs.
+// PATScope pairs a role with its resource type and optional resource IDs.
 message PATScope {
   string role_id = 1 [
     (validate.rules).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
-  // Scope namespace: "app/organization" or "app/project"
-  string scope = 2 [
+  // Resource type: "app/organization" or "app/project"
+  string resource_type = 2 [
     (google.api.field_behavior) = REQUIRED
   ];
-  // Specific resource UUIDs within the scope (optional)
+  // Specific resource UUIDs within the resource type (optional)
   repeated string resource_ids = 3 [(validate.rules).repeated.items.string.uuid = true];
 }
 
