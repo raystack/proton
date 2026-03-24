@@ -270,6 +270,20 @@ message ServiceUserToken {
   google.protobuf.Timestamp created_at = 4;
 }
 
+// PATScope pairs a role with its scope and optional resource IDs.
+message PATScope {
+  string role_id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Scope namespace: "app/organization" or "app/project"
+  string scope = 2 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+  // Specific resource UUIDs within the scope (optional)
+  repeated string resource_ids = 3 [(validate.rules).repeated.items.string.uuid = true];
+}
+
 message PAT {
   string id = 1;
   string title = 2;
@@ -280,8 +294,8 @@ message PAT {
   // this value is never persisted in the system so if lost, can't be recovered
   string token = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  repeated string role_ids = 6;
-  repeated string project_ids = 7;
+  reserved 6, 7;
+  repeated PATScope scopes = 8;
 
   google.protobuf.Timestamp expires_at = 10;
   google.protobuf.Timestamp last_used_at = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
