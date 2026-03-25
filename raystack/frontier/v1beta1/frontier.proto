@@ -1935,9 +1935,9 @@ message RemoveOrganizationUserRequest {
 message RemoveOrganizationUserResponse {}
 
 message SetOrganizationMemberRoleRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  string user_id = 2 [(validate.rules).string.min_len = 3];
-  string role_id = 3 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(validate.rules).string.uuid = true];
+  string user_id = 2 [(validate.rules).string.uuid = true];
+  string role_id = 3 [(validate.rules).string.uuid = true];
 }
 
 message SetOrganizationMemberRoleResponse {}
