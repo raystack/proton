@@ -2863,14 +2863,12 @@ message CreateCurrentUserPATRequest {
     (validate.rules).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
-  // Role ids to scope the PAT to
-  repeated string role_ids = 3 [
+  reserved 3, 4;
+  // Role-scope assignments for the PAT
+  repeated PATScope scopes = 7 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1},
-    (validate.rules).repeated.items.string.uuid = true
+    (validate.rules).repeated = {min_items: 1}
   ];
-  // For project-scoped roles: empty = all projects, non-empty = specific projects
-  repeated string project_ids = 4 [(validate.rules).repeated.items.string.uuid = true];
   google.protobuf.Timestamp expires_at = 5 [(google.api.field_behavior) = REQUIRED];
   google.protobuf.Struct metadata = 6;
 }
@@ -2929,14 +2927,12 @@ message UpdateCurrentUserPATRequest {
     (validate.rules).string.min_len = 1,
     (google.api.field_behavior) = REQUIRED
   ];
-  // Role ids to scope the PAT to
-  repeated string role_ids = 3 [
+  reserved 3, 4;
+  // Role-scope assignments for the PAT
+  repeated PATScope scopes = 6 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1},
-    (validate.rules).repeated.items.string.uuid = true
+    (validate.rules).repeated = {min_items: 1}
   ];
-  // For project-scoped roles: empty = all projects, non-empty = specific projects
-  repeated string project_ids = 4 [(validate.rules).repeated.items.string.uuid = true];
   google.protobuf.Struct metadata = 5;
 }
 
