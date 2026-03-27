@@ -226,6 +226,8 @@ service AdminService {
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
   rpc ExportAuditRecords(ExportAuditRecordsRequest) returns (stream google.api.HttpBody) {}
 
+  rpc SearchOrganizationPATs(SearchOrganizationPATsRequest) returns (SearchOrganizationPATsResponse) {}
+
 }
 
 message ListAllUsersRequest {
@@ -1127,4 +1129,33 @@ message ListAuditRecordsResponse {
   repeated AuditRecord audit_records = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
+}
+
+message SearchOrganizationPATsRequest {
+  string org_id = 1 [
+    (validate.rules).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
+  RQLRequest query = 2;
+}
+
+message SearchOrganizationPATsResponse {
+  message CreatedBy {
+    string id = 1;
+    string title = 2;
+    string email = 3;
+  }
+
+  message OrganizationPAT {
+    string id = 1;
+    string title = 2;
+    CreatedBy created_by = 3;
+    repeated PATScope scopes = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp expires_at = 6;
+    google.protobuf.Timestamp last_used_at = 7;
+  }
+
+  repeated OrganizationPAT organization_pats = 1;
+  RQLQueryPaginationResponse pagination = 2;
 }
