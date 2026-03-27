@@ -207,6 +207,19 @@ service CompassService {
     };
   }
 
+  rpc GroupAssets(GroupAssetsRequest) returns (GroupAssetsResponse) {
+    option (google.api.http) = {get: "/v1beta1/groupassets"};
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Group assets";
+      description: "API for grouping assets by specified fields with filtering support.";
+      tags: [
+        "Search",
+        "Asset"
+      ];
+    };
+  }
+
   rpc GetGraph(GetGraphRequest) returns (GetGraphResponse) {
     option (google.api.http) = {get: "/v1beta1/lineage/{urn=**}"};
 
@@ -737,6 +750,14 @@ message SearchAssetsRequest {
     },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "offset parameter defines the offset from the first result you want to fetch"}
   ];
+
+  SearchFlags flags = 8;
+}
+
+message SearchFlags {
+  bool is_column_search = 1;
+  bool disable_fuzzy = 2;
+  bool enable_highlight = 3;
 }
 
 message SearchAssetsResponse {
@@ -754,6 +775,33 @@ message SuggestAssetsResponse {
   repeated string data = 1;
 }
 
+message GroupAssetsRequest {
+  repeated string groupby = 1 [(validate.rules).repeated = {min_items: 1}];
+  map<string, string> filter = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter result based on asset fields"}];
+  repeated string include_fields = 3;
+  uint32 size = 4 [
+    (validate.rules).uint32 = {
+      gte: 0,
+      ignore_empty: true
+    },
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "number of results per group to return"}
+  ];
+}
+
+message GroupAssetsResponse {
+  repeated AssetGroup asset_groups = 1;
+}
+
+message AssetGroup {
+  repeated GroupField group_fields = 1;
+  repeated Asset assets = 2;
+}
+
+message GroupField {
+  string group_key = 1;
+  string group_value = 2;
+}
+
 message GetGraphRequest {
   string urn = 1;
   uint32 level = 2;
@@ -764,6 +812,8 @@ message GetGraphRequest {
       ""
     ]
   }];
+  optional bool with_attributes = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if set to false, node attributes (probes) will not be returned"}];
+  bool include_deleted = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if true, include soft deleted assets in the lineage graph result"}];
 }
 
 message GetGraphResponse {
@@ -847,6 +897,7 @@ message GetAllAssetsRequest {
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "offset to fetch from"}
   ];
   bool with_total = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if set include total field in response"}];
+  bool is_deleted = 11 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "filter assets by deletion status"}];
 }
 
 message GetAllAssetsResponse {
@@ -877,6 +928,7 @@ message UpsertAssetRequest {
   Asset asset = 1;
   repeated LineageNode upstreams = 2;
   repeated LineageNode downstreams = 3;
+  bool update_only = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if true, only update existing assets, do not create new ones"}];
 }
 
 message UpsertAssetResponse {
@@ -910,6 +962,7 @@ message UpsertPatchAssetRequest {
   // Currently, it is only applicable when both upstreams and downstreams are
   // empty/not specified.
   bool overwrite_lineage = 4;
+  bool update_only = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "if true, only update existing assets, do not create new ones"}];
 }
 
 message UpsertPatchAssetResponse {
@@ -974,6 +1027,7 @@ message CreateAssetProbeRequest {
     string status_reason = 2;
     google.protobuf.Struct metadata = 3;
     google.protobuf.Timestamp timestamp = 4;
+    string id = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "optional probe ID, if not provided will be auto-generated"}];
   }
   string asset_urn = 1 [(validate.rules).string = {min_len: 1}];
   Probe probe = 2;
@@ -1282,6 +1336,7 @@ message Asset {
   google.protobuf.Timestamp updated_at = 14;
   string url = 15;
   repeated Probe probes = 16;
+  bool is_deleted = 17;
 }
 
 message Probe {
