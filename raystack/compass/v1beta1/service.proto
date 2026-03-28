@@ -5,7 +5,7 @@ package raystack.compass.v1beta1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/compass/v1beta1;compassv1beta1";
 option java_multiple_files = true;
@@ -150,21 +150,19 @@ service CompassService {
 }
 
 message GetAllDiscussionsRequest {
-  string type = 1 [(validate.rules).string.ignore_empty = true];
-  string state = 2 [(validate.rules).string.ignore_empty = true];
-  string owner = 3 [(validate.rules).string.ignore_empty = true];
-  string assignee = 4 [(validate.rules).string.ignore_empty = true];
-  string asset = 5 [(validate.rules).string.ignore_empty = true];
-  string labels = 6 [(validate.rules).string.ignore_empty = true];
-  string sort = 7 [(validate.rules).string.ignore_empty = true];
-  string direction = 8 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 9 [(validate.rules).uint32 = {
+  string type = 1;
+  string state = 2;
+  string owner = 3;
+  string assignee = 4;
+  string asset = 5;
+  string labels = 6;
+  string sort = 7;
+  string direction = 8;
+  uint32 size = 9 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 10 [(validate.rules).uint32 = {
+  uint32 offset = 10 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -173,21 +171,18 @@ message GetAllDiscussionsResponse {
 }
 
 message CreateDiscussionRequest {
-  string title = 2 [(validate.rules).string.min_len = 1];
-  string body = 3 [(validate.rules).string.min_len = 1];
+  string title = 2 [(buf.validate.field).string.min_len = 1];
+  string body = 3 [(buf.validate.field).string.min_len = 1];
   string type = 4;
-  string state = 5 [(validate.rules).string.ignore_empty = true];
-  repeated string labels = 6 [(validate.rules).repeated = {
+  string state = 5;
+  repeated string labels = 6 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
-  repeated string assets = 7 [(validate.rules).repeated = {
+  repeated string assets = 7 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
-  repeated string assignees = 8 [(validate.rules).repeated = {
+  repeated string assignees = 8 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
 }
 
@@ -205,27 +200,24 @@ message GetDiscussionResponse {
 
 message PatchDiscussionRequest {
   string id = 1;
-  string title = 2 [(validate.rules).string.ignore_empty = true];
-  string body = 3 [(validate.rules).string.ignore_empty = true];
-  string type = 4 [(validate.rules).string.ignore_empty = true];
-  string state = 5 [(validate.rules).string.ignore_empty = true];
-  repeated string labels = 6 [(validate.rules).repeated = {
+  string title = 2;
+  string body = 3;
+  string type = 4;
+  string state = 5;
+  repeated string labels = 6 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
-  repeated string assets = 7 [(validate.rules).repeated = {
+  repeated string assets = 7 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
-  repeated string assignees = 8 [(validate.rules).repeated = {
+  repeated string assignees = 8 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
 }
 
 message CreateCommentRequest {
   string discussion_id = 1;
-  string body = 2 [(validate.rules).string.min_len = 1];
+  string body = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message PatchDiscussionResponse {}
@@ -236,15 +228,13 @@ message CreateCommentResponse {
 
 message GetAllCommentsRequest {
   string discussion_id = 1;
-  string sort = 2 [(validate.rules).string.ignore_empty = true];
-  string direction = 3 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 4 [(validate.rules).uint32 = {
+  string sort = 2;
+  string direction = 3;
+  uint32 size = 4 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 5 [(validate.rules).uint32 = {
+  uint32 offset = 5 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -264,7 +254,7 @@ message GetCommentResponse {
 message UpdateCommentRequest {
   string discussion_id = 1;
   string id = 2;
-  string body = 3 [(validate.rules).string.min_len = 1];
+  string body = 3 [(buf.validate.field).string.min_len = 1];
 }
 
 message UpdateCommentResponse {}
@@ -277,18 +267,17 @@ message DeleteCommentRequest {
 message DeleteCommentResponse {}
 
 message SearchAssetsRequest {
-  string text = 1 [(validate.rules).string.ignore_empty = true];
-  string rankby = 2 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 3 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  string text = 1;
+  string rankby = 2;
+  uint32 size = 3 [(buf.validate.field).uint32 = { gte: 0 }];
   map<string, string> filter = 4;
   map<string, string> query = 5;
 
-  repeated string include_fields = 6 [(validate.rules).repeated = {
+  repeated string include_fields = 6 [(buf.validate.field).repeated = {
     unique: true,
-    ignore_empty: true
   }];
 
-  uint32 offset = 7 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 offset = 7 [(buf.validate.field).uint32 = { gte: 0 }];
 
   SearchFlags flags = 8;
 }
@@ -304,7 +293,7 @@ message SearchAssetsResponse {
 }
 
 message SuggestAssetsRequest {
-  string text = 1 [(validate.rules).string.ignore_empty = true];
+  string text = 1;
 }
 
 message SuggestAssetsResponse {
@@ -312,10 +301,10 @@ message SuggestAssetsResponse {
 }
 
 message GroupAssetsRequest {
-  repeated string groupby = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated string groupby = 1 [(buf.validate.field).repeated = {min_items: 1}];
   map<string, string> filter = 2;
   repeated string include_fields = 3;
-  uint32 size = 4 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 4 [(buf.validate.field).uint32 = { gte: 0 }];
 }
 
 message GroupAssetsResponse {
@@ -335,7 +324,7 @@ message GroupField {
 message GetGraphRequest {
   string urn = 1;
   uint32 level = 2;
-  string direction = 3 [(validate.rules).string = {
+  string direction = 3 [(buf.validate.field).string = {
     in: [
       "upstream",
       "downstream",
@@ -363,10 +352,10 @@ message GetGraphResponse {
 }
 
 message GetAllTypesRequest {
-  string q = 1 [(validate.rules).string.ignore_empty = true];
-  string q_fields = 2 [(validate.rules).string.ignore_empty = true];
-  string types = 3 [(validate.rules).string.ignore_empty = true];
-  string services = 4 [(validate.rules).string.ignore_empty = true];
+  string q = 1;
+  string q_fields = 2;
+  string types = 3;
+  string services = 4;
   map<string, string> data = 5;
 }
 
@@ -375,15 +364,15 @@ message GetAllTypesResponse {
 }
 
 message GetAllAssetsRequest {
-  string q = 1 [(validate.rules).string.ignore_empty = true];
-  string q_fields = 2 [(validate.rules).string.ignore_empty = true];
-  string types = 3 [(validate.rules).string.ignore_empty = true];
-  string services = 4 [(validate.rules).string.ignore_empty = true];
-  string sort = 5 [(validate.rules).string.ignore_empty = true];
-  string direction = 6 [(validate.rules).string.ignore_empty = true];
+  string q = 1;
+  string q_fields = 2;
+  string types = 3;
+  string services = 4;
+  string sort = 5;
+  string direction = 6;
   map<string, string> data = 7;
-  uint32 size = 8 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
-  uint32 offset = 9 [(validate.rules).uint32 = { gte: 0, ignore_empty: true }];
+  uint32 size = 8 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 offset = 9 [(buf.validate.field).uint32 = { gte: 0 }];
   bool with_total = 10;
   bool is_deleted = 11;
 }
@@ -427,9 +416,9 @@ message UpsertPatchAssetRequest {
   message Asset {
     string urn = 1;
     string type = 2;
-    google.protobuf.StringValue name = 3 [(validate.rules).string.ignore_empty = true];
+    google.protobuf.StringValue name = 3;
     string service = 4;
-    google.protobuf.StringValue description = 5 [(validate.rules).string.ignore_empty = true];
+    google.protobuf.StringValue description = 5;
   google.protobuf.Struct data = 6;
   map<string, string> labels = 7;
   repeated User owners = 8;
@@ -459,13 +448,11 @@ message DeleteAssetResponse {}
 
 message GetAssetStargazersRequest {
   string id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = {
+  uint32 size = 2 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 3 [(validate.rules).uint32 = {
+  uint32 offset = 3 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -475,13 +462,11 @@ message GetAssetStargazersResponse {
 
 message GetAssetVersionHistoryRequest {
   string id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = {
+  uint32 size = 2 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 3 [(validate.rules).uint32 = {
+  uint32 offset = 3 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -500,13 +485,13 @@ message GetAssetByVersionResponse {
 
 message CreateAssetProbeRequest {
   message Probe {
-    string status = 1 [(validate.rules).string = {min_len: 1}];
+    string status = 1 [(buf.validate.field).string = {min_len: 1}];
     string status_reason = 2;
     google.protobuf.Struct metadata = 3;
     google.protobuf.Timestamp timestamp = 4;
   string id = 5;
   }
-  string asset_urn = 1 [(validate.rules).string = {min_len: 1}];
+  string asset_urn = 1 [(buf.validate.field).string = {min_len: 1}];
   Probe probe = 2;
 }
 
@@ -516,13 +501,11 @@ message CreateAssetProbeResponse {
 
 message GetUserStarredAssetsRequest {
   string user_id = 1;
-  uint32 size = 2 [(validate.rules).uint32 = {
+  uint32 size = 2 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 3 [(validate.rules).uint32 = {
+  uint32 offset = 3 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -531,13 +514,11 @@ message GetUserStarredAssetsResponse {
 }
 
 message GetMyStarredAssetsRequest {
-  uint32 size = 1 [(validate.rules).uint32 = {
+  uint32 size = 1 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 2 [(validate.rules).uint32 = {
+  uint32 offset = 2 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -568,20 +549,18 @@ message UnstarAssetRequest {
 message UnstarAssetResponse {}
 
 message GetMyDiscussionsRequest {
-  string filter = 1 [(validate.rules).string.ignore_empty = true];
-  string type = 2 [(validate.rules).string.ignore_empty = true];
-  string state = 3 [(validate.rules).string.ignore_empty = true];
-  string asset = 4 [(validate.rules).string.ignore_empty = true];
-  string labels = 5 [(validate.rules).string.ignore_empty = true];
-  string sort = 6 [(validate.rules).string.ignore_empty = true];
-  string direction = 7 [(validate.rules).string.ignore_empty = true];
-  uint32 size = 8 [(validate.rules).uint32 = {
+  string filter = 1;
+  string type = 2;
+  string state = 3;
+  string asset = 4;
+  string labels = 5;
+  string sort = 6;
+  string direction = 7;
+  uint32 size = 8 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
-  uint32 offset = 9 [(validate.rules).uint32 = {
+  uint32 offset = 9 [(buf.validate.field).uint32 = {
     gte: 0,
-    ignore_empty: true
   }];
 }
 
@@ -683,7 +662,7 @@ message DeleteTagTemplateResponse {}
 
 message CreateNamespaceRequest {
   string id = 1;
-  string name = 2 [(validate.rules).string.min_len = 3];
+  string name = 2 [(buf.validate.field).string.min_len = 3];
   string state = 3;
   google.protobuf.Struct metadata = 4;
 }
@@ -850,7 +829,7 @@ message Type {
 
 message Namespace {
   string id = 1;
-  string name = 2 [(validate.rules).string.min_len = 3];
+  string name = 2 [(buf.validate.field).string.min_len = 3];
   string state = 3;
   google.protobuf.Struct metadata = 4;
 }
