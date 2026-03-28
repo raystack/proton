@@ -4,8 +4,7 @@ deps:
   - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
   - buf.build/envoyproxy/protoc-gen-validate
-  - buf.build/connectrpc/es
-  - buf.build/connectrpc/connect-query
+  - buf.build/bufbuild/protovalidate
 breaking:
   use:
     - WIRE
