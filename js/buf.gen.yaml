@@ -1,10 +1,11 @@
 version: v2
+clean: true
 plugins:
-  - local: protoc-gen-es
+  - remote: buf.build/bufbuild/es
     out: js/dist
     opt:
       - target=ts+js+dts
       - import_extension=none
-  - local: protoc-gen-connect-query
+  - remote: buf.build/connectrpc/query
     out: js/dist
     opt: target=ts+js+dts

@@ -15,6 +15,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: bufbuild/buf-action@v1
         with:
-          setup_only: true
-      - run: buf lint
-      - run: buf breaking --against "https://github.com/$GITHUB_REPOSITORY.git#branch=main"
+          push: false
+          format: false

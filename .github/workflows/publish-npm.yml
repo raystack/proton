@@ -5,29 +5,18 @@ on:
     branches:
       - main
 
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: bufbuild/buf-setup-action@v1.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Lint protobuf files
-        run: buf lint
-      - name: Check breaking changes
-        run: buf breaking --against 'https://github.com/raystack/proton.git#branch=main'
-        if: github.ref != 'refs/heads/main'
+permissions:
+  contents: read
 
+jobs:
   publish:
     runs-on: ubuntu-latest
-    needs: validate
     steps:
-      - uses: actions/checkout@v3
-      - uses: bufbuild/buf-setup-action@v1.5.0
+      - uses: actions/checkout@v4
+      - uses: bufbuild/buf-action@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-node@v3
+          setup_only: true
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org/
