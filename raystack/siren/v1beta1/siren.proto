@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package raystack.siren.v1beta1;
 
+import "buf/validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
-import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/siren/v1beta1;sirenv1beta1";
 option java_multiple_files = true;
@@ -406,9 +406,9 @@ message ListProvidersResponse {
 }
 
 message CreateProviderRequest {
-  string host = 1 [(validate.rules).string.uri = true];
-  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string host = 1 [(buf.validate.field).string.uri = true];
+  string urn = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 3 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   string type = 4;
   google.protobuf.Struct credentials = 5;
   map<string, string> labels = 6;
@@ -428,8 +428,8 @@ message GetProviderResponse {
 
 message UpdateProviderRequest {
   uint64 id = 1;
-  string host = 2 [(validate.rules).string.uri = true];
-  string name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string host = 2 [(buf.validate.field).string.uri = true];
+  string name = 3 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   string type = 4;
   google.protobuf.Struct credentials = 5;
   map<string, string> labels = 6;
@@ -463,8 +463,8 @@ message ListNamespacesResponse {
 }
 
 message CreateNamespaceRequest {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 provider = 3;
   google.protobuf.Struct credentials = 4;
   map<string, string> labels = 5;
@@ -486,7 +486,7 @@ message GetNamespaceResponse {
 
 message UpdateNamespaceRequest {
   uint64 id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 provider = 3;
   google.protobuf.Struct credentials = 4;
   map<string, string> labels = 5;
@@ -509,7 +509,7 @@ message ReceiverMetadata {
 
 message Subscription {
   uint64 id = 1;
-  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 namespace = 3;
   repeated ReceiverMetadata receivers = 4;
   map<string, string> match = 5;
@@ -529,7 +529,7 @@ message ListSubscriptionsResponse {
 }
 
 message CreateSubscriptionRequest {
-  string urn = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 namespace = 2;
   repeated ReceiverMetadata receivers = 3;
   map<string, string> match = 4;
@@ -549,7 +549,7 @@ message GetSubscriptionResponse {
 
 message UpdateSubscriptionRequest {
   uint64 id = 1;
-  string urn = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string urn = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 namespace = 3;
   repeated ReceiverMetadata receivers = 4;
   map<string, string> match = 5;
@@ -583,7 +583,7 @@ message ListReceiversResponse {
 }
 
 message CreateReceiverRequest {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_.-]+$"];
   string type = 2;
   map<string, string> labels = 3;
   google.protobuf.Struct configurations = 4;
@@ -603,7 +603,7 @@ message GetReceiverResponse {
 
 message UpdateReceiverRequest {
   uint64 id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_.-]+$"];
+  string name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_.-]+$"];
   map<string, string> labels = 3;
   google.protobuf.Struct configurations = 4;
 }
@@ -641,7 +641,7 @@ message Alert {
 message ListAlertsRequest {
   string provider_type = 1;
   uint64 provider_id = 2;
-  string resource_name = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string resource_name = 3 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   uint64 start_time = 4;
   uint64 end_time = 5;
   uint64 namespace_id = 6;
@@ -694,11 +694,11 @@ message Rule {
   repeated Variables variables = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
-  uint64 provider_namespace = 10 [(validate.rules).uint64.gte = 0];
+  uint64 provider_namespace = 10 [(buf.validate.field).uint64.gte = 0];
 }
 
 message Variables {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   string value = 2;
   string type = 3;
   string description = 4;
@@ -718,9 +718,9 @@ message ListRulesResponse {
 
 message UpdateRuleRequest {
   bool enabled = 1;
-  string group_name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string namespace = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string template = 4 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string group_name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string namespace = 3 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string template = 4 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   repeated Variables variables = 5;
   uint64 provider_namespace = 6;
 }
@@ -730,20 +730,20 @@ message UpdateRuleResponse {
 }
 
 message TemplateVariables {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string type = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string type = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   string default = 3;
   string description = 4;
 }
 
 message Template {
   uint64 id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  string body = 3 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
-  repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
+  string name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string body = 3 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
+  repeated string tags = 4 [(buf.validate.field).repeated.min_items = 1];
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
-  repeated TemplateVariables variables = 7 [(validate.rules).repeated.min_items = 1];
+  repeated TemplateVariables variables = 7 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message ListTemplatesRequest {
@@ -756,10 +756,10 @@ message ListTemplatesResponse {
 
 message UpsertTemplateRequest {
   uint64 id = 1;
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   string body = 3;
-  repeated string tags = 4 [(validate.rules).repeated.min_items = 1];
-  repeated TemplateVariables variables = 5 [(validate.rules).repeated.min_items = 1];
+  repeated string tags = 4 [(buf.validate.field).repeated.min_items = 1];
+  repeated TemplateVariables variables = 5 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message UpsertTemplateResponse {
@@ -767,7 +767,7 @@ message UpsertTemplateResponse {
 }
 
 message GetTemplateRequest {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
 }
 
 message GetTemplateResponse {
@@ -781,7 +781,7 @@ message DeleteTemplateRequest {
 message DeleteTemplateResponse {}
 
 message RenderTemplateRequest {
-  string name = 1 [(validate.rules).string.pattern = "^[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^[A-Za-z0-9_-]+$"];
   map<string, string> variables = 2;
 }
 
