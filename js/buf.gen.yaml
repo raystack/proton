@@ -6,6 +6,6 @@ plugins:
     opt:
       - target=ts+js+dts
       - import_extension=none
-  - remote: buf.build/connectrpc/query
+  - remote: buf.build/connectrpc/query-es
     out: js/dist
     opt: target=ts+js+dts
