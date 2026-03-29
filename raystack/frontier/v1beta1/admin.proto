@@ -15,168 +15,121 @@ option java_package = "io.raystack.proton.frontier.v1beta1";
 
 service AdminService {
   // Users
-  rpc ListAllUsers(ListAllUsersRequest) returns (ListAllUsersResponse) {
-  }
+  rpc ListAllUsers(ListAllUsersRequest) returns (ListAllUsersResponse) {}
 
-  rpc ListAllServiceUsers(ListAllServiceUsersRequest) returns (ListAllServiceUsersResponse) {
-  }
+  rpc ListAllServiceUsers(ListAllServiceUsersRequest) returns (ListAllServiceUsersResponse) {}
 
   // Group
-  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
-  }
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {}
 
   // Organizations
-  rpc ListAllOrganizations(ListAllOrganizationsRequest) returns (ListAllOrganizationsResponse) {
-  }
+  rpc ListAllOrganizations(ListAllOrganizationsRequest) returns (ListAllOrganizationsResponse) {}
 
-  rpc AdminCreateOrganization(AdminCreateOrganizationRequest) returns (AdminCreateOrganizationResponse) {
-  }
+  rpc AdminCreateOrganization(AdminCreateOrganizationRequest) returns (AdminCreateOrganizationResponse) {}
 
-  rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {
-  }
+  rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {}
 
-  rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {
-  }
+  rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {}
 
-  rpc SearchProjectUsers(SearchProjectUsersRequest) returns (SearchProjectUsersResponse) {
-  }
+  rpc SearchProjectUsers(SearchProjectUsersRequest) returns (SearchProjectUsersResponse) {}
 
-  rpc SearchOrganizationProjects(SearchOrganizationProjectsRequest) returns (SearchOrganizationProjectsResponse) {
-  }
+  rpc SearchOrganizationProjects(SearchOrganizationProjectsRequest) returns (SearchOrganizationProjectsResponse) {}
 
-  rpc SearchOrganizationInvoices(SearchOrganizationInvoicesRequest) returns (SearchOrganizationInvoicesResponse) {
-  }
+  rpc SearchOrganizationInvoices(SearchOrganizationInvoicesRequest) returns (SearchOrganizationInvoicesResponse) {}
 
-  rpc SearchOrganizationTokens(SearchOrganizationTokensRequest) returns (SearchOrganizationTokensResponse) {
-  }
+  rpc SearchOrganizationTokens(SearchOrganizationTokensRequest) returns (SearchOrganizationTokensResponse) {}
 
-  rpc SearchOrganizationServiceUserCredentials(SearchOrganizationServiceUserCredentialsRequest) returns (SearchOrganizationServiceUserCredentialsResponse) {
-  }
+  rpc SearchOrganizationServiceUserCredentials(SearchOrganizationServiceUserCredentialsRequest) returns (SearchOrganizationServiceUserCredentialsResponse) {}
 
-  rpc SearchOrganizationServiceUsers(SearchOrganizationServiceUsersRequest) returns (SearchOrganizationServiceUsersResponse) {
-  }
+  rpc SearchOrganizationServiceUsers(SearchOrganizationServiceUsersRequest) returns (SearchOrganizationServiceUsersResponse) {}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {
-  }
+  rpc ExportOrganizations(ExportOrganizationsRequest) returns (stream google.api.HttpBody) {}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportOrganizationUsers(ExportOrganizationUsersRequest) returns (stream google.api.HttpBody) {
-  }
+  rpc ExportOrganizationUsers(ExportOrganizationUsersRequest) returns (stream google.api.HttpBody) {}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportOrganizationProjects(ExportOrganizationProjectsRequest) returns (stream google.api.HttpBody) {
-  }
+  rpc ExportOrganizationProjects(ExportOrganizationProjectsRequest) returns (stream google.api.HttpBody) {}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportOrganizationTokens(ExportOrganizationTokensRequest) returns (stream google.api.HttpBody) {
-  }
+  rpc ExportOrganizationTokens(ExportOrganizationTokensRequest) returns (stream google.api.HttpBody) {}
 
   // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
   // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
-  rpc ExportUsers(ExportUsersRequest) returns (stream google.api.HttpBody) {
-  }
+  rpc ExportUsers(ExportUsersRequest) returns (stream google.api.HttpBody) {}
 
-  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {
-  }
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {}
 
-  rpc SearchUserOrganizations(SearchUserOrganizationsRequest) returns (SearchUserOrganizationsResponse) {
-  }
+  rpc SearchUserOrganizations(SearchUserOrganizationsRequest) returns (SearchUserOrganizationsResponse) {}
 
-  rpc SearchUserProjects(SearchUserProjectsRequest) returns (SearchUserProjectsResponse) {
-  }
+  rpc SearchUserProjects(SearchUserProjectsRequest) returns (SearchUserProjectsResponse) {}
 
-  rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {
-  }
+  rpc SetOrganizationKyc(SetOrganizationKycRequest) returns (SetOrganizationKycResponse) {}
 
-  rpc ListOrganizationsKyc(ListOrganizationsKycRequest) returns (ListOrganizationsKycResponse) {
-  }
+  rpc ListOrganizationsKyc(ListOrganizationsKycRequest) returns (ListOrganizationsKycResponse) {}
 
   // Projects
-  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {
-  }
+  rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse) {}
 
   // Relations
-  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {
-  }
+  rpc ListRelations(ListRelationsRequest) returns (ListRelationsResponse) {}
 
   // Resources
-  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {
-  }
+  rpc ListResources(ListResourcesRequest) returns (ListResourcesResponse) {}
 
   // Roles
-  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
-  }
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {}
 
-  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
-  }
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {}
 
-  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
-  }
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {}
 
   // Permissions
-  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {
-  }
+  rpc CreatePermission(CreatePermissionRequest) returns (CreatePermissionResponse) {}
 
-  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {
-  }
+  rpc UpdatePermission(UpdatePermissionRequest) returns (UpdatePermissionResponse) {}
 
-  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {
-  }
+  rpc DeletePermission(DeletePermissionRequest) returns (DeletePermissionResponse) {}
 
   // Preferences
-  rpc ListPreferences(ListPreferencesRequest) returns (ListPreferencesResponse) {
-  }
-  rpc CreatePreferences(CreatePreferencesRequest) returns (CreatePreferencesResponse) {
-  }
+  rpc ListPreferences(ListPreferencesRequest) returns (ListPreferencesResponse) {}
+  rpc CreatePreferences(CreatePreferencesRequest) returns (CreatePreferencesResponse) {}
 
   // Check
-  rpc CheckFederatedResourcePermission(CheckFederatedResourcePermissionRequest) returns (CheckFederatedResourcePermissionResponse) {
-  }
+  rpc CheckFederatedResourcePermission(CheckFederatedResourcePermissionRequest) returns (CheckFederatedResourcePermissionResponse) {}
 
   // Platform
-  rpc AddPlatformUser(AddPlatformUserRequest) returns (AddPlatformUserResponse) {
-  }
+  rpc AddPlatformUser(AddPlatformUserRequest) returns (AddPlatformUserResponse) {}
 
-  rpc ListPlatformUsers(ListPlatformUsersRequest) returns (ListPlatformUsersResponse) {
-  }
+  rpc ListPlatformUsers(ListPlatformUsersRequest) returns (ListPlatformUsersResponse) {}
 
-  rpc RemovePlatformUser(RemovePlatformUserRequest) returns (RemovePlatformUserResponse) {
-  }
+  rpc RemovePlatformUser(RemovePlatformUserRequest) returns (RemovePlatformUserResponse) {}
 
   // Checkout
-  rpc DelegatedCheckout(DelegatedCheckoutRequest) returns (DelegatedCheckoutResponse) {
-  }
+  rpc DelegatedCheckout(DelegatedCheckoutRequest) returns (DelegatedCheckoutResponse) {}
 
-  rpc ListAllInvoices(ListAllInvoicesRequest) returns (ListAllInvoicesResponse) {
-  }
+  rpc ListAllInvoices(ListAllInvoicesRequest) returns (ListAllInvoicesResponse) {}
 
-  rpc GenerateInvoices(GenerateInvoicesRequest) returns (GenerateInvoicesResponse) {
-  }
+  rpc GenerateInvoices(GenerateInvoicesRequest) returns (GenerateInvoicesResponse) {}
 
-  rpc ListAllBillingAccounts(ListAllBillingAccountsRequest) returns (ListAllBillingAccountsResponse) {
-  }
+  rpc ListAllBillingAccounts(ListAllBillingAccountsRequest) returns (ListAllBillingAccountsResponse) {}
 
   // Usage
-  rpc RevertBillingUsage(RevertBillingUsageRequest) returns (RevertBillingUsageResponse) {
-  }
+  rpc RevertBillingUsage(RevertBillingUsageRequest) returns (RevertBillingUsageResponse) {}
 
   // Webhooks
-  rpc CreateWebhook(CreateWebhookRequest) returns (CreateWebhookResponse) {
-  }
+  rpc CreateWebhook(CreateWebhookRequest) returns (CreateWebhookResponse) {}
 
-  rpc UpdateWebhook(UpdateWebhookRequest) returns (UpdateWebhookResponse) {
-  }
+  rpc UpdateWebhook(UpdateWebhookRequest) returns (UpdateWebhookResponse) {}
 
-  rpc DeleteWebhook(DeleteWebhookRequest) returns (DeleteWebhookResponse) {
-  }
+  rpc DeleteWebhook(DeleteWebhookRequest) returns (DeleteWebhookResponse) {}
 
-  rpc ListWebhooks(ListWebhooksRequest) returns (ListWebhooksResponse) {
-  }
+  rpc ListWebhooks(ListWebhooksRequest) returns (ListWebhooksResponse) {}
 
   // Billing Account
   rpc UpdateBillingAccountLimits(UpdateBillingAccountLimitsRequest) returns (UpdateBillingAccountLimitsResponse) {
@@ -184,34 +137,25 @@ service AdminService {
   }
 
   // GetBillingAccountDetails returns the billing account details that can be updated via UpdateBillingAccountDetails
-  rpc GetBillingAccountDetails(GetBillingAccountDetailsRequest) returns (GetBillingAccountDetailsResponse) {
-  }
+  rpc GetBillingAccountDetails(GetBillingAccountDetailsRequest) returns (GetBillingAccountDetailsResponse) {}
 
-  rpc UpdateBillingAccountDetails(UpdateBillingAccountDetailsRequest) returns (UpdateBillingAccountDetailsResponse) {
-  }
+  rpc UpdateBillingAccountDetails(UpdateBillingAccountDetailsRequest) returns (UpdateBillingAccountDetailsResponse) {}
 
   // Prospects
-  rpc CreateProspect(CreateProspectRequest) returns (CreateProspectResponse) {
-  }
+  rpc CreateProspect(CreateProspectRequest) returns (CreateProspectResponse) {}
 
-  rpc ListProspects(ListProspectsRequest) returns (ListProspectsResponse) {
-  }
+  rpc ListProspects(ListProspectsRequest) returns (ListProspectsResponse) {}
 
-  rpc GetProspect(GetProspectRequest) returns (GetProspectResponse) {
-  }
+  rpc GetProspect(GetProspectRequest) returns (GetProspectResponse) {}
 
-  rpc UpdateProspect(UpdateProspectRequest) returns (UpdateProspectResponse) {
-  }
+  rpc UpdateProspect(UpdateProspectRequest) returns (UpdateProspectResponse) {}
 
-  rpc DeleteProspect(DeleteProspectRequest) returns (DeleteProspectResponse) {
-  }
+  rpc DeleteProspect(DeleteProspectRequest) returns (DeleteProspectResponse) {}
 
-  rpc SearchInvoices(SearchInvoicesRequest) returns (SearchInvoicesResponse) {
-  }
+  rpc SearchInvoices(SearchInvoicesRequest) returns (SearchInvoicesResponse) {}
 
   // Admin Self
-  rpc GetCurrentAdminUser(GetCurrentAdminUserRequest) returns (GetCurrentAdminUserResponse) {
-  }
+  rpc GetCurrentAdminUser(GetCurrentAdminUserRequest) returns (GetCurrentAdminUserResponse) {}
 
   // Returns a list of all sessions for a specific user. Admin access required.
   rpc ListUserSessions(ListUserSessionsRequest) returns (ListUserSessionsResponse) {}
@@ -227,22 +171,17 @@ service AdminService {
   rpc ExportAuditRecords(ExportAuditRecordsRequest) returns (stream google.api.HttpBody) {}
 
   rpc SearchOrganizationPATs(SearchOrganizationPATsRequest) returns (SearchOrganizationPATsResponse) {}
-
 }
 
 message ListAllUsersRequest {
-  int32 page_size = 1 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 2 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 1 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 2 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
   string keyword = 3;
   string org_id = 4;
   string group_id = 5;
@@ -254,8 +193,7 @@ message ListAllUsersResponse {
   repeated User users = 2;
 }
 
-message ListAllServiceUsersRequest {
-}
+message ListAllServiceUsersRequest {}
 
 message ListAllServiceUsersResponse {
   repeated ServiceUser service_users = 1;
@@ -274,18 +212,14 @@ message ListGroupsResponse {
 message ListAllOrganizationsRequest {
   string user_id = 1;
   string state = 2;
-  int32 page_size = 3 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 4 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 3 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 4 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
 }
 
 message ListAllOrganizationsResponse {
@@ -315,9 +249,7 @@ message ListResourcesRequest {
   string user_id = 1;
   string project_id = 2;
   string organization_id = 3;
-  string namespace = 4 [
-    (validate.rules).string.min_len = 3
-  ];
+  string namespace = 4 [(validate.rules).string.min_len = 3];
 }
 
 message ListResourcesResponse {
@@ -333,9 +265,7 @@ message CreateRoleResponse {
 }
 
 message UpdateRoleRequest {
-  string id = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   RoleRequestBody body = 2;
 }
 
@@ -344,21 +274,15 @@ message UpdateRoleResponse {
 }
 
 message DeleteRoleRequest {
-  string id = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message DeleteRoleResponse {}
 
 message PermissionRequestBody {
-  string name = 1 [
-    deprecated = true
-  ];
+  string name = 1 [deprecated = true];
   // namespace should be in service/resource format
-  string namespace = 2 [
-    deprecated = true
-  ];
+  string namespace = 2 [deprecated = true];
   google.protobuf.Struct metadata = 3;
   string title = 4;
 
@@ -405,12 +329,8 @@ message CreatePreferencesResponse {
 }
 
 message CheckFederatedResourcePermissionRequest {
-  string subject = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
-  string resource = 2 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string subject = 1 [(google.api.field_behavior) = REQUIRED];
+  string resource = 2 [(google.api.field_behavior) = REQUIRED];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
@@ -425,9 +345,7 @@ message AddPlatformUserRequest {
   string user_id = 1;
   string serviceuser_id = 2;
 
-  string relation = 3 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string relation = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AddPlatformUserResponse {}
@@ -453,7 +371,7 @@ message DelegatedCheckoutRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -473,18 +391,14 @@ message DelegatedCheckoutResponse {
 
 message ListAllInvoicesRequest {
   string org_id = 1;
-  int32 page_size = 2 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 3 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 2 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 3 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
 }
 
 message ListAllInvoicesResponse {
@@ -513,7 +427,7 @@ message RevertBillingUsageRequest {
   string billing_id = 3 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -536,7 +450,7 @@ message WebhookRequestBody {
   // headers to be sent with the webhook
   map<string, string> headers = 4;
   string state = 5 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "enabled",
       "disabled"
@@ -584,7 +498,7 @@ message ListWebhooksResponse {
 message UpdateBillingAccountLimitsRequest {
   string org_id = 1 [(validate.rules).string = {min_len: 3}];
   string id = 2 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     uuid: true
   }];
 
@@ -599,7 +513,7 @@ message UpdateBillingAccountLimitsResponse {}
 message GetBillingAccountDetailsRequest {
   string org_id = 1 [(validate.rules).string = {uuid: true}];
   string id = 2 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     uuid: true
   }];
 }
@@ -619,7 +533,7 @@ message GetBillingAccountDetailsResponse {
 message UpdateBillingAccountDetailsRequest {
   string org_id = 1 [(validate.rules).string = {uuid: true}];
   string id = 2 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     uuid: true
   }];
 
@@ -662,12 +576,17 @@ message SearchOrganizationsResponse {
     string name = 2;
     string title = 3;
     google.protobuf.Timestamp created_at = 4;
-    google.protobuf.Timestamp updated_at = 5 ;
+    google.protobuf.Timestamp updated_at = 5;
     string state = 6;
     string avatar = 7;
     string created_by = 8;
     string plan_name = 9;
-    string payment_mode = 10 [(validate.rules).string = {in: ["prepaid", "postpaid"]}];
+    string payment_mode = 10 [(validate.rules).string = {
+      in: [
+        "prepaid",
+        "postpaid"
+      ]
+    }];
     google.protobuf.Timestamp subscription_cycle_end_at = 11;
     string country = 12;
     string subscription_state = 14;
@@ -680,75 +599,76 @@ message SearchOrganizationsResponse {
   RQLQueryGroupResponse group = 3;
 }
 
-message ListProspectsRequest{
-    RQLRequest query = 1;
+message ListProspectsRequest {
+  RQLRequest query = 1;
 }
 
-message ListProspectsResponse{
+message ListProspectsResponse {
   repeated Prospect prospects = 1;
   RQLQueryPaginationResponse pagination = 2;
   RQLQueryGroupResponse group = 3;
 }
 
-message GetProspectRequest{
+message GetProspectRequest {
   string id = 1 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {min_len: 1},
     (validate.rules).string.uuid = true
-  ];;
+  ];
 }
 
-message GetProspectResponse{
+message GetProspectResponse {
   Prospect prospect = 1;
 }
 
-message UpdateProspectRequest{
-  string id = 1[
+message UpdateProspectRequest {
+  string id = 1 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {min_len: 1},
     (validate.rules).string.uuid = true
   ];
-  string name = 2[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z ]+$",
-    }
-  ];
-  string email = 5[
+  string name = 2 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z ]+$"
+  }];
+  string email = 5 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      email: true,
+      min_len: 1
+      email: true
     }
   ];
   string phone = 6;
-  string activity = 7[
+  string activity = 7 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      pattern: "^[A-Za-z0-9-_]+$",
+      min_len: 1
+      pattern: "^[A-Za-z0-9-_]+$"
     }
   ];
   Prospect.Status status = 8 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {in: [1,2]}
-  ];
-  string source = 9[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z0-9-_]+$",
+    (validate.rules).enum = {
+      in: [
+        1,
+        2
+      ]
     }
   ];
+  string source = 9 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   bool verified = 10;
   google.protobuf.Struct metadata = 11;
 }
 
-message UpdateProspectResponse{
+message UpdateProspectResponse {
   Prospect prospect = 1;
 }
 
 message DeleteProspectRequest {
-  string id = 1[
+  string id = 1 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {min_len: 1},
     (validate.rules).string.uuid = true
@@ -757,43 +677,44 @@ message DeleteProspectRequest {
 
 message DeleteProspectResponse {}
 
-message CreateProspectRequest{
-  string name = 1[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z ]+$",
-    }
-  ];
-  string email = 5[
+message CreateProspectRequest {
+  string name = 1 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z ]+$"
+  }];
+  string email = 5 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      email: true,
+      min_len: 1
+      email: true
     }
   ];
   string phone = 6;
-  string activity = 7[
+  string activity = 7 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      pattern: "^[A-Za-z0-9-_]+$",
+      min_len: 1
+      pattern: "^[A-Za-z0-9-_]+$"
     }
   ];
   Prospect.Status status = 8 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).enum = {in:[1,2]}
-  ];
-  string source = 9[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z0-9-_]+$",
+    (validate.rules).enum = {
+      in: [
+        1,
+        2
+      ]
     }
   ];
+  string source = 9 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   bool verified = 10;
   google.protobuf.Struct metadata = 11;
 }
 
-message CreateProspectResponse{
+message CreateProspectResponse {
   Prospect prospect = 1;
 }
 
@@ -822,7 +743,7 @@ message SearchOrganizationUsersResponse {
   RQLQueryGroupResponse group = 3;
 }
 
-message ExportOrganizationUsersRequest{
+message ExportOrganizationUsersRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
 }
 
@@ -848,7 +769,7 @@ message SearchOrganizationProjectsResponse {
   RQLQueryGroupResponse group = 3;
 }
 
-message ExportOrganizationProjectsRequest{
+message ExportOrganizationProjectsRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
 }
 
@@ -909,7 +830,7 @@ message SearchOrganizationTokensResponse {
     string user_id = 4;
     string user_title = 5;
     string user_avatar = 6;
-    google.protobuf.Timestamp created_at =7;
+    google.protobuf.Timestamp created_at = 7;
     string org_id = 8;
   }
 
@@ -918,7 +839,7 @@ message SearchOrganizationTokensResponse {
   RQLQueryGroupResponse group = 3;
 }
 
-message ExportOrganizationTokensRequest{
+message ExportOrganizationTokensRequest {
   string id = 1 [(validate.rules).string.min_len = 3];
 }
 
@@ -931,7 +852,7 @@ message SearchOrganizationServiceUserCredentialsResponse {
   message OrganizationServiceUserCredential {
     string title = 1;
     string serviceuser_title = 2;
-    google.protobuf.Timestamp created_at =3;
+    google.protobuf.Timestamp created_at = 3;
     string org_id = 4;
   }
 
@@ -1017,13 +938,11 @@ message AdminCreateOrganizationRequest {
     ];
     string title = 2;
     google.protobuf.Struct metadata = 3;
-    string avatar = 4 [
-      (validate.rules).string = {
-        pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
-        max_len: 250000,
-        ignore_empty: true,
-      }
-    ];
+    string avatar = 4 [(validate.rules).string = {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
+      max_len: 250000
+      ignore_empty: true
+    }];
 
     // this user will be invited to org as owner.
     // if this user doesn't exist, it will be created first
@@ -1079,8 +998,7 @@ message SearchOrganizationServiceUsersResponse {
     string org_id = 3;
     repeated Project projects = 4;
     google.protobuf.Timestamp created_at = 5;
-}
-
+  }
 
   repeated OrganizationServiceUser organization_service_users = 1;
   RQLQueryPaginationResponse pagination = 2;

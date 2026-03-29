@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package raystack.compass.v1beta1;
 
+import "buf/validate/validate.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "buf/validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/compass/v1beta1;compassv1beta1";
 option java_multiple_files = true;
@@ -104,8 +104,8 @@ message GetAllEntitiesRequest {
   string types = 1;
   string source = 2;
   string q = 3;
-  uint32 size = 4 [(buf.validate.field).uint32 = { gte: 0 }];
-  uint32 offset = 5 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 size = 4 [(buf.validate.field).uint32 = {gte: 0}];
+  uint32 offset = 5 [(buf.validate.field).uint32 = {gte: 0}];
 }
 
 message GetAllEntitiesResponse {
@@ -151,8 +151,8 @@ message SearchEntitiesRequest {
   string types = 2;
   string source = 3;
   string mode = 4; // keyword, semantic, hybrid
-  uint32 size = 5 [(buf.validate.field).uint32 = { gte: 0 }];
-  uint32 offset = 6 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 size = 5 [(buf.validate.field).uint32 = {gte: 0}];
+  uint32 offset = 6 [(buf.validate.field).uint32 = {gte: 0}];
 }
 
 message SearchEntitiesResponse {
@@ -253,8 +253,8 @@ message UnstarEntityResponse {}
 
 message GetUserStarredEntitiesRequest {
   string user_id = 1;
-  uint32 size = 2 [(buf.validate.field).uint32 = { gte: 0 }];
-  uint32 offset = 3 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 size = 2 [(buf.validate.field).uint32 = {gte: 0}];
+  uint32 offset = 3 [(buf.validate.field).uint32 = {gte: 0}];
 }
 
 message GetUserStarredEntitiesResponse {
@@ -262,8 +262,8 @@ message GetUserStarredEntitiesResponse {
 }
 
 message GetMyStarredEntitiesRequest {
-  uint32 size = 1 [(buf.validate.field).uint32 = { gte: 0 }];
-  uint32 offset = 2 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 size = 1 [(buf.validate.field).uint32 = {gte: 0}];
+  uint32 offset = 2 [(buf.validate.field).uint32 = {gte: 0}];
 }
 
 message GetMyStarredEntitiesResponse {
@@ -280,8 +280,8 @@ message GetMyStarredEntityResponse {
 
 message GetEntityStargazersRequest {
   string id = 1;
-  uint32 size = 2 [(buf.validate.field).uint32 = { gte: 0 }];
-  uint32 offset = 3 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 size = 2 [(buf.validate.field).uint32 = {gte: 0}];
+  uint32 offset = 3 [(buf.validate.field).uint32 = {gte: 0}];
 }
 
 message GetEntityStargazersResponse {

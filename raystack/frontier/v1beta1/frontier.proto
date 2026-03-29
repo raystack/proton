@@ -13,333 +13,228 @@ option java_outer_classname = "Frontier";
 option java_package = "io.raystack.proton.frontier.v1beta1";
 service FrontierService {
   // Users
-  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
-  }
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
 
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
-  }
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
 
-  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
-  }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
 
-  rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {
-  }
+  rpc ListUserGroups(ListUserGroupsRequest) returns (ListUserGroupsResponse) {}
 
-  rpc ListCurrentUserGroups(ListCurrentUserGroupsRequest) returns (ListCurrentUserGroupsResponse) {
-  }
+  rpc ListCurrentUserGroups(ListCurrentUserGroupsRequest) returns (ListCurrentUserGroupsResponse) {}
 
-  rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {
-  }
+  rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {}
 
-  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
-  }
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
 
-  rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {
-  }
+  rpc UpdateCurrentUser(UpdateCurrentUserRequest) returns (UpdateCurrentUserResponse) {}
 
-  rpc EnableUser(EnableUserRequest) returns (EnableUserResponse) {
-  }
+  rpc EnableUser(EnableUserRequest) returns (EnableUserResponse) {}
 
-  rpc DisableUser(DisableUserRequest) returns (DisableUserResponse) {
-  }
+  rpc DisableUser(DisableUserRequest) returns (DisableUserResponse) {}
 
-  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
-  }
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 
-  rpc ListOrganizationsByUser(ListOrganizationsByUserRequest) returns (ListOrganizationsByUserResponse) {
-  }
+  rpc ListOrganizationsByUser(ListOrganizationsByUserRequest) returns (ListOrganizationsByUserResponse) {}
 
-  rpc ListOrganizationsByCurrentUser(ListOrganizationsByCurrentUserRequest) returns (ListOrganizationsByCurrentUserResponse) {
-  }
+  rpc ListOrganizationsByCurrentUser(ListOrganizationsByCurrentUserRequest) returns (ListOrganizationsByCurrentUserResponse) {}
 
-  rpc ListProjectsByUser(ListProjectsByUserRequest) returns (ListProjectsByUserResponse) {
-  }
+  rpc ListProjectsByUser(ListProjectsByUserRequest) returns (ListProjectsByUserResponse) {}
 
-  rpc ListProjectsByCurrentUser(ListProjectsByCurrentUserRequest) returns (ListProjectsByCurrentUserResponse) {
-  }
+  rpc ListProjectsByCurrentUser(ListProjectsByCurrentUserRequest) returns (ListProjectsByCurrentUserResponse) {}
 
-  rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {
-  }
+  rpc ListUserInvitations(ListUserInvitationsRequest) returns (ListUserInvitationsResponse) {}
 
-  rpc ListCurrentUserInvitations(ListCurrentUserInvitationsRequest) returns (ListCurrentUserInvitationsResponse) {
-  }
+  rpc ListCurrentUserInvitations(ListCurrentUserInvitationsRequest) returns (ListCurrentUserInvitationsResponse) {}
 
   // ServiceUser
-  rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {
-  }
+  rpc ListServiceUsers(ListServiceUsersRequest) returns (ListServiceUsersResponse) {}
 
-  rpc CreateServiceUser(CreateServiceUserRequest) returns (CreateServiceUserResponse) {
-  }
+  rpc CreateServiceUser(CreateServiceUserRequest) returns (CreateServiceUserResponse) {}
 
-  rpc GetServiceUser(GetServiceUserRequest) returns (GetServiceUserResponse) {
-  }
+  rpc GetServiceUser(GetServiceUserRequest) returns (GetServiceUserResponse) {}
 
-  rpc DeleteServiceUser(DeleteServiceUserRequest) returns (DeleteServiceUserResponse) {
-  }
+  rpc DeleteServiceUser(DeleteServiceUserRequest) returns (DeleteServiceUserResponse) {}
 
-  rpc CreateServiceUserJWK(CreateServiceUserJWKRequest) returns (CreateServiceUserJWKResponse) {
-  }
+  rpc CreateServiceUserJWK(CreateServiceUserJWKRequest) returns (CreateServiceUserJWKResponse) {}
 
-  rpc ListServiceUserJWKs(ListServiceUserJWKsRequest) returns (ListServiceUserJWKsResponse) {
-  }
+  rpc ListServiceUserJWKs(ListServiceUserJWKsRequest) returns (ListServiceUserJWKsResponse) {}
 
-  rpc GetServiceUserJWK(GetServiceUserJWKRequest) returns (GetServiceUserJWKResponse) {
-  }
+  rpc GetServiceUserJWK(GetServiceUserJWKRequest) returns (GetServiceUserJWKResponse) {}
 
-  rpc DeleteServiceUserJWK(DeleteServiceUserJWKRequest) returns (DeleteServiceUserJWKResponse) {
-  }
+  rpc DeleteServiceUserJWK(DeleteServiceUserJWKRequest) returns (DeleteServiceUserJWKResponse) {}
 
-  rpc CreateServiceUserCredential(CreateServiceUserCredentialRequest) returns (CreateServiceUserCredentialResponse) {
-  }
+  rpc CreateServiceUserCredential(CreateServiceUserCredentialRequest) returns (CreateServiceUserCredentialResponse) {}
 
-  rpc ListServiceUserCredentials(ListServiceUserCredentialsRequest) returns (ListServiceUserCredentialsResponse) {
-  }
+  rpc ListServiceUserCredentials(ListServiceUserCredentialsRequest) returns (ListServiceUserCredentialsResponse) {}
 
-  rpc DeleteServiceUserCredential(DeleteServiceUserCredentialRequest) returns (DeleteServiceUserCredentialResponse) {
-  }
+  rpc DeleteServiceUserCredential(DeleteServiceUserCredentialRequest) returns (DeleteServiceUserCredentialResponse) {}
 
-  rpc CreateServiceUserToken(CreateServiceUserTokenRequest) returns (CreateServiceUserTokenResponse) {
-  }
+  rpc CreateServiceUserToken(CreateServiceUserTokenRequest) returns (CreateServiceUserTokenResponse) {}
 
-  rpc ListServiceUserTokens(ListServiceUserTokensRequest) returns (ListServiceUserTokensResponse) {
-  }
+  rpc ListServiceUserTokens(ListServiceUserTokensRequest) returns (ListServiceUserTokensResponse) {}
 
-  rpc DeleteServiceUserToken(DeleteServiceUserTokenRequest) returns (DeleteServiceUserTokenResponse) {
-  }
+  rpc DeleteServiceUserToken(DeleteServiceUserTokenRequest) returns (DeleteServiceUserTokenResponse) {}
 
-  rpc ListServiceUserProjects(ListServiceUserProjectsRequest) returns (ListServiceUserProjectsResponse) {
-  }
+  rpc ListServiceUserProjects(ListServiceUserProjectsRequest) returns (ListServiceUserProjectsResponse) {}
 
   // Group
-  rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {
-  }
+  rpc ListOrganizationGroups(ListOrganizationGroupsRequest) returns (ListOrganizationGroupsResponse) {}
 
-  rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
-  }
+  rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {}
 
-  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
-  }
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {}
 
-  rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {
-  }
+  rpc UpdateGroup(UpdateGroupRequest) returns (UpdateGroupResponse) {}
 
-  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {
-  }
+  rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {}
 
-  rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {
-  }
+  rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {}
 
-  rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {
-  }
+  rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {}
 
-  rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {
-  }
+  rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {}
 
-  rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {
-  }
+  rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {}
 
-  rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {
-  }
+  rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {}
 
   // Roles
-  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-  }
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {}
 
-  rpc ListOrganizationRoles(ListOrganizationRolesRequest) returns (ListOrganizationRolesResponse) {
-  }
+  rpc ListOrganizationRoles(ListOrganizationRolesRequest) returns (ListOrganizationRolesResponse) {}
 
-  rpc CreateOrganizationRole(CreateOrganizationRoleRequest) returns (CreateOrganizationRoleResponse) {
-  }
+  rpc CreateOrganizationRole(CreateOrganizationRoleRequest) returns (CreateOrganizationRoleResponse) {}
 
-  rpc GetOrganizationRole(GetOrganizationRoleRequest) returns (GetOrganizationRoleResponse) {
-  }
+  rpc GetOrganizationRole(GetOrganizationRoleRequest) returns (GetOrganizationRoleResponse) {}
 
-  rpc UpdateOrganizationRole(UpdateOrganizationRoleRequest) returns (UpdateOrganizationRoleResponse) {
-  }
+  rpc UpdateOrganizationRole(UpdateOrganizationRoleRequest) returns (UpdateOrganizationRoleResponse) {}
 
-  rpc DeleteOrganizationRole(DeleteOrganizationRoleRequest) returns (DeleteOrganizationRoleResponse) {
-  }
+  rpc DeleteOrganizationRole(DeleteOrganizationRoleRequest) returns (DeleteOrganizationRoleResponse) {}
 
   // Organizations
-  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
-  }
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {}
 
-  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
-  }
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {}
 
-  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
-  }
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {}
 
-  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
-  }
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {}
 
-  rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {
-  }
+  rpc ListOrganizationProjects(ListOrganizationProjectsRequest) returns (ListOrganizationProjectsResponse) {}
 
-  rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {
-  }
+  rpc ListOrganizationAdmins(ListOrganizationAdminsRequest) returns (ListOrganizationAdminsResponse) {}
 
-  rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
-  }
+  rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {}
 
-  rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {
-  }
+  rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {}
 
-  rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
-  }
+  rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {}
 
-  rpc SetOrganizationMemberRole(SetOrganizationMemberRoleRequest) returns (SetOrganizationMemberRoleResponse) {
-  }
+  rpc SetOrganizationMemberRole(SetOrganizationMemberRoleRequest) returns (SetOrganizationMemberRoleResponse) {}
 
-  rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {
-  }
+  rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {}
 
   // Deprecated: use ListServiceUsers instead
-  rpc ListOrganizationServiceUsers(ListOrganizationServiceUsersRequest) returns (ListOrganizationServiceUsersResponse) {
-  }
+  rpc ListOrganizationServiceUsers(ListOrganizationServiceUsersRequest) returns (ListOrganizationServiceUsersResponse) {}
 
-  rpc ListOrganizationInvitations(ListOrganizationInvitationsRequest) returns (ListOrganizationInvitationsResponse) {
-  }
+  rpc ListOrganizationInvitations(ListOrganizationInvitationsRequest) returns (ListOrganizationInvitationsResponse) {}
 
-  rpc CreateOrganizationInvitation(CreateOrganizationInvitationRequest) returns (CreateOrganizationInvitationResponse) {
-  }
+  rpc CreateOrganizationInvitation(CreateOrganizationInvitationRequest) returns (CreateOrganizationInvitationResponse) {}
 
-  rpc GetOrganizationInvitation(GetOrganizationInvitationRequest) returns (GetOrganizationInvitationResponse) {
-  }
+  rpc GetOrganizationInvitation(GetOrganizationInvitationRequest) returns (GetOrganizationInvitationResponse) {}
 
-  rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {
-  }
+  rpc AcceptOrganizationInvitation(AcceptOrganizationInvitationRequest) returns (AcceptOrganizationInvitationResponse) {}
 
-  rpc DeleteOrganizationInvitation(DeleteOrganizationInvitationRequest) returns (DeleteOrganizationInvitationResponse) {
-  }
+  rpc DeleteOrganizationInvitation(DeleteOrganizationInvitationRequest) returns (DeleteOrganizationInvitationResponse) {}
 
-  rpc ListOrganizationDomains(ListOrganizationDomainsRequest) returns (ListOrganizationDomainsResponse) {
-  }
+  rpc ListOrganizationDomains(ListOrganizationDomainsRequest) returns (ListOrganizationDomainsResponse) {}
 
-  rpc CreateOrganizationDomain(CreateOrganizationDomainRequest) returns (CreateOrganizationDomainResponse) {
-  }
+  rpc CreateOrganizationDomain(CreateOrganizationDomainRequest) returns (CreateOrganizationDomainResponse) {}
 
-  rpc DeleteOrganizationDomain(DeleteOrganizationDomainRequest) returns (DeleteOrganizationDomainResponse) {
-  }
+  rpc DeleteOrganizationDomain(DeleteOrganizationDomainRequest) returns (DeleteOrganizationDomainResponse) {}
 
-  rpc GetOrganizationDomain(GetOrganizationDomainRequest) returns (GetOrganizationDomainResponse) {
-  }
+  rpc GetOrganizationDomain(GetOrganizationDomainRequest) returns (GetOrganizationDomainResponse) {}
 
-  rpc VerifyOrganizationDomain(VerifyOrganizationDomainRequest) returns (VerifyOrganizationDomainResponse) {
-  }
+  rpc VerifyOrganizationDomain(VerifyOrganizationDomainRequest) returns (VerifyOrganizationDomainResponse) {}
 
-  rpc JoinOrganization(JoinOrganizationRequest) returns (JoinOrganizationResponse) {
-  }
+  rpc JoinOrganization(JoinOrganizationRequest) returns (JoinOrganizationResponse) {}
 
-  rpc EnableOrganization(EnableOrganizationRequest) returns (EnableOrganizationResponse) {
-  }
+  rpc EnableOrganization(EnableOrganizationRequest) returns (EnableOrganizationResponse) {}
 
-  rpc DisableOrganization(DisableOrganizationRequest) returns (DisableOrganizationResponse) {
-  }
+  rpc DisableOrganization(DisableOrganizationRequest) returns (DisableOrganizationResponse) {}
 
-  rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
-  }
+  rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {}
 
   // Projects
-  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
-  }
+  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {}
 
-  rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
-  }
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {}
 
-  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
-  }
+  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {}
 
-  rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {
-  }
+  rpc ListProjectAdmins(ListProjectAdminsRequest) returns (ListProjectAdminsResponse) {}
 
-  rpc ListProjectUsers(ListProjectUsersRequest) returns (ListProjectUsersResponse) {
-  }
+  rpc ListProjectUsers(ListProjectUsersRequest) returns (ListProjectUsersResponse) {}
 
-  rpc ListProjectServiceUsers(ListProjectServiceUsersRequest) returns (ListProjectServiceUsersResponse) {
-  }
+  rpc ListProjectServiceUsers(ListProjectServiceUsersRequest) returns (ListProjectServiceUsersResponse) {}
 
-  rpc ListProjectGroups(ListProjectGroupsRequest) returns (ListProjectGroupsResponse) {
-  }
+  rpc ListProjectGroups(ListProjectGroupsRequest) returns (ListProjectGroupsResponse) {}
 
-  rpc EnableProject(EnableProjectRequest) returns (EnableProjectResponse) {
-  }
+  rpc EnableProject(EnableProjectRequest) returns (EnableProjectResponse) {}
 
-  rpc DisableProject(DisableProjectRequest) returns (DisableProjectResponse) {
-  }
+  rpc DisableProject(DisableProjectRequest) returns (DisableProjectResponse) {}
 
-  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
-  }
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {}
 
   // Policies
-  rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {
-  }
+  rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {}
 
-  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {
-  }
+  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse) {}
 
-  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
-  }
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {}
 
-  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {
-  }
+  rpc UpdatePolicy(UpdatePolicyRequest) returns (UpdatePolicyResponse) {}
 
-  rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {
-  }
+  rpc DeletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse) {}
 
-  rpc CreatePolicyForProject(CreatePolicyForProjectRequest) returns (CreatePolicyForProjectResponse) {
-  }
+  rpc CreatePolicyForProject(CreatePolicyForProjectRequest) returns (CreatePolicyForProjectResponse) {}
 
   // Relations
-  rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {
-  }
+  rpc CreateRelation(CreateRelationRequest) returns (CreateRelationResponse) {}
 
-  rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {
-  }
+  rpc GetRelation(GetRelationRequest) returns (GetRelationResponse) {}
 
-  rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {
-  }
+  rpc DeleteRelation(DeleteRelationRequest) returns (DeleteRelationResponse) {}
 
   // Permissions
-  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
-  }
+  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {}
 
-  rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {
-  }
+  rpc GetPermission(GetPermissionRequest) returns (GetPermissionResponse) {}
 
   // Namespaces
-  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
-  }
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
 
-  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-  }
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {}
 
   // Resources
-  rpc ListProjectResources(ListProjectResourcesRequest) returns (ListProjectResourcesResponse) {
-  }
+  rpc ListProjectResources(ListProjectResourcesRequest) returns (ListProjectResourcesResponse) {}
 
-  rpc CreateProjectResource(CreateProjectResourceRequest) returns (CreateProjectResourceResponse) {
-  }
+  rpc CreateProjectResource(CreateProjectResourceRequest) returns (CreateProjectResourceResponse) {}
 
-  rpc GetProjectResource(GetProjectResourceRequest) returns (GetProjectResourceResponse) {
-  }
+  rpc GetProjectResource(GetProjectResourceRequest) returns (GetProjectResourceResponse) {}
 
-  rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {
-  }
+  rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {}
 
-  rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {
-  }
+  rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {}
 
   // Authz
-  rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {
-  }
+  rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {}
 
-  rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse) {
-  }
+  rpc BatchCheckPermission(BatchCheckPermissionRequest) returns (BatchCheckPermissionResponse) {}
 
   // Authn
-  rpc GetJWKs(GetJWKsRequest) returns (GetJWKsResponse) {
-  }
+  rpc GetJWKs(GetJWKsRequest) returns (GetJWKsResponse) {}
 
   // Returns a list of all active sessions for the current authenticated user.
   rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {}
@@ -350,193 +245,133 @@ service FrontierService {
   // Ping user current active session.
   rpc PingUserSession(PingUserSessionRequest) returns (PingUserSessionResponse) {}
 
-  rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {
-  }
+  rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {}
 
-  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {
-  }
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
 
-  rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {
-  }
+  rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {}
 
-  rpc AuthToken(AuthTokenRequest) returns (AuthTokenResponse) {
-  }
+  rpc AuthToken(AuthTokenRequest) returns (AuthTokenResponse) {}
 
-  rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {
-  }
+  rpc AuthLogout(AuthLogoutRequest) returns (AuthLogoutResponse) {}
 
   // MetaSchemas
-  rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {
-  }
+  rpc ListMetaSchemas(ListMetaSchemasRequest) returns (ListMetaSchemasResponse) {}
 
-  rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {
-  }
+  rpc CreateMetaSchema(CreateMetaSchemaRequest) returns (CreateMetaSchemaResponse) {}
 
-  rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {
-  }
+  rpc GetMetaSchema(GetMetaSchemaRequest) returns (GetMetaSchemaResponse) {}
 
-  rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {
-  }
+  rpc UpdateMetaSchema(UpdateMetaSchemaRequest) returns (UpdateMetaSchemaResponse) {}
 
-  rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {
-  }
+  rpc DeleteMetaSchema(DeleteMetaSchemaRequest) returns (DeleteMetaSchemaResponse) {}
 
   // Preferences
 
   // DescribePreferences list down all the supported preferences of entities
-  rpc DescribePreferences(DescribePreferencesRequest) returns (DescribePreferencesResponse) {
-  }
+  rpc DescribePreferences(DescribePreferencesRequest) returns (DescribePreferencesResponse) {}
 
-  rpc CreateOrganizationPreferences(CreateOrganizationPreferencesRequest) returns (CreateOrganizationPreferencesResponse) {
-  }
-  rpc ListOrganizationPreferences(ListOrganizationPreferencesRequest) returns (ListOrganizationPreferencesResponse) {
-  }
+  rpc CreateOrganizationPreferences(CreateOrganizationPreferencesRequest) returns (CreateOrganizationPreferencesResponse) {}
+  rpc ListOrganizationPreferences(ListOrganizationPreferencesRequest) returns (ListOrganizationPreferencesResponse) {}
 
-  rpc CreateProjectPreferences(CreateProjectPreferencesRequest) returns (CreateProjectPreferencesResponse) {
-  }
-  rpc ListProjectPreferences(ListProjectPreferencesRequest) returns (ListProjectPreferencesResponse) {
-  }
+  rpc CreateProjectPreferences(CreateProjectPreferencesRequest) returns (CreateProjectPreferencesResponse) {}
+  rpc ListProjectPreferences(ListProjectPreferencesRequest) returns (ListProjectPreferencesResponse) {}
 
-  rpc CreateGroupPreferences(CreateGroupPreferencesRequest) returns (CreateGroupPreferencesResponse) {
-  }
-  rpc ListGroupPreferences(ListGroupPreferencesRequest) returns (ListGroupPreferencesResponse) {
-  }
+  rpc CreateGroupPreferences(CreateGroupPreferencesRequest) returns (CreateGroupPreferencesResponse) {}
+  rpc ListGroupPreferences(ListGroupPreferencesRequest) returns (ListGroupPreferencesResponse) {}
 
-  rpc CreateUserPreferences(CreateUserPreferencesRequest) returns (CreateUserPreferencesResponse) {
-  }
-  rpc ListUserPreferences(ListUserPreferencesRequest) returns (ListUserPreferencesResponse) {
-  }
-  rpc CreateCurrentUserPreferences(CreateCurrentUserPreferencesRequest) returns (CreateCurrentUserPreferencesResponse) {
-  }
-  rpc ListCurrentUserPreferences(ListCurrentUserPreferencesRequest) returns (ListCurrentUserPreferencesResponse) {
-  }
+  rpc CreateUserPreferences(CreateUserPreferencesRequest) returns (CreateUserPreferencesResponse) {}
+  rpc ListUserPreferences(ListUserPreferencesRequest) returns (ListUserPreferencesResponse) {}
+  rpc CreateCurrentUserPreferences(CreateCurrentUserPreferencesRequest) returns (CreateCurrentUserPreferencesResponse) {}
+  rpc ListCurrentUserPreferences(ListCurrentUserPreferencesRequest) returns (ListCurrentUserPreferencesResponse) {}
 
   // Billing account
-  rpc CreateBillingAccount(CreateBillingAccountRequest) returns (CreateBillingAccountResponse) {
-  }
+  rpc CreateBillingAccount(CreateBillingAccountRequest) returns (CreateBillingAccountResponse) {}
 
-  rpc GetBillingAccount(GetBillingAccountRequest) returns (GetBillingAccountResponse) {
-  }
+  rpc GetBillingAccount(GetBillingAccountRequest) returns (GetBillingAccountResponse) {}
 
-  rpc UpdateBillingAccount(UpdateBillingAccountRequest) returns (UpdateBillingAccountResponse) {
-  }
+  rpc UpdateBillingAccount(UpdateBillingAccountRequest) returns (UpdateBillingAccountResponse) {}
 
-  rpc RegisterBillingAccount(RegisterBillingAccountRequest) returns (RegisterBillingAccountResponse) {
-  }
+  rpc RegisterBillingAccount(RegisterBillingAccountRequest) returns (RegisterBillingAccountResponse) {}
 
-  rpc ListBillingAccounts(ListBillingAccountsRequest) returns (ListBillingAccountsResponse) {
-  }
+  rpc ListBillingAccounts(ListBillingAccountsRequest) returns (ListBillingAccountsResponse) {}
 
-  rpc DeleteBillingAccount(DeleteBillingAccountRequest) returns (DeleteBillingAccountResponse) {
-  }
+  rpc DeleteBillingAccount(DeleteBillingAccountRequest) returns (DeleteBillingAccountResponse) {}
 
-  rpc EnableBillingAccount(EnableBillingAccountRequest) returns (EnableBillingAccountResponse) {
-  }
+  rpc EnableBillingAccount(EnableBillingAccountRequest) returns (EnableBillingAccountResponse) {}
 
-  rpc DisableBillingAccount(DisableBillingAccountRequest) returns (DisableBillingAccountResponse) {
-  }
+  rpc DisableBillingAccount(DisableBillingAccountRequest) returns (DisableBillingAccountResponse) {}
 
-  rpc GetBillingBalance(GetBillingBalanceRequest) returns (GetBillingBalanceResponse) {
-  }
+  rpc GetBillingBalance(GetBillingBalanceRequest) returns (GetBillingBalanceResponse) {}
 
-  rpc HasTrialed(HasTrialedRequest) returns (HasTrialedResponse) {
-  }
+  rpc HasTrialed(HasTrialedRequest) returns (HasTrialedResponse) {}
 
   // Subscriptions
-  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
-  }
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {}
 
-  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
-  }
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {}
 
-  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
-  }
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {}
 
-  rpc ChangeSubscription(ChangeSubscriptionRequest) returns (ChangeSubscriptionResponse) {
-  }
+  rpc ChangeSubscription(ChangeSubscriptionRequest) returns (ChangeSubscriptionResponse) {}
 
-  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
-  }
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {}
 
   // Billing Product
-  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
-  }
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
 
-  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
-  }
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {}
 
-  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
-  }
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
 
-  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {
-  }
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {}
 
-  rpc CreateFeature(CreateFeatureRequest) returns (CreateFeatureResponse) {
-  }
+  rpc CreateFeature(CreateFeatureRequest) returns (CreateFeatureResponse) {}
 
-  rpc GetFeature(GetFeatureRequest) returns (GetFeatureResponse) {
-  }
+  rpc GetFeature(GetFeatureRequest) returns (GetFeatureResponse) {}
 
-  rpc UpdateFeature(UpdateFeatureRequest) returns (UpdateFeatureResponse) {
-  }
+  rpc UpdateFeature(UpdateFeatureRequest) returns (UpdateFeatureResponse) {}
 
-  rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {
-  }
+  rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {}
 
   // Plans
-  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {
-  }
+  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {}
 
-  rpc ListPlans(ListPlansRequest) returns (ListPlansResponse) {
-  }
+  rpc ListPlans(ListPlansRequest) returns (ListPlansResponse) {}
 
-  rpc GetPlan(GetPlanRequest) returns (GetPlanResponse) {
-  }
+  rpc GetPlan(GetPlanRequest) returns (GetPlanResponse) {}
 
-  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {
-  }
+  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {}
 
   // Checkout
-  rpc CreateCheckout(CreateCheckoutRequest) returns (CreateCheckoutResponse) {
-  }
+  rpc CreateCheckout(CreateCheckoutRequest) returns (CreateCheckoutResponse) {}
 
-  rpc ListCheckouts(ListCheckoutsRequest) returns (ListCheckoutsResponse) {
-  }
+  rpc ListCheckouts(ListCheckoutsRequest) returns (ListCheckoutsResponse) {}
 
-  rpc GetCheckout(GetCheckoutRequest) returns (GetCheckoutResponse) {
-  }
+  rpc GetCheckout(GetCheckoutRequest) returns (GetCheckoutResponse) {}
 
   // Billing Entitlements
-  rpc CheckFeatureEntitlement(CheckFeatureEntitlementRequest) returns (CheckFeatureEntitlementResponse) {
-  }
+  rpc CheckFeatureEntitlement(CheckFeatureEntitlementRequest) returns (CheckFeatureEntitlementResponse) {}
 
-  rpc CheckCreditEntitlement(CheckCreditEntitlementRequest) returns (CheckCreditEntitlementResponse) {
-  }
+  rpc CheckCreditEntitlement(CheckCreditEntitlementRequest) returns (CheckCreditEntitlementResponse) {}
 
   // Transactions
-  rpc CreateBillingUsage(CreateBillingUsageRequest) returns (CreateBillingUsageResponse) {
-  }
+  rpc CreateBillingUsage(CreateBillingUsageRequest) returns (CreateBillingUsageResponse) {}
 
-  rpc ListBillingTransactions(ListBillingTransactionsRequest) returns (ListBillingTransactionsResponse) {
-  }
+  rpc ListBillingTransactions(ListBillingTransactionsRequest) returns (ListBillingTransactionsResponse) {}
 
-  rpc TotalDebitedTransactions(TotalDebitedTransactionsRequest) returns (TotalDebitedTransactionsResponse) {
-  }
+  rpc TotalDebitedTransactions(TotalDebitedTransactionsRequest) returns (TotalDebitedTransactionsResponse) {}
 
   // Invoice
-  rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {
-  }
+  rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {}
 
-  rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {
-  }
+  rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {}
 
   // Incoming Webhooks
-  rpc BillingWebhookCallback(BillingWebhookCallbackRequest) returns (BillingWebhookCallbackResponse) {
-  }
+  rpc BillingWebhookCallback(BillingWebhookCallbackRequest) returns (BillingWebhookCallbackResponse) {}
 
   // Prospects
-  rpc CreateProspectPublic(CreateProspectPublicRequest) returns (CreateProspectPublicResponse) {
-  }
+  rpc CreateProspectPublic(CreateProspectPublicRequest) returns (CreateProspectPublicResponse) {}
 
   // Audit Records
   rpc CreateAuditRecord(CreateAuditRecordRequest) returns (CreateAuditRecordResponse) {}
@@ -724,7 +559,7 @@ message CreateBillingUsageRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -744,12 +579,12 @@ message ListBillingTransactionsRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
 
-  google.protobuf.Timestamp since = 3 [deprecated=true];
+  google.protobuf.Timestamp since = 3 [deprecated = true];
   google.protobuf.Timestamp start_range = 4;
   google.protobuf.Timestamp end_range = 5;
 
@@ -767,7 +602,7 @@ message TotalDebitedTransactionsRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -783,7 +618,7 @@ message GetSubscriptionRequest {
   string org_id = 1 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       min_len: 3
     }
   ];
@@ -792,7 +627,7 @@ message GetSubscriptionRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -813,7 +648,7 @@ message ListSubscriptionsRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -835,7 +670,7 @@ message UpdateSubscriptionRequest {
   string org_id = 1 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       min_len: 3
     }
   ];
@@ -844,7 +679,7 @@ message UpdateSubscriptionRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -864,7 +699,7 @@ message ChangeSubscriptionRequest {
   string org_id = 1 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       min_len: 3
     }
   ];
@@ -873,7 +708,7 @@ message ChangeSubscriptionRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -915,7 +750,7 @@ message CancelSubscriptionRequest {
   string org_id = 1 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       min_len: 3
     }
   ];
@@ -924,7 +759,7 @@ message CancelSubscriptionRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -949,7 +784,7 @@ message CheckFeatureEntitlementRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -978,10 +813,10 @@ message CreateCheckoutRequest {
   string org_id = 1 [(validate.rules).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
-  string billing_id = 2  [
+  string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -1009,7 +844,7 @@ message ListCheckoutsRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -1025,7 +860,7 @@ message GetCheckoutRequest {
   string org_id = 1 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       min_len: 3
     }
   ];
@@ -1033,7 +868,7 @@ message GetCheckoutRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -1055,7 +890,7 @@ message ProductRequestBody {
   string plan_id = 4;
   repeated Price prices = 5;
   string behavior = 8 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "basic",
       "credits",
@@ -1215,7 +1050,7 @@ message ListInvoicesRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -1236,7 +1071,7 @@ message GetUpcomingInvoiceRequest {
   string billing_id = 2 [
     deprecated = true,
     (validate.rules).string = {
-      ignore_empty: true,
+      ignore_empty: true
       uuid: true
     }
   ];
@@ -1344,37 +1179,29 @@ message AuthTokenResponse {
 }
 
 message UserRequestBody {
-  string name = 1 [
-    (validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"
-  ];
+  string name = 1 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
   string email = 2 [
     (validate.rules).string.email = true,
     (google.api.field_behavior) = REQUIRED
   ];
   google.protobuf.Struct metadata = 3;
   string title = 4;
-  string avatar = 5 [
-    (validate.rules).string = {
-      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
-      max_len: 250000,
-      ignore_empty: true,
-    }
-  ];
+  string avatar = 5 [(validate.rules).string = {
+    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
+    max_len: 250000
+    ignore_empty: true
+  }];
 }
 
 message ListUsersRequest {
-  int32 page_size = 1 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 2 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 1 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 2 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
   string keyword = 3;
   string org_id = 4;
   string group_id = 5;
@@ -1440,18 +1267,14 @@ message ListProjectsByCurrentUserRequest {
 
   bool with_member_count = 4;
 
-  int32 page_size = 5 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 6 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 5 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 6 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
 }
 
 message ListProjectsByCurrentUserResponse {
@@ -1762,7 +1585,7 @@ message ListServiceUserProjectsResponse {
 message ListOrganizationGroupsRequest {
   reserved 1;
   string org_id = 2 [(validate.rules).string = {
-    pattern: "^[A-Za-z0-9_-]+$",
+    pattern: "^[A-Za-z0-9_-]+$"
     min_len: 3
   }];
   string state = 3;
@@ -1778,9 +1601,7 @@ message ListOrganizationGroupsResponse {
 
 message CreateOrganizationRoleRequest {
   RoleRequestBody body = 1 [(validate.rules).message.required = true];
-  string org_id = 2 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message CreateOrganizationRoleResponse {
@@ -1839,30 +1660,24 @@ message OrganizationRequestBody {
   ];
   string title = 2;
   google.protobuf.Struct metadata = 3;
-  string avatar = 4 [
-    (validate.rules).string = {
-      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$",
-      max_len: 250000,
-      ignore_empty: true,
-    }
-  ];
+  string avatar = 4 [(validate.rules).string = {
+    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
+    max_len: 250000
+    ignore_empty: true
+  }];
 }
 
 message ListOrganizationsRequest {
   string user_id = 1;
   string state = 2;
-  int32 page_size = 3 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
-  int32 page_num = 4 [
-    (validate.rules).int32 = {
-      gte: 1,
-      ignore_empty: true,
-    }
-  ];
+  int32 page_size = 3 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
+  int32 page_num = 4 [(validate.rules).int32 = {
+    gte: 1
+    ignore_empty: true
+  }];
 }
 
 message ListOrganizationsResponse {
@@ -1951,9 +1766,7 @@ message ListOrganizationServiceUsersResponse {
 }
 
 message ListOrganizationInvitationsRequest {
-  string org_id = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 1 [(google.api.field_behavior) = REQUIRED];
   string user_id = 2;
 }
 
@@ -1962,13 +1775,11 @@ message ListOrganizationInvitationsResponse {
 }
 
 message CreateOrganizationInvitationRequest {
-  string org_id = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 1 [(google.api.field_behavior) = REQUIRED];
   repeated string user_ids = 2 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).repeated = {
-      min_items: 1,
+      min_items: 1
       max_items: 10
     }
   ];
@@ -2250,9 +2061,7 @@ message PolicyRequestBody {
     (validate.rules).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
-  string principal = 4 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string principal = 4 [(google.api.field_behavior) = REQUIRED];
   google.protobuf.Struct metadata = 5;
 }
 
@@ -2262,9 +2071,7 @@ message CreatePolicyForProjectBody {
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2;
-  string principal = 3 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string principal = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetPermissionRequest {
@@ -2396,9 +2203,7 @@ message GroupRequestBody {
 
 message CreateGroupRequest {
   GroupRequestBody body = 1 [(validate.rules).message.required = true];
-  string org_id = 2 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetGroupRequest {
@@ -2422,9 +2227,7 @@ message UpdateGroupResponse {
 message UpdateGroupRequest {
   string id = 1;
   GroupRequestBody body = 2;
-  string org_id = 3 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListGroupUsersRequest {
@@ -2507,13 +2310,9 @@ message ListProjectResourcesResponse {
 
 message ResourceRequestBody {
   reserved 4, 5;
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
   string title = 2;
-  string namespace = 3 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string namespace = 3 [(google.api.field_behavior) = REQUIRED];
   // format namespace:uuid or just uuid for user
   string principal = 6;
   google.protobuf.Struct metadata = 7;
@@ -2558,12 +2357,8 @@ message DeleteProjectResourceRequest {
 message DeleteProjectResourceResponse {}
 
 message CheckResourcePermissionRequest {
-  string object_id = 1 [
-    deprecated = true
-  ];
-  string object_namespace = 2 [
-    deprecated = true
-  ];
+  string object_id = 1 [deprecated = true];
+  string object_namespace = 2 [deprecated = true];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
@@ -2577,7 +2372,7 @@ message CheckResourcePermissionResponse {
 
 message BatchCheckPermissionRequest {
   repeated BatchCheckPermissionBody bodies = 1 [(validate.rules).repeated = {
-    min_items: 1,
+    min_items: 1
     max_items: 20
   }];
 }
@@ -2763,39 +2558,34 @@ message BillingWebhookCallbackRequest {
 
 message BillingWebhookCallbackResponse {}
 
-message CreateProspectPublicRequest{
-  string name = 1[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z ]+$",
-    }
-  ];
-  string email = 5[
+message CreateProspectPublicRequest {
+  string name = 1 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z ]+$"
+  }];
+  string email = 5 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      email: true,
+      min_len: 1
+      email: true
     }
   ];
   string phone = 6;
-  string activity = 7[
+  string activity = 7 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {
-      min_len: 1,
-      pattern: "^[A-Za-z0-9-_]+$",
+      min_len: 1
+      pattern: "^[A-Za-z0-9-_]+$"
     }
   ];
-  string source = 9[
-    (validate.rules).string = {
-      ignore_empty: true,
-      pattern: "^[A-Za-z0-9-_]+$",
-    }
-  ];
+  string source = 9 [(validate.rules).string = {
+    ignore_empty: true
+    pattern: "^[A-Za-z0-9-_]+$"
+  }];
   google.protobuf.Struct metadata = 11;
 }
 
-message CreateProspectPublicResponse{
-}
+message CreateProspectPublicResponse {}
 
 message ListSessionsRequest {}
 
@@ -2820,33 +2610,34 @@ message PingUserSessionResponse {
 
 message CreateAuditRecordRequest {
   AuditRecordActor actor = 1 [(google.api.field_behavior) = REQUIRED];
-  
+
   string event = 2 [
     (google.api.field_behavior) = REQUIRED,
     (validate.rules).string = {min_len: 3}
   ];
-  
+
   // Base resource on which this change happened
   AuditRecordResource resource = 3 [(google.api.field_behavior) = REQUIRED];
-  
+
   // Related resource info (optional)
   AuditRecordTarget target = 4;
-  
+
   // When the event occurred
   google.protobuf.Timestamp occurred_at = 5 [(google.api.field_behavior) = REQUIRED];
-  
+
   string org_id = 6 [(validate.rules).string.uuid = true];
-  
+
   // Request ID for tracing
   string request_id = 7;
-  
+
   // Flexible metadata field for any additional data including reason, changes, etc.
   google.protobuf.Struct metadata = 8;
 
   // Idempotency key to prevent duplicate audit records. Can be used for storing external id.
   string idempotency_key = 9 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.uuid = true];
+    (validate.rules).string.uuid = true
+  ];
 }
 
 message CreateAuditRecordResponse {

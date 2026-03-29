@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for git hash
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,10 +26,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install buf
-        uses: bufbuild/buf-setup-action@v1.5.0
+        uses: bufbuild/buf-action@v1
         with:
-          version: "1.47.2"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          setup_only: true
 
       - name: Install Python dependencies
         run: |

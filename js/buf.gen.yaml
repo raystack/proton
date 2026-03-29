@@ -1,11 +1,11 @@
-version: v1
+version: v2
+clean: true
 plugins:
-  - name: es
+  - remote: buf.build/bufbuild/es
+    out: js/dist
     opt:
       - target=ts+js+dts
       - import_extension=none
+  - remote: buf.build/connectrpc/query
     out: js/dist
-  - name: connect-query
-    opt:
-      - target=ts+js+dts
-    out: js/dist
+    opt: target=ts+js+dts
