@@ -1,14 +1,17 @@
-version: v1
+version: v2
 name: buf.build/raystack/proton
 deps:
+  - buf.build/bufbuild/protovalidate
+  - buf.build/envoyproxy/protoc-gen-validate
   - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
-  - buf.build/envoyproxy/protoc-gen-validate
-  - buf.build/bufbuild/protovalidate
+lint:
+  except:
+    - FIELD_NOT_REQUIRED
+    - PACKAGE_NO_IMPORT_CYCLE
 breaking:
   use:
     - WIRE
   except:
+    - FIELD_SAME_DEFAULT
     - RESERVED_MESSAGE_NO_DELETE
-lint:
-  allow_comment_ignores: true

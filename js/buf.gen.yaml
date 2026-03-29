@@ -1,11 +1,10 @@
-version: v1
+version: v2
 plugins:
-  - name: es
+  - local: protoc-gen-es
+    out: js/dist
     opt:
       - target=ts+js+dts
       - import_extension=none
+  - local: protoc-gen-connect-query
     out: js/dist
-  - name: connect-query
-    opt:
-      - target=ts+js+dts
-    out: js/dist
+    opt: target=ts+js+dts
