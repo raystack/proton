@@ -14,21 +14,17 @@ option java_package = "io.raystack.proton.frontier.v1beta1";
 message User {
   string id = 1;
   // can either be empty or must start with a character
-  string name = 2 [
-    (validate.rules).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"}
-  ];
+  string name = 2 [(validate.rules).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"}];
   string title = 3;
   string email = 4 [(validate.rules).string.email = true];
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
   string state = 8;
-  string avatar = 9 [
-    (validate.rules).string = {
-      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
-      max_len: 250000
-    }
-  ];
+  string avatar = 9 [(validate.rules).string = {
+    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
+    max_len: 250000
+  }];
 }
 
 message ServiceUser {
@@ -45,7 +41,7 @@ message ServiceUser {
 message Group {
   string id = 1;
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string title = 3;
@@ -55,9 +51,7 @@ message Group {
   google.protobuf.Timestamp updated_at = 7;
 
   repeated User users = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
-  int32 members_count = 8 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  int32 members_count = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message Role {
@@ -65,7 +59,7 @@ message Role {
 
   string id = 1;
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   repeated string permissions = 3;
@@ -81,7 +75,7 @@ message Role {
 message Organization {
   string id = 1;
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string title = 3;
@@ -89,12 +83,10 @@ message Organization {
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
   string state = 7;
-  string avatar = 8 [
-    (validate.rules).string = {
-      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
-      max_len: 250000
-    }
-  ];
+  string avatar = 8 [(validate.rules).string = {
+    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
+    max_len: 250000
+  }];
 }
 
 message OrganizationKyc {
@@ -108,7 +100,7 @@ message OrganizationKyc {
 message Project {
   string id = 1;
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string title = 3;
@@ -117,16 +109,12 @@ message Project {
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
 
-  int32 members_count = 8 [
-    (google.api.field_behavior) = OUTPUT_ONLY
-  ];
+  int32 members_count = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message Domain {
   string id = 1;
-  string name = 2 [
-    (validate.rules).string = {min_len: 2}
-  ];
+  string name = 2 [(validate.rules).string = {min_len: 2}];
   string org_id = 3;
   string token = 4;
   string state = 5;
@@ -169,7 +157,7 @@ message Permission {
   string id = 1;
   string name = 2 [
     (validate.rules).string = {
-      min_len: 2,
+      min_len: 2
       pattern: "^[A-Za-z0-9]+$"
     },
     deprecated = true
@@ -211,7 +199,7 @@ message Resource {
 message MetaSchema {
   string id = 1;
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string schema = 3;
@@ -277,9 +265,7 @@ message PATScope {
     (google.api.field_behavior) = REQUIRED
   ];
   // Resource type: "app/organization" or "app/project"
-  string resource_type = 2 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string resource_type = 2 [(google.api.field_behavior) = REQUIRED];
   // Specific resource UUIDs within the resource type (optional)
   repeated string resource_ids = 3 [(validate.rules).repeated.items.string.uuid = true];
 }
@@ -398,7 +384,7 @@ message PreferenceTrait {
     INPUT_TYPE_MULTISELECT = 6;
     INPUT_TYPE_NUMBER = 7;
   }
-  
+
   string resource_type = 1;
   string name = 2;
   string title = 3;
@@ -410,9 +396,9 @@ message PreferenceTrait {
   string default = 9;
 
   string input_hints = 19;
-  
+
   reserved 20 to 26;
-  
+
   InputType input_type = 27;
   // Structured input options with name and description for select/combobox/multiselect inputs
   repeated InputHintOption input_options = 28;
@@ -584,7 +570,7 @@ message Product {
 
   repeated Price prices = 7;
   string behavior = 9 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "basic",
       "credits",
@@ -632,7 +618,7 @@ message Price {
 
   // usage_type known types are "licensed" and "metered"
   string usage_type = 7 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "licensed",
       "metered"
@@ -640,7 +626,7 @@ message Price {
   }];
   // billing_scheme known schemes are "tiered" and "flat"
   string billing_scheme = 8 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "tiered",
       "flat"
@@ -652,7 +638,7 @@ message Price {
   int64 amount = 11 [(validate.rules).int64 = {gte: 0}];
   // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
   string metered_aggregate = 13 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "sum",
       "max",
@@ -661,7 +647,7 @@ message Price {
   }];
   // tier_mode known modes are "graduated" and "volume"
   string tier_mode = 14 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "graduated",
       "volume"
@@ -680,7 +666,7 @@ message BillingTransaction {
   string source = 3;
   int64 amount = 4 [(validate.rules).int64 = {gte: 0}];
   string type = 5 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "credit",
       "debit"
@@ -711,7 +697,7 @@ message Usage {
   // if credit, the amount is the amount of credits that were consumed
   // if feature, the amount is the amount of features that were used
   string type = 5 [(validate.rules).string = {
-    ignore_empty: true,
+    ignore_empty: true
     in: [
       "credit",
       "feature"
@@ -801,7 +787,7 @@ message RoleRequestBody {
   reserved 1, 4;
 
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
@@ -812,7 +798,7 @@ message RoleRequestBody {
 
 message PreferenceRequestBody {
   string name = 2 [(validate.rules).string = {
-    min_len: 2,
+    min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
   string value = 3;
@@ -893,7 +879,12 @@ message RQLFilter {
 
 message RQLSort {
   string name = 1;
-  string order = 2 [(validate.rules).string = {in: ["asc", "desc"]}];
+  string order = 2 [(validate.rules).string = {
+    in: [
+      "asc",
+      "desc"
+    ]
+  }];
 }
 
 message RQLQueryPaginationResponse {
@@ -912,8 +903,7 @@ message RQLQueryGroupData {
   uint32 count = 2;
 }
 
-message ExportOrganizationsRequest {
-}
+message ExportOrganizationsRequest {}
 
 // Session management
 
@@ -930,7 +920,7 @@ message Session {
     string ip_address = 3;
     Location location = 4;
   }
-  
+
   string id = 1;
   Meta metadata = 2;
   bool is_current_session = 3;
@@ -941,7 +931,10 @@ message Session {
 // Audit Record models
 
 message AuditRecordActor {
-  string id = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.uuid = true];
+  string id = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (validate.rules).string.uuid = true
+  ];
   string type = 2; // not mandatory if id is zeroUUID
   string name = 3;
   string title = 5;
@@ -964,7 +957,7 @@ message AuditRecordTarget {
 
 message AuditRecord {
   string id = 1;
-  
+
   AuditRecordActor actor = 2;
   string event = 3;
   AuditRecordResource resource = 4;

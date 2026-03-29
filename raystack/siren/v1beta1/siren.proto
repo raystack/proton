@@ -16,18 +16,18 @@ option java_package = "io.raystack.proton.siren";
 // These annotations are used when generating the OpenAPI file.
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
-    title: "Siren APIs";
-    description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway.";
-    version: "0.5";
-  };
-  schemes: HTTP;
+    title: "Siren APIs"
+    description: "Documentation of our Siren API with gRPC and\ngRPC-Gateway."
+    version: "0.5"
+  }
+  schemes: HTTP
 };
 
 service SirenService {
   rpc ListProviders(ListProvidersRequest) returns (ListProvidersResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list providers";
-      tags: "Provider";
+      summary: "list providers"
+      tags: "Provider"
     };
 
     option (google.api.http) = {get: "/v1beta1/providers"};
@@ -35,8 +35,8 @@ service SirenService {
 
   rpc CreateProvider(CreateProviderRequest) returns (CreateProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create a provider";
-      tags: "Provider";
+      summary: "create a provider"
+      tags: "Provider"
     };
 
     option (google.api.http) = {
@@ -47,8 +47,8 @@ service SirenService {
 
   rpc GetProvider(GetProviderRequest) returns (GetProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get a provider";
-      tags: "Provider";
+      summary: "get a provider"
+      tags: "Provider"
     };
 
     option (google.api.http) = {get: "/v1beta1/providers/{id}"};
@@ -56,20 +56,20 @@ service SirenService {
 
   rpc UpdateProvider(UpdateProviderRequest) returns (UpdateProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "update a provider";
-      tags: "Provider";
+      summary: "update a provider"
+      tags: "Provider"
     };
 
     option (google.api.http) = {
-      put: "/v1beta1/providers/{id}",
+      put: "/v1beta1/providers/{id}"
       body: "*"
     };
   }
 
   rpc DeleteProvider(DeleteProviderRequest) returns (DeleteProviderResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "delete a provider";
-      tags: "Provider";
+      summary: "delete a provider"
+      tags: "Provider"
     };
 
     option (google.api.http) = {delete: "/v1beta1/providers/{id}"};
@@ -77,8 +77,8 @@ service SirenService {
 
   rpc NotifyReceiver(NotifyReceiverRequest) returns (NotifyReceiverResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "send notification to receiver";
-      tags: "Receiver";
+      summary: "send notification to receiver"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {
@@ -89,8 +89,8 @@ service SirenService {
 
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list namespaces";
-      tags: "Namespace";
+      summary: "list namespaces"
+      tags: "Namespace"
     };
 
     option (google.api.http) = {get: "/v1beta1/namespaces"};
@@ -98,8 +98,8 @@ service SirenService {
 
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create a namespace";
-      tags: "Namespace";
+      summary: "create a namespace"
+      tags: "Namespace"
     };
 
     option (google.api.http) = {
@@ -110,8 +110,8 @@ service SirenService {
 
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get a namespace";
-      tags: "Namespace";
+      summary: "get a namespace"
+      tags: "Namespace"
     };
 
     option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
@@ -119,20 +119,20 @@ service SirenService {
 
   rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "update a namespace";
-      tags: "Namespace";
+      summary: "update a namespace"
+      tags: "Namespace"
     };
 
     option (google.api.http) = {
-      put: "/v1beta1/namespaces/{id}",
+      put: "/v1beta1/namespaces/{id}"
       body: "*"
     };
   }
 
   rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "delete a namespace";
-      tags: "Namespace";
+      summary: "delete a namespace"
+      tags: "Namespace"
     };
 
     option (google.api.http) = {delete: "/v1beta1/namespaces/{id}"};
@@ -140,8 +140,8 @@ service SirenService {
 
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "List subscriptions";
-      tags: "Subscription";
+      summary: "List subscriptions"
+      tags: "Subscription"
     };
 
     option (google.api.http) = {get: "/v1beta1/subscriptions"};
@@ -149,8 +149,8 @@ service SirenService {
 
   rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Create a subscription";
-      tags: "Subscription";
+      summary: "Create a subscription"
+      tags: "Subscription"
     };
 
     option (google.api.http) = {
@@ -161,8 +161,8 @@ service SirenService {
 
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Get a subscription";
-      tags: "Subscription";
+      summary: "Get a subscription"
+      tags: "Subscription"
     };
 
     option (google.api.http) = {get: "/v1beta1/subscriptions/{id}"};
@@ -170,19 +170,19 @@ service SirenService {
 
   rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Update a subscription";
-      tags: "Subscription";
+      summary: "Update a subscription"
+      tags: "Subscription"
     };
     option (google.api.http) = {
-      put: "/v1beta1/subscriptions/{id}",
+      put: "/v1beta1/subscriptions/{id}"
       body: "*"
     };
   }
 
   rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Delete a subscription";
-      tags: "Subscription";
+      summary: "Delete a subscription"
+      tags: "Subscription"
     };
 
     option (google.api.http) = {delete: "/v1beta1/subscriptions/{id}"};
@@ -190,8 +190,8 @@ service SirenService {
 
   rpc ListReceivers(ListReceiversRequest) returns (ListReceiversResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list receivers";
-      tags: "Receiver";
+      summary: "list receivers"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {get: "/v1beta1/receivers"};
@@ -199,8 +199,8 @@ service SirenService {
 
   rpc CreateReceiver(CreateReceiverRequest) returns (CreateReceiverResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create a receiver";
-      tags: "Receiver";
+      summary: "create a receiver"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {
@@ -211,8 +211,8 @@ service SirenService {
 
   rpc GetReceiver(GetReceiverRequest) returns (GetReceiverResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get a receiver";
-      tags: "Receiver";
+      summary: "get a receiver"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {get: "/v1beta1/receivers/{id}"};
@@ -220,20 +220,20 @@ service SirenService {
 
   rpc UpdateReceiver(UpdateReceiverRequest) returns (UpdateReceiverResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "update a receiver";
-      tags: "Receiver";
+      summary: "update a receiver"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {
-      put: "/v1beta1/receivers/{id}",
+      put: "/v1beta1/receivers/{id}"
       body: "*"
     };
   }
 
   rpc DeleteReceiver(DeleteReceiverRequest) returns (DeleteReceiverResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "delete a receiver";
-      tags: "Receiver";
+      summary: "delete a receiver"
+      tags: "Receiver"
     };
 
     option (google.api.http) = {delete: "/v1beta1/receivers/{id}"};
@@ -241,8 +241,8 @@ service SirenService {
 
   rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list alerts";
-      tags: "Alert";
+      summary: "list alerts"
+      tags: "Alert"
     };
 
     option (google.api.http) = {get: "/v1beta1/alerts/{provider_type}/{provider_id}"};
@@ -250,8 +250,8 @@ service SirenService {
 
   rpc CreateAlerts(CreateAlertsRequest) returns (CreateAlertsResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create alerts";
-      tags: "Alert";
+      summary: "create alerts"
+      tags: "Alert"
     };
 
     option (google.api.http) = {
@@ -262,8 +262,8 @@ service SirenService {
 
   rpc CreateAlertsWithNamespace(CreateAlertsWithNamespaceRequest) returns (CreateAlertsWithNamespaceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create alerts with namespace";
-      tags: "Alert";
+      summary: "create alerts with namespace"
+      tags: "Alert"
     };
 
     option (google.api.http) = {
@@ -274,8 +274,8 @@ service SirenService {
 
   rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list rules";
-      tags: "Rule";
+      summary: "list rules"
+      tags: "Rule"
     };
 
     option (google.api.http) = {get: "/v1beta1/rules"};
@@ -283,8 +283,8 @@ service SirenService {
 
   rpc UpdateRule(UpdateRuleRequest) returns (UpdateRuleResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "add/update a rule";
-      tags: "Rule";
+      summary: "add/update a rule"
+      tags: "Rule"
     };
 
     option (google.api.http) = {
@@ -295,8 +295,8 @@ service SirenService {
 
   rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "list templates";
-      tags: "Template";
+      summary: "list templates"
+      tags: "Template"
     };
 
     option (google.api.http) = {get: "/v1beta1/templates"};
@@ -304,8 +304,8 @@ service SirenService {
 
   rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get a template";
-      tags: "Template";
+      summary: "get a template"
+      tags: "Template"
     };
 
     option (google.api.http) = {get: "/v1beta1/templates/{name}"};
@@ -313,20 +313,20 @@ service SirenService {
 
   rpc UpsertTemplate(UpsertTemplateRequest) returns (UpsertTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "add/update a template";
-      tags: "Template";
+      summary: "add/update a template"
+      tags: "Template"
     };
 
     option (google.api.http) = {
-      put: "/v1beta1/templates",
+      put: "/v1beta1/templates"
       body: "*"
     };
   }
 
   rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "delete a template";
-      tags: "Template";
+      summary: "delete a template"
+      tags: "Template"
     };
 
     option (google.api.http) = {delete: "/v1beta1/templates/{name}"};
@@ -334,32 +334,32 @@ service SirenService {
 
   rpc RenderTemplate(RenderTemplateRequest) returns (RenderTemplateResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "render a template";
-      tags: "Template";
+      summary: "render a template"
+      tags: "Template"
     };
 
     option (google.api.http) = {
-      post: "/v1beta1/templates/{name}/render",
+      post: "/v1beta1/templates/{name}/render"
       body: "*"
     };
   }
 
   rpc CreateSilence(CreateSilenceRequest) returns (CreateSilenceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "create a silence";
-      tags: "Silence";
+      summary: "create a silence"
+      tags: "Silence"
     };
 
     option (google.api.http) = {
-      post: "/v1beta1/silences",
+      post: "/v1beta1/silences"
       body: "*"
     };
   }
 
   rpc ListSilences(ListSilencesRequest) returns (ListSilencesResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get all silences";
-      tags: "Silence";
+      summary: "get all silences"
+      tags: "Silence"
     };
 
     option (google.api.http) = {get: "/v1beta1/silences"};
@@ -367,8 +367,8 @@ service SirenService {
 
   rpc GetSilence(GetSilenceRequest) returns (GetSilenceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "get a silence";
-      tags: "Silence";
+      summary: "get a silence"
+      tags: "Silence"
     };
 
     option (google.api.http) = {get: "/v1beta1/silences/{id}"};
@@ -376,8 +376,8 @@ service SirenService {
 
   rpc ExpireSilence(ExpireSilenceRequest) returns (ExpireSilenceResponse) {
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "expire a silence";
-      tags: "Silence";
+      summary: "expire a silence"
+      tags: "Silence"
     };
 
     option (google.api.http) = {delete: "/v1beta1/silences/{id}"};
