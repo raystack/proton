@@ -147,6 +147,45 @@ service CompassService {
 
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
   }
+
+  // Domain: Entity (v2)
+  rpc GetAllEntities(GetAllEntitiesRequest) returns (GetAllEntitiesResponse) {
+  }
+
+  rpc GetEntityByID(GetEntityByIDRequest) returns (GetEntityByIDResponse) {
+  }
+
+  rpc UpsertEntity(UpsertEntityRequest) returns (UpsertEntityResponse) {
+  }
+
+  rpc DeleteEntity(DeleteEntityRequest) returns (DeleteEntityResponse) {
+  }
+
+  rpc SearchEntities(SearchEntitiesRequest) returns (SearchEntitiesResponse) {
+  }
+
+  rpc SuggestEntities(SuggestEntitiesRequest) returns (SuggestEntitiesResponse) {
+  }
+
+  rpc GetEntityTypes(GetEntityTypesRequest) returns (GetEntityTypesResponse) {
+  }
+
+  // Domain: Entity Context & Impact (v2)
+  rpc GetEntityContext(GetEntityContextRequest) returns (GetEntityContextResponse) {
+  }
+
+  rpc GetEntityImpact(GetEntityImpactRequest) returns (GetEntityImpactResponse) {
+  }
+
+  // Domain: Edges (v2)
+  rpc UpsertEdge(UpsertEdgeRequest) returns (UpsertEdgeResponse) {
+  }
+
+  rpc GetEdges(GetEdgesRequest) returns (GetEdgesResponse) {
+  }
+
+  rpc DeleteEdge(DeleteEdgeRequest) returns (DeleteEdgeResponse) {
+  }
 }
 
 message GetAllDiscussionsRequest {
@@ -833,3 +872,162 @@ message Namespace {
   string state = 3;
   google.protobuf.Struct metadata = 4;
 }
+
+// ============================================================
+// Entity v2 messages
+// ============================================================
+
+message Entity {
+  string id = 1;
+  string urn = 2;
+  string type = 3;
+  string name = 4;
+  string description = 5;
+  google.protobuf.Struct properties = 6;
+  string source = 7;
+  google.protobuf.Timestamp valid_from = 8;
+  google.protobuf.Timestamp valid_to = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+message Edge {
+  string id = 1;
+  string source_urn = 2;
+  string target_urn = 3;
+  string type = 4;
+  google.protobuf.Struct properties = 5;
+  string source = 6;
+  google.protobuf.Timestamp valid_from = 7;
+  google.protobuf.Timestamp valid_to = 8;
+  google.protobuf.Timestamp created_at = 9;
+}
+
+// Entity CRUD
+
+message GetAllEntitiesRequest {
+  string types = 1;
+  string source = 2;
+  string q = 3;
+  uint32 size = 4 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 offset = 5 [(buf.validate.field).uint32 = { gte: 0 }];
+}
+
+message GetAllEntitiesResponse {
+  repeated Entity data = 1;
+  uint32 total = 2;
+}
+
+message GetEntityByIDRequest {
+  string id = 1;
+}
+
+message GetEntityByIDResponse {
+  Entity data = 1;
+}
+
+message UpsertEntityRequest {
+  string urn = 1 [(buf.validate.field).string.min_len = 1];
+  string type = 2 [(buf.validate.field).string.min_len = 1];
+  string name = 3 [(buf.validate.field).string.min_len = 1];
+  string description = 4;
+  google.protobuf.Struct properties = 5;
+  string source = 6;
+  repeated string upstreams = 7;
+  repeated string downstreams = 8;
+}
+
+message UpsertEntityResponse {
+  string id = 1;
+}
+
+message DeleteEntityRequest {
+  string urn = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message DeleteEntityResponse {}
+
+// Entity Search
+
+message SearchEntitiesRequest {
+  string text = 1;
+  string types = 2;
+  string source = 3;
+  string mode = 4; // keyword, semantic, hybrid
+  uint32 size = 5 [(buf.validate.field).uint32 = { gte: 0 }];
+  uint32 offset = 6 [(buf.validate.field).uint32 = { gte: 0 }];
+}
+
+message SearchEntitiesResponse {
+  repeated Entity data = 1;
+}
+
+message SuggestEntitiesRequest {
+  string text = 1;
+}
+
+message SuggestEntitiesResponse {
+  repeated string data = 1;
+}
+
+message GetEntityTypesRequest {}
+
+message GetEntityTypesResponse {
+  repeated Type data = 1;
+}
+
+// Context & Impact
+
+message GetEntityContextRequest {
+  string urn = 1 [(buf.validate.field).string.min_len = 1];
+  uint32 depth = 2;
+}
+
+message GetEntityContextResponse {
+  Entity entity = 1;
+  repeated Edge edges = 2;
+  repeated Entity related = 3;
+}
+
+message GetEntityImpactRequest {
+  string urn = 1 [(buf.validate.field).string.min_len = 1];
+  uint32 depth = 2;
+}
+
+message GetEntityImpactResponse {
+  repeated Edge edges = 1;
+  repeated Entity affected = 2;
+}
+
+// Edge CRUD
+
+message UpsertEdgeRequest {
+  string source_urn = 1 [(buf.validate.field).string.min_len = 1];
+  string target_urn = 2 [(buf.validate.field).string.min_len = 1];
+  string type = 3 [(buf.validate.field).string.min_len = 1];
+  google.protobuf.Struct properties = 4;
+  string source = 5;
+}
+
+message UpsertEdgeResponse {
+  string id = 1;
+}
+
+message GetEdgesRequest {
+  string urn = 1 [(buf.validate.field).string.min_len = 1];
+  string direction = 2; // outgoing, incoming, both (default: both)
+  string type = 3; // filter by edge type
+  bool current_only = 4; // only current edges (valid_to IS NULL)
+}
+
+message GetEdgesResponse {
+  repeated Edge data = 1;
+}
+
+message DeleteEdgeRequest {
+  string source_urn = 1 [(buf.validate.field).string.min_len = 1];
+  string target_urn = 2 [(buf.validate.field).string.min_len = 1];
+  string type = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message DeleteEdgeResponse {}
