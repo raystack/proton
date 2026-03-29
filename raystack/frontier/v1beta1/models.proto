@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package raystack.frontier.v1beta1;
 
+import "buf/validate/validate.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
 option java_outer_classname = "Frontier";
@@ -14,14 +14,14 @@ option java_package = "io.raystack.proton.frontier.v1beta1";
 message User {
   string id = 1;
   // can either be empty or must start with a character
-  string name = 2 [(validate.rules).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"}];
+  string name = 2 [(buf.validate.field).string = {pattern: "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"}];
   string title = 3;
-  string email = 4 [(validate.rules).string.email = true];
+  string email = 4 [(buf.validate.field).string.email = true];
   google.protobuf.Struct metadata = 5;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
   string state = 8;
-  string avatar = 9 [(validate.rules).string = {
+  string avatar = 9 [(buf.validate.field).string = {
     pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
     max_len: 250000
   }];
@@ -40,7 +40,7 @@ message ServiceUser {
 
 message Group {
   string id = 1;
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -58,7 +58,7 @@ message Role {
   reserved 8;
 
   string id = 1;
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -74,7 +74,7 @@ message Role {
 
 message Organization {
   string id = 1;
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -83,7 +83,7 @@ message Organization {
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
   string state = 7;
-  string avatar = 8 [(validate.rules).string = {
+  string avatar = 8 [(buf.validate.field).string = {
     pattern: "^data:image/(png|jpg|jpeg|gif);base64,([A-Za-z0-9+/=]|\\s)+$"
     max_len: 250000
   }];
@@ -99,7 +99,7 @@ message OrganizationKyc {
 
 message Project {
   string id = 1;
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -114,7 +114,7 @@ message Project {
 
 message Domain {
   string id = 1;
-  string name = 2 [(validate.rules).string = {min_len: 2}];
+  string name = 2 [(buf.validate.field).string = {min_len: 2}];
   string org_id = 3;
   string token = 4;
   string state = 5;
@@ -156,7 +156,7 @@ message Relation {
 message Permission {
   string id = 1;
   string name = 2 [
-    (validate.rules).string = {
+    (buf.validate.field).string = {
       min_len: 2
       pattern: "^[A-Za-z0-9]+$"
     },
@@ -175,7 +175,7 @@ message Namespace {
 
   string id = 1;
   // name could be in a format like: app/organization
-  string name = 2 [(validate.rules).string.pattern = "^[A-Za-z0-9/]+$"];
+  string name = 2 [(buf.validate.field).string.pattern = "^[A-Za-z0-9/]+$"];
   google.protobuf.Struct metadata = 3;
   google.protobuf.Timestamp created_at = 6;
   google.protobuf.Timestamp updated_at = 7;
@@ -198,7 +198,7 @@ message Resource {
 
 message MetaSchema {
   string id = 1;
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -261,13 +261,13 @@ message ServiceUserToken {
 // PATScope pairs a role with its resource type and optional resource IDs.
 message PATScope {
   string role_id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   // Resource type: "app/organization" or "app/project"
   string resource_type = 2 [(google.api.field_behavior) = REQUIRED];
   // Specific resource UUIDs within the resource type (optional)
-  repeated string resource_ids = 3 [(validate.rules).repeated.items.string.uuid = true];
+  repeated string resource_ids = 3 [(buf.validate.field).repeated.items.string.uuid = true];
 }
 
 message PAT {
@@ -341,13 +341,13 @@ message AuditLog {
 
   // Source service generating the event
   string source = 2 [
-    (validate.rules).string = {min_len: 2},
+    (buf.validate.field).string = {min_len: 2},
     (google.api.field_behavior) = REQUIRED
   ];
 
   // Action performed, e.g. project.create, user.update, serviceuser.delete
   string action = 3 [
-    (validate.rules).string = {min_len: 2},
+    (buf.validate.field).string = {min_len: 2},
     (google.api.field_behavior) = REQUIRED
   ];
 
@@ -536,7 +536,7 @@ message Plan {
   string description = 4;
   repeated Product products = 5;
   // known intervals are "day", "week", "month", and "year"
-  string interval = 6 [(validate.rules).string = {
+  string interval = 6 [(buf.validate.field).string = {
     in: [
       "day",
       "week",
@@ -544,8 +544,8 @@ message Plan {
       "year"
     ]
   }];
-  int64 on_start_credits = 7 [(validate.rules).int64 = {gte: 0}];
-  int64 trial_days = 8 [(validate.rules).int64 = {gte: 0}];
+  int64 on_start_credits = 7 [(buf.validate.field).int64 = {gte: 0}];
+  int64 trial_days = 8 [(buf.validate.field).int64 = {gte: 0}];
 
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
@@ -557,8 +557,8 @@ message Product {
   message BehaviorConfig {
     int64 credit_amount = 1;
     int64 seat_limit = 2;
-    int64 min_quantity = 3 [(validate.rules).int64 = {gte: 0}];
-    int64 max_quantity = 4 [(validate.rules).int64 = {gte: 0}];
+    int64 min_quantity = 3 [(buf.validate.field).int64 = {gte: 0}];
+    int64 max_quantity = 4 [(buf.validate.field).int64 = {gte: 0}];
   }
 
   string id = 1;
@@ -569,13 +569,15 @@ message Product {
   string state = 6;
 
   repeated Price prices = 7;
-  string behavior = 9 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "basic",
-      "credits",
-      "per_seat"
-    ]
+  string behavior = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "basic",
+        "credits",
+        "per_seat"
+      ]
+    }
   }];
   repeated Feature features = 10;
   BehaviorConfig behavior_config = 11;
@@ -607,7 +609,7 @@ message Price {
   string name = 4;
 
   // known intervals are "day", "week", "month", and "year"
-  string interval = 6 [(validate.rules).string = {
+  string interval = 6 [(buf.validate.field).string = {
     in: [
       "day",
       "week",
@@ -617,41 +619,49 @@ message Price {
   }];
 
   // usage_type known types are "licensed" and "metered"
-  string usage_type = 7 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "licensed",
-      "metered"
-    ]
+  string usage_type = 7 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "licensed",
+        "metered"
+      ]
+    }
   }];
   // billing_scheme known schemes are "tiered" and "flat"
-  string billing_scheme = 8 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "tiered",
-      "flat"
-    ]
+  string billing_scheme = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "tiered",
+        "flat"
+      ]
+    }
   }];
   string state = 9;
   // currency like "usd", "eur", "gbp"
   string currency = 10;
-  int64 amount = 11 [(validate.rules).int64 = {gte: 0}];
+  int64 amount = 11 [(buf.validate.field).int64 = {gte: 0}];
   // metered_aggregate known aggregations are "sum", "last_during_period" and "max"
-  string metered_aggregate = 13 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "sum",
-      "max",
-      "last_during_period"
-    ]
+  string metered_aggregate = 13 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "sum",
+        "max",
+        "last_during_period"
+      ]
+    }
   }];
   // tier_mode known modes are "graduated" and "volume"
-  string tier_mode = 14 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "graduated",
-      "volume"
-    ]
+  string tier_mode = 14 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "graduated",
+        "volume"
+      ]
+    }
   }];
 
   google.protobuf.Struct metadata = 20;
@@ -660,17 +670,19 @@ message Price {
 }
 
 message BillingTransaction {
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
   string customer_id = 2;
   // additional metadata for storing event/service that triggered this usage
   string source = 3;
-  int64 amount = 4 [(validate.rules).int64 = {gte: 0}];
-  string type = 5 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "credit",
-      "debit"
-    ]
+  int64 amount = 4 [(buf.validate.field).int64 = {gte: 0}];
+  string type = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "credit",
+        "debit"
+      ]
+    }
   }];
   string description = 6;
 
@@ -687,7 +699,7 @@ message BillingTransaction {
 
 message Usage {
   // uuid used as an idempotent key
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
   string customer_id = 2;
   // additional metadata for storing event/service that triggered this usage
   string source = 3;
@@ -696,14 +708,16 @@ message Usage {
   // Type is the type of usage, it can be credit or feature
   // if credit, the amount is the amount of credits that were consumed
   // if feature, the amount is the amount of features that were used
-  string type = 5 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "credit",
-      "feature"
-    ]
+  string type = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "credit",
+        "feature"
+      ]
+    }
   }];
-  int64 amount = 6 [(validate.rules).int64 = {gt: 0}];
+  int64 amount = 6 [(buf.validate.field).int64 = {gt: 0}];
 
   // user_id is the user that triggered this usage
   string user_id = 7;
@@ -786,18 +800,18 @@ message WebhookEvent {
 message RoleRequestBody {
   reserved 1, 4;
 
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
-  repeated string permissions = 3 [(validate.rules).repeated = {min_items: 1}];
+  repeated string permissions = 3 [(buf.validate.field).repeated = {min_items: 1}];
   google.protobuf.Struct metadata = 5;
   string title = 6;
   repeated string scopes = 7;
 }
 
 message PreferenceRequestBody {
-  string name = 2 [(validate.rules).string = {
+  string name = 2 [(buf.validate.field).string = {
     min_len: 2
     pattern: "^[A-Za-z0-9-_]+$"
   }];
@@ -823,7 +837,7 @@ message CheckoutSubscriptionBody {
 
 message CheckoutProductBody {
   string product = 1;
-  int64 quantity = 2 [(validate.rules).int64 = {gte: 0}];
+  int64 quantity = 2 [(buf.validate.field).int64 = {gte: 0}];
 }
 
 message CheckoutSetupBody {
@@ -879,7 +893,7 @@ message RQLFilter {
 
 message RQLSort {
   string name = 1;
-  string order = 2 [(validate.rules).string = {
+  string order = 2 [(buf.validate.field).string = {
     in: [
       "asc",
       "desc"
@@ -933,7 +947,7 @@ message Session {
 message AuditRecordActor {
   string id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.uuid = true
+    (buf.validate.field).string.uuid = true
   ];
   string type = 2; // not mandatory if id is zeroUUID
   string name = 3;

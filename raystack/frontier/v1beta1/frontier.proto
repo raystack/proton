@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package raystack.frontier.v1beta1;
 
+import "buf/validate/validate.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "raystack/frontier/v1beta1/models.proto";
-import "validate/validate.proto";
 
 option go_package = "github.com/raystack/proton/frontier/v1beta1;frontierv1beta1";
 option java_outer_classname = "Frontier";
@@ -402,9 +402,9 @@ message BillingAccountRequestBody {
 
 message CreateBillingAccountRequest {
   // ID of the organization to create the billing account for
-  string org_id = 1 [(validate.rules).string.min_len = 1];
+  string org_id = 1 [(buf.validate.field).string.min_len = 1];
   // Billing account to create.
-  BillingAccountRequestBody body = 2 [(validate.rules).message.required = true];
+  BillingAccountRequestBody body = 2 [(buf.validate.field).required = true];
   // Offline billing account don't get registered with billing provider
   bool offline = 3;
 }
@@ -416,11 +416,11 @@ message CreateBillingAccountResponse {
 
 message GetBillingAccountRequest {
   // ID of the billing account to get
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 
   bool with_payment_methods = 3;
@@ -443,11 +443,11 @@ message GetBillingAccountResponse {
 
 message UpdateBillingAccountRequest {
   // ID of the billing account to update
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 
   // Billing account to update.
@@ -461,11 +461,11 @@ message UpdateBillingAccountResponse {
 
 message RegisterBillingAccountRequest {
   // ID of the billing account to register
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
@@ -473,7 +473,7 @@ message RegisterBillingAccountResponse {}
 
 message ListBillingAccountsRequest {
   // ID of the organization to list billing accounts for
-  string org_id = 1 [(validate.rules).string.min_len = 1];
+  string org_id = 1 [(buf.validate.field).string.min_len = 1];
 
   repeated string expand = 101;
 }
@@ -485,11 +485,11 @@ message ListBillingAccountsResponse {
 
 message DeleteBillingAccountRequest {
   // ID of the billing account to delete
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
@@ -497,10 +497,10 @@ message DeleteBillingAccountResponse {}
 
 message EnableBillingAccountRequest {
   // ID of the billing account to enable
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
@@ -508,10 +508,10 @@ message EnableBillingAccountResponse {}
 
 message DisableBillingAccountRequest {
   // ID of the billing account to disable
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
@@ -519,11 +519,11 @@ message DisableBillingAccountResponse {}
 
 message GetBillingBalanceRequest {
   // ID of the billing account to get the balance for
-  string id = 1 [(validate.rules).string.uuid = true];
+  string id = 1 [(buf.validate.field).string.uuid = true];
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from billing account id
 }
 
@@ -536,16 +536,16 @@ message HasTrialedRequest {
   // ID of the billing account to check
   string id = 1 [
     deprecated = true,
-    (validate.rules).string.uuid = true
+    (buf.validate.field).string.uuid = true
   ]; // DEPRECATED: billing_id will be inferred from plan_id
 
   string org_id = 2 [
     deprecated = true,
-    (validate.rules).string.min_len = 1
+    (buf.validate.field).string.min_len = 1
   ]; // DEPRECATED: org_id will be inferred from plan_id
 
   // ID of the plan to check
-  string plan_id = 3 [(validate.rules).string.min_len = 1];
+  string plan_id = 3 [(buf.validate.field).string.min_len = 1];
 }
 
 message HasTrialedResponse {
@@ -558,9 +558,9 @@ message CreateBillingUsageRequest {
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -574,13 +574,13 @@ message CreateBillingUsageRequest {
 message CreateBillingUsageResponse {}
 
 message ListBillingTransactionsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -597,13 +597,13 @@ message ListBillingTransactionsResponse {
 }
 
 message TotalDebitedTransactionsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 }
@@ -617,22 +617,22 @@ message GetSubscriptionRequest {
   // DEPRECATED: org_id will be inferred from subscription id
   string org_id = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      min_len: 3
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {min_len: 3}
     }
   ];
   // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to get the subscription for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
   // ID of the subscription to get
-  string id = 3 [(validate.rules).string.min_len = 1];
+  string id = 3 [(buf.validate.field).string.min_len = 1];
 
   repeated string expand = 101;
 }
@@ -642,14 +642,14 @@ message GetSubscriptionResponse {
 }
 
 message ListSubscriptionsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to list subscriptions for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -669,22 +669,22 @@ message UpdateSubscriptionRequest {
   // DEPRECATED: org_id will be inferred from subscription id
   string org_id = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      min_len: 3
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {min_len: 3}
     }
   ];
   // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
   // ID of the subscription to update
-  string id = 3 [(validate.rules).string.min_len = 1];
+  string id = 3 [(buf.validate.field).string.min_len = 1];
 
   google.protobuf.Struct metadata = 20;
 }
@@ -698,22 +698,22 @@ message ChangeSubscriptionRequest {
   // DEPRECATED: org_id will be inferred from subscription id
   string org_id = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      min_len: 3
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {min_len: 3}
     }
   ];
   // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
   // ID of the subscription to update
-  string id = 3 [(validate.rules).string.min_len = 1];
+  string id = 3 [(buf.validate.field).string.min_len = 1];
 
   // plan to change to
   // deprecated in favor of plan_change
@@ -749,22 +749,22 @@ message CancelSubscriptionRequest {
   // DEPRECATED: org_id will be inferred from subscription id
   string org_id = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      min_len: 3
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {min_len: 3}
     }
   ];
   // DEPRECATED: billing_id will be inferred from subscription id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
   // ID of the subscription to cancel
-  string id = 3 [(validate.rules).string.min_len = 1];
+  string id = 3 [(buf.validate.field).string.min_len = 1];
 
   bool immediate = 4;
 }
@@ -783,9 +783,9 @@ message CheckFeatureEntitlementRequest {
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -793,7 +793,7 @@ message CheckFeatureEntitlementRequest {
   string project_id = 4 [deprecated = true];
 
   // feature or product name
-  string feature = 3 [(validate.rules).string.min_len = 1];
+  string feature = 3 [(buf.validate.field).string.min_len = 1];
 }
 
 message CheckFeatureEntitlementResponse {
@@ -801,8 +801,8 @@ message CheckFeatureEntitlementResponse {
 }
 
 message CheckCreditEntitlementRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
-  int64 amount = 2 [(validate.rules).int64 = {gt: 0}];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
+  int64 amount = 2 [(buf.validate.field).int64 = {gt: 0}];
 }
 
 message CheckCreditEntitlementResponse {
@@ -810,14 +810,14 @@ message CheckCreditEntitlementResponse {
 }
 
 message CreateCheckoutRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to update the subscription for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -838,14 +838,14 @@ message CreateCheckoutResponse {
 }
 
 message ListCheckoutsRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   // ID of the billing account to get the subscriptions for
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 }
@@ -859,21 +859,21 @@ message GetCheckoutRequest {
   // DEPRECATED: org_id is not needed, checkout can be fetched by id alone
   string org_id = 1 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      min_len: 3
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {min_len: 3}
     }
   ];
   // DEPRECATED: billing_id is not needed, checkout can be fetched by id alone
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
   // ID of the checkout to get
-  string id = 3 [(validate.rules).string.min_len = 1];
+  string id = 3 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetCheckoutResponse {
@@ -884,18 +884,20 @@ message GetCheckoutResponse {
 message ProductRequestBody {
   reserved 7;
 
-  string name = 1 [(validate.rules).string.min_len = 3];
+  string name = 1 [(buf.validate.field).string.min_len = 3];
   string title = 2;
   string description = 3;
   string plan_id = 4;
   repeated Price prices = 5;
-  string behavior = 8 [(validate.rules).string = {
-    ignore_empty: true
-    in: [
-      "basic",
-      "credits",
-      "per_seat"
-    ]
+  string behavior = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "basic",
+        "credits",
+        "per_seat"
+      ]
+    }
   }];
   repeated Feature features = 9;
   Product.BehaviorConfig behavior_config = 10;
@@ -905,7 +907,7 @@ message ProductRequestBody {
 
 message CreateProductRequest {
   // Product to create
-  ProductRequestBody body = 1 [(validate.rules).message.required = true];
+  ProductRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateProductResponse {
@@ -915,7 +917,7 @@ message CreateProductResponse {
 
 message GetProductRequest {
   // ID of the product to get
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetProductResponse {
@@ -932,7 +934,7 @@ message ListProductsResponse {
 
 message UpdateProductRequest {
   // ID of the product to update
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   // Product to update
   ProductRequestBody body = 2;
 }
@@ -944,7 +946,7 @@ message UpdateProductResponse {
 
 message FeatureRequestBody {
   // machine friendly name
-  string name = 1 [(validate.rules).string.min_len = 3];
+  string name = 1 [(buf.validate.field).string.min_len = 3];
   // human friendly title
   string title = 2;
 
@@ -955,7 +957,7 @@ message FeatureRequestBody {
 
 message CreateFeatureRequest {
   // Feature to create
-  FeatureRequestBody body = 1 [(validate.rules).message.required = true];
+  FeatureRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateFeatureResponse {
@@ -965,7 +967,7 @@ message CreateFeatureResponse {
 
 message GetFeatureRequest {
   // ID of the feature to get
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetFeatureResponse {
@@ -975,7 +977,7 @@ message GetFeatureResponse {
 
 message UpdateFeatureRequest {
   // ID of the feature to update
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   // Feature to update
   FeatureRequestBody body = 2;
 }
@@ -998,7 +1000,7 @@ message PlanRequestBody {
 
   repeated Product products = 4;
   // known intervals are "day", "week", "month", and "year"
-  string interval = 5 [(validate.rules).string = {
+  string interval = 5 [(buf.validate.field).string = {
     in: [
       "day",
       "week",
@@ -1014,7 +1016,7 @@ message PlanRequestBody {
 
 message CreatePlanRequest {
   // Plan to create
-  PlanRequestBody body = 1 [(validate.rules).message.required = true];
+  PlanRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreatePlanResponse {
@@ -1024,7 +1026,7 @@ message CreatePlanResponse {
 
 message GetPlanRequest {
   // ID of the plan to get
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetPlanResponse {
@@ -1034,7 +1036,7 @@ message GetPlanResponse {
 
 message UpdatePlanRequest {
   // ID of the plan to update
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   // Plan to update
   PlanRequestBody body = 2;
 }
@@ -1045,13 +1047,13 @@ message UpdatePlanResponse {
 }
 
 message ListInvoicesRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 
@@ -1066,13 +1068,13 @@ message ListInvoicesResponse {
 }
 
 message GetUpcomingInvoiceRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   // DEPRECATED: billing_id will be inferred from org_id
   string billing_id = 2 [
     deprecated = true,
-    (validate.rules).string = {
-      ignore_empty: true
-      uuid: true
+    (buf.validate.field) = {
+      ignore: IGNORE_IF_ZERO_VALUE
+      string: {uuid: true}
     }
   ];
 }
@@ -1179,28 +1181,30 @@ message AuthTokenResponse {
 }
 
 message UserRequestBody {
-  string name = 1 [(validate.rules).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^([a-zA-Z][a-zA-Z0-9-_]{3,64})?$"];
   string email = 2 [
-    (validate.rules).string.email = true,
+    (buf.validate.field).string.email = true,
     (google.api.field_behavior) = REQUIRED
   ];
   google.protobuf.Struct metadata = 3;
   string title = 4;
-  string avatar = 5 [(validate.rules).string = {
-    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
-    max_len: 250000
-    ignore_empty: true
+  string avatar = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
+      max_len: 250000
+    }
   }];
 }
 
 message ListUsersRequest {
-  int32 page_size = 1 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_size = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
-  int32 page_num = 2 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_num = 2 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
   string keyword = 3;
   string org_id = 4;
@@ -1214,7 +1218,7 @@ message ListUsersResponse {
 }
 
 message CreateUserRequest {
-  UserRequestBody body = 1 [(validate.rules).message.required = true];
+  UserRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateUserResponse {
@@ -1267,13 +1271,13 @@ message ListProjectsByCurrentUserRequest {
 
   bool with_member_count = 4;
 
-  int32 page_size = 5 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_size = 5 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
-  int32 page_num = 6 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_num = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
 }
 
@@ -1387,7 +1391,7 @@ message ListCurrentUserInvitationsResponse {
 
 message ListServiceUsersRequest {
   string org_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string state = 2;
@@ -1405,7 +1409,7 @@ message ServiceUserRequestBody {
 message CreateServiceUserRequest {
   ServiceUserRequestBody body = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1417,7 +1421,7 @@ message CreateServiceUserResponse {
 message GetServiceUserRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1429,7 +1433,7 @@ message GetServiceUserResponse {
 message DeleteServiceUserRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1440,7 +1444,7 @@ message CreateServiceUserJWKRequest {
   string id = 1;
   string title = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1453,7 +1457,7 @@ message GetServiceUserJWKRequest {
   string id = 1;
   string key_id = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1465,7 +1469,7 @@ message GetServiceUserJWKResponse {
 message ListServiceUserJWKsRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1478,7 +1482,7 @@ message DeleteServiceUserJWKRequest {
   string id = 1;
   string key_id = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1489,7 +1493,7 @@ message CreateServiceUserCredentialRequest {
   string id = 1;
   string title = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1501,7 +1505,7 @@ message CreateServiceUserCredentialResponse {
 message ListServiceUserCredentialsRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1515,7 +1519,7 @@ message DeleteServiceUserCredentialRequest {
   string id = 1;
   string secret_id = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1526,7 +1530,7 @@ message CreateServiceUserTokenRequest {
   string id = 1;
   string title = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1538,7 +1542,7 @@ message CreateServiceUserTokenResponse {
 message ListServiceUserTokensRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1551,7 +1555,7 @@ message DeleteServiceUserTokenRequest {
   string id = 1;
   string token_id = 2;
   string org_id = 3 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1561,7 +1565,7 @@ message DeleteServiceUserTokenResponse {}
 message ListServiceUserProjectsRequest {
   string id = 1;
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   // list of permissions needs to be checked against each project
@@ -1584,7 +1588,7 @@ message ListServiceUserProjectsResponse {
 
 message ListOrganizationGroupsRequest {
   reserved 1;
-  string org_id = 2 [(validate.rules).string = {
+  string org_id = 2 [(buf.validate.field).string = {
     pattern: "^[A-Za-z0-9_-]+$"
     min_len: 3
   }];
@@ -1600,7 +1604,7 @@ message ListOrganizationGroupsResponse {
 }
 
 message CreateOrganizationRoleRequest {
-  RoleRequestBody body = 1 [(validate.rules).message.required = true];
+  RoleRequestBody body = 1 [(buf.validate.field).required = true];
   string org_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
@@ -1610,7 +1614,7 @@ message CreateOrganizationRoleResponse {
 
 message GetOrganizationRoleRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message GetOrganizationRoleResponse {
@@ -1637,7 +1641,7 @@ message ListRolesResponse {
 }
 
 message ListOrganizationRolesRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
   string state = 2;
   repeated string scopes = 3;
 }
@@ -1648,35 +1652,37 @@ message ListOrganizationRolesResponse {
 
 message DeleteOrganizationRoleRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message DeleteOrganizationRoleResponse {}
 
 message OrganizationRequestBody {
   string name = 1 [
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2;
   google.protobuf.Struct metadata = 3;
-  string avatar = 4 [(validate.rules).string = {
-    pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
-    max_len: 250000
-    ignore_empty: true
+  string avatar = 4 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      pattern: "^data:image/(png|jpg|jpeg|gif);base64,([a-zA-Z0-9+/]+={0,2})+$"
+      max_len: 250000
+    }
   }];
 }
 
 message ListOrganizationsRequest {
   string user_id = 1;
   string state = 2;
-  int32 page_size = 3 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_size = 3 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
-  int32 page_num = 4 [(validate.rules).int32 = {
-    gte: 1
-    ignore_empty: true
+  int32 page_num = 4 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    int32: {gte: 1}
   }];
 }
 
@@ -1685,7 +1691,7 @@ message ListOrganizationsResponse {
 }
 
 message CreateOrganizationRequest {
-  OrganizationRequestBody body = 1 [(validate.rules).message.required = true];
+  OrganizationRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateOrganizationResponse {
@@ -1710,7 +1716,7 @@ message UpdateOrganizationRequest {
 }
 
 message ListOrganizationAdminsRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListOrganizationAdminsResponse {
@@ -1718,7 +1724,7 @@ message ListOrganizationAdminsResponse {
 }
 
 message ListOrganizationUsersRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   string permission_filter = 2 [deprecated = true];
 
   bool with_roles = 3;
@@ -1736,29 +1742,29 @@ message ListOrganizationUsersResponse {
 }
 
 message AddOrganizationUsersRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   repeated string user_ids = 2;
 }
 
 message AddOrganizationUsersResponse {}
 
 message RemoveOrganizationUserRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   string user_id = 2;
 }
 
 message RemoveOrganizationUserResponse {}
 
 message SetOrganizationMemberRoleRequest {
-  string org_id = 1 [(validate.rules).string.uuid = true];
-  string user_id = 2 [(validate.rules).string.uuid = true];
-  string role_id = 3 [(validate.rules).string.uuid = true];
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
+  string user_id = 2 [(buf.validate.field).string.uuid = true];
+  string role_id = 3 [(buf.validate.field).string.uuid = true];
 }
 
 message SetOrganizationMemberRoleResponse {}
 
 message ListOrganizationServiceUsersRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListOrganizationServiceUsersResponse {
@@ -1778,7 +1784,7 @@ message CreateOrganizationInvitationRequest {
   string org_id = 1 [(google.api.field_behavior) = REQUIRED];
   repeated string user_ids = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {
+    (buf.validate.field).repeated = {
       min_items: 1
       max_items: 10
     }
@@ -1814,7 +1820,7 @@ message DeleteOrganizationInvitationRequest {
 
 message ListOrganizationDomainsRequest {
   string org_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string state = 2;
@@ -1826,7 +1832,7 @@ message ListOrganizationDomainsResponse {
 
 message ListOrganizationsByDomainRequest {
   string name = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1836,18 +1842,18 @@ message ListOrganizationsByDomainResponse {
 }
 
 message JoinOrganizationRequest {
-  string org_id = 1 [(validate.rules).string.min_len = 3];
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message JoinOrganizationResponse {}
 
 message GetOrganizationDomainRequest {
   string id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1858,11 +1864,11 @@ message GetOrganizationDomainResponse {
 
 message CreateOrganizationDomainRequest {
   string org_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string domain = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1873,11 +1879,11 @@ message CreateOrganizationDomainResponse {
 
 message DeleteOrganizationDomainRequest {
   string id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1886,11 +1892,11 @@ message DeleteOrganizationDomainResponse {}
 
 message VerifyOrganizationDomainRequest {
   string org_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string id = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -1931,19 +1937,19 @@ message GetOrganizationKycResponse {
 
 message ProjectRequestBody {
   string name = 1 [
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2;
   google.protobuf.Struct metadata = 3;
   string org_id = 4 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message CreateProjectRequest {
-  ProjectRequestBody body = 1 [(validate.rules).message.required = true];
+  ProjectRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateProjectResponse {
@@ -1951,7 +1957,7 @@ message CreateProjectResponse {
 }
 
 message ListOrganizationProjectsRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   string state = 2;
 
   bool with_member_count = 3;
@@ -1979,7 +1985,7 @@ message UpdateProjectResponse {
 }
 
 message ListProjectAdminsRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListProjectAdminsResponse {
@@ -1987,7 +1993,7 @@ message ListProjectAdminsResponse {
 }
 
 message ListProjectUsersRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   string permission_filter = 2;
 
   bool with_roles = 3;
@@ -2004,7 +2010,7 @@ message ListProjectUsersResponse {
 }
 
 message ListProjectServiceUsersRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   bool with_roles = 3;
 }
 
@@ -2019,7 +2025,7 @@ message ListProjectServiceUsersResponse {
 }
 
 message ListProjectGroupsRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   bool with_roles = 2;
 }
 
@@ -2053,12 +2059,12 @@ message DeleteProjectResponse {}
 
 message PolicyRequestBody {
   string role_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 3;
   string resource = 2 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string principal = 4 [(google.api.field_behavior) = REQUIRED];
@@ -2067,7 +2073,7 @@ message PolicyRequestBody {
 
 message CreatePolicyForProjectBody {
   string role_id = 1 [
-    (validate.rules).string.min_len = 3,
+    (buf.validate.field).string.min_len = 3,
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2;
@@ -2103,7 +2109,7 @@ message GetNamespaceResponse {
 }
 
 message CreatePolicyRequest {
-  PolicyRequestBody body = 1 [(validate.rules).message.required = true];
+  PolicyRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreatePolicyResponse {
@@ -2147,8 +2153,8 @@ message DeletePolicyRequest {
 message DeletePolicyResponse {}
 
 message CreatePolicyForProjectRequest {
-  string project_id = 1 [(validate.rules).string.min_len = 3];
-  CreatePolicyForProjectBody body = 2 [(validate.rules).message.required = true];
+  string project_id = 1 [(buf.validate.field).string.min_len = 3];
+  CreatePolicyForProjectBody body = 2 [(buf.validate.field).required = true];
 }
 
 message CreatePolicyForProjectResponse {}
@@ -2165,7 +2171,7 @@ message RelationRequestBody {
 }
 
 message CreateRelationRequest {
-  RelationRequestBody body = 1 [(validate.rules).message.required = true];
+  RelationRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateRelationResponse {
@@ -2194,7 +2200,7 @@ message UpdateRelationResponse {
 message GroupRequestBody {
   reserved 4;
   string name = 1 [
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2;
@@ -2202,7 +2208,7 @@ message GroupRequestBody {
 }
 
 message CreateGroupRequest {
-  GroupRequestBody body = 1 [(validate.rules).message.required = true];
+  GroupRequestBody body = 1 [(buf.validate.field).required = true];
   string org_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
@@ -2249,28 +2255,28 @@ message ListGroupUsersResponse {
 
 message EnableGroupRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message EnableGroupResponse {}
 
 message DisableGroupRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message DisableGroupResponse {}
 
 message DeleteGroupRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message DeleteGroupResponse {}
 
 message AddGroupUsersRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
   repeated string user_ids = 3;
 }
 
@@ -2278,7 +2284,7 @@ message AddGroupUsersResponse {}
 
 message RemoveGroupUserRequest {
   string id = 1;
-  string org_id = 2 [(validate.rules).string.min_len = 3];
+  string org_id = 2 [(buf.validate.field).string.min_len = 3];
   string user_id = 3;
 }
 
@@ -2300,7 +2306,7 @@ message DeleteRelationResponse {}
 
 message ListProjectResourcesRequest {
   reserved 1;
-  string project_id = 2 [(validate.rules).string.min_len = 3];
+  string project_id = 2 [(buf.validate.field).string.min_len = 3];
   string namespace = 4;
 }
 
@@ -2319,7 +2325,7 @@ message ResourceRequestBody {
 }
 
 message CreateProjectResourceRequest {
-  ResourceRequestBody body = 1 [(validate.rules).message.required = true];
+  ResourceRequestBody body = 1 [(buf.validate.field).required = true];
   // project uuid or name
   string project_id = 2;
   string id = 3;
@@ -2332,7 +2338,7 @@ message CreateProjectResourceResponse {
 message GetProjectResourceRequest {
   reserved 2;
   string id = 1;
-  string project_id = 3 [(validate.rules).string.min_len = 3];
+  string project_id = 3 [(buf.validate.field).string.min_len = 3];
 }
 
 message GetProjectResourceResponse {
@@ -2351,7 +2357,7 @@ message UpdateProjectResourceResponse {
 
 message DeleteProjectResourceRequest {
   string id = 1;
-  string project_id = 3 [(validate.rules).string.min_len = 3];
+  string project_id = 3 [(buf.validate.field).string.min_len = 3];
 }
 
 message DeleteProjectResourceResponse {}
@@ -2361,7 +2367,7 @@ message CheckResourcePermissionRequest {
   string object_namespace = 2 [deprecated = true];
   string permission = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
   string resource = 4;
 }
@@ -2371,7 +2377,7 @@ message CheckResourcePermissionResponse {
 }
 
 message BatchCheckPermissionRequest {
-  repeated BatchCheckPermissionBody bodies = 1 [(validate.rules).repeated = {
+  repeated BatchCheckPermissionBody bodies = 1 [(buf.validate.field).repeated = {
     min_items: 1
     max_items: 20
   }];
@@ -2380,7 +2386,7 @@ message BatchCheckPermissionRequest {
 message BatchCheckPermissionBody {
   string permission = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.pattern = "^[A-Za-z0-9._-]+$"
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9._-]+$"
   ];
   string resource = 2;
 }
@@ -2398,17 +2404,17 @@ message BatchCheckPermissionResponsePair {
 
 message MetaSchemaRequestBody {
   string name = 1 [
-    (validate.rules).string.pattern = "^[A-Za-z0-9-_]+$",
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9-_]+$",
     (google.api.field_behavior) = REQUIRED
   ];
   string schema = 2 [
-    (validate.rules).string.min_len = 2,
+    (buf.validate.field).string.min_len = 2,
     (google.api.field_behavior) = REQUIRED
   ];
 }
 
 message CreateMetaSchemaRequest {
-  MetaSchemaRequestBody body = 1 [(validate.rules).message.required = true];
+  MetaSchemaRequestBody body = 1 [(buf.validate.field).required = true];
 }
 
 message CreateMetaSchemaResponse {
@@ -2425,7 +2431,7 @@ message GetMetaSchemaResponse {
 
 message UpdateMetaSchemaRequest {
   string id = 1;
-  MetaSchemaRequestBody body = 2 [(validate.rules).message.required = true];
+  MetaSchemaRequestBody body = 2 [(buf.validate.field).required = true];
 }
 
 message UpdateMetaSchemaResponse {
@@ -2453,8 +2459,8 @@ message DescribePreferencesResponse {
 }
 
 message CreateOrganizationPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
-  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message CreateOrganizationPreferencesResponse {
@@ -2462,7 +2468,7 @@ message CreateOrganizationPreferencesResponse {
 }
 
 message ListOrganizationPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListOrganizationPreferencesResponse {
@@ -2470,8 +2476,8 @@ message ListOrganizationPreferencesResponse {
 }
 
 message CreateProjectPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
-  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message CreateProjectPreferencesResponse {
@@ -2479,7 +2485,7 @@ message CreateProjectPreferencesResponse {
 }
 
 message ListProjectPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListProjectPreferencesResponse {
@@ -2487,8 +2493,8 @@ message ListProjectPreferencesResponse {
 }
 
 message CreateGroupPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
-  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message CreateGroupPreferencesResponse {
@@ -2496,7 +2502,7 @@ message CreateGroupPreferencesResponse {
 }
 
 message ListGroupPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
 }
 
 message ListGroupPreferencesResponse {
@@ -2504,8 +2510,8 @@ message ListGroupPreferencesResponse {
 }
 
 message CreateUserPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
-  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
+  repeated PreferenceRequestBody bodies = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message CreateUserPreferencesResponse {
@@ -2513,7 +2519,7 @@ message CreateUserPreferencesResponse {
 }
 
 message ListUserPreferencesRequest {
-  string id = 1 [(validate.rules).string.min_len = 3];
+  string id = 1 [(buf.validate.field).string.min_len = 3];
   // scope_type filters preferences by context type (e.g., "app/organization")
   // If empty, returns all user preferences (global + all scoped)
   // If set with scope_id, returns preferences for the specific scope,
@@ -2529,7 +2535,7 @@ message ListUserPreferencesResponse {
 }
 
 message CreateCurrentUserPreferencesRequest {
-  repeated PreferenceRequestBody bodies = 2 [(validate.rules).repeated.min_items = 1];
+  repeated PreferenceRequestBody bodies = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message CreateCurrentUserPreferencesResponse {
@@ -2552,20 +2558,20 @@ message ListCurrentUserPreferencesResponse {
 }
 
 message BillingWebhookCallbackRequest {
-  string provider = 1 [(validate.rules).string = {min_len: 1}];
+  string provider = 1 [(buf.validate.field).string = {min_len: 1}];
   bytes body = 2;
 }
 
 message BillingWebhookCallbackResponse {}
 
 message CreateProspectPublicRequest {
-  string name = 1 [(validate.rules).string = {
-    ignore_empty: true
-    pattern: "^[A-Za-z ]+$"
+  string name = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {pattern: "^[A-Za-z ]+$"}
   }];
   string email = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {
+    (buf.validate.field).string = {
       min_len: 1
       email: true
     }
@@ -2573,14 +2579,14 @@ message CreateProspectPublicRequest {
   string phone = 6;
   string activity = 7 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {
+    (buf.validate.field).string = {
       min_len: 1
       pattern: "^[A-Za-z0-9-_]+$"
     }
   ];
-  string source = 9 [(validate.rules).string = {
-    ignore_empty: true
-    pattern: "^[A-Za-z0-9-_]+$"
+  string source = 9 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {pattern: "^[A-Za-z0-9-_]+$"}
   }];
   google.protobuf.Struct metadata = 11;
 }
@@ -2596,7 +2602,7 @@ message ListSessionsResponse {
 message RevokeSessionRequest {
   string session_id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.uuid = true
+    (buf.validate.field).string.uuid = true
   ];
 }
 
@@ -2613,7 +2619,7 @@ message CreateAuditRecordRequest {
 
   string event = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string = {min_len: 3}
+    (buf.validate.field).string = {min_len: 3}
   ];
 
   // Base resource on which this change happened
@@ -2625,7 +2631,7 @@ message CreateAuditRecordRequest {
   // When the event occurred
   google.protobuf.Timestamp occurred_at = 5 [(google.api.field_behavior) = REQUIRED];
 
-  string org_id = 6 [(validate.rules).string.uuid = true];
+  string org_id = 6 [(buf.validate.field).string.uuid = true];
 
   // Request ID for tracing
   string request_id = 7;
@@ -2636,7 +2642,7 @@ message CreateAuditRecordRequest {
   // Idempotency key to prevent duplicate audit records. Can be used for storing external id.
   string idempotency_key = 9 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).string.uuid = true
+    (buf.validate.field).string.uuid = true
   ];
 }
 
@@ -2647,18 +2653,18 @@ message CreateAuditRecordResponse {
 message CreateCurrentUserPATRequest {
   // Human-friendly display name, unique per user per org
   string title = 1 [
-    (validate.rules).string.min_len = 1,
+    (buf.validate.field).string.min_len = 1,
     (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   reserved 3, 4;
   // Role-scope assignments for the PAT
   repeated PATScope scopes = 7 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1}
+    (buf.validate.field).repeated = {min_items: 1}
   ];
   google.protobuf.Timestamp expires_at = 5 [(google.api.field_behavior) = REQUIRED];
   google.protobuf.Struct metadata = 6;
@@ -2678,7 +2684,7 @@ message ListRolesForPATResponse {
 
 message SearchCurrentUserPATsRequest {
   string org_id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   RQLRequest query = 2;
@@ -2691,7 +2697,7 @@ message SearchCurrentUserPATsResponse {
 
 message GetCurrentUserPATRequest {
   string id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -2702,7 +2708,7 @@ message GetCurrentUserPATResponse {
 
 message DeleteCurrentUserPATRequest {
   string id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
 }
@@ -2711,18 +2717,18 @@ message DeleteCurrentUserPATResponse {}
 
 message UpdateCurrentUserPATRequest {
   string id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   string title = 2 [
-    (validate.rules).string.min_len = 1,
+    (buf.validate.field).string.min_len = 1,
     (google.api.field_behavior) = REQUIRED
   ];
   reserved 3, 4;
   // Role-scope assignments for the PAT
   repeated PATScope scopes = 6 [
     (google.api.field_behavior) = REQUIRED,
-    (validate.rules).repeated = {min_items: 1}
+    (buf.validate.field).repeated = {min_items: 1}
   ];
   google.protobuf.Struct metadata = 5;
 }
@@ -2733,7 +2739,7 @@ message UpdateCurrentUserPATResponse {
 
 message RegenerateCurrentUserPATRequest {
   string id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   google.protobuf.Timestamp expires_at = 2 [(google.api.field_behavior) = REQUIRED];
@@ -2745,13 +2751,13 @@ message RegenerateCurrentUserPATResponse {
 
 message CheckCurrentUserPATTitleRequest {
   string org_id = 1 [
-    (validate.rules).string.uuid = true,
+    (buf.validate.field).string.uuid = true,
     (google.api.field_behavior) = REQUIRED
   ];
   // Checks if this title is available for the current user in the given org.
   // Comparison is case-insensitive.
   string title = 2 [
-    (validate.rules).string.min_len = 1,
+    (buf.validate.field).string.min_len = 1,
     (google.api.field_behavior) = REQUIRED
   ];
 }
