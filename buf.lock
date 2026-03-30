@@ -4,9 +4,6 @@ deps:
   - name: buf.build/bufbuild/protovalidate
     commit: 80ab13bee0bf4272b6161a72bf7034e0
     digest: b5:1aa6a965be5d02d64e1d81954fa2e78ef9d1e33a0c30f92bc2626039006a94deb3a5b05f14ed8893f5c3ffce444ac008f7e968188ad225c4c29c813aa5f2daa1
-  - name: buf.build/envoyproxy/protoc-gen-validate
-    commit: daf171c6cdb54629b5f51e345a79e4dd
-    digest: b5:c745e1521879f43740230b1df673d0729f55704efefdcfc489d4a0a2d40c92a26cacfeab62813403040a8b180142d53b398c7ca784a065e43823605ee49681de
   - name: buf.build/googleapis/googleapis
     commit: 536964a08a534d51b8f30f2d6751f1f9
     digest: b5:3e05d27e797b00c345fadd3c15cf0e16c4cc693036a55059721e66d6ce22a96264a4897658c9243bb0874fa9ca96e437589eb512189d2754604a626c632f6030
