@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package raystack.meteor.v1beta1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/raystack/meteor/models/raystack/meteor/v1beta1;meteorv1beta1";
+option java_multiple_files = true;
+option java_outer_classname = "MeteorProto";
+option java_package = "io.raystack.proton.meteor";
+
+// Entity is a named resource in the metadata graph.
+message Entity {
+  string urn = 1;
+  string type = 2;
+  string name = 3;
+  string description = 4;
+  string source = 5;
+  google.protobuf.Struct properties = 6;
+  google.protobuf.Timestamp create_time = 7;
+  google.protobuf.Timestamp update_time = 8;
+}
+
+// Edge is a typed, directed relationship between two entities.
+message Edge {
+  string source_urn = 1;
+  string target_urn = 2;
+  string type = 3;
+  google.protobuf.Struct properties = 4;
+  string source = 5;
+}
