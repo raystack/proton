@@ -614,8 +614,7 @@ message ListProspectsResponse {
 message GetProspectRequest {
   string id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {min_len: 1},
-    (buf.validate.field).string.uuid = true
+    (buf.validate.field).string = {min_len: 1, uuid: true}
   ];
 }
 
@@ -626,8 +625,7 @@ message GetProspectResponse {
 message UpdateProspectRequest {
   string id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {min_len: 1},
-    (buf.validate.field).string.uuid = true
+    (buf.validate.field).string = {min_len: 1, uuid: true}
   ];
   string name = 2 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
@@ -672,8 +670,7 @@ message UpdateProspectResponse {
 message DeleteProspectRequest {
   string id = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).string = {min_len: 1},
-    (buf.validate.field).string.uuid = true
+    (buf.validate.field).string = {min_len: 1, uuid: true}
   ];
 }
 
