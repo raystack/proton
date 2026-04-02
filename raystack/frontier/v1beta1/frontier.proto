@@ -421,10 +421,8 @@ message GetBillingAccountRequest {
   // ID of the billing account to get
   string id = 1 [(buf.validate.field).string.min_len = 1];
 
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  // org_id removed
+  reserved 2;
 
   bool with_payment_methods = 3;
 
