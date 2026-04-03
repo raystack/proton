@@ -190,6 +190,9 @@ service FrontierService {
   rpc SetProjectMemberRole(SetProjectMemberRoleRequest) returns (SetProjectMemberRoleResponse) {
   }
 
+  rpc RemoveProjectMember(RemoveProjectMemberRequest) returns (RemoveProjectMemberResponse) {
+  }
+
   // Policies
   rpc CreatePolicy(CreatePolicyRequest) returns (CreatePolicyResponse) {}
 
@@ -2066,6 +2069,14 @@ message SetProjectMemberRoleRequest {
 }
 
 message SetProjectMemberRoleResponse {}
+
+message RemoveProjectMemberRequest {
+  string project_id = 1 [(buf.validate.field).string.uuid = true];
+  string principal_id = 2 [(buf.validate.field).string.uuid = true];
+  string principal_type = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message RemoveProjectMemberResponse {}
 
 message PolicyRequestBody {
   string role_id = 1 [
