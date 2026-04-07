@@ -519,7 +519,10 @@ message GetBillingBalanceResponse {
 }
 
 message HasTrialedRequest {
-  reserved 1, 2;
+  // ID of the billing account to check
+  string id = 1 [(buf.validate.field).string.uuid = true];
+
+  reserved 2;
 
   // ID of the plan to check
   string plan_id = 3 [(buf.validate.field).string.min_len = 1];
