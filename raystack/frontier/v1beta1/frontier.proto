@@ -449,10 +449,7 @@ message UpdateBillingAccountRequest {
   // ID of the billing account to update
   string id = 1 [(buf.validate.field).string.uuid = true];
 
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 
   // Billing account to update.
   BillingAccountRequestBody body = 3;
@@ -467,10 +464,7 @@ message RegisterBillingAccountRequest {
   // ID of the billing account to register
   string id = 1 [(buf.validate.field).string.uuid = true];
 
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 }
 
 message RegisterBillingAccountResponse {}
@@ -491,10 +485,7 @@ message DeleteBillingAccountRequest {
   // ID of the billing account to delete
   string id = 1 [(buf.validate.field).string.uuid = true];
 
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 }
 
 message DeleteBillingAccountResponse {}
@@ -502,10 +493,7 @@ message DeleteBillingAccountResponse {}
 message EnableBillingAccountRequest {
   // ID of the billing account to enable
   string id = 1 [(buf.validate.field).string.uuid = true];
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 }
 
 message EnableBillingAccountResponse {}
@@ -513,10 +501,7 @@ message EnableBillingAccountResponse {}
 message DisableBillingAccountRequest {
   // ID of the billing account to disable
   string id = 1 [(buf.validate.field).string.uuid = true];
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 }
 
 message DisableBillingAccountResponse {}
@@ -525,10 +510,7 @@ message GetBillingBalanceRequest {
   // ID of the billing account to get the balance for
   string id = 1 [(buf.validate.field).string.uuid = true];
 
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from billing account id
+  reserved 2;
 }
 
 message GetBillingBalanceResponse {
@@ -537,16 +519,7 @@ message GetBillingBalanceResponse {
 }
 
 message HasTrialedRequest {
-  // ID of the billing account to check
-  string id = 1 [
-    deprecated = true,
-    (buf.validate.field).string.uuid = true
-  ]; // DEPRECATED: billing_id will be inferred from plan_id
-
-  string org_id = 2 [
-    deprecated = true,
-    (buf.validate.field).string.min_len = 1
-  ]; // DEPRECATED: org_id will be inferred from plan_id
+  reserved 1, 2;
 
   // ID of the plan to check
   string plan_id = 3 [(buf.validate.field).string.min_len = 1];
@@ -559,17 +532,7 @@ message HasTrialedResponse {
 
 message CreateBillingUsageRequest {
   string org_id = 1;
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
-
-  // DEPRECATED
-  string project_id = 4 [deprecated = true];
+  reserved 2, 4;
 
   // Usage to create
   repeated Usage usages = 3;
@@ -579,14 +542,7 @@ message CreateBillingUsageResponse {}
 
 message ListBillingTransactionsRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 
   google.protobuf.Timestamp since = 3 [deprecated = true];
   google.protobuf.Timestamp start_range = 4;
@@ -602,14 +558,7 @@ message ListBillingTransactionsResponse {
 
 message TotalDebitedTransactionsRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 }
 
 message TotalDebitedTransactionsResponse {
@@ -618,23 +567,8 @@ message TotalDebitedTransactionsResponse {
 }
 
 message GetSubscriptionRequest {
-  // DEPRECATED: org_id will be inferred from subscription id
-  string org_id = 1 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {min_len: 3}
-    }
-  ];
-  // DEPRECATED: billing_id will be inferred from subscription id
-  // ID of the billing account to get the subscription for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 1, 2;
+
   // ID of the subscription to get
   string id = 3 [(buf.validate.field).string.min_len = 1];
 
@@ -647,15 +581,7 @@ message GetSubscriptionResponse {
 
 message ListSubscriptionsRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  // ID of the billing account to list subscriptions for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 
   // Filter subscriptions by state
   string state = 3;
@@ -670,23 +596,8 @@ message ListSubscriptionsResponse {
 }
 
 message UpdateSubscriptionRequest {
-  // DEPRECATED: org_id will be inferred from subscription id
-  string org_id = 1 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {min_len: 3}
-    }
-  ];
-  // DEPRECATED: billing_id will be inferred from subscription id
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 1, 2;
+
   // ID of the subscription to update
   string id = 3 [(buf.validate.field).string.min_len = 1];
 
@@ -699,23 +610,8 @@ message UpdateSubscriptionResponse {
 }
 
 message ChangeSubscriptionRequest {
-  // DEPRECATED: org_id will be inferred from subscription id
-  string org_id = 1 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {min_len: 3}
-    }
-  ];
-  // DEPRECATED: billing_id will be inferred from subscription id
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 1, 2;
+
   // ID of the subscription to update
   string id = 3 [(buf.validate.field).string.min_len = 1];
 
@@ -750,23 +646,8 @@ message ChangeSubscriptionResponse {
 }
 
 message CancelSubscriptionRequest {
-  // DEPRECATED: org_id will be inferred from subscription id
-  string org_id = 1 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {min_len: 3}
-    }
-  ];
-  // DEPRECATED: billing_id will be inferred from subscription id
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 1, 2;
+
   // ID of the subscription to cancel
   string id = 3 [(buf.validate.field).string.min_len = 1];
 
@@ -784,17 +665,7 @@ message ListPlansResponse {
 
 message CheckFeatureEntitlementRequest {
   string org_id = 1;
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
-
-  // DEPRECATED
-  string project_id = 4 [deprecated = true];
+  reserved 2, 4;
 
   // feature or product name
   string feature = 3 [(buf.validate.field).string.min_len = 1];
@@ -815,15 +686,7 @@ message CheckCreditEntitlementResponse {
 
 message CreateCheckoutRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  // ID of the billing account to update the subscription for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 
   string success_url = 3;
   string cancel_url = 4;
@@ -843,15 +706,7 @@ message CreateCheckoutResponse {
 
 message ListCheckoutsRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  // ID of the billing account to get the subscriptions for
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 }
 
 message ListCheckoutsResponse {
@@ -860,22 +715,8 @@ message ListCheckoutsResponse {
 }
 
 message GetCheckoutRequest {
-  // DEPRECATED: org_id is not needed, checkout can be fetched by id alone
-  string org_id = 1 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {min_len: 3}
-    }
-  ];
-  // DEPRECATED: billing_id is not needed, checkout can be fetched by id alone
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 1, 2;
+
   // ID of the checkout to get
   string id = 3 [(buf.validate.field).string.min_len = 1];
 }
@@ -1052,14 +893,7 @@ message UpdatePlanResponse {
 
 message ListInvoicesRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 
   bool nonzero_amount_only = 3;
 
@@ -1073,14 +907,7 @@ message ListInvoicesResponse {
 
 message GetUpcomingInvoiceRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
-  // DEPRECATED: billing_id will be inferred from org_id
-  string billing_id = 2 [
-    deprecated = true,
-    (buf.validate.field) = {
-      ignore: IGNORE_IF_ZERO_VALUE
-      string: {uuid: true}
-    }
-  ];
+  reserved 2;
 }
 
 message GetUpcomingInvoiceResponse {
