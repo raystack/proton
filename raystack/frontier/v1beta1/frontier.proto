@@ -900,12 +900,16 @@ message ListInvoicesRequest {
 
   bool nonzero_amount_only = 3;
 
+  optional RQLRequest query = 4;
+
   repeated string expand = 101;
 }
 
 message ListInvoicesResponse {
   // List of invoices
   repeated Invoice invoices = 1;
+  // Set when the request included `query` (offset, limit, and total row count for the filtered set).
+  RQLQueryPaginationResponse pagination = 2;
 }
 
 message GetUpcomingInvoiceRequest {
