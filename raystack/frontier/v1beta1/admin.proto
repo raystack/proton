@@ -1083,7 +1083,7 @@ message SearchOrganizationPATsResponse {
 
 message AddOrganizationMembersRequest {
   string org_id = 1 [(buf.validate.field).string.uuid = true];
-  repeated OrgMemberEntry members = 2;
+  repeated OrgMemberEntry members = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message OrgMemberEntry {
@@ -1097,6 +1097,7 @@ message AddOrganizationMembersResponse {
 
 message OrgMemberResult {
   string user_id = 1;
-  bool success = 2;
-  string error = 3;
+  string role_id = 2;
+  bool success = 3;
+  string error = 4;
 }
