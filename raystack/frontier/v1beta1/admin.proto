@@ -1053,10 +1053,7 @@ message ListAuditRecordsResponse {
 }
 
 message SearchOrganizationPATsRequest {
-  string org_id = 1 [
-    (buf.validate.field).string.uuid = true,
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
   RQLRequest query = 2;
 }
 
@@ -1082,10 +1079,7 @@ message SearchOrganizationPATsResponse {
 }
 
 message AddOrganizationMembersRequest {
-  string org_id = 1 [
-    (buf.validate.field).string.uuid = true,
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
   repeated OrgMemberEntry members = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
