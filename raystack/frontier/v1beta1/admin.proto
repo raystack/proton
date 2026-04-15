@@ -27,6 +27,8 @@ service AdminService {
 
   rpc AdminCreateOrganization(AdminCreateOrganizationRequest) returns (AdminCreateOrganizationResponse) {}
 
+  rpc AddOrganizationMembers(AddOrganizationMembersRequest) returns (AddOrganizationMembersResponse) {}
+
   rpc SearchOrganizations(SearchOrganizationsRequest) returns (SearchOrganizationsResponse) {}
 
   rpc SearchOrganizationUsers(SearchOrganizationUsersRequest) returns (SearchOrganizationUsersResponse) {}
@@ -1077,4 +1079,25 @@ message SearchOrganizationPATsResponse {
 
   repeated OrganizationPAT organization_pats = 1;
   RQLQueryPaginationResponse pagination = 2;
+}
+
+message AddOrganizationMembersRequest {
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
+  repeated OrgMemberEntry members = 2 [(buf.validate.field).repeated.min_items = 1];
+}
+
+message OrgMemberEntry {
+  string user_id = 1 [(buf.validate.field).string.uuid = true];
+  string role_id = 2 [(buf.validate.field).string.uuid = true];
+}
+
+message AddOrganizationMembersResponse {
+  repeated OrgMemberResult results = 1;
+}
+
+message OrgMemberResult {
+  string user_id = 1;
+  string role_id = 2;
+  bool success = 3;
+  string error = 4;
 }
