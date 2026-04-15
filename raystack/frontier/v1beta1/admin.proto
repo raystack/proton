@@ -1053,7 +1053,10 @@ message ListAuditRecordsResponse {
 }
 
 message SearchOrganizationPATsRequest {
-  string org_id = 1 [(buf.validate.field).string.uuid = true];
+  string org_id = 1 [
+    (buf.validate.field).string.uuid = true,
+    (google.api.field_behavior) = REQUIRED
+  ];
   RQLRequest query = 2;
 }
 
