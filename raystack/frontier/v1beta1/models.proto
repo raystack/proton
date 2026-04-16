@@ -284,7 +284,7 @@ message PAT {
   repeated PATScope scopes = 8;
 
   google.protobuf.Timestamp expires_at = 10;
-  google.protobuf.Timestamp last_used_at = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp used_at = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
   google.protobuf.Timestamp created_at = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
   google.protobuf.Timestamp updated_at = 13 [(google.api.field_behavior) = OUTPUT_ONLY];
   google.protobuf.Timestamp regenerated_at = 14 [(google.api.field_behavior) = OUTPUT_ONLY];

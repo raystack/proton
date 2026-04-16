@@ -1074,7 +1074,7 @@ message SearchOrganizationPATsResponse {
     repeated PATScope scopes = 4;
     google.protobuf.Timestamp created_at = 5;
     google.protobuf.Timestamp expires_at = 6;
-    google.protobuf.Timestamp last_used_at = 7;
+    google.protobuf.Timestamp used_at = 7;
     google.protobuf.Timestamp regenerated_at = 8;
   }
 
