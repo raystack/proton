@@ -133,6 +133,8 @@ service FrontierService {
 
   rpc SetOrganizationMemberRole(SetOrganizationMemberRoleRequest) returns (SetOrganizationMemberRoleResponse) {}
 
+  rpc RemoveOrganizationMember(RemoveOrganizationMemberRequest) returns (RemoveOrganizationMemberResponse) {}
+
   rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {}
 
   // Deprecated: use ListServiceUsers instead
@@ -1607,6 +1609,14 @@ message SetOrganizationMemberRoleRequest {
 }
 
 message SetOrganizationMemberRoleResponse {}
+
+message RemoveOrganizationMemberRequest {
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
+  string principal_id = 2 [(buf.validate.field).string.uuid = true];
+  string principal_type = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message RemoveOrganizationMemberResponse {}
 
 message ListOrganizationServiceUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
