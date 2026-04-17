@@ -370,6 +370,7 @@ service FrontierService {
 
   // Invoice
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse) {}
+  rpc SearchOrganisationInvoices(SearchOrganisationInvoicesRequest) returns (SearchOrganisationInvoicesResponse) {}
 
   rpc GetUpcomingInvoice(GetUpcomingInvoiceRequest) returns (GetUpcomingInvoiceResponse) {}
 
@@ -906,6 +907,16 @@ message ListInvoicesRequest {
 message ListInvoicesResponse {
   // List of invoices
   repeated Invoice invoices = 1;
+}
+
+message SearchOrganisationInvoicesRequest {
+  string org_id = 1 [(buf.validate.field).string.min_len = 3];
+  RQLRequest query = 2;
+}
+
+message SearchOrganisationInvoicesResponse {
+  repeated Invoice invoices = 1;
+  RQLQueryPaginationResponse pagination = 2;
 }
 
 message GetUpcomingInvoiceRequest {
