@@ -129,9 +129,9 @@ service FrontierService {
 
   rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {}
 
-  rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {}
-
   rpc SetOrganizationMemberRole(SetOrganizationMemberRoleRequest) returns (SetOrganizationMemberRoleResponse) {}
+
+  rpc RemoveOrganizationMember(RemoveOrganizationMemberRequest) returns (RemoveOrganizationMemberResponse) {}
 
   rpc GetOrganizationKyc(GetOrganizationKycRequest) returns (GetOrganizationKycResponse) {}
 
@@ -1593,13 +1593,6 @@ message AddOrganizationUsersRequest {
 
 message AddOrganizationUsersResponse {}
 
-message RemoveOrganizationUserRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 3];
-  string user_id = 2;
-}
-
-message RemoveOrganizationUserResponse {}
-
 message SetOrganizationMemberRoleRequest {
   string org_id = 1 [(buf.validate.field).string.uuid = true];
   string user_id = 2 [(buf.validate.field).string.uuid = true];
@@ -1607,6 +1600,14 @@ message SetOrganizationMemberRoleRequest {
 }
 
 message SetOrganizationMemberRoleResponse {}
+
+message RemoveOrganizationMemberRequest {
+  string org_id = 1 [(buf.validate.field).string.uuid = true];
+  string principal_id = 2 [(buf.validate.field).string.uuid = true];
+  string principal_type = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message RemoveOrganizationMemberResponse {}
 
 message ListOrganizationServiceUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
