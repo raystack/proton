@@ -30,14 +30,6 @@ service CompassService {
   rpc GetEdges(GetEdgesRequest) returns (GetEdgesResponse) {}
   rpc DeleteEdge(DeleteEdgeRequest) returns (DeleteEdgeResponse) {}
 
-  // Domain: Star
-  rpc StarEntity(StarEntityRequest) returns (StarEntityResponse) {}
-  rpc UnstarEntity(UnstarEntityRequest) returns (UnstarEntityResponse) {}
-  rpc GetUserStarredEntities(GetUserStarredEntitiesRequest) returns (GetUserStarredEntitiesResponse) {}
-  rpc GetMyStarredEntities(GetMyStarredEntitiesRequest) returns (GetMyStarredEntitiesResponse) {}
-  rpc GetMyStarredEntity(GetMyStarredEntityRequest) returns (GetMyStarredEntityResponse) {}
-  rpc GetEntityStargazers(GetEntityStargazersRequest) returns (GetEntityStargazersResponse) {}
-
   // Domain: Namespace
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {}
   rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {}
@@ -49,13 +41,14 @@ service CompassService {
 // Core messages
 // ============================================================
 
-message User {
+message Principal {
   string id = 1;
-  string uuid = 2;
-  string email = 3;
-  string provider = 4;
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
+  string type = 2;      // "user", "agent", "service"
+  string name = 3;
+  string subject = 4;   // JWT sub claim, unique external identity
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 message Entity {
@@ -128,8 +121,10 @@ message UpsertEntityRequest {
   string description = 4;
   google.protobuf.Struct properties = 5;
   string source = 6;
-  repeated string upstreams = 7;
-  repeated string downstreams = 8;
+  // Fields 7, 8 removed: upstreams/downstreams are now represented as
+  // edges (derived_from / generates) via UpsertEdge.
+  reserved 7, 8;
+  reserved "upstreams", "downstreams";
 }
 
 message UpsertEntityResponse {
@@ -232,61 +227,6 @@ message DeleteEdgeRequest {
 }
 
 message DeleteEdgeResponse {}
-
-// ============================================================
-// Star
-// ============================================================
-
-message StarEntityRequest {
-  string entity_id = 1;
-}
-
-message StarEntityResponse {
-  string id = 1;
-}
-
-message UnstarEntityRequest {
-  string entity_id = 1;
-}
-
-message UnstarEntityResponse {}
-
-message GetUserStarredEntitiesRequest {
-  string user_id = 1;
-  uint32 size = 2 [(buf.validate.field).uint32 = {gte: 0}];
-  uint32 offset = 3 [(buf.validate.field).uint32 = {gte: 0}];
-}
-
-message GetUserStarredEntitiesResponse {
-  repeated Entity data = 1;
-}
-
-message GetMyStarredEntitiesRequest {
-  uint32 size = 1 [(buf.validate.field).uint32 = {gte: 0}];
-  uint32 offset = 2 [(buf.validate.field).uint32 = {gte: 0}];
-}
-
-message GetMyStarredEntitiesResponse {
-  repeated Entity data = 1;
-}
-
-message GetMyStarredEntityRequest {
-  string entity_id = 1;
-}
-
-message GetMyStarredEntityResponse {
-  Entity data = 1;
-}
-
-message GetEntityStargazersRequest {
-  string id = 1;
-  uint32 size = 2 [(buf.validate.field).uint32 = {gte: 0}];
-  uint32 offset = 3 [(buf.validate.field).uint32 = {gte: 0}];
-}
-
-message GetEntityStargazersResponse {
-  repeated User data = 1;
-}
 
 // ============================================================
 // Namespace
