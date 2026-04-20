@@ -2527,6 +2527,7 @@ message CreateCurrentUserPATRequest {
   // Human-friendly display name, unique per user per org
   string title = 1 [
     (buf.validate.field).string.min_len = 1,
+    (buf.validate.field).string.max_len = 50,
     (google.api.field_behavior) = REQUIRED
   ];
   string org_id = 2 [
@@ -2595,6 +2596,7 @@ message UpdateCurrentUserPATRequest {
   ];
   string title = 2 [
     (buf.validate.field).string.min_len = 1,
+    (buf.validate.field).string.max_len = 50,
     (google.api.field_behavior) = REQUIRED
   ];
   reserved 3, 4;
