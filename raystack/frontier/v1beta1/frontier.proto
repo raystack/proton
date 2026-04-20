@@ -127,8 +127,6 @@ service FrontierService {
 
   rpc ListOrganizationUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {}
 
-  rpc AddOrganizationUsers(AddOrganizationUsersRequest) returns (AddOrganizationUsersResponse) {}
-
   rpc SetOrganizationMemberRole(SetOrganizationMemberRoleRequest) returns (SetOrganizationMemberRoleResponse) {}
 
   rpc RemoveOrganizationMember(RemoveOrganizationMemberRequest) returns (RemoveOrganizationMemberResponse) {}
@@ -1597,12 +1595,6 @@ message ListOrganizationUsersResponse {
   repeated RolePair role_pairs = 2;
 }
 
-message AddOrganizationUsersRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 3];
-  repeated string user_ids = 2;
-}
-
-message AddOrganizationUsersResponse {}
 
 message SetOrganizationMemberRoleRequest {
   string org_id = 1 [(buf.validate.field).string.uuid = true];
