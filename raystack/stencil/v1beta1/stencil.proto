@@ -2,120 +2,31 @@ syntax = "proto3";
 
 package raystack.stencil.v1beta1;
 
-import "google/api/annotations.proto";
-import "google/api/field_behavior.proto";
+import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/raystack/proton/stencil/v1beta1;stencilv1beta1";
-// These annotations are used when generating the OpenAPI file.
-option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {version: "0.1.4"}
-  schemes: HTTP
-};
+option java_multiple_files = true;
+option java_outer_classname = "StencilServiceProto";
+option java_package = "io.raystack.proton.stencil";
 
 service StencilService {
-  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "namespace"
-      summary: "List names of namespaces"
-    };
-  }
-  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "namespace"
-      summary: "Get namespace by id"
-    };
-  }
-  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/namespaces"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "namespace"
-      summary: "Create namespace entry"
-    };
-  }
-  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {
-    option (google.api.http) = {
-      put: "/v1beta1/namespaces/{id}"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "namespace"
-      summary: "Update namespace entity by id"
-    };
-  }
-  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {
-    option (google.api.http) = {delete: "/v1beta1/namespaces/{id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "namespace"
-      summary: "Delete namespace by id"
-      description: "Ensure all schemas under this namespace is deleted, otherwise it will throw error"
-    };
-  }
-  rpc ListSchemas(ListSchemasRequest) returns (ListSchemasResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces/{id}/schemas"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      summary: "List schemas under the namespace"
-    };
-  }
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
+  rpc GetNamespace(GetNamespaceRequest) returns (GetNamespaceResponse) {}
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {}
+  rpc UpdateNamespace(UpdateNamespaceRequest) returns (UpdateNamespaceResponse) {}
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse) {}
+  rpc ListSchemas(ListSchemasRequest) returns (ListSchemasResponse) {}
   rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse) {}
   rpc CheckCompatibility(CheckCompatibilityRequest) returns (CheckCompatibilityResponse) {}
-  rpc GetSchemaMetadata(GetSchemaMetadataRequest) returns (GetSchemaMetadataResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/meta"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      summary: "Create schema under the namespace. Returns version number, unique ID and location"
-    };
-  }
-  rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {
-    option (google.api.http) = {
-      patch: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      summary: "Update only schema metadata"
-    };
-  }
+  rpc GetSchemaMetadata(GetSchemaMetadataRequest) returns (GetSchemaMetadataResponse) {}
+  rpc UpdateSchemaMetadata(UpdateSchemaMetadataRequest) returns (UpdateSchemaMetadataResponse) {}
   rpc GetLatestSchema(GetLatestSchemaRequest) returns (GetLatestSchemaResponse) {}
-  rpc DeleteSchema(DeleteSchemaRequest) returns (DeleteSchemaResponse) {
-    option (google.api.http) = {delete: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      summary: "Delete specified schema"
-    };
-  }
+  rpc DeleteSchema(DeleteSchemaRequest) returns (DeleteSchemaResponse) {}
   rpc GetSchema(GetSchemaRequest) returns (GetSchemaResponse) {}
-  rpc ListVersions(ListVersionsRequest) returns (ListVersionsResponse) {
-    option (google.api.http) = {get: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      tags: "version"
-      summary: "List all version numbers for schema"
-    };
-  }
-  rpc DeleteVersion(DeleteVersionRequest) returns (DeleteVersionResponse) {
-    option (google.api.http) = {delete: "/v1beta1/namespaces/{namespace_id}/schemas/{schema_id}/versions/{version_id}"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      tags: "version"
-      summary: "Delete specified version of the schema"
-    };
-  }
-
-  rpc Search(SearchRequest) returns (SearchResponse) {
-    option (google.api.http) = {get: "/v1beta1/search"};
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags: "schema"
-      summary: "Global Search API"
-    };
-  }
+  rpc ListVersions(ListVersionsRequest) returns (ListVersionsResponse) {}
+  rpc DeleteVersion(DeleteVersionRequest) returns (DeleteVersionResponse) {}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
 }
 
 message Namespace {
@@ -158,7 +69,7 @@ message ListNamespacesResponse {
 }
 
 message GetNamespaceRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetNamespaceResponse {
@@ -166,9 +77,9 @@ message GetNamespaceResponse {
 }
 
 message CreateNamespaceRequest {
-  string id = 1 [(google.api.field_behavior) = REQUIRED];
-  Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
-  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  Schema.Format format = 2 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
+  Schema.Compatibility compatibility = 3 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
   string description = 4;
 }
 
@@ -177,9 +88,9 @@ message CreateNamespaceResponse {
 }
 
 message UpdateNamespaceRequest {
-  string id = 1;
-  Schema.Format format = 2 [(google.api.field_behavior) = REQUIRED];
-  Schema.Compatibility compatibility = 3 [(google.api.field_behavior) = REQUIRED];
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  Schema.Format format = 2 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
+  Schema.Compatibility compatibility = 3 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
   string description = 4;
 }
 
@@ -188,22 +99,22 @@ message UpdateNamespaceResponse {
 }
 
 message DeleteNamespaceRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message DeleteNamespaceResponse {
   string message = 1;
 }
 
 message ListSchemasRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message ListSchemasResponse {
   repeated Schema schemas = 1;
 }
 
 message GetLatestSchemaRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetLatestSchemaResponse {
@@ -211,9 +122,9 @@ message GetLatestSchemaResponse {
 }
 
 message CreateSchemaRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
-  bytes data = 3 [(google.api.field_behavior) = REQUIRED];
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  bytes data = 3 [(buf.validate.field).bytes.min_len = 1];
   Schema.Format format = 4;
   Schema.Compatibility compatibility = 5;
 }
@@ -225,17 +136,17 @@ message CreateSchemaResponse {
 }
 
 message CheckCompatibilityRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
-  bytes data = 3 [(google.api.field_behavior) = REQUIRED];
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  bytes data = 3 [(buf.validate.field).bytes.min_len = 1];
   Schema.Compatibility compatibility = 4;
 }
 
 message CheckCompatibilityResponse {}
 
 message GetSchemaMetadataRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetSchemaMetadataResponse {
@@ -248,8 +159,8 @@ message GetSchemaMetadataResponse {
 }
 
 message UpdateSchemaMetadataRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
   Schema.Compatibility compatibility = 3;
 }
 
@@ -260,8 +171,8 @@ message UpdateSchemaMetadataResponse {
 }
 
 message DeleteSchemaRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteSchemaResponse {
@@ -269,8 +180,8 @@ message DeleteSchemaResponse {
 }
 
 message ListVersionsRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListVersionsResponse {
@@ -278,9 +189,9 @@ message ListVersionsResponse {
 }
 
 message GetSchemaRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
-  int32 version_id = 3;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  int32 version_id = 3 [(buf.validate.field).int32 = {gt: 0}];
 }
 
 message GetSchemaResponse {
@@ -288,9 +199,9 @@ message GetSchemaResponse {
 }
 
 message DeleteVersionRequest {
-  string namespace_id = 1;
-  string schema_id = 2;
-  int32 version_id = 3;
+  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
+  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  int32 version_id = 3 [(buf.validate.field).int32 = {gt: 0}];
 }
 
 message DeleteVersionResponse {
@@ -300,7 +211,7 @@ message DeleteVersionResponse {
 message SearchRequest {
   string namespace_id = 1;
   string schema_id = 2;
-  string query = 3 [(google.api.field_behavior) = REQUIRED];
+  string query = 3 [(buf.validate.field).string.min_len = 1];
 
   oneof version {
     bool history = 4;
