@@ -69,7 +69,7 @@ message ListNamespacesResponse {
 }
 
 message GetNamespaceRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string id = 1;
 }
 
 message GetNamespaceResponse {
@@ -88,7 +88,7 @@ message CreateNamespaceResponse {
 }
 
 message UpdateNamespaceRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string id = 1;
   Schema.Format format = 2 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
   Schema.Compatibility compatibility = 3 [(buf.validate.field).enum = {defined_only: true, not_in: [0]}];
   string description = 4;
@@ -99,22 +99,22 @@ message UpdateNamespaceResponse {
 }
 
 message DeleteNamespaceRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string id = 1;
 }
 message DeleteNamespaceResponse {
   string message = 1;
 }
 
 message ListSchemasRequest {
-  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string id = 1;
 }
 message ListSchemasResponse {
   repeated Schema schemas = 1;
 }
 
 message GetLatestSchemaRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
 }
 
 message GetLatestSchemaResponse {
@@ -122,8 +122,8 @@ message GetLatestSchemaResponse {
 }
 
 message CreateSchemaRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
   bytes data = 3 [(buf.validate.field).bytes.min_len = 1];
   Schema.Format format = 4;
   Schema.Compatibility compatibility = 5;
@@ -136,8 +136,8 @@ message CreateSchemaResponse {
 }
 
 message CheckCompatibilityRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
   bytes data = 3 [(buf.validate.field).bytes.min_len = 1];
   Schema.Compatibility compatibility = 4;
 }
@@ -145,8 +145,8 @@ message CheckCompatibilityRequest {
 message CheckCompatibilityResponse {}
 
 message GetSchemaMetadataRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
 }
 
 message GetSchemaMetadataResponse {
@@ -159,8 +159,8 @@ message GetSchemaMetadataResponse {
 }
 
 message UpdateSchemaMetadataRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
   Schema.Compatibility compatibility = 3;
 }
 
@@ -171,8 +171,8 @@ message UpdateSchemaMetadataResponse {
 }
 
 message DeleteSchemaRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
 }
 
 message DeleteSchemaResponse {
@@ -180,8 +180,8 @@ message DeleteSchemaResponse {
 }
 
 message ListVersionsRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
+  string namespace_id = 1;
+  string schema_id = 2;
 }
 
 message ListVersionsResponse {
@@ -189,9 +189,9 @@ message ListVersionsResponse {
 }
 
 message GetSchemaRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
-  int32 version_id = 3 [(buf.validate.field).int32 = {gt: 0}];
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
 }
 
 message GetSchemaResponse {
@@ -199,9 +199,9 @@ message GetSchemaResponse {
 }
 
 message DeleteVersionRequest {
-  string namespace_id = 1 [(buf.validate.field).string.min_len = 1];
-  string schema_id = 2 [(buf.validate.field).string.min_len = 1];
-  int32 version_id = 3 [(buf.validate.field).int32 = {gt: 0}];
+  string namespace_id = 1;
+  string schema_id = 2;
+  int32 version_id = 3;
 }
 
 message DeleteVersionResponse {
