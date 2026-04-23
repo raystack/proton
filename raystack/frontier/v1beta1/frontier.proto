@@ -584,6 +584,7 @@ message SearchOrganizationTokensResponse {
     string user_avatar = 6;
     google.protobuf.Timestamp created_at = 7;
     string org_id = 8;
+    string source = 9;
   }
 
   repeated OrganizationToken organization_tokens = 1;
