@@ -1605,7 +1605,7 @@ message ListOrganizationUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
   reserved 2, 3;
 
-  repeated string role_filters = 4;
+  repeated string role_ids = 4 [(buf.validate.field).repeated.items.string.uuid = true];
 }
 
 message ListOrganizationUsersResponse {
