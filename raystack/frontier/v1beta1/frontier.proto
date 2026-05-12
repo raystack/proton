@@ -1848,9 +1848,18 @@ message GetProjectResponse {
   Project project = 1;
 }
 
+message UpdateProjectRequestBody {
+  string name = 1 [
+    (buf.validate.field).string.pattern = "^[A-Za-z0-9-_]+$",
+    (google.api.field_behavior) = REQUIRED
+  ];
+  string title = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
 message UpdateProjectRequest {
   string id = 1;
-  ProjectRequestBody body = 2;
+  UpdateProjectRequestBody body = 2;
 }
 
 message UpdateProjectResponse {
