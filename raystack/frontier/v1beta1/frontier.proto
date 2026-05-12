@@ -93,6 +93,8 @@ service FrontierService {
 
   rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {}
 
+  rpc SetGroupMemberRole(SetGroupMemberRoleRequest) returns (SetGroupMemberRoleResponse) {}
+
   rpc EnableGroup(EnableGroupRequest) returns (EnableGroupResponse) {}
 
   rpc DisableGroup(DisableGroupRequest) returns (DisableGroupResponse) {}
@@ -2175,6 +2177,16 @@ message RemoveGroupUserRequest {
 }
 
 message RemoveGroupUserResponse {}
+
+message SetGroupMemberRoleRequest {
+  string group_id = 1 [(buf.validate.field).string.uuid = true];
+  string org_id = 2 [(buf.validate.field).string.uuid = true];
+  string principal_id = 3 [(buf.validate.field).string.uuid = true];
+  string principal_type = 4 [(buf.validate.field).string.min_len = 1];
+  string role_id = 5 [(buf.validate.field).string.uuid = true];
+}
+
+message SetGroupMemberRoleResponse {}
 
 message DeleteRelationRequest {
   reserved 3;
