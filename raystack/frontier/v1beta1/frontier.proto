@@ -1603,10 +1603,9 @@ message ListOrganizationAdminsResponse {
 
 message ListOrganizationUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
-  string permission_filter = 2 [deprecated = true];
+  reserved 2, 3;
 
-  bool with_roles = 3;
-  repeated string role_filters = 4;
+  repeated string role_ids = 4 [(buf.validate.field).repeated.items.string.uuid = true];
 }
 
 message ListOrganizationUsersResponse {
@@ -1867,9 +1866,7 @@ message ListProjectAdminsResponse {
 
 message ListProjectUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
-  string permission_filter = 2;
-
-  bool with_roles = 3;
+  reserved 2, 3;
 }
 
 message ListProjectUsersResponse {
@@ -1884,7 +1881,7 @@ message ListProjectUsersResponse {
 
 message ListProjectServiceUsersRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
-  bool with_roles = 3;
+  reserved 3;
 }
 
 message ListProjectServiceUsersResponse {
@@ -1899,7 +1896,7 @@ message ListProjectServiceUsersResponse {
 
 message ListProjectGroupsRequest {
   string id = 1 [(buf.validate.field).string.min_len = 3];
-  bool with_roles = 2;
+  reserved 2;
 }
 
 message ListProjectGroupsResponse {
@@ -2129,8 +2126,7 @@ message UpdateGroupRequest {
 message ListGroupUsersRequest {
   string id = 1;
   string org_id = 2;
-
-  bool with_roles = 3;
+  reserved 3;
 }
 
 message ListGroupUsersResponse {
