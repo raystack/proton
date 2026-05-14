@@ -918,8 +918,6 @@ message RQLQueryGroupData {
   uint32 count = 2;
 }
 
-message ExportOrganizationsRequest {}
-
 // Session management
 
 message Session {

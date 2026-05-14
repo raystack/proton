@@ -556,6 +556,8 @@ message SetOrganizationKycRequest {
   string link = 3;
 }
 
+message ExportOrganizationsRequest {}
+
 message SearchOrganizationsRequest {
   RQLRequest query = 1;
 }
