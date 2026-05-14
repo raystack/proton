@@ -89,8 +89,6 @@ service FrontierService {
 
   rpc ListGroupUsers(ListGroupUsersRequest) returns (ListGroupUsersResponse) {}
 
-  rpc AddGroupUsers(AddGroupUsersRequest) returns (AddGroupUsersResponse) {}
-
   rpc RemoveGroupUser(RemoveGroupUserRequest) returns (RemoveGroupUserResponse) {}
 
   rpc SetGroupMemberRole(SetGroupMemberRoleRequest) returns (SetGroupMemberRoleResponse) {}
@@ -2171,14 +2169,6 @@ message DeleteGroupRequest {
 }
 
 message DeleteGroupResponse {}
-
-message AddGroupUsersRequest {
-  string id = 1;
-  string org_id = 2 [(buf.validate.field).string.min_len = 3];
-  repeated string user_ids = 3;
-}
-
-message AddGroupUsersResponse {}
 
 message RemoveGroupUserRequest {
   string id = 1;
