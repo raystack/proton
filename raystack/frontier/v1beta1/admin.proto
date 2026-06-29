@@ -358,6 +358,10 @@ message ListPlatformUsersResponse {
 message RemovePlatformUserRequest {
   string user_id = 1;
   string serviceuser_id = 2;
+
+  // relation scopes the removal to a single platform relation (admin or member).
+  // When empty, all platform relations of the principal are removed.
+  string relation = 3;
 }
 
 message RemovePlatformUserResponse {}
