@@ -2110,8 +2110,9 @@ message CreateGroupRequest {
 }
 
 message GetGroupRequest {
+  reserved 2;
+
   string id = 1;
-  string org_id = 2;
   bool with_members = 3;
 }
 
@@ -2128,15 +2129,16 @@ message UpdateGroupResponse {
 }
 
 message UpdateGroupRequest {
+  reserved 3;
+
   string id = 1;
   GroupRequestBody body = 2;
-  string org_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListGroupUsersRequest {
+  reserved 2, 3;
+
   string id = 1;
-  string org_id = 2;
-  reserved 3;
 }
 
 message ListGroupUsersResponse {
@@ -2150,37 +2152,42 @@ message ListGroupUsersResponse {
 }
 
 message EnableGroupRequest {
+  reserved 2;
+
   string id = 1;
-  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message EnableGroupResponse {}
 
 message DisableGroupRequest {
+  reserved 2;
+
   string id = 1;
-  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message DisableGroupResponse {}
 
 message DeleteGroupRequest {
+  reserved 2;
+
   string id = 1;
-  string org_id = 2 [(buf.validate.field).string.min_len = 3];
 }
 
 message DeleteGroupResponse {}
 
 message RemoveGroupUserRequest {
+  reserved 2;
+
   string id = 1;
-  string org_id = 2 [(buf.validate.field).string.min_len = 3];
   string user_id = 3;
 }
 
 message RemoveGroupUserResponse {}
 
 message SetGroupMemberRoleRequest {
+  reserved 2;
+
   string group_id = 1 [(buf.validate.field).string.uuid = true];
-  string org_id = 2 [(buf.validate.field).string.uuid = true];
   string principal_id = 3 [(buf.validate.field).string.uuid = true];
   string principal_type = 4 [(buf.validate.field).string.min_len = 1];
   string role_id = 5 [(buf.validate.field).string.uuid = true];
