@@ -174,7 +174,10 @@ service AdminService {
 message ListAllUsersRequest {
   int32 page_size = 1 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 2 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
@@ -212,7 +215,10 @@ message ListAllOrganizationsRequest {
   string state = 2;
   int32 page_size = 3 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 4 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
@@ -395,7 +401,10 @@ message ListAllInvoicesRequest {
   string org_id = 1;
   int32 page_size = 2 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 3 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
