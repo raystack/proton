@@ -871,7 +871,7 @@ message RQLRequest {
   repeated RQLFilter filters = 1;
   repeated string group_by = 2;
   uint32 offset = 3;
-  uint32 limit = 4;
+  uint32 limit = 4 [(buf.validate.field).uint32.lte = 5000];
   string search = 5;
   repeated RQLSort sort = 6;
 }

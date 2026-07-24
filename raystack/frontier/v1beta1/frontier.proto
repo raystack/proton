@@ -1078,7 +1078,10 @@ message UserRequestBody {
 message ListUsersRequest {
   int32 page_size = 1 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 2 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
@@ -1151,7 +1154,10 @@ message ListProjectsByCurrentUserRequest {
 
   int32 page_size = 5 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 6 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
@@ -1556,7 +1562,10 @@ message ListOrganizationsRequest {
   string state = 2;
   int32 page_size = 3 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
-    int32: {gte: 1}
+    int32: {
+      gte: 1
+      lte: 5000
+    }
   }];
   int32 page_num = 4 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
