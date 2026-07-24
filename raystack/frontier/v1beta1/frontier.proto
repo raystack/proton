@@ -1702,17 +1702,6 @@ message ListOrganizationDomainsResponse {
   repeated Domain domains = 1;
 }
 
-message ListOrganizationsByDomainRequest {
-  string name = 1 [
-    (buf.validate.field).string.min_len = 3,
-    (google.api.field_behavior) = REQUIRED
-  ];
-}
-
-message ListOrganizationsByDomainResponse {
-  repeated Organization organizations = 1;
-}
-
 message JoinOrganizationRequest {
   string org_id = 1 [(buf.validate.field).string.min_len = 3];
 }
