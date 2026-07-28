@@ -548,6 +548,8 @@ message Plan {
   int64 on_start_credits = 7 [(buf.validate.field).int64 = {gte: 0}];
   int64 trial_days = 8 [(buf.validate.field).int64 = {gte: 0}];
 
+  string state = 9;
+
   google.protobuf.Struct metadata = 20;
   google.protobuf.Timestamp created_at = 21;
   google.protobuf.Timestamp updated_at = 22;

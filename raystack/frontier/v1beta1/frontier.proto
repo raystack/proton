@@ -882,6 +882,8 @@ message PlanRequestBody {
   int64 on_start_credits = 6;
   int64 trial_days = 7;
 
+  string state = 8;
+
   google.protobuf.Struct metadata = 20;
 }
 
