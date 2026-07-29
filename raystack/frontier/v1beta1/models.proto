@@ -611,14 +611,18 @@ message Price {
   string provider_id = 3;
   string name = 4;
 
-  // known intervals are "day", "week", "month", and "year"
-  string interval = 6 [(buf.validate.field).string = {
-    in: [
-      "day",
-      "week",
-      "month",
-      "year"
-    ]
+  // known intervals are "day", "week", "month", and "year"; an empty interval
+  // means a one-time price with no recurring billing
+  string interval = 6 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "day",
+        "week",
+        "month",
+        "year"
+      ]
+    }
   }];
 
   // usage_type known types are "licensed" and "metered"
