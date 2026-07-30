@@ -753,12 +753,12 @@ message GetCheckoutResponse {
 }
 
 message ProductRequestBody {
-  reserved 7;
+  reserved 4, 7;
+  reserved "plan_id";
 
   string name = 1 [(buf.validate.field).string.min_len = 3];
   string title = 2;
   string description = 3;
-  string plan_id = 4;
   repeated Price prices = 5;
   string behavior = 8 [(buf.validate.field) = {
     ignore: IGNORE_IF_ZERO_VALUE
