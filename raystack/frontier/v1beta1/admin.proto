@@ -440,7 +440,13 @@ message ListAllBillingAccountsResponse {
 
 message ListAllPlansRequest {
   // filter by plan state, e.g. "active" or "disabled". an empty value returns all plans
-  string state = 1;
+  string state = 1 [(buf.validate.field).string = {
+    in: [
+      "",
+      "active",
+      "disabled"
+    ]
+  }];
 }
 
 message ListAllPlansResponse {
@@ -462,10 +468,16 @@ message PlanRequestBody {
       "year"
     ]
   }];
-  int64 on_start_credits = 6;
-  int64 trial_days = 7;
+  int64 on_start_credits = 6 [(buf.validate.field).int64.gte = 0];
+  int64 trial_days = 7 [(buf.validate.field).int64.gte = 0];
 
-  string state = 8;
+  string state = 8 [(buf.validate.field).string = {
+    in: [
+      "",
+      "active",
+      "disabled"
+    ]
+  }];
 
   google.protobuf.Struct metadata = 20;
 }
