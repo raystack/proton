@@ -339,13 +339,9 @@ service FrontierService {
   rpc ListFeatures(ListFeaturesRequest) returns (ListFeaturesResponse) {}
 
   // Plans
-  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {}
-
   rpc ListPlans(ListPlansRequest) returns (ListPlansResponse) {}
 
   rpc GetPlan(GetPlanRequest) returns (GetPlanResponse) {}
-
-  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {}
 
   // Checkout
   rpc CreateCheckout(CreateCheckoutRequest) returns (CreateCheckoutResponse) {}
@@ -864,39 +860,6 @@ message ListFeaturesResponse {
   repeated Feature features = 1;
 }
 
-message PlanRequestBody {
-  string name = 1;
-  string title = 2;
-  string description = 3;
-
-  repeated Product products = 4;
-  // known intervals are "day", "week", "month", and "year"
-  string interval = 5 [(buf.validate.field).string = {
-    in: [
-      "day",
-      "week",
-      "month",
-      "year"
-    ]
-  }];
-  int64 on_start_credits = 6;
-  int64 trial_days = 7;
-
-  string state = 8;
-
-  google.protobuf.Struct metadata = 20;
-}
-
-message CreatePlanRequest {
-  // Plan to create
-  PlanRequestBody body = 1 [(buf.validate.field).required = true];
-}
-
-message CreatePlanResponse {
-  // Created plan
-  Plan plan = 1;
-}
-
 message GetPlanRequest {
   // ID of the plan to get
   string id = 1 [(buf.validate.field).string.min_len = 1];
@@ -904,18 +867,6 @@ message GetPlanRequest {
 
 message GetPlanResponse {
   // Plan
-  Plan plan = 1;
-}
-
-message UpdatePlanRequest {
-  // ID of the plan to update
-  string id = 1 [(buf.validate.field).string.min_len = 1];
-  // Plan to update
-  PlanRequestBody body = 2;
-}
-
-message UpdatePlanResponse {
-  // Updated plan
   Plan plan = 1;
 }
 
