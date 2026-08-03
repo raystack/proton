@@ -122,7 +122,7 @@ service AdminService {
 
   rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {}
 
-  // ListAllPlans returns every plan, including disabled ones, unlike
+  // ListAllPlans returns every plan, including inactive ones, unlike
   // FrontierService.ListPlans which returns active plans only.
   rpc ListAllPlans(ListAllPlansRequest) returns (ListAllPlansResponse) {}
 
@@ -456,11 +456,11 @@ message PlanRequestBody {
   int64 on_start_credits = 6 [(buf.validate.field).int64 = {gte: 0}];
   int64 trial_days = 7 [(buf.validate.field).int64 = {gte: 0}];
 
-  // known states are "active" and "disabled"
+  // known states are "active" and "inactive"
   string state = 8 [(buf.validate.field).string = {
     in: [
       "active",
-      "disabled"
+      "inactive"
     ]
   }];
 
@@ -479,18 +479,19 @@ message CreatePlanResponse {
 
 // UpdatePlanRequestBody carries the plan fields UpdatePlan writes. It has no
 // name, interval, or products because UpdatePlan does not change those; a
-// plan's products are managed through CreatePlan's upsert.
+// plan's products are managed through CreatePlan's upsert. UpdatePlan is a full
+// write of these fields: an omitted field is cleared, not left unchanged.
 message UpdatePlanRequestBody {
   string title = 1;
   string description = 2;
   int64 on_start_credits = 3 [(buf.validate.field).int64 = {gte: 0}];
   int64 trial_days = 4 [(buf.validate.field).int64 = {gte: 0}];
 
-  // known states are "active" and "disabled"
+  // known states are "active" and "inactive"
   string state = 5 [(buf.validate.field).string = {
     in: [
       "active",
-      "disabled"
+      "inactive"
     ]
   }];
 
@@ -498,7 +499,7 @@ message UpdatePlanRequestBody {
 }
 
 message UpdatePlanRequest {
-  // ID of the plan to update
+  // ID or name of the plan to update
   string id = 1 [(buf.validate.field).string.min_len = 1];
   // field 2 held a PlanRequestBody before UpdatePlan moved to its own body type
   reserved 2;
@@ -518,7 +519,7 @@ message ListAllPlansRequest {
     string: {
       in: [
         "active",
-        "disabled"
+        "inactive"
       ]
     }
   }];
