@@ -438,21 +438,6 @@ message ListAllBillingAccountsResponse {
   repeated BillingAccount billing_accounts = 1;
 }
 
-message ListAllPlansRequest {
-  // filter by plan state, e.g. "active" or "disabled". an empty value returns all plans
-  string state = 1 [(buf.validate.field).string = {
-    in: [
-      "",
-      "active",
-      "disabled"
-    ]
-  }];
-}
-
-message ListAllPlansResponse {
-  repeated Plan plans = 1;
-}
-
 message PlanRequestBody {
   string name = 1;
   string title = 2;
@@ -468,12 +453,12 @@ message PlanRequestBody {
       "year"
     ]
   }];
-  int64 on_start_credits = 6 [(buf.validate.field).int64.gte = 0];
-  int64 trial_days = 7 [(buf.validate.field).int64.gte = 0];
+  int64 on_start_credits = 6 [(buf.validate.field).int64 = {gte: 0}];
+  int64 trial_days = 7 [(buf.validate.field).int64 = {gte: 0}];
 
+  // known states are "active" and "disabled"
   string state = 8 [(buf.validate.field).string = {
     in: [
-      "",
       "active",
       "disabled"
     ]
@@ -492,16 +477,55 @@ message CreatePlanResponse {
   Plan plan = 1;
 }
 
+// UpdatePlanRequestBody carries the plan fields UpdatePlan writes. It has no
+// name, interval, or products because UpdatePlan does not change those; a
+// plan's products are managed through CreatePlan's upsert.
+message UpdatePlanRequestBody {
+  string title = 1;
+  string description = 2;
+  int64 on_start_credits = 3 [(buf.validate.field).int64 = {gte: 0}];
+  int64 trial_days = 4 [(buf.validate.field).int64 = {gte: 0}];
+
+  // known states are "active" and "disabled"
+  string state = 5 [(buf.validate.field).string = {
+    in: [
+      "active",
+      "disabled"
+    ]
+  }];
+
+  google.protobuf.Struct metadata = 20;
+}
+
 message UpdatePlanRequest {
   // ID of the plan to update
   string id = 1 [(buf.validate.field).string.min_len = 1];
-  // Plan to update
-  PlanRequestBody body = 2;
+  // field 2 held a PlanRequestBody before UpdatePlan moved to its own body type
+  reserved 2;
+  // Plan fields to write
+  UpdatePlanRequestBody body = 3 [(buf.validate.field).required = true];
 }
 
 message UpdatePlanResponse {
   // Updated plan
   Plan plan = 1;
+}
+
+message ListAllPlansRequest {
+  // filter by plan state. an empty value returns plans in every state
+  string state = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "active",
+        "disabled"
+      ]
+    }
+  }];
+}
+
+message ListAllPlansResponse {
+  repeated Plan plans = 1;
 }
 
 message RevertBillingUsageRequest {
