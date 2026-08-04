@@ -117,6 +117,15 @@ service AdminService {
 
   rpc ListAllBillingAccounts(ListAllBillingAccountsRequest) returns (ListAllBillingAccountsResponse) {}
 
+  // Plans
+  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse) {}
+
+  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse) {}
+
+  // ListAllPlans returns every plan, including inactive ones, unlike
+  // FrontierService.ListPlans which returns active plans only.
+  rpc ListAllPlans(ListAllPlansRequest) returns (ListAllPlansResponse) {}
+
   // Usage
   rpc RevertBillingUsage(RevertBillingUsageRequest) returns (RevertBillingUsageResponse) {}
 
@@ -427,6 +436,97 @@ message ListAllBillingAccountsRequest {
 
 message ListAllBillingAccountsResponse {
   repeated BillingAccount billing_accounts = 1;
+}
+
+message PlanRequestBody {
+  string name = 1;
+  string title = 2;
+  string description = 3;
+
+  repeated Product products = 4;
+  // known intervals are "day", "week", "month", and "year"
+  string interval = 5 [(buf.validate.field).string = {
+    in: [
+      "day",
+      "week",
+      "month",
+      "year"
+    ]
+  }];
+  int64 on_start_credits = 6 [(buf.validate.field).int64 = {gte: 0}];
+  int64 trial_days = 7 [(buf.validate.field).int64 = {gte: 0}];
+
+  // known states are "active" and "inactive"
+  string state = 8 [(buf.validate.field).string = {
+    in: [
+      "active",
+      "inactive"
+    ]
+  }];
+
+  google.protobuf.Struct metadata = 20;
+}
+
+message CreatePlanRequest {
+  // Plan to create
+  PlanRequestBody body = 1 [(buf.validate.field).required = true];
+}
+
+message CreatePlanResponse {
+  // Created plan
+  Plan plan = 1;
+}
+
+// UpdatePlanRequestBody carries the plan fields UpdatePlan writes. It has no
+// name, interval, or products because UpdatePlan does not change those; a
+// plan's products are managed through CreatePlan's upsert. UpdatePlan is a full
+// write of these fields: an omitted field is cleared, not left unchanged.
+message UpdatePlanRequestBody {
+  string title = 1;
+  string description = 2;
+  int64 on_start_credits = 3 [(buf.validate.field).int64 = {gte: 0}];
+  int64 trial_days = 4 [(buf.validate.field).int64 = {gte: 0}];
+
+  // known states are "active" and "inactive"
+  string state = 5 [(buf.validate.field).string = {
+    in: [
+      "active",
+      "inactive"
+    ]
+  }];
+
+  google.protobuf.Struct metadata = 20;
+}
+
+message UpdatePlanRequest {
+  // ID or name of the plan to update
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  // field 2 held a PlanRequestBody before UpdatePlan moved to its own body type
+  reserved 2;
+  // Plan fields to write
+  UpdatePlanRequestBody body = 3 [(buf.validate.field).required = true];
+}
+
+message UpdatePlanResponse {
+  // Updated plan
+  Plan plan = 1;
+}
+
+message ListAllPlansRequest {
+  // filter by plan state. an empty value returns plans in every state
+  string state = 1 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "active",
+        "inactive"
+      ]
+    }
+  }];
+}
+
+message ListAllPlansResponse {
+  repeated Plan plans = 1;
 }
 
 message RevertBillingUsageRequest {
