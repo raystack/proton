@@ -1793,6 +1793,11 @@ message DisableOrganizationResponse {}
 
 message DeleteOrganizationRequest {
   string id = 1;
+  // Set to true to confirm that any unused prepaid tokens on the
+  // organization's billing account may be forfeited by this delete.
+  // If the account has unused tokens and this is false, the request
+  // fails with a failed_precondition error listing the amount at stake.
+  bool acknowledge_token_forfeit = 2;
 }
 
 message DeleteOrganizationResponse {}
