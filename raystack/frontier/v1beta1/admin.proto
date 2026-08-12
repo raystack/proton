@@ -457,11 +457,14 @@ message PlanRequestBody {
   int64 trial_days = 7 [(buf.validate.field).int64 = {gte: 0}];
 
   // known states are "active" and "inactive"
-  string state = 8 [(buf.validate.field).string = {
-    in: [
-      "active",
-      "inactive"
-    ]
+  string state = 8 [(buf.validate.field) = {
+    ignore: IGNORE_IF_ZERO_VALUE
+    string: {
+      in: [
+        "active",
+        "inactive"
+      ]
+    }
   }];
 
   google.protobuf.Struct metadata = 20;
