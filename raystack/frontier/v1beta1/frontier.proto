@@ -164,6 +164,11 @@ service FrontierService {
 
   rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {}
 
+  // CheckOrganizationDelete reports everything that currently blocks deleting
+  // the organization, without changing anything. An empty blocker list means
+  // DeleteOrganization would proceed right now.
+  rpc CheckOrganizationDelete(CheckOrganizationDeleteRequest) returns (CheckOrganizationDeleteResponse) {}
+
   // Projects
   rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {}
 
@@ -1747,6 +1752,29 @@ message DeleteOrganizationRequest {
 }
 
 message DeleteOrganizationResponse {}
+
+message CheckOrganizationDeleteRequest {
+  string id = 1;
+}
+
+message CheckOrganizationDeleteResponse {
+  message Blocker {
+    // machine-readable reason, e.g. ACTIVE_SUBSCRIPTION, UNPAID_INVOICE,
+    // NEGATIVE_TOKEN_BALANCE
+    string type = 1;
+    // id of the blocking entity
+    string subject = 2;
+    // what blocks the delete and what the caller can do about it
+    string message = 3;
+    // what kind of entity the subject id refers to, e.g.
+    // billing_subscription, billing_invoice, billing_account
+    string subject_type = 4;
+  }
+  // true when nothing blocks the delete right now
+  bool can_delete = 1;
+  // every reason the delete would be refused; empty when can_delete is true
+  repeated Blocker blockers = 2;
+}
 
 message GetOrganizationKycRequest {
   string org_id = 1;
