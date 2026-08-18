@@ -1762,10 +1762,13 @@ message CheckOrganizationDeleteResponse {
     // machine-readable reason, e.g. ACTIVE_SUBSCRIPTION, UNPAID_INVOICE,
     // NEGATIVE_TOKEN_BALANCE
     string type = 1;
-    // id of the blocking entity, e.g. a subscription or an invoice id
+    // id of the blocking entity
     string subject = 2;
     // what blocks the delete and what the caller can do about it
     string message = 3;
+    // what kind of entity the subject id refers to, e.g.
+    // billing_subscription, billing_invoice, billing_account
+    string subject_type = 4;
   }
   // true when nothing blocks the delete right now
   bool can_delete = 1;
