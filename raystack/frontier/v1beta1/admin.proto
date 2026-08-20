@@ -293,14 +293,13 @@ message DeleteRoleRequest {
 message DeleteRoleResponse {}
 
 message PermissionRequestBody {
-  string name = 1 [deprecated = true];
-  // namespace should be in service/resource format
-  string namespace = 2 [deprecated = true];
+  reserved 1, 2;
+  reserved "name", "namespace";
+
   google.protobuf.Struct metadata = 3;
   string title = 4;
 
   // key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.
-  // Use this instead of using name and namespace fields
   string key = 5;
 }
 
