@@ -154,19 +154,15 @@ message Relation {
 }
 
 message Permission {
+  reserved 2, 6;
+  reserved "name", "namespace";
+
   string id = 1;
-  string name = 2 [
-    (buf.validate.field).string = {
-      min_len: 2
-      pattern: "^[A-Za-z0-9]+$"
-    },
-    deprecated = true
-  ];
   string title = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
-  string namespace = 6 [deprecated = true];
   google.protobuf.Struct metadata = 7;
+  // key is composed of three parts, 'service.resource.verb'. Where 'service.resource' works as a namespace for the 'verb'.
   string key = 8;
 }
 
