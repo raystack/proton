@@ -256,10 +256,7 @@ service FrontierService {
 
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {}
 
-  // ListConsentDocuments returns the documents a user has to accept before an
-  // account is created for them. Unauthenticated, like ListAuthStrategies, so a
-  // sign-up view can render them before the account exists. An empty list means
-  // the deployment asks for no consent.
+  // Returns the list of consent documents 
   rpc ListConsentDocuments(ListConsentDocumentsRequest) returns (ListConsentDocumentsResponse) {}
 
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
