@@ -256,6 +256,9 @@ service FrontierService {
 
   rpc ListAuthStrategies(ListAuthStrategiesRequest) returns (ListAuthStrategiesResponse) {}
 
+  // Returns the list of consent documents 
+  rpc ListConsentDocuments(ListConsentDocumentsRequest) returns (ListConsentDocumentsResponse) {}
+
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
 
   rpc AuthCallback(AuthCallbackRequest) returns (AuthCallbackResponse) {}
@@ -948,6 +951,15 @@ message AuthCallbackRequest {
 
 message AuthCallbackResponse {}
 
+// FlowIntent says whether the caller is logging an existing user in or signing a
+// new one up. Unspecified keeps the existing create-or-get behaviour, so clients
+// that do not set it are unaffected.
+enum FlowIntent {
+  FLOW_INTENT_UNSPECIFIED = 0;
+  FLOW_INTENT_LOGIN = 1;
+  FLOW_INTENT_SIGNUP = 2;
+}
+
 message AuthenticateRequest {
   string strategy_name = 1;
 
@@ -972,6 +984,16 @@ message AuthenticateRequest {
   // callback_url should be one of the allowed urls configured at instance level
   string callback_url = 5;
 
+  // flow_intent separates a login from a signup. A login never creates an
+  // account and a signup never logs an existing user in. Left unspecified,
+  // the flow creates the user if it does not exist, as it does today.
+  FlowIntent flow_intent = 6;
+
+  // accepted_document_ids are the ids of the consent documents the user
+  // accepted, as returned by ListConsentDocuments. They accompany a signup
+  // intent only, and are ignored when the deployment asks for no consent.
+  repeated string accepted_document_ids = 7;
+
   // TODO(kushsharma): add support for passing state from client and returning it once auth is finished
 }
 
@@ -995,6 +1017,27 @@ message ListAuthStrategiesRequest {}
 
 message ListAuthStrategiesResponse {
   repeated AuthStrategy strategies = 1;
+}
+
+// ConsentDocument is one document a user has to accept at signup, as the
+// deployment configured it.
+message ConsentDocument {
+  // id is what the client sends back in accepted_document_ids
+  string id = 1;
+  // human readable name of the document, for example "Privacy Policy"
+  string title = 2;
+  // opaque version of the document, compared for equality only
+  string version = 3;
+  // url the document can be read at
+  string url = 4;
+}
+
+message ListConsentDocumentsRequest {}
+
+message ListConsentDocumentsResponse {
+  // every document the deployment requires, ordered by id; empty when it
+  // requires none
+  repeated ConsentDocument documents = 1;
 }
 
 message AuthTokenRequest {
