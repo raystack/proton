@@ -190,6 +190,7 @@ message Resource {
   string principal = 12;
   google.protobuf.Struct metadata = 13;
   string title = 14;
+  string org_id = 15;
 }
 
 message MetaSchema {

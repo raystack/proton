@@ -35,6 +35,10 @@ service FrontierService {
 
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
 
+  rpc CheckCurrentUserDelete(CheckCurrentUserDeleteRequest) returns (CheckCurrentUserDeleteResponse) {}
+
+  rpc DeleteCurrentUser(DeleteCurrentUserRequest) returns (DeleteCurrentUserResponse) {}
+
   rpc ListOrganizationsByUser(ListOrganizationsByUserRequest) returns (ListOrganizationsByUserResponse) {}
 
   rpc ListOrganizationsByCurrentUser(ListOrganizationsByCurrentUserRequest) returns (ListOrganizationsByCurrentUserResponse) {}
@@ -190,6 +194,8 @@ service FrontierService {
 
   rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {}
 
+  rpc CheckProjectDelete(CheckProjectDeleteRequest) returns (CheckProjectDeleteResponse) {}
+
   rpc SetProjectMemberRole(SetProjectMemberRoleRequest) returns (SetProjectMemberRoleResponse) {
   }
 
@@ -236,6 +242,12 @@ service FrontierService {
   rpc UpdateProjectResource(UpdateProjectResourceRequest) returns (UpdateProjectResourceResponse) {}
 
   rpc DeleteProjectResource(DeleteProjectResourceRequest) returns (DeleteProjectResourceResponse) {}
+
+  rpc CreateOrganizationResource(CreateOrganizationResourceRequest) returns (CreateOrganizationResourceResponse) {}
+
+  rpc UpdateOrganizationResource(UpdateOrganizationResourceRequest) returns (UpdateOrganizationResourceResponse) {}
+
+  rpc DeleteOrganizationResource(DeleteOrganizationResourceRequest) returns (DeleteOrganizationResourceResponse) {}
 
   // Authz
   rpc CheckResourcePermission(CheckResourcePermissionRequest) returns (CheckResourcePermissionResponse) {}
@@ -1195,6 +1207,33 @@ message DeleteUserRequest {
 
 message DeleteUserResponse {}
 
+message CheckCurrentUserDeleteRequest {}
+
+message CheckCurrentUserDeleteResponse {
+  message OrganizationToDelete {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    bool can_delete = 4;
+    repeated Blocker blockers = 5;
+  }
+  message OrganizationToLeave {
+    string id = 1;
+    string name = 2;
+    string title = 3;
+    string role = 4;
+  }
+  bool can_delete = 1;
+  repeated Blocker blockers = 2;
+  repeated OrganizationToDelete organizations_to_delete = 3;
+  repeated OrganizationToLeave organizations_to_leave = 4;
+  int32 pat_count = 5;
+}
+
+message DeleteCurrentUserRequest {}
+
+message DeleteCurrentUserResponse {}
+
 message GetUserResponse {
   User user = 1;
 }
@@ -1796,23 +1835,19 @@ message DeleteOrganizationRequest {
 
 message DeleteOrganizationResponse {}
 
+message Blocker {
+  string type = 1;
+  string subject = 2;
+  string message = 3;
+  string subject_type = 4;
+  int32 count = 5;
+}
+
 message CheckOrganizationDeleteRequest {
   string id = 1;
 }
 
 message CheckOrganizationDeleteResponse {
-  message Blocker {
-    // machine-readable reason, e.g. ACTIVE_SUBSCRIPTION, UNPAID_INVOICE,
-    // NEGATIVE_TOKEN_BALANCE
-    string type = 1;
-    // id of the blocking entity
-    string subject = 2;
-    // what blocks the delete and what the caller can do about it
-    string message = 3;
-    // what kind of entity the subject id refers to, e.g.
-    // billing_subscription, billing_invoice, billing_account
-    string subject_type = 4;
-  }
   // true when nothing blocks the delete right now
   bool can_delete = 1;
   // every reason the delete would be refused; empty when can_delete is true
@@ -1958,6 +1993,15 @@ message DeleteProjectRequest {
 }
 
 message DeleteProjectResponse {}
+
+message CheckProjectDeleteRequest {
+  string id = 1;
+}
+
+message CheckProjectDeleteResponse {
+  bool can_delete = 1;
+  repeated Blocker blockers = 2;
+}
 
 message SetProjectMemberRoleRequest {
   string project_id = 1 [(buf.validate.field).string.uuid = true];
@@ -2288,6 +2332,33 @@ message DeleteProjectResourceRequest {
 }
 
 message DeleteProjectResourceResponse {}
+
+message CreateOrganizationResourceRequest {
+  ResourceRequestBody body = 1 [(buf.validate.field).required = true];
+  string org_id = 2 [(buf.validate.field).string.uuid = true];
+  string id = 3;
+}
+
+message CreateOrganizationResourceResponse {
+  Resource resource = 1;
+}
+
+message UpdateOrganizationResourceRequest {
+  string id = 1;
+  ResourceRequestBody body = 2;
+  string org_id = 3 [(buf.validate.field).string.uuid = true];
+}
+
+message UpdateOrganizationResourceResponse {
+  Resource resource = 1;
+}
+
+message DeleteOrganizationResourceRequest {
+  string id = 1;
+  string org_id = 2 [(buf.validate.field).string.uuid = true];
+}
+
+message DeleteOrganizationResourceResponse {}
 
 message CheckResourcePermissionRequest {
   string object_id = 1 [deprecated = true];
