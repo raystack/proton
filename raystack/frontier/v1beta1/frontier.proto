@@ -1222,6 +1222,7 @@ message CheckCurrentUserDeleteResponse {
     string name = 2;
     string title = 3;
     string role = 4;
+    repeated Blocker blockers = 5;
   }
   bool can_delete = 1;
   repeated Blocker blockers = 2;
