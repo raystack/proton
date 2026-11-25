@@ -4,6 +4,7 @@ package gotocompany.optimus.core.v1beta1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "gotocompany/optimus/core/v1beta1/status.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -216,6 +217,8 @@ message ResourceSpecification {
   google.protobuf.Struct spec = 5;
   map<string, string> assets = 6;
   map<string, string> labels = 7;
+
+  google.protobuf.Timestamp created_at = 8;
 }
 
 
